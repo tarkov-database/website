@@ -1,0 +1,29 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Type</th>
+              <td>
+                <a class="underline" title="Show all medicals with the same type" href="/item/medical?type={{ .Item.Type }}">
+                  {{ .Item.Type | toTitle }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Resources</th>
+              <td>{{ .Item.Resources }}</td>
+            </tr>
+            <tr>
+              <th>Resource Rate</th>
+              <td>{{ .Item.ResourceRate }}</td>
+            </tr>
+            <tr>
+              <th>Use Time</th>
+              <td>{{ .Item.UseTime }} sec.</td>
+            </tr>
+          </table>
+
+          {{ template "effects" . }}
+{{end}}
+
+{{ define "sub_box" }}
+{{ end }}

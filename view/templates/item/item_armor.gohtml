@@ -1,0 +1,71 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Type</th>
+              <td>
+                <a class="underline" title="Show all armor with the same type" href="/item/armor?type={{ .Item.Type }}">
+                  {{ if eq .Item.Type "faceCover" }}Face Cover
+                  {{ else }}{{ .Item.Type | toTitle }}{{ end }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Class</th>
+              <td>
+                <a class="underline" title="Show all armor with the same class" href="/item/armor?class={{ .Item.Armor.Class }}">
+                  {{ .Item.Armor.Class }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Material</th>
+              <td title="{{ if eq .Item.Armor.Material.Name "uhmwpe" }}Ultra-high-molecular-weight polyethylene{{ end }}">
+                {{ if eq .Item.Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Item.Armor.Material.Name | toTitle }}{{ end }}
+              </td>
+            </tr>
+            <tr>
+              <th>Durability</th>
+              <td>{{ .Item.Armor.Durability }}</td>
+            </tr>
+            <tr>
+              <th class="tr-list">Protected Zones</th>
+              <td>
+                {{ range .Item.Armor.Zones }}
+                {{ . }}<br>
+                {{ end }}
+              </td>
+            </tr>
+            {{ if .Item.Blocking }}
+            <tr>
+              <th class="tr-list">Blocking</th>
+              <td>
+                {{ range .Item.Blocking }}
+                {{ . }}<br>
+                {{ end }}
+              </td>
+            {{ end }}
+          </table>
+
+          {{ template "penalties" . }}
+{{end}}
+
+{{ define "sub_box" }}
+      <div class="box sub">
+        <ul class="tab-buttons">
+          {{ if .Item.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" onclick="openTab(event, 'slots')">Slots</li>{{ end }}
+          {{ if .Item.Compatibility }}<li title="Can be installed on following items" class="tab-btn {{ if not .Item.Slots }}active{{ end }}" onclick="openTab(event, 'compatible')">Compatibility</li>{{ end }}
+        </ul>
+
+        <ul class="tabs">
+
+          <li id="slots" class="tab" style="display:block;">
+            {{ template "mod_slots" . }}
+          </li>
+
+          <li id="compatible" class="tab" {{ if not .Item.Slots }}style="display:block;"{{ end }}>
+            {{ template "compatibility" . }}
+          </li>
+
+        </ul>
+      </div>
+{{ end }}

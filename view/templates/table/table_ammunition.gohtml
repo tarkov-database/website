@@ -1,0 +1,123 @@
+{{ define "table" }}
+      <div class="box table">
+        <div class="table-big">
+          <table class="item-table sort-table">
+            <caption>Table of {{ .Keyword | toTitle }}</caption>
+            <thead>
+              <tr title="Sort by">
+
+                {{ if hasQuery $.URI "sort" "shortName" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-shortName" }}">Name</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-shortName" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "shortName" }}">Name</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "shortName" }}">Name</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "caliber" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-caliber" }}">Caliber</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-caliber" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "caliber" }}">Caliber</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "caliber" }}">Caliber</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "damage" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-damage" }}">Damage</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-damage" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "damage" }}">Damage</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "damage" }}">Damage</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "penetration" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-penetration" }}">Penetration</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-penetration" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "penetration" }}">Penetration</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "penetration" }}">Penetration</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "armorDamage" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-armorDamage" }}">Armor Damage</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-armorDamage" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "armorDamage" }}">Armor Damage</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "armorDamage" }}">Armor Damage</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "fragmentation.chance" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-fragmentation.chance" }}">Fragmentation</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-fragmentation.chance" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "fragmentation.chance" }}">Fragmentation</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "fragmentation.chance" }}">Fragmentation</a>
+                </th>
+                {{ end }}
+
+              </tr>
+            </thead>
+            {{ range .List }}
+            <tr>
+
+              <td>
+                <a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">
+                  {{ .ShortName }}
+                </a>
+              </td>
+
+              <td>
+                <a href="{{ setQuery $.URI "caliber" .Caliber }}">
+                  {{ .Caliber }}
+                </a>
+              </td>
+
+              <td>{{ .Damage }} {{ if gt .Pellets 1 }}({{ .Pellets }}x){{ end }}</td>
+
+              <td>{{ .Penetration }}</td>
+
+              <td>{{ .ArmorDamage }}</td>
+
+              <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
+
+            </tr>
+            {{ end }}
+          </table>
+        </div>
+      </div>
+{{ end }}

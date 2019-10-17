@@ -1,0 +1,27 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th></th>
+              <th>Slash</th>
+              <th>Stab</th>
+            </tr>
+            <tr>
+              <th>Damage</th>
+              <td>{{ .Item.Slash.Damage }}</td>
+              <td>{{ .Item.Stab.Damage }}</td>
+            </tr>
+            <tr>
+              <th>Range</th>
+              <td>{{ .Item.Slash.Range }} m</td>
+              <td>{{ .Item.Stab.Range }} m</td>
+            </tr>
+            <tr>
+              <th>Consumption</th>
+              <td>{{ .Item.Slash.Consumption }}</td>
+              <td>{{ .Item.Stab.Consumption }}</td>
+            </tr>
+          </table>
+{{ end }}
+
+{{ define "sub_box" }}
+{{ end }}

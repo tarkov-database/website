@@ -1,0 +1,20 @@
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+
+	"github.com/tarkov-database/website/core/server"
+	"github.com/tarkov-database/website/version"
+
+	"github.com/google/logger"
+)
+
+func main() {
+	fmt.Printf("Starting up Tarkov Database Frontend (Commit: %s Build Date: %s)\n\n", version.App.CommitShort, version.App.BuildDate)
+
+	defLog := logger.Init("default", true, false, ioutil.Discard)
+	defer defLog.Close()
+
+	server.Start()
+}

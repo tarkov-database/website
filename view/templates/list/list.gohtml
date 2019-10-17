@@ -1,0 +1,60 @@
+{{ define "list" }}
+      <div class="box list">
+        <div class="listTitle">
+          {{ if .IsSearch }}Result for "{{ .Keyword }}"{{ else }}{{ .Keyword | toTitle }}{{ end }} ({{ .PageCount }} of {{ .TotalCount }})
+        </div>
+        <div class="filters" hidden>
+          <ul id="filters">
+          </ul>
+        </div>
+        <ul id="list" class="items">
+          {{ range .List }}
+          {{ $cat := kindToCategory .Kind }}
+          <li data-category="{{ $cat | categoryToName }}"
+              {{ if not $.IsSearch }}
+              {{ if eq .Kind "firearm" "armor" "grenade" "clothing" "medical" "food" "modificationGoggles" "modificationGogglesSpecial" "modificationSight" "modificationSightSpecial" "modificationMuzzle" "modificationDevice" }}data-type="{{ .Type }}"{{ end }}
+              {{ if eq .Kind "ammunition" "magazine" "firearm" }}data-caliber="{{ .Caliber }}"{{ end }}
+              {{ if eq .Kind "firearm" }}data-class="{{ .Class }}"{{ end }}
+              {{ if eq .Kind "armor" "tacticalrig" }}data-class="{{ .Armor.Class }}"{{ end }}{{ end }}>
+
+            <a title="{{ .Name }}" href="/item/{{ $cat }}/{{ .ID }}">
+              <div class="icon {{ $cat }}" title="{{ $cat | categoryToName | toTitle }}">&nbsp;</div>
+              <span>{{ .ShortName }}</span>
+            </a>
+
+          </li>
+          {{ else }}
+          <div class="list no-results">
+            No matches :-(
+          </div>
+          {{ end }}
+        </ul>
+
+        {{ if gt .PageNumber 0 }}
+        <nav class="pagination">
+          <ul>
+            <li>
+              {{ if gt .PagePrev.Number 0 }}
+              <a class="active" href="{{ .PagePrev.URL }}">Previous</a>
+              {{ else }}
+              <a>Previous</a>
+              {{ end }}
+            </li>
+            <li>
+              <div class="number">
+                {{ .PageNumber }}
+              </div>
+            </li>
+            <li>
+              {{ if gt .PageNext.Number 0 }}
+              <a class="active" href="{{ .PageNext.URL }}">Next</a>
+              {{ else }}
+              <a>Next</a>
+              {{ end }}
+            </li>
+          </ul>
+        </nav>
+        {{ end }}
+
+      </div>
+{{ end }}

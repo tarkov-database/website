@@ -1,0 +1,35 @@
+{{ define "properties" }}
+          {{ if .Item.Armor.Class }}
+          <table>
+            <tr>
+              <th>Class</th>
+              <td>{{ .Item.Armor.Class }}</td>
+            </tr>
+            <tr>
+              <th>Material</th>
+              <td title="{{ if eq .Item.Armor.Material.Name "uhmwpe" }}Ultra-high-molecular-weight polyethylene{{ end }}">
+                {{ if eq .Item.Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Item.Armor.Material.Name | toTitle }}{{ end }}
+              </td>
+            </tr>
+            <tr>
+              <th>Durability</th>
+              <td>{{ .Item.Armor.Durability }}</td>
+            </tr>
+            <tr>
+              <th class="tr-list">Protected Zones</th>
+              <td>
+                {{ range .Item.Armor.Zones }}
+                {{ . }}<br>
+                {{ end }}
+              </td>
+            </tr>
+          </table>
+          {{ end }}
+
+          {{ template "penalties" . }}
+
+          {{ template "grids" . }}
+{{ end }}
+
+{{ define "sub_box" }}
+{{ end }}

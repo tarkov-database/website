@@ -1,0 +1,510 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'Bender';
+  font-display: block;
+  font-style: normal;
+  font-weight: 400;
+  src: local('Bender Regular'), url("../fonts/Bender.woff2") format('woff2');
+}
+
+@font-face {
+  font-family: 'Bender';
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+  src: local('Bender Bold'), url("../fonts/Bender-Bold.woff2") format('woff2');
+}
+
+@font-face {
+  font-family: 'Bender';
+  font-display: swap;
+  font-style: italic;
+  font-weight: 400;
+  src: local('Bender Italic'), url("../fonts/Bender-Italic.woff2") format('woff2');
+}
+
+@font-face {
+  font-family: 'Bender';
+  font-display: swap;
+  font-style: italic;
+  font-weight: 700;
+  src: local('Bender Bold Italic'), url("../fonts/Bender-Bold-Italic.woff2") format('woff2');
+}
+
+:root {
+  /* background colors */
+  --bg-main-color: rgb(12, 12, 12);
+  --bg-sec-color: rgb(14, 14, 14);
+  --bg-third-color: rgb(16, 16, 16);
+  --bg-fourth-color: rgb(19, 19, 19);
+
+  /* font colors */
+  --font-main-color: rgb(150, 136, 103);
+  --font-sec-color: rgb(200, 200, 200);
+  --font-red-color: rgb(251, 69, 69);
+}
+
+html {
+  font-size: 17px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main-color);
+  font-family: 'Bender', 'sans serif';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--font-main-color);
+}
+
+a {
+  color: var(--font-main-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--font-sec-color);
+}
+
+input {
+  font-family: 'Bender', 'sans serif';
+  color: var(--font-main-color);
+  background-color: var(--bg-fourth-color);
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+header,
+main,
+footer {
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 .5rem;
+}
+
+main {
+  margin-top: 2rem;
+  min-height: 32rem;
+}
+
+@media only screen and (max-width: 500px) {
+  main {
+    margin-top: .6rem;
+  }
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+.box {
+  box-sizing: border-box;
+  background-color: var(--bg-third-color);
+  padding: 2rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .box {
+    padding: 1rem;
+  }
+}
+
+.underline {
+  border-bottom: .05rem solid var(--font-main-color);
+}
+
+.underline:hover {
+  border-bottom: .05rem solid var(--font-sec-color);
+}
+
+.system-info {
+  margin: 0 auto;
+  margin-top: 6rem;
+  padding: 1rem;
+  max-width: 30rem;
+  text-align: center;
+  color: black;
+  background-color: rgb(203, 116, 0);
+  opacity: .5;
+  cursor: default;
+  transition: opacity .4s linear;
+}
+
+@media only screen and (max-width: 500px) {
+  .system-info {
+    margin-top: 0;
+  }
+}
+
+.system-info:hover {
+  opacity: 1;
+}
+
+.navbox {
+  margin: 0 auto;
+  margin-top: 4rem;
+  max-width: 38rem;
+}
+
+header .navbox {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  flex-wrap: wrap;
+  margin: .9rem 0 1rem 0;
+}
+
+@media only screen and (max-width: 500px) {
+  header .navbox {
+    margin-top: .3rem;
+  }
+}
+
+.navbox .header {
+  margin: 0 auto;
+  width: fit-content;
+  width: -moz-fit-content;
+}
+
+.title,
+.title:hover {
+  margin: .3rem 0;
+  color: var(--font-sec-color);
+  text-decoration: none;
+}
+
+.navbox > .header > .title,
+.navbox > .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.title .logo {
+  display: inline-block;
+  background-image: url("../img/logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2.5rem;
+  line-height: 2.6rem;
+  width: 2.6rem;
+  margin: 0 .5rem;
+}
+
+.title .name,
+.title .db {
+  font-size: 1.9rem;
+}
+
+.title .name {
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-right: .5rem;
+}
+
+.title .db {
+  font-weight: 400;
+}
+
+.update {
+  display: block;
+  width: 100%;
+  text-align: right;
+  font-size: .8rem;
+  font-style: italic;
+  color: var(--font-main-color);
+  opacity: .8;
+}
+
+.search {
+  position: relative;
+  margin: .3rem auto;
+  margin-top: 1.5rem;
+}
+
+header .search {
+  margin: .5rem 0 .3rem 0;
+  width: 100%;
+}
+
+.search input[type="search"] {
+  width: 100%;
+  height: 3rem;
+  padding: .8rem;
+  font-size: 1rem;
+  border: none;
+}
+
+.search input[type="search"]::placeholder {
+  color: var(--font-main-color);
+  opacity: .5;
+}
+
+.search .suggestion {
+  box-sizing: border-box;
+  z-index: 20;
+  position: absolute;
+  display: block;
+  background-color: var(--bg-third-color);
+  width: 100%;
+}
+
+.search:focus-within .show.suggestion {
+  visibility: visible;
+}
+
+.search .suggestion {
+  visibility: hidden;
+}
+
+.search .suggestion ul {
+  list-style: none;
+  margin: 0;
+  padding: .6rem 1rem;
+}
+
+.search .suggestion li {
+  margin: .1rem 0;
+}
+
+.search .suggestion li > a {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: .4rem;
+  width: 100%;
+}
+
+.search .suggestion li > a:hover,
+.search .suggestion li > a:focus,
+.search .suggestion li > a:active {
+  background-color: var(--bg-fourth-color);
+}
+
+.search .suggestion .icon {
+  width: 1rem;
+  line-height: 1rem;
+  margin: .3rem;
+}
+
+.navbox .menu {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbox .menu > li > .name {
+  display: inline-block;
+  padding: .2rem .5rem;
+  cursor: default;
+}
+
+.navbox .menu > li:hover {
+  background-color: var(--bg-third-color);
+}
+
+.navbox .sub-menu {
+  visibility: hidden;
+  z-index: 10;
+  position: absolute;
+  list-style: none;
+  padding: .5rem;
+  margin: 0;
+  background-color: var(--bg-third-color);
+  opacity: 0;
+  box-shadow: 0 .2rem .6rem -.1rem rgba(0, 0, 0, 0.4);
+  transition: opacity .3s linear;
+}
+
+.navbox .sub-menu.wide {
+  display: flex;
+  flex-wrap: wrap;
+  width: max-content;
+  max-width: 22rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .navbox .sub-menu.wide {
+    display: block;
+    max-width: none;
+  }
+}
+
+.navbox .sub-menu li > .name {
+  display: inline-block;
+  width: 100%;
+  padding: .2rem;
+}
+
+.navbox .sub-menu li > div.name {
+  cursor: default;
+}
+
+.navbox .sub-menu li:hover > div.name {
+  color: var(--font-sec-color);
+}
+
+.navbox .sub-menu.wide li {
+  width: 11rem;
+}
+
+.navbox .sub-menu .icon {
+  width: 1rem;
+  line-height: 1rem;
+  margin: .3rem;
+}
+
+.navbox .menu li:hover > .sub-menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+.icon {
+  box-sizing: border-box;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.list .icon {
+  width: 1.6rem;
+  line-height: 1.6rem;
+  margin: .5rem;
+}
+
+.icon.ammunition {
+  background-image: url("../img/ammo.svg");
+}
+
+.icon.firearm {
+  background-image: url("../img/weapon.svg");
+}
+
+.icon.magazine {
+  background-image: url("../img/magazine.svg");
+}
+
+.icon.grenade {
+  background-image: url("../img/grenade.svg");
+}
+
+.icon.melee {
+  background-image: url("../img/melee.svg");
+}
+
+.icon.armor {
+  background-image: url("../img/armor.svg");
+}
+
+.icon.headphone {
+  background-image: url("../img/headphone.svg");
+}
+
+.icon.clothing {
+  background-image: url("../img/shirt.svg");
+}
+
+.icon.backpack {
+  background-image: url("../img/backpack.svg");
+}
+
+.icon.tacticalrig {
+  background-image: url("../img/vest.svg");
+}
+
+.icon.medical {
+  background-image: url("../img/medical.svg");
+}
+
+.icon.food {
+  background-image: url("../img/food.svg");
+}
+
+.icon.container {
+  background-image: url("../img/case.svg");
+}
+
+.icon.barter {
+  background-image: url("../img/barter.svg");
+}
+
+.icon.key {
+  background-image: url("../img/key.svg");
+}
+
+.icon.map {
+  background-image: url("../img/map.svg");
+}
+
+.icon.money {
+  background-image: url("../img/money.svg");
+}
+
+.icon.modification,
+.icon.barrel,
+.icon.bipod,
+.icon.charge,
+.icon.device,
+.icon.foregrip,
+.icon.gasblock,
+.icon.handguard,
+.icon.launcher,
+.icon.mount,
+.icon.muzzle,
+.icon.goggles,
+.icon.goggles-special,
+.icon.pistolgrip,
+.icon.receiver,
+.icon.sight,
+.icon.sight-special,
+.icon.stock,
+.icon.mod-other {
+  background-image: url("../img/mod.svg");
+}
+
+.icon.table {
+  background-image: url("../img/table.svg");
+}
+
+.icon.other {
+  display: none;
+}
+
+.s404,
+.s500,
+.s503 {
+  margin: 8rem auto 0 auto;
+  text-align: center;
+  color: var(--font-red-color);
+}
+
+footer {
+  margin: 2rem auto;
+  height: 3rem;
+}
+
+footer .links {
+  font-size: .9rem;
+  text-align: center;
+}
+
+footer .version {
+  margin-top: 1rem;
+  font-size: .8rem;
+  text-align: center;
+  color: var(--font-sec-color);
+  opacity: .2;
+}

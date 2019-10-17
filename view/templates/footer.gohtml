@@ -1,0 +1,12 @@
+{{ define "footer" }}
+      <div class="links">
+        <a class="underline" href="/about">About</a>
+      </div>
+
+      <div class="version">
+        <p>
+          <span title="Commit hash">{{ .App.CommitShort }} </span>
+          <time title="Build date" datetime="{{ formatTime "RFC3339" .App.BuildDate }}">({{ formatTime "02 Jan 2006" .App.BuildDate }})</time>
+        </p>
+      </div>
+{{ end }}

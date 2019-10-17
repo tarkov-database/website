@@ -1,0 +1,28 @@
+{{ define "content" }}
+      <div class="system-info">
+        <b>Attention! This service is still in development!</b>
+        <br>It doesent't represent the final quality of the service.
+      </div>
+
+      <div class="navbox">
+
+        <div class="header">
+          <div class="title">
+            <div class="logo">&nbsp;</div>
+            <span class="name">Tarkov</span>
+            <span class="db">Database</span>
+          </div>
+          {{ $date := formatTime "RFC3339" .API.Modified }}
+          {{ if .API.Modified.IsZero }}
+          <div class="update offline" title="Database/API is offline">OFFLINE</div>
+          {{ else }}
+          <time class="update" title="Database update date" datetime="{{ $date }}">updated on {{ formatTime "02 January 2006" .API.Modified }}</time>
+          {{ end }}
+        </div>
+
+        {{ template "search" . }}
+
+        {{ template "nav" . }}
+
+      </div>
+{{ end }}

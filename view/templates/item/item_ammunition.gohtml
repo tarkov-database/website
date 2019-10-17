@@ -1,0 +1,82 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Caliber</th>
+              <td>
+                <a class="underline" title="Show all ammo with caliber '{{ .Item.Caliber }}'" href="/item/ammunition?caliber={{ .Item.Caliber }}">{{ .Item.Caliber }}</a>
+              </td>
+            </tr>
+            <tr>
+              <th>Subsonic</th>
+              <td>{{ if .Item.Subsonic }}Yes{{ else }}No{{ end }}</td>
+            </tr>
+            <tr>
+              <th>Tracer</th>
+              <td>{{ if .Item.Tracer }}Yes{{ else }}No{{ end }}</td>
+            </tr>
+          </table>
+
+          <table>
+            <tr>
+              <th>Damage</th>
+              <td>{{ .Item.Damage }} {{ if gt .Item.Pellets 1 }}({{ .Item.Pellets }}x){{ end }}</td>
+            </tr>
+            <tr>
+              <th>Penetration</th>
+              <td>{{ .Item.Penetration }}</td>
+            </tr>
+            <tr>
+              <th>Armor Damage</th>
+              <td>{{ .Item.ArmorDamage }}</td>
+            </tr>
+            <tr title="Chance (Fragments)">
+              <th>Fragmentation</th>
+              <td>{{ .Item.Fragmentation.Chance | decimalToPercent }} % ({{ .Item.Fragmentation.Min }}{{ if ne .Item.Fragmentation.Min .Item.Fragmentation.Max }}-{{ .Item.Fragmentation.Max }}{{ end }})</td>
+            </tr>
+            <tr>
+              <th>Velocity</th>
+              <td>{{ .Item.Velocity }} m/s</td>
+            </tr>
+            <tr>
+              <th>Ballistic Coeficient</th>
+              <td>{{ .Item.BallisticCoeficient }}</td>
+            </tr>
+          </table>
+{{ end }}
+
+{{ define "sub_box" }}
+          <div class="box sub">
+            <div class="table-big">
+              <table class="item-table sort-table ammo">
+                <caption>Types of {{ .Item.Caliber }}</caption>
+                <thead>
+                  <tr title="Sort by">
+                    <th>Name</th>
+                    <th>Damage</th>
+                    <th>Penetration</th>
+                    <th>Armor Damage</th>
+                    <th>Fragmentation</th>
+                  </tr>
+                </thead>
+                {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 30 }}
+                {{ range $result.Items }}
+                <tr {{ if eq .ID $.Item.ID }}title="Current selection" class="selected"{{ end }} data-name="{{ .ShortName }}" data-projectilecount="{{ .Pellets }}" data-damage="{{ .Damage }}" data-penetration="{{ .Penetration }}" data-armordamage="{{ .ArmorDamage }}">
+                  <td>
+                    <a href="/item/ammunition/{{ .ID }}">
+                      {{ .ShortName }}
+                    </a>
+                  </td>
+                  <td>{{ .Damage }} {{ if gt .Pellets 1 }}({{ .Pellets }}x){{ end }}</td>
+                  <td>{{ .Penetration }}</td>
+                  <td>{{ .ArmorDamage }}</td>
+                  <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
+                </tr>
+                {{ end }}
+              </table>
+            </div>
+
+            <div class="chart ammo">
+              <canvas id="ammoTypeChart"></canvas>
+            </div>
+          </div>
+{{ end }}

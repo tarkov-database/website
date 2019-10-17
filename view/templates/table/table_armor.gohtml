@@ -1,0 +1,111 @@
+{{ define "table" }}
+      <div class="box table">
+        <div class="table-big">
+          <table class="item-table sort-table">
+            <caption>Table of {{ .Keyword | toTitle }}</caption>
+            <thead>
+              <tr title="Sort by">
+
+                {{ if hasQuery $.URI "sort" "shortName" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-shortName" }}">Name</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-shortName" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "shortName" }}">Name</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "shortName" }}">Name</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "type" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-type" }}">Type</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-type" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "type" }}">Type</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "type" }}">Type</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "armor.class" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-armor.class" }}">Class</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-armor.class" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "armor.durability" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-armor.durability" }}">Durability</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-armor.durability" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "armor.durability" }}">Durability</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "armor.durability" }}">Durability</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "armor.material.name" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-armor.material.name" }}">Material</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-armor.material.name" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "armor.material.name" }}">Material</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "armor.material.name" }}">Material</a>
+                </th>
+                {{ end }}
+
+              </tr>
+            </thead>
+            {{ range .List }}
+            <tr>
+
+              <td>
+                <a title="{{ .Name }}" href="/item/armor/{{ .ID }}">
+                  {{ .ShortName }}
+                </a>
+              </td>
+
+              <td>
+                <a href="{{ setQuery $.URI "type" .Type }}">
+                  {{ .Type | toTitle }}
+                </a>
+              </td>
+
+              <td>
+                <a href="{{ setQuery $.URI "class" .Armor.Class }}">
+                  {{ .Armor.Class }}
+                </a>
+              </td>
+
+              <td>{{ .Armor.Durability }}</td>
+
+              <td>{{ if eq .Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Armor.Material.Name | toTitle }}{{ end }}</td>
+
+            </tr>
+            {{ end }}
+          </table>
+        </div>
+      </div>
+{{ end }}

@@ -1,0 +1,35 @@
+{{ define "head" }}
+    <!-- META -->
+    <meta charset="utf-8">
+    <title>{{ .Item.Name }} - Tarkov Database</title>
+    <meta name="description" content="{{ .Item.Description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://{{ .Host }}{{ .Path }}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Tarkov Database">
+    <meta property="og:title" content="{{ .Item.Name }}">
+    <meta property="og:description" content="{{ .Item.Description }}">
+    <meta property="og:image" content="https://static.{{ .Host }}/image/icon/1-1/{{ .Item.ID }}.png">
+    <meta property="og:image:type" content="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0C0C0C">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/resources/css/style.css?v={{ staticHashShort "css/style.css" }}">
+    <link rel="stylesheet" href="/resources/css/item.css?v={{ staticHashShort "css/item.css" }}">
+    <link rel="stylesheet" href="/resources/css/table.css?v={{ staticHashShort "css/table.css" }}">
+
+    <!-- Scripts -->
+    <script defer src="/resources/js/main.js?v={{ staticHashShort "js/main.js" }}"></script>
+    <script defer src="/resources/js/Chart.min.js?v={{ staticHashShort "js/Chart.min.js" }}"></script>
+    <script defer src="/resources/js/charts.js?v={{ staticHashShort "js/charts.js" }}"></script>
+
+    <!-- Misc -->
+    <link rel="icon" type="image/svg+xml" href="/resources/img/logo.svg?v={{ staticHashShort "img/logo.svg" }}" sizes="any">
+    <link rel="icon" type="image/png" href="/resources/img/logo-180.png?v={{ staticHashShort "img/logo-180.png" }}" sizes="180x180">
+    <link rel="icon" type="image/png" href="/resources/img/logo-144.png?v={{ staticHashShort "img/logo-144.png" }}" sizes="144x144">
+    <link rel="icon" type="image/png" href="/resources/img/logo-96.png?v={{ staticHashShort "img/logo-96.png" }}" sizes="96x96">
+    <link rel="icon" type="image/png" href="/resources/img/logo-48.png?v={{ staticHashShort "img/logo-48.png" }}" sizes="48x48">
+    <link rel="icon" type="image/png" href="/resources/img/logo-32.png?v={{ staticHashShort "img/logo-32.png" }}" sizes="32x32">
+    <link rel="manifest" href="/resources/manifest.json?v={{ staticHashShort "manifest.json" }}">
+{{ end }}

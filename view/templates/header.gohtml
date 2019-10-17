@@ -1,0 +1,288 @@
+{{ define "header" }}
+    <div class="navbox">
+
+      <a class="title" href="/">
+        <div class="logo">&nbsp;</div>
+        <div class="name">Tarkov</div>
+        <div class="db">Database</div>
+      </a>
+
+      {{ template "search" . }}
+
+      {{ template "nav" . }}
+
+    </div>
+{{ end }}
+
+{{ define "search" }}
+<form id="search" class="search" action="/search" method="get">
+  <input required type="search" name="query" placeholder="Search..." minlength="2" pattern=".{2,32}" maxlength="32" autocomplete="off">
+  <div class="suggestion hide"><ul></ul></div>
+</form>
+{{ end }}
+
+{{ define "nav" }}
+<nav>
+  <ul class="menu">
+    <li>
+      <span class="name">Items</span>
+      <ul class="sub-menu wide">
+        <li>
+          <a class="name" href="/item/ammunition">
+            <div class="icon ammunition">&nbsp;</div>
+            <span>Ammunition</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/firearm">
+            <div class="icon firearm">&nbsp;</div>
+            <span>Firearms</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/magazine">
+            <div class="icon magazine">&nbsp;</div>
+            <span>Magazines</span>
+          </a>
+        </li>
+        <li>
+          <div class="name">
+            <div class="icon modification">&nbsp;</div>
+            <span>Parts & Mods</span>
+          </div>
+          <ul class="sub-menu wide">
+            <li>
+              <a class="name" href="/item/barrel">
+                <div class="icon barrel">&nbsp;</div>
+                <span>Barrel</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/bipod">
+                <div class="icon bipod">&nbsp;</div>
+                <span>Bipod</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/charge">
+                <div class="icon charge">&nbsp;</div>
+                <span>Charging Handle</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/device">
+                <div class="icon device">&nbsp;</div>
+                <span>Tactical Device</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/foregrip">
+                <div class="icon foregrip">&nbsp;</div>
+                <span>Foregrip</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/gasblock">
+                <div class="icon gasblock">&nbsp;</div>
+                <span>Gas Block</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/goggles">
+                <div class="icon goggles">&nbsp;</div>
+                <span>Goggles</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/handguard">
+                <div class="icon handguard">&nbsp;</div>
+                <span>Handguard</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/launcher">
+                <div class="icon launcher">&nbsp;</div>
+                <span>Launcher</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/mount">
+                <div class="icon mount">&nbsp;</div>
+                <span>Mount</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/muzzle">
+                <div class="icon muzzle">&nbsp;</div>
+                <span>Muzzle</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/pistolgrip">
+                <div class="icon pistolgrip">&nbsp;</div>
+                <span>Pistol Grip</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/receiver">
+                <div class="icon receiver">&nbsp;</div>
+                <span>Receiver</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/sight">
+                <div class="icon sight">&nbsp;</div>
+                <span>Sight</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/sight-special">
+                <div class="icon sight-special">&nbsp;</div>
+                <span>Special Sight</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/stock">
+                <div class="icon stock">&nbsp;</div>
+                <span>Stock</span>
+              </a>
+            </li>
+            <li>
+              <a class="name" href="/item/mod-other">
+                <div class="icon mod-other">&nbsp;</div>
+                <span>Other</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="name" href="/item/grenade">
+            <div class="icon grenade">&nbsp;</div>
+            <span>Grenades</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/melee">
+            <div class="icon melee">&nbsp;</div>
+            <span>Melee</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/armor">
+            <div class="icon armor">&nbsp;</div>
+            <span>Armor</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/headphone">
+            <div class="icon headphone">&nbsp;</div>
+            <span>Headphone</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/backpack">
+            <div class="icon backpack">&nbsp;</div>
+            <span>Backpacks</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/tacticalrig">
+            <div class="icon tacticalrig">&nbsp;</div>
+            <span>Tactical Rig</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/clothing">
+            <div class="icon clothing">&nbsp;</div>
+            <span>Clothing</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/medical">
+            <div class="icon medical">&nbsp;</div>
+            <span>Medicals</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/food">
+            <div class="icon food">&nbsp;</div>
+            <span>Food</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/container">
+            <div class="icon container">&nbsp;</div>
+            <span>Container & Cases</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/barter">
+            <div class="icon barter">&nbsp;</div>
+            <span>Barter</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/key">
+            <div class="icon key">&nbsp;</div>
+            <span>Keys</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/money">
+            <div class="icon money">&nbsp;</div>
+            <span>Money</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/map">
+            <div class="icon map">&nbsp;</div>
+            <span>Maps</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/common">
+            <div class="icon other">&nbsp;</div>
+            <span>Uncategorized</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <span class="name">Tables</span>
+      <ul class="sub-menu">
+        <li>
+          <a class="name" href="/item/ammunition?sort=caliber&view=table">
+            <div class="icon table">&nbsp;</div>
+            <span>Ammunition</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/armor?sort=type&view=table">
+            <div class="icon table">&nbsp;</div>
+            <span>Armor</span>
+          </a>
+        </li>
+        <li>
+          <a class="name" href="/item/magazine?sort=caliber&view=table">
+            <div class="icon table">&nbsp;</div>
+            <span>Magazines</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <span class="name">Tools</span>
+    </li>
+    <li>
+      <span class="name">Links</span>
+      <ul class="sub-menu">
+        <li>
+          <a class="name" href="/projects">
+            <span>Projects</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+{{ end }}

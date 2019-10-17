@@ -1,0 +1,331 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Ergonomics</th>
+              <td>{{ if gt .Item.Ergonomics 0 }}+{{ end }}{{ .Item.Ergonomics }}</td>
+            </tr>
+            <tr>
+              <th>Raid Moddable</th>
+              <td>
+                {{ if eq .Item.RaidModdable 0 }}No
+                {{ else if eq .Item.RaidModdable 1 }}Yes
+                {{ else if eq .Item.RaidModdable 2 }}Tool
+                {{ end }}
+              </td>
+            </tr>
+          </table>
+
+          {{ if eq .Item.Kind "modificationBarrel" }}
+          {{ template "modificationBarrel" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationBipod" }}
+          {{ template "modificationBipod" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationCharge" }}
+          {{ template "modificationCharge" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationDevice" }}
+          {{ template "modificationDevice" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationForegrip" }}
+          {{ template "modificationForegrip" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationGasblock" }}
+          {{ template "modificationGasblock" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationGoggles" }}
+          {{ template "modificationGoggles" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationHandguard" }}
+          {{ template "modificationHandguard" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationLauncher" }}
+          {{ template "modificationLauncher" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationMount" }}
+          {{ template "modificationMount" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationMuzzle" }}
+          {{ template "modificationMuzzle" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationPistolgrip" }}
+          {{ template "modificationPistolgrip" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationReceiver" }}
+          {{ template "modificationReceiver" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationSight" }}
+          {{ template "modificationSight" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationSightSpecial" }}
+          {{ template "modificationSightSpecial" . }}
+          {{ end }}
+          {{ if eq .Item.Kind "modificationStock" }}
+          {{ template "modificationStock" . }}
+          {{ end }}
+
+          {{ template "gridModifier" . }}
+{{ end }}
+
+{{ define "sub_box" }}
+      <div class="box sub">
+        <ul class="tab-buttons">
+          {{ if .Item.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" onclick="openTab(event, 'slots')">Slots</li>{{ end }}
+          {{ if .Item.Compatibility }}<li title="Can be installed on following items" class="tab-btn {{ if not .Item.Slots }}active{{ end }}" onclick="openTab(event, 'compatible')">Compatibility</li>{{ end }}
+        </ul>
+
+        <ul class="tabs">
+
+          <li id="slots" class="tab" style="display:block;">
+            {{ template "mod_slots" . }}
+          </li>
+
+          <li id="compatible" class="tab" {{ if not .Item.Slots }}style="display:block;"{{ end }}>
+            {{ template "compatibility" . }}
+          </li>
+
+        </ul>
+      </div>
+{{ end }}
+
+{{ define "modificationBarrel" }}
+<table>
+  <tr>
+    <th>Length</th>
+    <td>{{ .Item.Length }} mm</td>
+  </tr>
+  <tr>
+    <th>Accuracy</th>
+    <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
+  </tr>
+  <tr>
+    <th>Velocity</th>
+    <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
+  </tr>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+  <tr>
+    <th>Suppressor</th>
+    <td>{{ if .Item.Suppressor }}Yes{{ else }}No{{ end }}</td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationBipod" }}
+<table>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationCharge" }}
+{{ end }}
+
+{{ define "modificationDevice" }}
+<table>
+  <tr>
+    <th>Type</th>
+    <td>
+      <a class="underline" title="Show all medicals with the same type" href="/item/device?type={{ .Item.Type }}">
+        {{ .Item.Type | toTitle }}
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <th class="tr-list">Modes</th>
+    <td>
+      {{ range .Item.Modes }}
+      {{ . }}<br>
+      {{ end }}
+    </td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationForegrip" }}
+<table>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationGasblock" }}
+{{ end }}
+
+{{ define "modificationHandguard" }}
+<table>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationLauncher" }}
+<table>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+  <tr>
+    <th>Caliber</th>
+    <td>{{ .Item.Caliber }}</td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationMount" }}
+{{ end }}
+
+{{ define "modificationMuzzle" }}
+<table>
+  <tr>
+    <th>Type</th>
+    <td>
+      <a class="underline" title="Show all medicals with the same type" href="/item/muzzle?type={{ .Item.Type }}">
+        {{ .Item.Type | toTitle }}
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <th>Accuracy</th>
+    <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
+  </tr>
+  <tr>
+    <th>Velocity</th>
+    <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
+  </tr>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationGoggles" }}
+<table>
+  <tr>
+    <th>Type</th>
+    <td>
+      <a class="underline" title="Show all medicals with the same type" href="/item/goggles?type={{ .Item.Type }}">
+        {{ .Item.Type | toTitle }}
+      </a>
+    </td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationPistolgrip" }}
+<table>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationReceiver" }}
+<table>
+  <tr>
+    <th>Accuracy</th>
+    <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
+  </tr>
+  <tr>
+    <th>Velocity</th>
+    <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
+  </tr>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationSightSpecial" }}
+<table>
+  <tr>
+    <th>Type</th>
+    <td>
+      <a class="underline" title="Show all medicals with the same type" href="/item/sight-special?type={{ .Item.Type }}">
+        {{ .Item.Type | toTitle }}
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <th class="tr-list">Magnification</th>
+    <td>
+      {{ range .Item.Magnification }}
+      {{ . }}<br>
+      {{ end }}
+    </td>
+  </tr>
+  <tr>
+    <th>Variable Zoom</th>
+    <td>{{ if .Item.VariableZoom }}Yes{{ else }}No{{ end }}</td>
+  </tr>
+  <tr>
+    <th class="tr-list">Zero Distances</th>
+    <td>
+      {{ range .Item.ZeroDistances }}
+      {{ . }}<br>
+      {{ end }}
+    </td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationSight" }}
+<table>
+  <tr>
+    <th>Type</th>
+    <td>
+      <a class="underline" title="Show all medicals with the same type" href="/item/sight?type={{ .Item.Type }}">
+        {{ .Item.Type | toTitle }}
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <th class="tr-list">Magnification</th>
+    <td>
+      {{ range .Item.Magnification }}
+      {{ . }}<br>
+      {{ end }}
+    </td>
+  </tr>
+  <tr>
+    <th>Variable Zoom</th>
+    <td>{{ if .Item.VariableZoom }}Yes{{ else }}No{{ end }}</td>
+  </tr>
+  <tr>
+    <th class="tr-list">Zero Distances</th>
+    <td>
+      {{ range .Item.ZeroDistances }}
+      {{ . }}<br>
+      {{ end }}
+    </td>
+  </tr>
+</table>
+{{ end }}
+
+{{ define "modificationStock" }}
+<table>
+  <tr>
+    <th>Recoil</th>
+    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+  </tr>
+  <tr>
+    <th>Accuracy</th>
+    <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
+  </tr>
+  <tr>
+    <th>Fold-/Retractable</th>
+    <td>{{ if .Item.FoldRectractable }}Yes{{ else }}No{{ end }}</td>
+  </tr>
+</table>
+{{ end }}

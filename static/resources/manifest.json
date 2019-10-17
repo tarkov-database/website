@@ -1,0 +1,43 @@
+{
+  "name": "Tarkov Database",
+  "short_name": "Tarkov DB",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "orientation": "portrait",
+  "theme_color": "#8C7E60",
+  "background_color": "#0C0C0C",
+  "description": "Tarkov Database is an searchable database of Escape from Tarkov items and quests combinded with some useful tools.",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/resources/img/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/resources/img/logo-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/resources/img/logo-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/resources/img/logo-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/resources/img/logo-48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/resources/img/logo-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}

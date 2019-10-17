@@ -1,0 +1,47 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Type</th>
+              <td>
+                <a class="underline" title="Show all grenades with the same type" href="/item/grenade?type={{ .Item.Type }}">
+                  {{ if eq .Item.Type "frag" }}Fragmentation
+                  {{ else if eq .Item.Type "flash" }}Flash
+                  {{ else if eq .Item.Type "smoke" }}Smoke{{ end }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Delay</th>
+              <td>{{ .Item.Delay }} sec.</td>
+            </tr>
+            {{ if eq .Item.Type "frag" }}
+            <tr>
+              <th>Strength</th>
+              <td>{{ .Item.Strength }}</td>
+            </tr>
+            <tr>
+              <th>Fragment Count</th>
+              <td>{{ .Item.FragmentCount }}</td>
+            </tr>
+            <tr>
+              <th>Explosion Distance</th>
+              <td>{{ .Item.MinDistance }} - {{ .Item.MaxDistance }} m</td>
+            </tr>
+            {{ end }}
+            {{ if eq .Item.Type "flash" }}
+            <tr>
+              <th>Contusion Distance</th>
+              <td>{{ .Item.ContusionDistance }} m</td>
+            </tr>
+            {{ end }}
+            {{ if eq .Item.Type "smoke" }}
+            <tr>
+              <th>Burn Time</th>
+              <td>{{ .Item.EmitTime }} sec.</td>
+            </tr>
+            {{ end }}
+          </table>
+{{ end }}
+
+{{ define "sub_box" }}
+{{ end }}

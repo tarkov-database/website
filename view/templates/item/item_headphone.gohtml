@@ -1,0 +1,19 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Ambient Reduction</th>
+              <td>{{ multiplyFloat .Item.AmbientVolume -1.0 }} dB</td>
+            </tr>
+            <tr>
+              <th>Cutoff Frequency</th>
+              <td><{{ .Item.HighPassFilter.CutoffFrequency }} Hz</td>
+            </tr>
+            <tr>
+              <th>Clarity</th>
+              <td>{{ subtractFloat 1.0 .Item.Distortion | decimalToPercent }} %</td>
+            </tr>
+          </table>
+{{ end }}
+
+{{ define "sub_box" }}
+{{ end }}

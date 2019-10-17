@@ -1,0 +1,276 @@
+@charset "UTF-8";
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2;
+}
+
+.categories {
+  box-sizing: border-box;
+  min-height: 20rem;
+}
+
+.categories .title {
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.categories ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.categories li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  max-width: 20.5rem;
+  width: 100%;
+}
+
+.categories li a {
+  box-sizing: border-box;
+  display: block;
+  font-size: 1.1rem;
+  margin: .3rem;
+  padding: .2rem 1rem;
+  line-height: 4rem;
+  background-color: var(--bg-fourth-color);
+  text-decoration: none;
+}
+
+.categories .icon {
+  box-sizing: border-box;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 2rem;
+  line-height: 2rem;
+  margin: 1rem;
+}
+
+.categories .icon a {
+  text-decoration: none;
+}
+
+.main {
+  display: flex;
+  flex: 0 1 75%;
+  flex-direction: column;
+  margin: 0 .5rem .5rem 0;
+  min-height: 45rem;
+}
+
+@media only screen and (max-width: 1454px) {
+  main {
+    display: block;
+  }
+  .main {
+    margin: 0 0 .5rem 0;
+  }
+}
+
+.main .text {
+  min-height: 22rem;
+}
+
+.text h1 {
+  margin: 0 0 1rem 0;
+}
+
+.main .modified-date {
+  display: inline-block;
+  opacity: .4;
+  font-size: .8rem;
+  margin-bottom: .3rem;
+}
+
+.main .image {
+  box-sizing: border-box;
+  float: right;
+  margin: 0 0 2rem 4rem;
+  padding: 1rem;
+  max-width: 12rem;
+  min-width: 8rem;
+  width: 30vw;
+  max-height: 12rem;
+  min-height: 8rem;
+  height: 30vw;
+  background-color: var(--bg-sec-color);
+}
+
+@media only screen and (max-width: 1454px) {
+  .main .image {
+    margin: 0 0 1rem 2rem;
+  }
+}
+
+#image {
+  box-sizing: border-box;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.main .prop {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.prop > table,
+.prop > .table-big {
+  margin: .3rem;
+}
+
+.prop td,
+.prop th {
+  text-align: left;
+  padding: .4rem .8rem;
+}
+
+.item-info {
+  flex: 1 auto;
+  margin-bottom: .5rem;
+}
+
+.item-info > div {
+  padding: 2rem;
+}
+
+.item-info table {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 20rem;
+  width: 100%;
+  background: none;
+}
+
+.item-info tr {
+  margin: 1rem;
+}
+
+.item-info td,
+.item-info th {
+  text-align: left;
+  padding: .4rem .8rem;
+}
+
+.item-info .icon {
+  width: .9rem;
+  line-height: .9rem;
+  margin: .1rem;
+}
+
+.sub {
+  flex: 0 75%;
+  min-height: 20rem;
+}
+
+.sub .tab-buttons {
+  display: flex;
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.sub .tab-btn {
+  display: inline-block;
+  margin: 0 .1rem;
+  padding: .3rem;
+  line-height: 2rem;
+  width: 100%;
+  color: var(--font-sec-color);
+  background-color: var(--bg-sec-color);
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  opacity: .7;
+}
+
+.sub .tab-btn.active {
+  background-color: var(--bg-main-color);
+  opacity: 1;
+}
+
+.sub .tabs {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sub .tab {
+  display: none;
+  width: 100%;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.tabs .items {
+  margin: .8rem 0 0 0;
+}
+
+.tabs .items .title {
+  margin: .3rem 0;
+  padding: .3rem;
+  width: 100%;
+  background-color: var(--bg-sec-color);
+  text-align: center;
+}
+
+.tabs .items ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+}
+
+.tabs .items li a {
+  display: inline-block;
+  margin: .2rem;
+  padding: .2rem;
+  width: 12.1rem;
+  line-height: 1.5rem;
+  background-color: var(--bg-sec-color);
+  text-align: center;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 462px) {
+  .tabs .items li,
+  .tabs .items li a {
+    width: 100%;
+  }
+}
+
+.center {
+  text-align: center !important;
+}
+
+.chart {
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 35rem;
+  padding: 1rem;
+  margin-top: 1rem;
+  background-color: var(--bg-sec-color);
+}

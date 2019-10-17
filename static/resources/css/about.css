@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+.about {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.about .main {
+  flex: 60%;
+  padding: 0 1rem;
+}
+
+.about .credits {
+  margin: 2rem 0;
+}
+
+.about .credits .flaticon {
+  margin-top: 4rem;
+  font-size: .9rem;
+}
+
+.about .faq {
+  margin: 2rem 0;
+}
+
+.about .faq li {
+  margin: .2rem 0;
+}
+
+.about .sidebar-box {
+  box-sizing: border-box;
+  margin: 1rem;
+  padding: 2rem;
+  background-color: var(--bg-sec-color);
+}
+
+.sidebar-box.links ul {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.sidebar-box.links li {
+  margin: .2rem 0;
+}
+
+.sidebar-box.donate .btc {
+  margin: 1rem 0;
+  word-break: break-word;
+}

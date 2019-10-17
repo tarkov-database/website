@@ -1,0 +1,66 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Capacity</th>
+              <td>
+                {{ .Item.Capacity }}
+              </td>
+            </tr>
+            <tr>
+              <th>Ergonomics</th>
+              <td>{{ if gt .Item.Ergonomics 0 }}+{{ end }}{{ .Item.Ergonomics }}</td>
+            </tr>
+            {{ if ne .Item.Modifier.LoadUnload 0.0 }}
+            <tr>
+              <th>Load/Unload Time</th>
+              <td>{{ if gt .Item.Modifier.LoadUnload 0.0 }}+{{ end }}{{ .Item.Modifier.LoadUnload }} %</td>
+            </tr>
+            {{ end }}
+            {{ if ne .Item.Modifier.CheckTime 0.0 }}
+            <tr>
+              <th>Check Time</th>
+              <td>{{ if gt .Item.Modifier.CheckTime 0.0 }}+{{ end }}{{ .Item.Modifier.CheckTime }} %</td>
+            </tr>
+            {{ end }}
+            <tr>
+              <th>Caliber</th>
+              <td>
+                <a class="underline" title="Show all magazines with caliber '{{ .Item.Caliber }}'" href="/item/magazine?caliber={{ .Item.Caliber }}">{{ .Item.Caliber }}</a>
+              </td>
+            </tr>
+          </table>
+
+          {{ template "gridModifier" . }}
+{{ end }}
+
+{{ define "sub_box" }}
+
+      <div class="box sub">
+        <ul class="tab-buttons">
+          <li class="tab-btn active" onclick="openTab(event, 'cartridges')">Compatible Ammo</li>
+          <li title="Can be used with following weapons" class="tab-btn" onclick="openTab(event, 'compatible')">Compatible Weapons</li>
+        </ul>
+
+        <ul class="tabs">
+
+          <li id="cartridges" class="tab" style="display:block;">
+            <div class="items">
+              <ul>
+                {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 30 }}
+                {{ range $result.Items }}
+                <li>
+                  <a title="{{ .Name }}" class="mod" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a>
+                </li>
+                {{ end }}
+              </ul>
+            </div>
+          </li>
+
+          <li id="compatible" class="tab">
+            {{ template "compatibility" . }}
+          </li>
+
+        </ul>
+      </div>
+
+{{ end }}

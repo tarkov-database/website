@@ -1,0 +1,29 @@
+{{ define "properties" }}
+          {{ if or .Item.Penalties.Mouse .Item.Penalties.Speed .Item.Penalties.Ergonomics }}
+          <table>
+            {{ if .Item.Penalties.Mouse }}
+            <tr>
+              <th>Turn Speed</th>
+              <td>{{ .Item.Penalties.Mouse }} %</td>
+            </tr>
+            {{ end }}
+            {{ if .Item.Penalties.Speed }}
+            <tr>
+              <th>Movement Speed</th>
+              <td>{{ .Item.Penalties.Speed }} %</td>
+            </tr>
+            {{ end }}
+            {{ if .Item.Penalties.Ergonomics }}
+            <tr>
+              <th >Ergonomics</th>
+              <td>{{ if gt .Item.Penalties.Ergonomics 0 }}+{{ end }}{{ .Item.Penalties.Ergonomics }}</td>
+            </tr>
+            {{ end }}
+          </table>
+          {{ end }}
+
+          {{ template "grids" . }}
+{{ end }}
+
+{{ define "sub_box" }}
+{{ end }}

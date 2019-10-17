@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+table {
+  background-color: var(--bg-sec-color);
+  padding: 1.5rem 2rem;
+  border-spacing: 0;
+}
+
+td, th {
+  padding: .2rem .5rem;
+}
+
+table caption {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.table-big {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-big table {
+  width: 100%;
+  margin: 0 !important;
+  white-space: nowrap;
+}
+
+.sort-table th a:hover {
+  color: var(--font-main-color);
+}
+
+.sort-table .selected {
+  font-weight: 700;
+  background-color: var(--bg-third-color);
+}
+
+.sorted-by.up:after,
+.sorted-by.down:after {
+  position: absolute;
+  height: 1rem;
+  width: 1rem;
+  margin: .2rem .3rem 0 .1rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: .6rem;
+}
+
+.sorted-by.up:after {
+  content: "";
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHZpZXdCb3g9IjAgMCAyNiAyNiIgaGVpZ2h0PSIxMDAiIHdpZHRoPSIxMDAiPjxwYXRoIGQ9Ik0yNiAxOEwxMyA1IDAgMThsMyAzIDEwLTEwIDEwIDEweiIgZmlsbD0iIzk2ODg2NyIvPjwvc3ZnPg==);
+}
+
+.sorted-by.down:after {
+  content: "";
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHZpZXdCb3g9IjAgMCAyNiAyNiIgaGVpZ2h0PSIxMDAiIHdpZHRoPSIxMDAiPjxwYXRoIGQ9Ik0yNiA4bC0zLTMtMTAgMTBMMyA1IDAgOGwxMyAxM3oiIGZpbGw9IiM5Njg4NjciLz48L3N2Zz4=);
+}
+
+.item-table tr {
+  height: 2rem;
+}
+
+.item-table tr:hover td,
+.loot tr:hover td {
+  background-color: var(--bg-fourth-color);
+}
+
+.item-table td {
+  text-align: center;
+  height: 1.8rem;
+  max-width: 8rem;
+}
+
+.item-table th:nth-child(1),
+.item-table td:nth-child(1) {
+  border-right: .02rem solid var(--bg-fourth-color);
+}
+
+@media only screen and (max-width: 500px) {
+  .item-table td {
+    max-width: none;
+  }
+}
+
+.table caption {
+  font-size: 1.3rem;
+  color: var(--font-sec-color);
+}
+
+.no-effect {
+  opacity: .6;
+}
+
+.center {
+  text-align: center !important;
+}
+
+.no-center {
+  text-align: left !important;
+}

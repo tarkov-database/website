@@ -1,0 +1,127 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Type</th>
+              <td>
+                <a class="underline" title="Show all armor with the same type" href="/item/firearm?type={{ .Item.Type }}">
+                  {{ .Item.Type | toTitle }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Class</th>
+              <td>
+                <a class="underline" title="Show all weapons with the same class" href="/item/firearm?class={{ .Item.Class }}">
+                  {{ if eq .Item.Class "pistol" }}Pistol
+                  {{ else if eq .Item.Class "sniperRifle" }}Sniper Rifle
+                  {{ else if eq .Item.Class "assaultRifle" }}Assault Rifle
+                  {{ else if eq .Item.Class "assaultCarbine" }}Assault Carbine
+                  {{ else if eq .Item.Class "marksmanRifle" }}Marksman Rifle
+                  {{ else if eq .Item.Class "machinegun" }}Machine Gun
+                  {{ else if eq .Item.Class "shotgun" }}Shotgun
+                  {{ else if eq .Item.Class "smg" }}SMG{{ end }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Caliber</th>
+              <td>
+                <a class="underline" title="Show all firearms with caliber '{{ .Item.Caliber }}'" href="/item/firearm?caliber={{ .Item.Caliber }}">{{ .Item.Caliber }}</a>
+              </td>
+            </tr>
+            <tr>
+              <th>Action</th>
+              <td>
+                {{ if eq .Item.Action "bolt" }}Bolt
+                {{ else if eq .Item.Action "pump" }}Pump
+                {{ else if eq .Item.Action "break" }}Break
+                {{ else if eq .Item.Action "lever" }}Lever
+                {{ else if eq .Item.Action "single" }}Single
+                {{ else if eq .Item.Action "double" }}Double
+                {{ else if eq .Item.Action "recoil" }}Recoil
+                {{ else if eq .Item.Action "gas" }}Gas{{ end }}
+              </td>
+            </tr>
+            <tr>
+              <th>Rate Of Fire</th>
+              <td>{{ .Item.RateOfFire }} RPM</td>
+            </tr>
+            <tr>
+              <th>Effective Distance</th>
+              <td>{{ .Item.EffectiveDistance }} m</td>
+            </tr>
+            <tr>
+              <th class="tr-list">Fire Modes</th>
+              <td>
+                {{ range .Item.Modes }}
+                {{ if eq . "single" }}<span title="Single">&#8226; </span>{{ end }}
+                {{ if eq . "burst" }}<span title="Burst">&#8226;&#8226; </span>{{ end }}
+                {{ if eq . "full" }}<span title="Fullauto">&#8226;&#8226;&#8226; </span>{{ end }}
+                {{ end }}
+              </td>
+            </tr>
+          </table>
+
+          <table>
+            <tr>
+              <th>Recoil</th>
+              <td title="Vertical / Horizontal" class="tr-list">
+                &#65372; {{ .Item.RecoilVertical }}<br>
+                &#8213; {{ .Item.RecoilHorizontal }}
+              </td>
+            </tr>
+            <tr>
+              <th>Ergonomics</th>
+              <td>{{ .Item.Ergonomics }}</td>
+            </tr>
+            <tr>
+              <th>Fold-/Retractable</th>
+              <td>{{ if .Item.FoldRectractable }}Yes{{ else }}No{{ end }}</td>
+            </tr>
+          </table>
+{{end}}
+
+{{ define "sub_box" }}
+      <div class="box sub">
+        <ul class="tab-buttons">
+          <li title="Item slots with compatible mods" class="tab-btn active" onclick="openTab(event, 'slots')">Slots</li>
+          <li class="tab-btn" onclick="openTab(event, 'ammo')">Compatible Ammo</li>
+          <li class="tab-btn" onclick="openTab(event, 'magazines')">Compatible Magazines</li>
+        </ul>
+
+        <ul class="tabs">
+
+          <li id="slots" class="tab" style="display:block;">
+            {{ template "mod_slots" . }}
+          </li>
+
+          <li id="ammo" class="tab">
+            <div class="items">
+              <ul>
+                {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 30 }}
+                {{ range $result.Items }}
+                <li>
+                  <a title="{{ .Name }}" class="mod" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a>
+                </li>
+                {{ end }}
+              </ul>
+            </div>
+          </li>
+
+          <li id="magazines" class="tab">
+            <div class="items">
+              <ul>
+                {{ range resolveItemList .Item.Slots.magazine.Filter }}
+                  {{ range . }}
+                  <li>
+                    <a title="{{ .Name }}" class="mod" href="/item/magazine/{{ .ID }}">{{ .ShortName }}</a>
+                  </li>
+                  {{ end }}
+                {{ end }}
+              </ul>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+{{ end }}

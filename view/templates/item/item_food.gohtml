@@ -1,0 +1,36 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Type</th>
+              <td>
+                <a class="underline" title="Show all food with the same type" href="/item/food?type={{ .Item.Type }}">
+                  {{ .Item.Type | toTitle }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th>Resources</th>
+              <td>{{ .Item.Resources }}</td>
+            </tr>
+            <tr>
+              <th>Use Time</th>
+              <td>{{ .Item.UseTime }} sec.</td>
+            </tr>
+          </table>
+
+          <table>
+            <tr>
+              <th>Hydration</th>
+              <td>{{ if gt .Item.Effects.Hydration.Value 0.0 }}+{{ end }}{{ .Item.Effects.Hydration.Value }}</td>
+            </tr>
+            <tr>
+              <th>Energy</th>
+              <td>{{ if gt .Item.Effects.Energy.Value 0.0 }}+{{ end }}{{ .Item.Effects.Energy.Value }}</td>
+            </tr>
+          </table>
+
+          {{ template "effects" . }}
+{{end}}
+
+{{ define "sub_box" }}
+{{ end }}

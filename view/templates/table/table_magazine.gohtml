@@ -1,0 +1,91 @@
+{{ define "table" }}
+      <div class="box table">
+        <div class="table-big">
+          <table class="item-table sort-table">
+            <caption>Table of {{ .Keyword | toTitle }}</caption>
+            <thead>
+              <tr title="Sort by">
+
+                {{ if hasQuery $.URI "sort" "name" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-name" }}">Name</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-name" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "name" }}">Name</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "name" }}">Name</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "caliber" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-caliber" }}">Caliber</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-caliber" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "caliber" }}">Caliber</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "caliber" }}">Caliber</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "capacity" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-capacity" }}">Capacity</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-capacity" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "capacity" }}">Capacity</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "capacity" }}">Capacity</a>
+                </th>
+                {{ end }}
+
+                {{ if hasQuery $.URI "sort" "ergonomics" }}
+                <th class="sorted-by up">
+                  <a href="{{ setQuery $.URI "sort" "-ergonomics" }}">Ergonomics</a>
+                </th>
+                {{ else if hasQuery $.URI "sort" "-ergonomics" }}
+                <th class="sorted-by down">
+                  <a href="{{ setQuery $.URI "sort" "ergonomics" }}">Ergonomics</a>
+                </th>
+                {{ else }}
+                <th>
+                  <a href="{{ setQuery $.URI "sort" "ergonomics" }}">Ergonomics</a>
+                </th>
+                {{ end }}
+
+              </tr>
+            </thead>
+            {{ range .List }}
+            <tr>
+
+              <td>
+                <a title="{{ .Name }}" href="/item/magazine/{{ .ID }}">
+                  {{ .ShortName }}
+                </a>
+              </td>
+
+              <td>
+                <a href="{{ setQuery $.URI "caliber" .Caliber }}">
+                  {{ .Caliber }}
+                </a>
+              </td>
+
+              <td>{{ .Capacity }}</td>
+
+              <td>{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
+
+            </tr>
+            {{ end }}
+          </table>
+        </div>
+      </div>
+{{ end }}

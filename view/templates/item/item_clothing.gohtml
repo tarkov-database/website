@@ -1,0 +1,41 @@
+{{ define "properties" }}
+          <table>
+            <tr>
+              <th>Type</th>
+              <td>
+                <a class="underline" title="Show all clothing with the same type" href="/item/clothing?type={{ .Item.Type }}">
+                  {{ if eq .Item.Type "faceCover" }}Face Cover
+                  {{ else }}{{ .Item.Type | toTitle }}{{ end }}
+                </a>
+              </td>
+            </tr>
+            {{ if .Item.Blocking }}
+            <tr>
+              <th class="tr-list">Blocking</th>
+              <td>
+                {{ range .Item.Blocking }}
+                {{ . }}<br>
+                {{ end }}
+              </td>
+              {{ end }}
+          </table>
+
+
+          {{ template "penalties" . }}
+{{end}}
+
+{{ define "sub_box" }}
+      <div class="box sub">
+        <ul class="tab-buttons">
+          {{ if .Item.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" onclick="openTab(event, 'slots')">Slots</li>{{ end }}
+        </ul>
+
+        <ul class="tabs">
+
+          <li id="slots" class="tab" style="display:block;">
+            {{ template "mod_slots" . }}
+          </li>
+
+        </ul>
+      </div>
+{{ end }}
