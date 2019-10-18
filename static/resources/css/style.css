@@ -508,3 +508,8 @@ footer .version {
   color: var(--font-sec-color);
   opacity: .2;
 }
+
+footer .version a {
+  color: var(--font-sec-color);
+  border-bottom: .05rem solid var(--font-sec-color);
+}
