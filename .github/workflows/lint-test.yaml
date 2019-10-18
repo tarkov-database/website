@@ -1,0 +1,29 @@
+name: Lint & Test
+on:
+  push:
+    paths:
+      - '*.go'
+      - '*/*.go'
+      - '*/*/*.go'
+      - '*/*/*/*.go'
+      - 'go.mod'
+      - 'go.sum'
+      - 'revive.toml'
+      - '.github/workflows/lint-test.yaml'
+
+jobs:
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: Run Revive Action
+      uses: docker://morphy/revive-action:v1
+      with:
+        config: revive.toml
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
