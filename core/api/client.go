@@ -49,10 +49,12 @@ func request(ctx context.Context, method, path string, body io.Reader) (*http.Re
 
 	res, err := client.Do(req.WithContext(ctx))
 	if err != nil {
-		if strings.HasSuffix(err.Error(), "connection refused") {
-			err = ErrUnreachable
+		switch {
+		case strings.HasSuffix(err.Error(), context.DeadlineExceeded.Error()), strings.HasSuffix(err.Error(), "connection refused"):
+			return res, ErrUnreachable
+		default:
+			return res, err
 		}
-		return &http.Response{}, err
 	}
 
 	return res, nil
