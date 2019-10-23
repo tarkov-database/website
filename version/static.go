@@ -5,71 +5,71 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
-
-	"golang.org/x/crypto/blake2b"
+	"sync"
 
 	"github.com/google/logger"
+	"golang.org/x/crypto/blake2b"
 )
 
-const rootDir = "./static/resources/"
+const rootDir = "./static"
 
-type FileSums = map[string]string
+type FileSums map[string]string
 
-var StaticSums = FileSums{}
+var StaticSums FileSums
 
 func init() {
-	index, err := ioutil.ReadDir(rootDir)
-	if err != nil {
-		logger.Fatal(err)
-	}
+	ch := make(chan File, 1)
+	wg := &sync.WaitGroup{}
 
-	ch := make(chan FileSums)
-	for _, e := range index {
-		path := fmt.Sprintf("%s%s", rootDir, e.Name())
-		if e.IsDir() {
-			go hashFiles(path, ch)
-		} else {
-			StaticSums[e.Name()] = hashFile(path)
-		}
-	}
+	wg.Add(1)
+	go hashFiles(rootDir, ch, wg)
 
-	i := 0
+	go func() {
+		wg.Wait()
+		close(ch)
+	}()
+
+	StaticSums = make(FileSums)
+	prefix := rootDir + "/"
 	for m := range ch {
-		for k, v := range m {
-			k = strings.TrimPrefix(k, rootDir)
-			StaticSums[k] = v
-		}
-
-		i++
-		if i == len(index)-1 {
-			close(ch)
-		}
+		k := strings.TrimPrefix(m.Path, prefix)
+		StaticSums[k] = m.Sum
 	}
 }
 
-func hashFile(p string) string {
+type File struct {
+	Path, Sum string
+}
+
+func hashFile(p string, ch chan File, wg *sync.WaitGroup) {
 	d, err := ioutil.ReadFile(p)
 	if err != nil {
 		logger.Fatal(err)
 	}
+
 	sum := blake2b.Sum256(d)
 
-	return hex.EncodeToString(sum[:])
+	ch <- File{p, hex.EncodeToString(sum[:])}
+
+	wg.Done()
 }
 
-func hashFiles(p string, ch chan FileSums) {
-	files, err := ioutil.ReadDir(p)
+func hashFiles(p string, ch chan File, wg *sync.WaitGroup) {
+	index, err := ioutil.ReadDir(p)
 	if err != nil {
 		logger.Fatal(err)
 	}
 
-	hashes := map[string]string{}
-	for _, file := range files {
-		if !file.IsDir() {
-			filePath := fmt.Sprintf("%s/%s", p, file.Name())
-			hashes[filePath] = hashFile(filePath)
+	wg.Add(len(index))
+
+	for _, e := range index {
+		path := fmt.Sprintf("%s/%s", p, e.Name())
+		if e.IsDir() {
+			go hashFiles(path, ch, wg)
+		} else {
+			go hashFile(path, ch, wg)
 		}
 	}
 
-	ch <- hashes
+	wg.Done()
 }

@@ -32,7 +32,7 @@ func init() {
 		"setQuery":         setQuery,
 		"hasQuery":         hasQuery,
 		"decimalToPercent": decimalToPercent,
-		"staticHashShort":  staticHashShort,
+		"appendStaticHash": appendStaticHash,
 		"categoryToName":   item.CategoryToDisplayName,
 		"kindToCategory":   item.KindToCategory,
 

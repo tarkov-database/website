@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"net/url"
+	"strings"
 	"sync"
 	"time"
 
@@ -28,12 +29,12 @@ func multiplyFloat(a, b float64) float64 {
 	return a * b
 }
 
-func staticHashShort(p string) (h string) {
-	if sum, ok := version.StaticSums[p]; ok {
-		h = sum[:8]
+func appendStaticHash(p string) string {
+	if sum, ok := version.StaticSums[strings.TrimPrefix(p, "/")]; ok {
+		p += fmt.Sprintf("?v=%s", sum[:8])
 	}
 
-	return
+	return p
 }
 
 func formatTime(format string, t time.Time) string {
