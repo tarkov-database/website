@@ -18,10 +18,15 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Build image
-        run: docker build -t docker.pkg.github.com/tarkov-database/website/website:${GITHUB_SHA} .
+        env:
+          IMAGE_NAME: website
+          IMAGE_TAG: ${{ github.sha }}
+        run: docker build -t docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG} .
 
       - name: Publish image
-        run: docker push docker.pkg.github.com/tarkov-database/website/website
+        env:
+          IMAGE_NAME: website
+        run: docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}
 
       - name: Logout
         run: docker logout docker.pkg.github.com
@@ -41,4 +46,17 @@ jobs:
           echo $KUBE_CONFIG | base64 -d > $KUBECONFIG
 
       - name: Deploy image
-        run: kubectl set image deployment/frontend website=docker.pkg.github.com/tarkov-database/website/website:${GITHUB_SHA}
+        env:
+          DEPLOYMENT: frontend
+          CONTAINER: website
+          IMAGE_NAME: website
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
+          kubectl rollout status deployment/${DEPLOYMENT} -w --timeout=3m
+
+      - name: Roll back
+        if: failure()
+        env:
+          DEPLOYMENT: frontend
+        run: kubectl rollout undo deployment/${DEPLOYMENT}
