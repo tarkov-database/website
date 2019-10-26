@@ -6,15 +6,18 @@ on:
       - '*/*.go'
       - '*/*/*.go'
       - '*/*/*/*.go'
+      - 'static/resources/js/*.js'
       - 'go.mod'
       - 'go.sum'
       - 'revive.toml'
+      - '.eslintrc.json'
+      - '.eslintignore'
       - '.github/workflows/lint-test.yaml'
 
 jobs:
 
-  lint:
-    name: Lint
+  go-lint:
+    name: Go Lint
     runs-on: ubuntu-latest
     steps:
 
@@ -27,3 +30,17 @@ jobs:
         config: revive.toml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  js-lint:
+    name: JS Lint
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: Install ESLint
+      run: npm i -g eslint@6
+
+    - name: Run ESLint
+      run: eslint static/resources/js
