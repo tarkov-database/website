@@ -38,9 +38,9 @@ const loadImage = async () => {
       const boxHeight = image.offsetHeight;
 
       if (imgHeight > boxHeight || imgWidth > boxWidth) image.style.backgroundSize = 'contain';
-    };
 
-    image.style.backgroundImage = `url("${objectURL}")`;
+      image.style.backgroundImage = `url("${objectURL}")`;
+    };
   } catch (err) {
     if (err.message === '404') {
       console.warn('Image can not be found');
@@ -184,7 +184,7 @@ const initSearchSocket = async() => {
     if (!socket || socket.readyState > 1) {
       if (noReconnect) return Promise.reject(errErrorClosure);
       try {
-        socket = await openSocket(onMessage);
+        socket = await openSocket(onMessage); // eslint-disable-line require-atomic-updates
       } catch (err) {
         return Promise.reject(err);
       }

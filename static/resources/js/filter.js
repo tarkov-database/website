@@ -89,7 +89,7 @@ const initFilters = () => {
   }
 
   for (const prop in filters) {
-    if (filters.hasOwnProperty(prop)) {
+    if (filters.prototype.hasOwnProperty.call(prop)) {
       const arr = filters[prop].sort();
       filters[prop] = {};
 
@@ -104,7 +104,7 @@ const initFilters = () => {
   const filterNode = document.getElementById('filters');
 
   for (const prop in filters) {
-    if (!filters.hasOwnProperty(prop) || Object.keys(filters[prop]).length < 2) continue;
+    if (!filters.prototype.hasOwnProperty.call(prop) || Object.keys(filters[prop]).length < 2) continue;
     const el = document.createElement('li');
     const sel = document.createElement('select');
     sel.name = prop;
@@ -141,7 +141,7 @@ const initFilters = () => {
 
   const hash = Object.entries(hashToObject());
   for (const [k, v] of hash) {
-    if (!filterStatus.hasOwnProperty(k)) continue;
+    if (!filters.prototype.hasOwnProperty.call(k)) continue;
     filterStatus[k] = v;
     document.querySelector(`#filters > li select[name="${k}"]`).value = v;
   }
