@@ -131,8 +131,10 @@ func resolveSlots(slots item.Slots) resolvedSlots {
 				return
 			case "barrel":
 				n = "Barrel"
-			case "muzzle":
+			case "muzzle", "muzzle_00":
 				n = "Muzzle"
+			case "muzzle_01":
+				n = "Muzzle 2"
 			case "receiver":
 				n = "Receiver"
 			case "gasBlock":
