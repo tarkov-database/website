@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -126,15 +127,15 @@ func resolveSlots(slots item.Slots) resolvedSlots {
 		go func(n string, s item.Slot) {
 			defer wg.Done()
 
-			switch n {
+			p := strings.SplitN(n, "_", 2)
+
+			switch t := p[0]; t {
 			case "magazine":
 				return
 			case "barrel":
 				n = "Barrel"
-			case "muzzle", "muzzle_00":
+			case "muzzle":
 				n = "Muzzle"
-			case "muzzle_01":
-				n = "Muzzle 2"
 			case "receiver":
 				n = "Receiver"
 			case "gasBlock":
@@ -151,52 +152,36 @@ func resolveSlots(slots item.Slots) resolvedSlots {
 				n = "Bipod"
 			case "launcher":
 				n = "Launcher"
-			case "equipment_00":
-				n = "Equipment 1"
-			case "equipment_01":
-				n = "Equipment 2"
-			case "equipment_02":
-				n = "Equipment 3"
-			case "tactical_00":
-				n = "Tactical 1"
-			case "tactical_01":
-				n = "Tactical 2"
-			case "tactical_02":
-				n = "Tactical 3"
-			case "tactical_03":
-				n = "Tactical 4"
-			case "mount_00":
-				n = "Mount 1"
-			case "mount_01":
-				n = "Mount 2"
-			case "mount_02":
-				n = "Mount 3"
-			case "mount_03":
-				n = "Mount 4"
-			case "mount_04":
-				n = "Mount 5"
-			case "mount_05":
-				n = "Mount 6"
+			case "equipment":
+				n = "Equipment"
+			case "tactical":
+				n = "Tactical"
+			case "mount":
+				n = "Mount"
 			case "flashlight":
 				n = "Flashlight"
 			case "foregrip":
 				n = "Foregrip"
 			case "nvg":
 				n = "Night Vision"
-			case "scope_00":
-				n = "Scope 1"
-			case "scope_01":
-				n = "Scope 2"
-			case "scope_02":
-				n = "Scope 3"
-			case "scope_03":
-				n = "Scope 4"
+			case "scope":
+				n = "Scope"
 			case "sightFront":
 				n = "Front Sight"
 			case "sightRear":
 				n = "Rear Sight"
 			default:
-				logger.Warningf("Unknown slot name \"%s\"", n)
+				logger.Warningf("Unknown slot name \"%s\"", t)
+			}
+
+			if len(p) > 1 {
+				if i, err := strconv.ParseInt(p[1], 10, 64); err == nil {
+					if i != 0 {
+						n += fmt.Sprintf(" %v", i+1)
+					}
+				} else {
+					logger.Error(err)
+				}
 			}
 
 			res := item.GetItemList(s.Filter)
