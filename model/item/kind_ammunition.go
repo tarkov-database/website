@@ -41,6 +41,6 @@ func (r *AmmunitionResult) GetEntities() []Entity {
 
 type AmmoFrag struct {
 	Chance float64 `json:"chance" bson:"chance"`
-	Min    int64 `json:"min" bson:"min"`
-	Max    int64 `json:"max" bson:"max"`
+	Min    int64   `json:"min" bson:"min"`
+	Max    int64   `json:"max" bson:"max"`
 }
