@@ -141,7 +141,7 @@ const initFilters = () => {
 
   const hash = Object.entries(hashToObject());
   for (const [k, v] of hash) {
-    if (!filters.prototype.hasOwnProperty.call(k)) continue;
+    if (!filters.hasOwnProperty(k)) continue; // eslint-disable-line no-prototype-builtins
     filterStatus[k] = v;
     document.querySelector(`#filters > li select[name="${k}"]`).value = v;
   }
