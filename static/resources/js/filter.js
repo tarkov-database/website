@@ -89,7 +89,7 @@ const initFilters = () => {
   }
 
   for (const prop in filters) {
-    if (filters.prototype.hasOwnProperty.call(prop)) {
+    if (filters.hasOwnProperty(prop)) { // eslint-disable-line no-prototype-builtins
       const arr = filters[prop].sort();
       filters[prop] = {};
 
@@ -104,7 +104,7 @@ const initFilters = () => {
   const filterNode = document.getElementById('filters');
 
   for (const prop in filters) {
-    if (!filters.prototype.hasOwnProperty.call(prop) || Object.keys(filters[prop]).length < 2) continue;
+    if (!filters.hasOwnProperty(prop) || Object.keys(filters[prop]).length < 2) continue; // eslint-disable-line no-prototype-builtins
     const el = document.createElement('li');
     const sel = document.createElement('select');
     sel.name = prop;
