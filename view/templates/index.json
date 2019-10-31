@@ -1,0 +1,199 @@
+{
+  "index": [
+    "/index/index.gohtml",
+    "/index/base.gohtml",
+		"/index/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "status_404": [
+    "/status/404.gohtml",
+    "/status/base.gohtml",
+    "/status/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "status_500": [
+    "/status/500.gohtml",
+    "/status/base.gohtml",
+    "/status/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "status_503": [
+    "/status/503.gohtml",
+    "/status/base.gohtml",
+    "/status/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "about": [
+    "/about/about.gohtml",
+    "/about/base.gohtml",
+    "/about/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "projects": [
+    "/projects/projects.gohtml",
+    "/projects/base.gohtml",
+    "/projects/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "list": [
+    "/list/list.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_generic": [
+    "/table/table_generic.gohtml",
+    "/table/base.gohtml",
+    "/table/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_ammunition": [
+    "/table/table_ammunition.gohtml",
+    "/table/base.gohtml",
+    "/table/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_armor": [
+    "/table/table_armor.gohtml",
+    "/table/base.gohtml",
+    "/table/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_magazine": [
+    "/table/table_magazine.gohtml",
+    "/table/base.gohtml",
+    "/table/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_common": [
+    "/item/item.gohtml",
+    "/item/item_common.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_ammunition": [
+    "/item/item.gohtml",
+    "/item/item_ammunition.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_firearm": [
+    "/item/item.gohtml",
+    "/item/item_firearm.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_melee": [
+    "/item/item.gohtml",
+    "/item/item_melee.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_magazine": [
+    "/item/item.gohtml",
+    "/item/item_magazine.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_modification": [
+    "/item/item.gohtml",
+    "/item/item_modification.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_grenade": [
+    "/item/item.gohtml",
+    "/item/item_grenade.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_armor": [
+    "/item/item.gohtml",
+    "/item/item_armor.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_backpack": [
+    "/item/item.gohtml",
+    "/item/item_backpack.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_clothing": [
+    "/item/item.gohtml",
+    "/item/item_clothing.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_tacticalrig": [
+    "/item/item.gohtml",
+    "/item/item_tacticalrig.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_medical": [
+    "/item/item.gohtml",
+    "/item/item_medical.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_food": [
+    "/item/item.gohtml",
+    "/item/item_food.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_container": [
+    "/item/item.gohtml",
+    "/item/item_container.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "item_headphone": [
+    "/item/item.gohtml",
+    "/item/item_headphone.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ]
+}
