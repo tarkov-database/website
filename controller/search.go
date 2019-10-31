@@ -59,14 +59,14 @@ func SearchWS(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
-	connections.Lock()
+	connections.RLock()
 	if connections.RemoteConnections[remoteAddr] >= maxConnsRemote {
-		connections.Unlock()
+		connections.RUnlock()
 		http.Error(w, "Limit of simultaneous connections per remote address exceeded", http.StatusTooManyRequests)
 		logger.Errorf("Simultaneous connections exceeded. Remote: %s", remoteAddr)
 		return
 	}
-	connections.Unlock()
+	connections.RUnlock()
 
 	c, err := socketUpgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -106,7 +106,7 @@ type socket struct {
 }
 
 type socketConnections struct {
-	sync.Mutex
+	sync.RWMutex
 	RemoteConnections map[string]uint
 }
 
