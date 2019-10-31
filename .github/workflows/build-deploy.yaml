@@ -51,9 +51,13 @@ jobs:
           CONTAINER: website
           IMAGE_NAME: website
           IMAGE_TAG: ${{ github.sha }}
-        run: |
-          kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
-          kubectl rollout status deployment/${DEPLOYMENT} -w --timeout=3m
+        run: kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
+
+      - name: Check rollout
+        if: success()
+        env:
+          DEPLOYMENT: frontend
+        run: kubectl rollout status deployment/${DEPLOYMENT} -w --timeout=5m
 
       - name: Roll back
         if: failure()
