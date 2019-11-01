@@ -43,7 +43,7 @@ jobs:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
           KUBE_CONFIG_STAGING: ${{ secrets.KUBE_CONFIG_STAGING }}
         run: |
-          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g")
           if [ "$BRANCH" == "staging" ]; then KUBE_CONFIG=$KUBE_CONFIG_STAGING; fi
           mkdir -p ${HOME}/.kube
           export KUBECONFIG=${HOME}/.kube/config
@@ -51,7 +51,7 @@ jobs:
 
       - name: Deploy image
         env:
-          DEPLOYMENT: frontend
+          DEPLOYMENT: website
           CONTAINER: website
           IMAGE_NAME: website
           IMAGE_TAG: ${{ github.sha }}
@@ -60,11 +60,11 @@ jobs:
       - name: Check rollout
         if: success()
         env:
-          DEPLOYMENT: frontend
+          DEPLOYMENT: website
         run: kubectl rollout status deployment/${DEPLOYMENT} -w --timeout=5m
 
       - name: Roll back
         if: failure()
         env:
-          DEPLOYMENT: frontend
+          DEPLOYMENT: website
         run: kubectl rollout undo deployment/${DEPLOYMENT}
