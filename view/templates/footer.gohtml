@@ -5,7 +5,7 @@
 
       <div class="version">
         <p>
-          <a title="Commit hash" href="https://github.com/tarkov-database/website/commit/{{ .App.CommitLong }}" target="_blank" rel="noopener">{{ .App.CommitShort }}</a> 
+          <a title="Commit hash" href="https://github.com/tarkov-database/website/commit/{{ .App.CommitLong }}" target="_blank" rel="noopener">{{ .App.CommitShort }}</a> {{ if ne .App.BranchName "master" }}{{ .App.BranchName }}{{ end }}
           <time title="Build date" datetime="{{ formatTime "RFC3339" .App.BuildDate }}">({{ formatTime "02 Jan 2006" .App.BuildDate }})</time>
         </p>
       </div>
