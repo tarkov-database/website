@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - staging
 
 jobs:
 
@@ -40,7 +41,10 @@ jobs:
       - name: Set up config
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONFIG_STAGING: ${{ secrets.KUBE_CONFIG_STAGING }}
         run: |
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          if [ "$BRANCH" == "staging" ]; then KUBE_CONFIG=$KUBE_CONFIG_STAGING; fi
           mkdir -p ${HOME}/.kube
           export KUBECONFIG=${HOME}/.kube/config
           echo $KUBE_CONFIG | base64 -d > $KUBECONFIG
