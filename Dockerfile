@@ -1,5 +1,9 @@
 FROM golang:1.13
 
+ARG BRANCH=""
+
+ENV BRANCH=${BRANCH}
+
 EXPOSE 8080
 
 WORKDIR /tmp/github.com/tarkov-database/website

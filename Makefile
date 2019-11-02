@@ -1,7 +1,7 @@
 OUT := frontendserver
 
 BUILD_DATE := $(shell date +%s)
-BRANCH_NAME := $(shell git rev-parse --abbrev-ref HEAD)
+BRANCH_NAME := $(shell if [ -z "${BRANCH}" ]; then git rev-parse --abbrev-ref HEAD; else echo "${BRANCH}"; fi)
 COMMIT_LONG := $(shell git rev-parse HEAD)
 COMMIT_SHORT := $(shell git rev-parse --short HEAD)
 COMMIT_DATE := $(shell git show -s --format="%ct")
