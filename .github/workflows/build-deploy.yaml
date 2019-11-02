@@ -22,7 +22,9 @@ jobs:
         env:
           IMAGE_NAME: website
           IMAGE_TAG: ${{ github.sha }}
-        run: docker build -t docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG} .
+        run: |
+          BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g")
+          docker build --build-arg BRANCH=$BRANCH -t docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG} .
 
       - name: Publish image
         env:
