@@ -11,7 +11,8 @@ import (
 )
 
 func main() {
-	fmt.Printf("Starting up Tarkov Database Frontend (Commit: %s Build Date: %s)\n\n", version.App.CommitShort, version.App.BuildDate)
+	fmt.Printf("Starting up Tarkov Database Frontend (Commit: %s-%s Build Date: %s)\n\n",
+		version.App.CommitShort, version.App.BranchName, version.App.BuildDate)
 
 	defLog := logger.Init("default", true, false, ioutil.Discard)
 	defer defLog.Close()
