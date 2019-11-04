@@ -21,7 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Check out code into the Go module directory
+    - name: Set up Go
+      uses: actions/setup-go@v1
+      with:
+        go-version: '1.13'
+
+    - name: Check out
       uses: actions/checkout@v1
 
     - name: Run Revive Action
@@ -31,12 +36,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Check formatting
+      uses: test -z $(gofmt -l .) || (gofmt -l . && exit 1)
+
   js-lint:
     name: JS Lint
     runs-on: ubuntu-latest
     steps:
 
-    - name: Check out code into the Go module directory
+    - name: Check out
       uses: actions/checkout@v1
 
     - name: Install Node
