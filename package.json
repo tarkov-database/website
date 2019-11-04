@@ -1,0 +1,25 @@
+{
+  "name": "tarkov-database-website",
+  "version": "0.1.0",
+  "description": "The website, the main frontend of Tarkov Database",
+  "scripts": {
+    "lint": "eslint . static/resources/js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-js": "cp node_modules/chart.js/dist/Chart.min.js static/resources/js/Chart.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarkov-database/website.git"
+  },
+  "author": "Markus Wiegand <mail@morphy2k.dev>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tarkov-database/website/issues"
+  },
+  "homepage": "https://github.com/tarkov-database/website#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "chart.js": "^2.9.2",
+    "eslint": "^6.6.0"
+  }
+}
