@@ -12,6 +12,8 @@ on:
       - 'revive.toml'
       - '.eslintrc.json'
       - '.eslintignore'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/lint-test.yaml'
 
 jobs:
@@ -47,13 +49,13 @@ jobs:
     - name: Check out
       uses: actions/checkout@v1
 
-    - name: Install Node
+    - name: Set up Node
       uses: actions/setup-node@v1
       with:
         node-version: 12
 
-    - name: Install ESLint
-      run: npm i eslint@6
+    - name: Install packages
+      run: npm i
 
-    - name: Run ESLint
-      run: ./node_modules/.bin/eslint static/resources/js
+    - name: Run linter
+      run: npm run lint
