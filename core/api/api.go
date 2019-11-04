@@ -11,9 +11,10 @@ import (
 )
 
 var (
-	ErrUnreachable    = errors.New("api: server unreachable")
-	ErrAuthentication = errors.New("api: authentication failed")
-	ErrParsing        = errors.New("api: parsing error")
+	ErrUnreachable      = errors.New("api: server unreachable")
+	ErrAuthentication   = errors.New("api: authentication failed")
+	ErrWrongContentType = errors.New("api: wrong content type")
+	ErrParsing          = errors.New("api: parsing error")
 )
 
 type response struct {

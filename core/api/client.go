@@ -57,14 +57,16 @@ func request(ctx context.Context, method, path string, body io.Reader) (*http.Re
 		}
 	}
 
+	if res.Header.Get("Content-Type") != contentTypeJSON {
+		return res, ErrWrongContentType
+	}
+
 	return res, nil
 }
 
 func decodeBody(body io.ReadCloser, target interface{}) error {
-	err := json.NewDecoder(body).Decode(target)
-	body.Close()
-
-	return err
+	defer body.Close()
+	return json.NewDecoder(body).Decode(target)
 }
 
 func encodeBody(w io.Writer, source interface{}) error {
