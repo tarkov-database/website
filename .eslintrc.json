@@ -24,10 +24,7 @@
     ],
     "quotes": [
       "error",
-      "single",
-      {
-        "allowTemplateLiterals": true
-      }
+      "single"
     ],
     "semi": [
       "error",
@@ -36,7 +33,6 @@
     "semi-style": [
       "error",
       "last"
-    ],
-    "no-console": 0
+    ]
   }
 }
