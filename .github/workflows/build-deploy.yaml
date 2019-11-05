@@ -25,7 +25,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           BRANCH=${GITHUB_REF#refs/heads/}
-          if ! [ "$BRANCH" == "master" ]; then IMAGE_TAG="$IMAGE_TAG-$BRANCH; fi
+          if ! [ "$BRANCH" == "master" ]; then IMAGE_TAG="$IMAGE_TAG-$BRANCH"; fi
           docker build --build-arg BRANCH=$BRANCH -t docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG} .
 
       - name: Publish image
@@ -59,7 +59,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           BRANCH=${GITHUB_REF#refs/heads/}
-          if ! [ "$BRANCH" == "master" ]; then IMAGE_TAG="$IMAGE_TAG-$BRANCH; fi
+          if ! [ "$BRANCH" == "master" ]; then IMAGE_TAG="$IMAGE_TAG-$BRANCH"; fi
           kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
 
       - name: Check rollout
