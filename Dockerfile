@@ -1,5 +1,9 @@
 FROM golang:1.13.4
 
+LABEL homepage="https://tarkov-database.com"
+LABEL repository="https://github.com/tarkov-database/website"
+LABEL maintainer="Markus Wiegand <mail@morphy2k.dev>"
+
 ARG BRANCH=""
 
 ENV BRANCH=${BRANCH}
