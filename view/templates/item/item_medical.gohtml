@@ -22,6 +22,17 @@
             </tr>
           </table>
 
+          <table>
+            <tr>
+              <th>Hydration</th>
+              <td>{{ if gt .Item.Effects.Hydration.Value 0.0 }}+{{ end }}{{ .Item.Effects.Hydration.Value }}</td>
+            </tr>
+            <tr>
+              <th>Energy</th>
+              <td>{{ if gt .Item.Effects.Energy.Value 0.0 }}+{{ end }}{{ .Item.Effects.Energy.Value }}</td>
+            </tr>
+          </table>
+
           {{ template "effects" . }}
 {{end}}
 
