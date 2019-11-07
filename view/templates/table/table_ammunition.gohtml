@@ -111,7 +111,7 @@
 
               <td>{{ .Penetration }}</td>
 
-              <td>{{ .ArmorDamage }}</td>
+              <td>{{ .ArmorDamage }} %</td>
 
               <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
 
@@ -145,6 +145,6 @@
           </ul>
         </nav>
         {{ end }}
-        
+
       </div>
 {{ end }}
