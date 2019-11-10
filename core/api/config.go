@@ -29,8 +29,6 @@ func init() {
 	}
 
 	if cfg.TLS {
-		os.Setenv("GODEBUG", os.Getenv("GODEBUG")+",tls13=1")
-
 		clientCert, rootCAs, err := cfg.GetTLSCertificate()
 		if err != nil {
 			log.Printf("Error: %s", err)
