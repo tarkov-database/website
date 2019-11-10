@@ -139,7 +139,9 @@ func (s *socket) read(remote string) {
 	defer func() {
 		close(s.Close)
 		close(s.Send)
-		s.Conn.Close()
+		if err := s.Conn.Close(); err != nil {
+			logger.Errorf("Error while closing socket: %s", err)
+		}
 
 		time.Sleep(10 * time.Second)
 
@@ -174,27 +176,32 @@ func (s *socket) read(remote string) {
 	}()
 
 	for {
-		s.Conn.SetReadDeadline(time.Now().Add(socketReadDeadline))
+		if err := s.Conn.SetReadDeadline(time.Now().Add(socketReadDeadline)); err != nil {
+			logger.Errorf("Deadline could not be set: %s", err)
+		}
 
 		if atomic.LoadUint64(&requests) >= s.MaxRequests {
 			msg := websocket.FormatCloseMessage(websocket.ClosePolicyViolation, "Rate limit exceeded")
-			s.Conn.WriteMessage(websocket.CloseMessage, msg)
+			if err := s.Conn.WriteMessage(websocket.CloseMessage, msg); err != nil {
+				logger.Errorf("Close message could not be sent: %s", err)
+			}
 			break
 		}
 
 		atomic.AddUint64(&requests, 1)
 
 		req := &socketRequest{}
-		err := s.Conn.ReadJSON(req)
-		if err != nil {
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseNormalClosure) {
+		if err := s.Conn.ReadJSON(req); err != nil {
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseNormalClosure, websocket.CloseServiceRestart) {
 				logger.Error(err)
 				break
 			}
 			if strings.HasPrefix(err.Error(), "invalid character") {
-				logger.Errorf("Invalid data over socket: %s", err)
+				logger.Errorf("Invalid data over socket: %v", err)
 				msg := websocket.FormatCloseMessage(websocket.CloseUnsupportedData, "Invalid data")
-				s.Conn.WriteMessage(websocket.CloseMessage, msg)
+				if err := s.Conn.WriteMessage(websocket.CloseMessage, msg); err != nil {
+					logger.Errorf("Close message could not be sent: %s", err)
+				}
 			}
 			break
 		}
@@ -227,7 +234,9 @@ func (s *socket) read(remote string) {
 				default:
 					msg = websocket.FormatCloseMessage(websocket.CloseInternalServerErr, "Internal server error")
 				}
-				s.Conn.WriteMessage(websocket.CloseMessage, msg)
+				if err := s.Conn.WriteMessage(websocket.CloseMessage, msg); err != nil {
+					logger.Errorf("Close message could not be sent: %s", err)
+				}
 
 				return
 			}
@@ -269,7 +278,9 @@ func (s *socket) write() {
 				return
 			}
 
-			s.Conn.SetWriteDeadline(time.Now().Add(socketWriteDeadline))
+			if err := s.Conn.SetWriteDeadline(time.Now().Add(socketWriteDeadline)); err != nil {
+				logger.Errorf("Deadline could not be set: %s", err)
+			}
 
 			if err := s.Conn.WriteJSON(res); err != nil {
 				logger.Error(err)
