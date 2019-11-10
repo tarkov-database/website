@@ -89,9 +89,16 @@ func SearchWS(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	go func() {
 		sig := make(chan os.Signal, 1)
 		signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
-		<-sig
-		msg := websocket.FormatCloseMessage(websocket.CloseServiceRestart, "Server shutdown")
-		socket.Conn.WriteMessage(websocket.CloseMessage, msg)
+
+		select {
+		case <-socket.Close:
+			return
+		case <-sig:
+			msg := websocket.FormatCloseMessage(websocket.CloseServiceRestart, "Server shutdown")
+			if err := socket.Conn.WriteMessage(websocket.CloseMessage, msg); err != nil {
+				logger.Errorf("Close message could not be sent: %s", err)
+			}
+		}
 	}()
 
 	go socket.read(remoteAddr)
