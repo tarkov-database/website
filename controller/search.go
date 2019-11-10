@@ -32,7 +32,7 @@ func SearchGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 }
 
 const (
-	maxConnsRemote = 5
+	maxRemoteConns = 5
 
 	socketReadSize  = 128
 	socketWriteSize = 768
@@ -60,13 +60,13 @@ func SearchWS(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 
 	connections.RLock()
-	if connections.RemoteConnections[remoteAddr] >= maxConnsRemote {
-		connections.RUnlock()
+	connsRemote := connections.RemoteConnections[remoteAddr]
+	connections.RUnlock()
+	if connsRemote >= maxRemoteConns {
 		http.Error(w, "Limit of simultaneous connections per remote address exceeded", http.StatusTooManyRequests)
 		logger.Errorf("Simultaneous connections exceeded. Remote: %s", remoteAddr)
 		return
 	}
-	connections.RUnlock()
 
 	c, err := socketUpgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -196,13 +196,16 @@ func (s *socket) read(remote string) {
 				logger.Error(err)
 				break
 			}
+
 			if strings.HasPrefix(err.Error(), "invalid character") {
 				logger.Errorf("Invalid data over socket: %v", err)
+
 				msg := websocket.FormatCloseMessage(websocket.CloseUnsupportedData, "Invalid data")
 				if err := s.Conn.WriteMessage(websocket.CloseMessage, msg); err != nil {
 					logger.Errorf("Close message could not be sent: %s", err)
 				}
 			}
+
 			break
 		}
 
@@ -234,6 +237,7 @@ func (s *socket) read(remote string) {
 				default:
 					msg = websocket.FormatCloseMessage(websocket.CloseInternalServerErr, "Internal server error")
 				}
+
 				if err := s.Conn.WriteMessage(websocket.CloseMessage, msg); err != nil {
 					logger.Errorf("Close message could not be sent: %s", err)
 				}
