@@ -83,7 +83,7 @@ const ammoTypeChart = () => {
   const element = document.querySelector('.chart.ammo');
 
   const intersectionHandler = entries => entries.forEach(entry => {
-    if (entry.intersectionRatio > 0) {
+    if (entry.isIntersecting) {
       new Chart(ctx, options);
       observer.unobserve(element);
     }
