@@ -20,7 +20,11 @@ const loadImage = async () => {
   const image = document.getElementById('image');
   if (image === null) return;
 
-  const staticURL = `//static.${window.location.host}`;
+  const staticURL = function() {
+    const host = window.location.host;
+    const parts = host.split('.');
+    return `//static.${parts.length > 2 ? [parts[parts.length-2], parts[parts.length-1]].join('.'): host}`;
+  }();
   const imageID = image.dataset.id;
   const request = new Request(`${staticURL}/image/icon/1-1/${imageID}.png`);
 
