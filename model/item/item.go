@@ -101,7 +101,7 @@ func GetItemList(items ItemList) map[Kind][]Entity {
 			go func(k Kind, ids string) {
 				defer wg.Done()
 
-				res, err := GetItemsByID(ids, k, &api.Options{})
+				res, err := GetItemsByID(ids, k, &api.Options{Limit: 100})
 				if err != nil {
 					logger.Error(err)
 					return
