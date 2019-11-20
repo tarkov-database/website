@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"time"
 	"syscall"
 
 	"github.com/tarkov-database/website/route"
@@ -30,7 +31,11 @@ func Start() {
 
 		fmt.Println()
 		logger.Info("HTTP server is shutting down...")
-		if err := srv.Shutdown(context.Background()); err != nil {
+
+		ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
+		defer cancel()
+
+		if err := srv.Shutdown(ctx); err != nil {
 			logger.Fatalf("HTTP server Shutdown: %v", err)
 		}
 
