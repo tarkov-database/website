@@ -20,6 +20,6 @@
   "dependencies": {},
   "devDependencies": {
     "chart.js": "^2.9.3",
-    "eslint": "^6.6.0"
+    "eslint": "^6.7.1"
   }
 }
