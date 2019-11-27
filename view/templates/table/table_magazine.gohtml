@@ -74,7 +74,7 @@
               </td>
 
               <td>
-                <a href="{{ setQuery $.URI "caliber" .Caliber }}">
+                <a href="{{ setQuery (setQuery $.URI "p" "1") "caliber" .Caliber }}">
                   {{ .Caliber }}
                 </a>
               </td>
@@ -113,6 +113,6 @@
           </ul>
         </nav>
         {{ end }}
-        
+
       </div>
 {{ end }}

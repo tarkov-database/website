@@ -88,13 +88,13 @@
               </td>
 
               <td>
-                <a href="{{ setQuery $.URI "type" .Type }}">
+                <a href="{{ setQuery (setQuery $.URI "p" "1") "type" .Type }}">
                   {{ .Type | toTitle }}
                 </a>
               </td>
 
               <td>
-                <a href="{{ setQuery $.URI "class" .Armor.Class }}">
+                <a href="{{ setQuery (setQuery $.URI "p" "1") "class" .Armor.Class }}">
                   {{ .Armor.Class }}
                 </a>
               </td>
@@ -133,6 +133,6 @@
           </ul>
         </nav>
         {{ end }}
-        
+
       </div>
 {{ end }}
