@@ -9,6 +9,8 @@
         </div>
         <ul id="list" class="items">
           {{ range .List }}
+
+          {{ if eq $.Type "item" }}
           {{ $cat := kindToCategory .Kind }}
           <li data-category="{{ $cat | categoryToName }}"
               {{ if not $.IsSearch }}
@@ -23,6 +25,19 @@
             </a>
 
           </li>
+          {{ end }}
+
+          {{ if eq $.Type "location" }}
+          <li data-available="{{ .Available }}">
+
+            <a title="{{ .Name }}" href="/location/{{ .ID }}">
+              <div class="icon location">&nbsp;</div>
+              <span>{{ .Name }}</span>
+            </a>
+
+          </li>
+          {{ end }}
+
           {{ else }}
           <div class="list no-results">
             No matches :-(

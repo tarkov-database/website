@@ -453,6 +453,14 @@ header .search {
   background-image: url("../img/money.svg");
 }
 
+.icon.location {
+  background-image: url("../img/location.svg");
+}
+
+.icon.interactive-maps {
+  background-image: url("../img/interactive-maps.svg");
+}
+
 .icon.modification,
 .icon.barrel,
 .icon.bipod,
@@ -489,6 +497,10 @@ header .search {
   margin: 8rem auto 0 auto;
   text-align: center;
   color: var(--font-red-color);
+}
+
+.unavailable {
+  opacity: .5;
 }
 
 footer {

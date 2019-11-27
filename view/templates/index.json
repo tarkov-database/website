@@ -195,5 +195,12 @@
     "/item/head.gohtml",
     "/header.gohtml",
     "/footer.gohtml"
+  ],
+  "location": [
+    "/location/location.gohtml",
+    "/location/base.gohtml",
+    "/location/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
   ]
 }

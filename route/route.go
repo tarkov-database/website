@@ -22,6 +22,10 @@ func routes() *httprouter.Router {
 	r.GET("/item/:category", cntrl.ItemsGET)
 	r.GET("/item/:category/:id", cntrl.ItemGET)
 
+	// Location
+	r.GET("/location", cntrl.LocationsGET)
+	r.GET("/location/:id", cntrl.LocationGET)
+
 	// Search
 	r.GET("/search", cntrl.SearchGET)
 	r.GET("/search/ws", cntrl.SearchWS)

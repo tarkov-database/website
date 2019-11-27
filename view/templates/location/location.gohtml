@@ -1,0 +1,63 @@
+{{ define "content" }}
+      <div class="box main" itemscope itemtype="http://schema.org/ItemPage" itemid="https://{{ .Host }}{{ .Path }}">
+
+        <div class="text">
+          <time class="modified-date" itemprop="dateModified" datetime="{{ formatTime "RFC3339" .Location.Modified.Time }}" title="Modified date in TT.MM.YYYY HH:MM">{{ formatTime "02.01.2006 15:04" .Location.Modified.Time }}</time>
+          <h1 itemprop="name">{{ .Location.Name }}</h1>
+          <p itemprop="description">{{ .Location.Description }}</p>
+        </div>
+
+        <div class="prop">
+          {{ template "exits" . }}
+        </div>
+
+      </div>
+
+      <div class="item-info">
+        <div class="box">
+          <table>
+            <tr>
+              <th>Players</th>
+              <td>{{ .Location.MinimumPlayers }} - {{ .Location.MaximumPlayers }}</td>
+            </tr>
+            <tr>
+              <th>Time to Escape</th>
+              <td>{{ .Location.EscapeTime }} min.</td>
+            </tr>
+            <tr>
+              <th>Insurance</th>
+              <td>{{ if .Location.Insurance }}Yes{{ else }}No{{ end }}</td>
+            </tr>
+            <tr>
+              <th>Available</th>
+              <td>{{ if .Location.Available }}Yes{{ else }}No{{ end }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+{{ end }}
+
+{{ define "exits" }}
+<div class="table-big">
+  <table>
+    <thead>
+      <tr>
+        <th>Exit</th>
+        <th class="center">Availability</th>
+        <th class="center" title="Exfiltration time">Exfil. Time</th>
+        <th class="center">Requirement</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range .Location.Exits }}
+      <tr>
+        <td>{{ .Name }}</td>
+        <td class="center">{{ .Chance }} %</td>
+        <td class="center">{{ .ExfiltrationTime }} sec.</td>
+        <td class="center">{{ if .Requirement }}{{ .Requirement }}{{ else }}?{{ end }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+{{ end }}

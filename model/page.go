@@ -8,9 +8,15 @@ import (
 
 	"github.com/tarkov-database/website/model/api"
 	"github.com/tarkov-database/website/model/item"
+	"github.com/tarkov-database/website/model/location"
 	"github.com/tarkov-database/website/version"
 
 	"github.com/google/logger"
+)
+
+const (
+	entityTypeItem     = "item"
+	entityTypeLocation = "location"
 )
 
 var host string
@@ -74,8 +80,18 @@ func (p *Page) Item(e item.Entity) *ItemPage {
 	return &ItemPage{EntityPage: &EntityPage{p}, Item: e}
 }
 
+type LocationPage struct {
+	*EntityPage
+	Location *location.Location
+}
+
+func (p *Page) Location(loc *location.Location) *LocationPage {
+	return &LocationPage{EntityPage: &EntityPage{p}, Location: loc}
+}
+
 type EntityList struct {
 	*Page
+	Type       string
 	IsSearch   bool
 	Keyword    string
 	TotalCount int64
@@ -157,6 +173,7 @@ type ItemList struct {
 func (p *Page) ItemResult(res item.EntityResult, kw string, search bool) *ItemList {
 	l := &ItemList{
 		EntityList: &EntityList{
+			Type:       entityTypeItem,
 			Page:       p,
 			IsSearch:   search,
 			Keyword:    kw,
@@ -164,6 +181,29 @@ func (p *Page) ItemResult(res item.EntityResult, kw string, search bool) *ItemLi
 			PageCount:  int64(len(res.GetEntities())),
 		},
 		List: res.GetEntities(),
+	}
+
+	l.GetPagination()
+
+	return l
+}
+
+type LocationList struct {
+	*EntityList
+	List []location.Location
+}
+
+func (p *Page) LocationResult(res *location.LocationResult, kw string, search bool) *LocationList {
+	l := &LocationList{
+		EntityList: &EntityList{
+			Type:       entityTypeLocation,
+			Page:       p,
+			IsSearch:   search,
+			Keyword:    kw,
+			TotalCount: res.Count,
+			PageCount:  int64(len(res.Items)),
+		},
+		List: res.Items,
 	}
 
 	l.GetPagination()
