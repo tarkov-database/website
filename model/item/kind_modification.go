@@ -25,6 +25,8 @@ type Modification struct {
 	Item `bson:",inline"`
 
 	Ergonomics    int64        `json:"ergonomics" bson:"ergonomics"`
+	Accuracy      float64      `json:"accuracy" bson:"accuracy"`
+	Recoil        float64      `json:"recoil" bson:"recoil"`
 	RaidModdable  int64        `json:"raidModdable" bson:"raidModdable"`
 	GridModifier  GridModifier `json:"gridModifier" bson:"gridModifier"`
 	Slots         Slots        `json:"slots" bson:"slots"`
@@ -56,9 +58,7 @@ type Barrel struct {
 	Modification `bson:",inline"`
 
 	Length     float64 `json:"length" bson:"length"`
-	Accuracy   float64 `json:"accuracy" bson:"accuracy"`
 	Velocity   float64 `json:"velocity" bson:"velocity"`
-	Recoil     float64 `json:"recoil" bson:"recoil"`
 	Suppressor bool    `json:"suppressor" bson:"suppressor"`
 }
 
@@ -82,8 +82,6 @@ func (r *BarrelResult) GetEntities() []Entity {
 
 type Bipod struct {
 	Modification `bson:",inline"`
-
-	Recoil float64 `json:"recoil" bson:"recoil"`
 }
 
 type BipodResult struct {
@@ -153,8 +151,6 @@ func (r *DeviceResult) GetEntities() []Entity {
 
 type Foregrip struct {
 	Modification `bson:",inline"`
-
-	Recoil float64 `json:"recoil" bson:"recoil"`
 }
 
 type ForegripResult struct {
@@ -199,8 +195,6 @@ func (r *GasBlockResult) GetEntities() []Entity {
 
 type Handguard struct {
 	Modification `bson:",inline"`
-
-	Recoil float64 `json:"recoil" bson:"recoil"`
 }
 
 type HandguardResult struct {
@@ -224,8 +218,7 @@ func (r *HandguardResult) GetEntities() []Entity {
 type Launcher struct {
 	Modification `bson:",inline"`
 
-	Recoil  float64 `json:"recoil" bson:"recoil"`
-	Caliber string  `json:"caliber" bson:"caliber"`
+	Caliber string `json:"caliber" bson:"caliber"`
 }
 
 type LauncherResult struct {
@@ -272,9 +265,7 @@ type Muzzle struct {
 	Modification `bson:",inline"`
 
 	Type     string  `json:"type" bson:"type"`
-	Accuracy float64 `json:"accuracy" bson:"accuracy"`
 	Velocity float64 `json:"velocity" bson:"velocity"`
-	Recoil   float64 `json:"recoil" bson:"recoil"`
 }
 
 type MuzzleResult struct {
@@ -297,8 +288,6 @@ func (r *MuzzleResult) GetEntities() []Entity {
 
 type PistolGrip struct {
 	Modification `bson:",inline"`
-
-	Recoil float64 `json:"recoil" bson:"recoil"`
 }
 
 type PistolGripResult struct {
@@ -322,9 +311,7 @@ func (r *PistolGripResult) GetEntities() []Entity {
 type Receiver struct {
 	Modification `bson:",inline"`
 
-	Accuracy float64 `json:"accuracy" bson:"accuracy"`
 	Velocity float64 `json:"velocity" bson:"velocity"`
-	Recoil   float64 `json:"recoil" bson:"recoil"`
 }
 
 type ReceiverResult struct {
@@ -398,9 +385,7 @@ func (r *SightSpecialResult) GetEntities() []Entity {
 type Stock struct {
 	Modification `bson:",inline"`
 
-	Accuracy         float64 `json:"accuracy" bson:"accuracy"`
-	Recoil           float64 `json:"recoil" bson:"recoil"`
-	FoldRectractable bool    `json:"foldRectractable" bson:"foldRectractable"`
+	FoldRectractable bool `json:"foldRectractable" bson:"foldRectractable"`
 }
 
 type StockResult struct {

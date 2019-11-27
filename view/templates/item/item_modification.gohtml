@@ -4,6 +4,18 @@
               <th>Ergonomics</th>
               <td>{{ if gt .Item.Ergonomics 0 }}+{{ end }}{{ .Item.Ergonomics }}</td>
             </tr>
+            {{ if .Item.Recoil }}
+            <tr>
+              <th>Recoil</th>
+              <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+            </tr>
+            {{ end }}
+            {{ if .Item.Accuracy }}
+            <tr>
+              <th>Accuracy</th>
+              <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
+            </tr>
+            {{ end }}
             <tr>
               <th>Raid Moddable</th>
               <td>
@@ -95,16 +107,8 @@
     <td>{{ .Item.Length }} mm</td>
   </tr>
   <tr>
-    <th>Accuracy</th>
-    <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
-  </tr>
-  <tr>
     <th>Velocity</th>
     <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
-  </tr>
-  <tr>
-    <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
   </tr>
   <tr>
     <th>Suppressor</th>
@@ -114,12 +118,6 @@
 {{ end }}
 
 {{ define "modificationBipod" }}
-<table>
-  <tr>
-    <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
-  </tr>
-</table>
 {{ end }}
 
 {{ define "modificationCharge" }}
@@ -147,24 +145,12 @@
 {{ end }}
 
 {{ define "modificationForegrip" }}
-<table>
-  <tr>
-    <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
-  </tr>
-</table>
 {{ end }}
 
 {{ define "modificationGasblock" }}
 {{ end }}
 
 {{ define "modificationHandguard" }}
-<table>
-  <tr>
-    <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
-  </tr>
-</table>
 {{ end }}
 
 {{ define "modificationLauncher" }}
@@ -194,16 +180,8 @@
     </td>
   </tr>
   <tr>
-    <th>Accuracy</th>
-    <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
-  </tr>
-  <tr>
     <th>Velocity</th>
     <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
-  </tr>
-  <tr>
-    <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
   </tr>
 </table>
 {{ end }}
@@ -222,27 +200,13 @@
 {{ end }}
 
 {{ define "modificationPistolgrip" }}
-<table>
-  <tr>
-    <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
-  </tr>
-</table>
 {{ end }}
 
 {{ define "modificationReceiver" }}
 <table>
   <tr>
-    <th>Accuracy</th>
-    <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
-  </tr>
-  <tr>
     <th>Velocity</th>
     <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
-  </tr>
-  <tr>
-    <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
   </tr>
 </table>
 {{ end }}
@@ -315,14 +279,6 @@
 
 {{ define "modificationStock" }}
 <table>
-  <tr>
-    <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
-  </tr>
-  <tr>
-    <th>Accuracy</th>
-    <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
-  </tr>
   <tr>
     <th>Fold-/Retractable</th>
     <td>{{ if .Item.FoldRectractable }}Yes{{ else }}No{{ end }}</td>
