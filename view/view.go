@@ -31,6 +31,7 @@ var (
 		"localeString":     localeString,
 		"setQuery":         setQuery,
 		"hasQuery":         hasQuery,
+		"hasPrefix":        hasPrefix,
 		"decimalToPercent": decimalToPercent,
 		"appendStaticHash": appendStaticHash,
 		"categoryToName":   item.CategoryToDisplayName,

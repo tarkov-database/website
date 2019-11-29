@@ -60,13 +60,17 @@ table caption {
   height: 2rem;
 }
 
-.item-table tr:hover td,
-.loot tr:hover td {
+.item-table tbody tr:hover,
+.table-big tbody tr:hover {
   background-color: var(--bg-fourth-color);
 }
 
-.item-table td {
+.item-table td,
+.item-table th {
   text-align: center;
+}
+
+.item-table td {
   height: 1.8rem;
   max-width: 8rem;
 }
@@ -82,9 +86,27 @@ table caption {
   }
 }
 
+.slot caption,
+.table caption {
+  color: var(--font-sec-color);
+}
+
 .table caption {
   font-size: 1.3rem;
-  color: var(--font-sec-color);
+}
+
+.slot .table-big {
+  margin: .5rem 0;
+}
+
+.slot table th:nth-child(n+1),
+.slot table td:nth-child(n+1) {
+  width: 30%;
+}
+
+.slot table th:nth-child(n+2),
+.slot table td:nth-child(n+2) {
+  width: 20%;
 }
 
 .no-effect {

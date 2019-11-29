@@ -487,6 +487,10 @@ header .search {
   background-image: url("../img/table.svg");
 }
 
+.icon.plus {
+  background-image: url("../img/plus.svg");
+}
+
 .icon.other {
   display: none;
 }

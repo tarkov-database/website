@@ -30,6 +30,19 @@ func multiplyFloat(a, b float64) float64 {
 	return a * b
 }
 
+func hasPrefix(v interface{}, p string) bool {
+	var s string
+
+	switch v := v.(type) {
+	case string:
+		s = v
+	case item.Kind:
+		s = v.String()
+	}
+
+	return strings.HasPrefix(s, p)
+}
+
 func appendStaticHash(p string) string {
 	if sum, ok := version.StaticSums[strings.TrimPrefix(p, "/")]; ok {
 		p += fmt.Sprintf("?v=%s", sum[:8])
@@ -120,9 +133,12 @@ type resolvedSlots map[string]resolvedItemList
 func resolveSlots(slots item.Slots) resolvedSlots {
 	mutex := &sync.Mutex{}
 	wg := &sync.WaitGroup{}
-	wg.Add(len(slots))
 
-	rs := make(resolvedSlots)
+	length := len(slots)
+
+	wg.Add(length)
+
+	rs := make(resolvedSlots, length)
 	for k, v := range slots {
 		go func(n string, s item.Slot) {
 			defer wg.Done()

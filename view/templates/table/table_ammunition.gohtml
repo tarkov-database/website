@@ -92,31 +92,33 @@
 
               </tr>
             </thead>
-            {{ range .List }}
-            <tr>
+            <tbody>
+              {{ range .List }}
+              <tr>
 
-              <td>
-                <a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">
-                  {{ .ShortName }}
-                </a>
-              </td>
+                <td>
+                  <a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">
+                    {{ .ShortName }}
+                  </a>
+                </td>
 
-              <td>
-                <a href="{{ setQuery (setQuery $.URI "p" "1") "caliber" .Caliber }}">
-                  {{ .Caliber }}
-                </a>
-              </td>
+                <td>
+                  <a href="{{ setQuery (setQuery $.URI "p" "1") "caliber" .Caliber }}">
+                    {{ .Caliber }}
+                  </a>
+                </td>
 
-              <td>{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
+                <td>{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
 
-              <td>{{ .Penetration }}</td>
+                <td>{{ .Penetration }}</td>
 
-              <td>{{ .ArmorDamage }} %</td>
+                <td>{{ .ArmorDamage }} %</td>
 
-              <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
+                <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
 
-            </tr>
-            {{ end }}
+              </tr>
+              {{ end }}
+            </tbody>
           </table>
         </div>
 

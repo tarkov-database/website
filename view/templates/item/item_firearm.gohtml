@@ -94,33 +94,71 @@
         <ul class="tabs">
 
           <li id="slots" class="tab" style="display:block;">
-            {{ template "mod_slots" . }}
+            {{ template "modSlots" . }}
           </li>
 
           <li id="ammo" class="tab">
             <div class="items">
-              <ul>
-                {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 30 }}
-                {{ range $result.Items }}
-                <li>
-                  <a title="{{ .Name }}" class="mod" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a>
-                </li>
-                {{ end }}
-              </ul>
+              <div class="table-big">
+                <table class="item-table sort-table ammo">
+                  <thead>
+                    <tr title="Sort by">
+                      <th>Name</th>
+                      <th>Damage</th>
+                      <th>Penetration</th>
+                      <th>Armor Damage</th>
+                      <th>Fragmentation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 100 }}
+                    {{ range $result.Items }}
+                    <tr>
+                      <td>
+                        <a href="/item/ammunition/{{ .ID }}">
+                          {{ .ShortName }}
+                        </a>
+                      </td>
+                      <td>{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
+                      <td>{{ .Penetration }}</td>
+                      <td>{{ .ArmorDamage }}</td>
+                      <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
+                    </tr>
+                    {{ end }}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </li>
 
           <li id="magazines" class="tab">
             <div class="items">
-              <ul>
-                {{ range resolveItemList .Item.Slots.magazine.Filter }}
-                  {{ range . }}
-                  <li>
-                    <a title="{{ .Name }}" class="mod" href="/item/magazine/{{ .ID }}">{{ .ShortName }}</a>
-                  </li>
+              <div class="table-big">
+                <table class="item-table sort-table">
+                  <thead>
+                    <tr title="Sort by">
+                      <th>Name</th>
+                      <th>Capacity</th>
+                      <th>Ergonomics</th>
+                      <th>Load/Unload Time</th>
+                      <th>Check Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {{ range resolveItemList .Item.Slots.magazine.Filter }}
+                    {{ range . }}
+                    <tr>
+                      <td><a href="/item/magazine/{{ .ID }}">{{ .ShortName }}</a></td>
+                      <td>{{ .Capacity }}</td>
+                      <td>{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
+                      <td>{{ if gt .Modifier.LoadUnload 0.0 }}+{{ end }}{{ .Modifier.LoadUnload }} %</td>
+                      <td>{{ if gt .Modifier.CheckTime  0.0 }}+{{ end }}{{ .Modifier.CheckTime  }} %</td>
+                    </tr>
+                    {{ end }}
                   {{ end }}
-                {{ end }}
-              </ul>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </li>
 

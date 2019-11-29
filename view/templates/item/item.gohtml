@@ -60,86 +60,96 @@
 {{ if or .Item.Effects.Bloodloss.Removes .Item.Effects.Fracture.Removes .Item.Effects.Pain.Removes .Item.Effects.Contusion.Removes .Item.Effects.Toxication.Removes .Item.Effects.RadiationExposure.Removes }}
 <div class="table-big">
   <table>
-    <tr>
-      <th></th>
-      <th class="center">Removes</th>
-      <th class="center">Duration</th>
-      <th class="center">Cost</th>
-    </tr>
-    <tr {{ if .Item.Effects.Bloodloss.Removes }}{{ else }}class="no-effect"{{ end }}>
-      <th>Bloodloss</th>
-      <td class="center">{{ if .Item.Effects.Bloodloss.Removes }}Yes{{ else }}No{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.Bloodloss.Removes }}{{ .Item.Effects.Bloodloss.Duration }}{{ else }}-{{ end }} sec.</td>
-      <td class="center">{{ if .Item.Effects.Bloodloss.Removes }}{{ .Item.Effects.Bloodloss.ResourceCosts }}{{ else }}-{{ end }} res.</td>
-    </tr>
-    <tr {{ if .Item.Effects.Fracture.Removes }}{{ else }}class="no-effect"{{ end }}>
-      <th>Fracture</th>
-      <td class="center">{{ if .Item.Effects.Fracture.Removes }}Yes{{ else }}No{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.Fracture.Removes }}{{ .Item.Effects.Fracture.Duration }}{{ else }}-{{ end }} sec.</td>
-      <td class="center">{{ if .Item.Effects.Fracture.Removes }}{{ .Item.Effects.Fracture.ResourceCosts }}{{ else }}-{{ end }} res.</td>
-    </tr>
-    <tr {{ if .Item.Effects.Pain.Removes }}{{ else }}class="no-effect"{{ end }}>
-      <th>Pain</th>
-      <td class="center">{{ if .Item.Effects.Pain.Removes }}Yes{{ else }}No{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.Pain.Removes }}{{ .Item.Effects.Pain.Duration }}{{ else }}-{{ end }} sec.</td>
-      <td class="center">{{ if .Item.Effects.Pain.Removes }}{{ .Item.Effects.Pain.ResourceCosts }}{{ else }}-{{ end }} res.</td>
-    </tr>
-    <tr {{ if .Item.Effects.Contusion.Removes }}{{ else }}class="no-effect"{{ end }}>
-      <th>Contusion</th>
-      <td class="center">{{ if .Item.Effects.Contusion.Removes }}Yes{{ else }}No{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.Contusion.Removes }}{{ .Item.Effects.Contusion.Duration }}{{ else }}-{{ end }} sec.</td>
-      <td class="center">{{ if .Item.Effects.Contusion.Removes }}{{ .Item.Effects.Contusion.ResourceCosts }}{{ else }}-{{ end }} res.</td>
-    </tr>
-    <tr {{ if .Item.Effects.Toxication.Removes }}{{ else }}class="no-effect"{{ end }}>
-      <th>Toxication</th>
-      <td class="center">{{ if .Item.Effects.Toxication.Removes }}Yes{{ else }}No{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.Toxication.Removes }}{{ .Item.Effects.Toxication.Duration }}{{ else }}-{{ end }} sec.</td>
-      <td class="center">{{ if .Item.Effects.Toxication.Removes }}{{ .Item.Effects.Toxication.ResourceCosts }}{{ else }}-{{ end }} res.</td>
-    </tr>
-    <tr {{ if .Item.Effects.RadiationExposure.Removes }}{{ else }}class="no-effect"{{ end }}>
-      <th>Radiation</th>
-      <td class="center">{{ if .Item.Effects.RadiationExposure.Removes }}Yes{{ else }}No{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.RadiationExposure.Removes }}{{ .Item.Effects.RadiationExposure.Duration }}{{ else }}-{{ end }} sec.</td>
-      <td class="center">{{ if .Item.Effects.RadiationExposure.Removes }}{{ .Item.Effects.RadiationExposure.ResourceCosts }}{{ else }}-{{ end }} res.</td>
-    </tr>
-  </table>
+    <thead>
+      <th>
+        <tr>
+          <th></th>
+          <th class="center">Removes</th>
+          <th class="center">Duration</th>
+          <th class="center">Cost</th>
+        </tr>
+      </th>
+    </thead>
+    <tbody>
+      <tr {{ if .Item.Effects.Bloodloss.Removes }}{{ else }}class="no-effect"{{ end }}>
+        <th>Bloodloss</th>
+        <td class="center">{{ if .Item.Effects.Bloodloss.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.Bloodloss.Removes }}{{ .Item.Effects.Bloodloss.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Item.Effects.Bloodloss.Removes }}{{ .Item.Effects.Bloodloss.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      <tr {{ if .Item.Effects.Fracture.Removes }}{{ else }}class="no-effect"{{ end }}>
+        <th>Fracture</th>
+        <td class="center">{{ if .Item.Effects.Fracture.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.Fracture.Removes }}{{ .Item.Effects.Fracture.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Item.Effects.Fracture.Removes }}{{ .Item.Effects.Fracture.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      <tr {{ if .Item.Effects.Pain.Removes }}{{ else }}class="no-effect"{{ end }}>
+        <th>Pain</th>
+        <td class="center">{{ if .Item.Effects.Pain.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.Pain.Removes }}{{ .Item.Effects.Pain.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Item.Effects.Pain.Removes }}{{ .Item.Effects.Pain.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      <tr {{ if .Item.Effects.Contusion.Removes }}{{ else }}class="no-effect"{{ end }}>
+        <th>Contusion</th>
+        <td class="center">{{ if .Item.Effects.Contusion.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.Contusion.Removes }}{{ .Item.Effects.Contusion.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Item.Effects.Contusion.Removes }}{{ .Item.Effects.Contusion.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      <tr {{ if .Item.Effects.Toxication.Removes }}{{ else }}class="no-effect"{{ end }}>
+        <th>Toxication</th>
+        <td class="center">{{ if .Item.Effects.Toxication.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.Toxication.Removes }}{{ .Item.Effects.Toxication.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Item.Effects.Toxication.Removes }}{{ .Item.Effects.Toxication.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      <tr {{ if .Item.Effects.RadiationExposure.Removes }}{{ else }}class="no-effect"{{ end }}>
+        <th>Radiation</th>
+        <td class="center">{{ if .Item.Effects.RadiationExposure.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.RadiationExposure.Removes }}{{ .Item.Effects.RadiationExposure.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Item.Effects.RadiationExposure.Removes }}{{ .Item.Effects.RadiationExposure.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+    </table>
+    </tbody>
 </div>
 {{ end }}
 
 {{ if or .Item.Effects.LootSpeed.Value .Item.Effects.Mobility.Value .Item.Effects.Recoil.Value .Item.Effects.ReloadSpeed.Value .Item.Effects.UnlockSpeed.Value }}
 <div class="table-big">
   <table>
-    <tr>
-      <th></th>
-      <th class="center">Boost</th>
-      <th class="center">Duration</th>
-    </tr>
-    <tr {{ if .Item.Effects.LootSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
-      <th>Loot</th>
-      <td class="center">{{ if .Item.Effects.LootSpeed.Value }}{{ .Item.Effects.LootSpeed.Value }}{{ else }}0{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.LootSpeed.Duration }}{{ .Item.Effects.LootSpeed.Duration }}{{ else }}-{{ end }} min.</td>
-    </tr>
-    <tr {{ if .Item.Effects.Mobility.Value }}{{ else }}class="no-effect"{{ end }}>
-      <th>Mobility</th>
-      <td class="center">{{ if .Item.Effects.Mobility.Value }}{{ .Item.Effects.Mobility.Value }}{{ else }}0{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.Mobility.Duration }}{{ .Item.Effects.Mobility.Duration }}{{ else }}-{{ end }} min.</td>
-    </tr>
-    <tr {{ if .Item.Effects.Recoil.Value }}{{ else }}class="no-effect"{{ end }}>
-      <th>Recoil</th>
-      <td class="center">{{ if .Item.Effects.Recoil.Value }}{{ .Item.Effects.Recoil.Value }}{{ else }}0{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.Recoil.Duration }}{{ .Item.Effects.Recoil.Duration }}{{ else }}-{{ end }} min.</td>
-    </tr>
-    <tr {{ if .Item.Effects.ReloadSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
-      <th>Reload</th>
-      <td class="center">{{ if .Item.Effects.ReloadSpeed.Value }}{{ .Item.Effects.ReloadSpeed.Value }}{{ else }}0{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.ReloadSpeed.Duration }}{{ .Item.Effects.ReloadSpeed.Duration }}{{ else }}-{{ end }} min.</td>
-    </tr>
-    <tr {{ if .Item.Effects.UnlockSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
-      <th>Unlock</th>
-      <td class="center">{{ if .Item.Effects.UnlockSpeed.Value }}{{ .Item.Effects.UnlockSpeed.Value }}{{ else }}0{{ end }}</td>
-      <td class="center">{{ if .Item.Effects.UnlockSpeed.Duration }}{{ .Item.Effects.UnlockSpeed.Duration }}{{ else }}-{{ end }} min.</td>
-    </tr>
-  </table>
+    <thead>
+      <tr>
+        <th></th>
+        <th class="center">Boost</th>
+        <th class="center">Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr {{ if .Item.Effects.LootSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Loot</th>
+        <td class="center">{{ if .Item.Effects.LootSpeed.Value }}{{ .Item.Effects.LootSpeed.Value }}{{ else }}0{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.LootSpeed.Duration }}{{ .Item.Effects.LootSpeed.Duration }}{{ else }}-{{ end }} min.</td>
+      </tr>
+      <tr {{ if .Item.Effects.Mobility.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Mobility</th>
+        <td class="center">{{ if .Item.Effects.Mobility.Value }}{{ .Item.Effects.Mobility.Value }}{{ else }}0{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.Mobility.Duration }}{{ .Item.Effects.Mobility.Duration }}{{ else }}-{{ end }} min.</td>
+      </tr>
+      <tr {{ if .Item.Effects.Recoil.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Recoil</th>
+        <td class="center">{{ if .Item.Effects.Recoil.Value }}{{ .Item.Effects.Recoil.Value }}{{ else }}0{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.Recoil.Duration }}{{ .Item.Effects.Recoil.Duration }}{{ else }}-{{ end }} min.</td>
+      </tr>
+      <tr {{ if .Item.Effects.ReloadSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Reload</th>
+        <td class="center">{{ if .Item.Effects.ReloadSpeed.Value }}{{ .Item.Effects.ReloadSpeed.Value }}{{ else }}0{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.ReloadSpeed.Duration }}{{ .Item.Effects.ReloadSpeed.Duration }}{{ else }}-{{ end }} min.</td>
+      </tr>
+      <tr {{ if .Item.Effects.UnlockSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Unlock</th>
+        <td class="center">{{ if .Item.Effects.UnlockSpeed.Value }}{{ .Item.Effects.UnlockSpeed.Value }}{{ else }}0{{ end }}</td>
+        <td class="center">{{ if .Item.Effects.UnlockSpeed.Duration }}{{ .Item.Effects.UnlockSpeed.Duration }}{{ else }}-{{ end }} min.</td>
+      </tr>
+    </table>
+    </tbody>
 </div>
 {{ end }}
 {{ end }}
@@ -228,22 +238,70 @@
 {{ end }}
 {{ end }}
 
-{{ define "mod_slots" }}
+{{ define "modSlots" }}
         {{ if .Item.Slots }}
 
-        {{ range $name, $items := resolveSlots .Item.Slots }}
+        {{ range $name, $kinds := resolveSlots .Item.Slots }}
         {{ if ne $name "magazine" }}
-          <div class="items">
+          <div class="slot items">
             <div class="title">{{ $name }}</div>
-            <ul>
-              {{ range $items }}
-                {{ range . }}
-                <li>
-                  <a title="{{ .Name }}" class="mod" href="/item/{{ kindToCategory .Kind }}/{{ .ID }}">{{ .ShortName }}</a>
-                </li>
-                {{ end }}
-              {{ end }}
-            </ul>
+
+            {{ range $kind, $items := $kinds }}
+            {{ $cat := kindToCategory $kind }}
+            <div class="table-big">
+              <table class="item-table sort-table">
+                <thead>
+                  <tr title="Sort by">
+                    <th>Name</th>
+                    <th>Type</th>
+                    {{ if hasPrefix $kind "modification" }}
+                    <th>Ergonomics</th>
+                    <th>Recoil</th>
+                    <th>Accuracy</th>
+                    {{ else if eq $kind "armor" }}
+                    <th>Class</th>
+                    <th>Durability</th>
+                    <th>Material</th>
+                    {{ else }}
+                    {{ end }}
+                  </tr>
+                </thead>
+                <tbody>
+                  {{ range $items }}
+                  <tr>
+                    {{ if hasPrefix $kind "modification" }}
+                    <td>
+                      <a title="{{ .Name }}" class="mod {{ if .Slots }}expandable{{ end }}" href="/item/{{ $cat }}/{{ .ID }}">{{ .ShortName }}</a>
+                    </td>
+                    {{ if or (eq $kind "modificationDevice") (eq $kind "modificationMuzzle") (eq $kind "modificationSight") (eq $kind "modificationGoggles") (eq $kind "modificationSightSpecial") }}
+                    <td>{{ .Type | toTitle }}</td>
+                    {{ else }}
+                    <td>{{ $cat | categoryToName | toTitle }}</td>
+                    {{ end }}
+                    <td>{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
+                    <td>{{ if gt .Recoil 0.0 }}+{{ end }}{{ .Recoil }}</td>
+                    <td>{{ if gt .Accuracy 0.0 }}+{{ end }}{{ .Accuracy }}</td>
+                    {{ else if eq $kind "armor" }}
+                    <td>
+                      <a title="{{ .Name }}" class="mod" href="/item/{{ $cat }}/{{ .ID }}">{{ .ShortName }}</a>
+                    </td>
+                    <td>{{ .Type | toTitle }}</td>
+                    <td>{{ .Armor.Class }}</td>
+                    <td>{{ .Armor.Durability }}</td>
+                    <td>{{ if eq .Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Armor.Material.Name | toTitle }}{{ end }}</td>
+                    {{ else }}
+                    <td>
+                      <a title="{{ .Name }}" class="mod" href="/item/{{ $cat }}/{{ .ID }}">{{ .ShortName }}</a>
+                    </td>
+                    <td>{{ $cat | categoryToName | toTitle }}</td>
+                    {{ end }}
+                  </tr>
+                  {{ end }}
+                </tbody>
+              </table>
+            </div>
+            {{ end }}
+
           </div>
           {{ end }}
         {{ end }}
@@ -254,15 +312,29 @@
 {{ define "compatibility" }}
       {{ if .Item.Compatibility }}
       <div class="items">
-        <ul>
-          {{ range resolveItemList .Item.Compatibility }}
-            {{ range . }}
-            <li>
-              <a title="{{ .Name }}" class="mod" href="/item/{{ kindToCategory .Kind }}/{{ .ID }}">{{ .ShortName }}</a>
-            </li>
+        <div class="table-big">
+          <table class="item-table sort-table">
+            <thead>
+              <tr title="Sort by">
+                <th>Name</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+            {{ range resolveItemList .Item.Compatibility }}
+              {{ range . }}
+              {{ $cat := kindToCategory .Kind }}
+              <tr>
+                <td>
+                  <a title="{{ .Name }}" class="mod" href="/item/{{ $cat }}/{{ .ID }}">{{ .ShortName }}</a>
+                </td>
+                <td>{{ $cat | categoryToName | toTitle }}</td>
+              </tr>
+              {{ end }}
             {{ end }}
-          {{ end }}
-        </ul>
+            </tbody>
+          </table>
+        </div>
       </div>
       {{ end }}
 {{ end }}

@@ -38,21 +38,42 @@
       <div class="box sub">
         <ul class="tab-buttons">
           <li class="tab-btn active" onclick="openTab(event, 'cartridges')">Compatible Ammo</li>
-          <li title="Can be used with following weapons" class="tab-btn" onclick="openTab(event, 'compatible')">Compatible Weapons</li>
+          <li title="Can be used with following weapons" class="tab-btn" onclick="openTab(event, 'compatible')">Compatibility</li>
         </ul>
 
         <ul class="tabs">
 
           <li id="cartridges" class="tab" style="display:block;">
             <div class="items">
-              <ul>
-                {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 30 }}
-                {{ range $result.Items }}
-                <li>
-                  <a title="{{ .Name }}" class="mod" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a>
-                </li>
-                {{ end }}
-              </ul>
+              <div class="table-big">
+                <table class="item-table sort-table ammo">
+                  <thead>
+                    <tr title="Sort by">
+                      <th>Name</th>
+                      <th>Damage</th>
+                      <th>Penetration</th>
+                      <th>Armor Damage</th>
+                      <th>Fragmentation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 100 }}
+                    {{ range $result.Items }}
+                    <tr>
+                      <td>
+                        <a href="/item/ammunition/{{ .ID }}">
+                          {{ .ShortName }}
+                        </a>
+                      </td>
+                      <td>{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
+                      <td>{{ .Penetration }}</td>
+                      <td>{{ .ArmorDamage }}</td>
+                      <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
+                    </tr>
+                    {{ end }}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </li>
 

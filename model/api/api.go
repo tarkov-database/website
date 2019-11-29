@@ -29,13 +29,13 @@ func GetAPI() (*API, error) {
 	wg.Add(2)
 
 	go func(wg *sync.WaitGroup) {
-		defer wg.Done()
 		a.Item = getItemEndpoint()
+		wg.Done()
 	}(wg)
 
 	go func(wg *sync.WaitGroup) {
-		defer wg.Done()
 		a.Location = getLocationEndpoint()
+		wg.Done()
 	}(wg)
 
 	wg.Wait()
