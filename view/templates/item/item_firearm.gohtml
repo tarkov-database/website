@@ -114,11 +114,7 @@
                     {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 100 }}
                     {{ range $result.Items }}
                     <tr>
-                      <td>
-                        <a href="/item/ammunition/{{ .ID }}">
-                          {{ .ShortName }}
-                        </a>
-                      </td>
+                      <td><a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a></td>
                       <td>{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
                       <td>{{ .Penetration }}</td>
                       <td>{{ .ArmorDamage }}</td>
@@ -148,7 +144,7 @@
                   {{ range resolveItemList .Item.Slots.magazine.Filter }}
                     {{ range . }}
                     <tr>
-                      <td><a href="/item/magazine/{{ .ID }}">{{ .ShortName }}</a></td>
+                      <td><a title="{{ .Name }}" href="/item/magazine/{{ .ID }}">{{ .ShortName }}</a></td>
                       <td>{{ .Capacity }}</td>
                       <td>{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
                       <td>{{ if gt .Modifier.LoadUnload 0.0 }}+{{ end }}{{ .Modifier.LoadUnload }} %</td>

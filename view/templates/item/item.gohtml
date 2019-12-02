@@ -325,9 +325,7 @@
               {{ range . }}
               {{ $cat := kindToCategory .Kind }}
               <tr>
-                <td>
-                  <a title="{{ .Name }}" class="mod" href="/item/{{ $cat }}/{{ .ID }}">{{ .ShortName }}</a>
-                </td>
+                <td><a title="{{ .Name }}" class="mod" href="/item/{{ $cat }}/{{ .ID }}">{{ .ShortName }}</a></td>
                 <td>{{ $cat | categoryToName | toTitle }}</td>
               </tr>
               {{ end }}
