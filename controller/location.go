@@ -49,7 +49,7 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
-	data := p.LocationResult(result, "Locations", false)
+	data := p.LocationResult(result, "location", false)
 
 	view.Render("list", data, w)
 }
