@@ -105,13 +105,13 @@
                     <tr title="Sort by">
                       <th>Name</th>
                       <th>Damage</th>
-                      <th>Penetration</th>
+                      <th class="sorted-by down">Penetration</th>
                       <th>Armor Damage</th>
                       <th>Fragmentation</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 100 }}
+                    {{ $result := getAmmunitionByCaliber .Item.Caliber "-penetration" 100 }}
                     {{ range $result.Items }}
                     <tr>
                       <td><a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a></td>
@@ -134,14 +134,14 @@
                   <thead>
                     <tr title="Sort by">
                       <th>Name</th>
-                      <th>Capacity</th>
+                      <th class="sorted-by up">Capacity</th>
                       <th>Ergonomics</th>
                       <th>Load/Unload Time</th>
                       <th>Check Time</th>
                     </tr>
                   </thead>
                   <tbody>
-                  {{ range resolveItemList .Item.Slots.magazine.Filter }}
+                  {{ range resolveItemList .Item.Slots.magazine.Filter "capacity" }}
                     {{ range . }}
                     <tr>
                       <td><a title="{{ .Name }}" href="/item/magazine/{{ .ID }}">{{ .ShortName }}</a></td>

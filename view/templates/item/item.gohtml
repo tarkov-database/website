@@ -241,7 +241,7 @@
 {{ define "modSlots" }}
         {{ if .Item.Slots }}
 
-        {{ range $name, $kinds := resolveSlots .Item.Slots }}
+        {{ range $name, $kinds := resolveSlots .Item.Slots "shortName" }}
         {{ if ne $name "magazine" }}
           <div class="slot items">
             <div class="title">{{ $name }}</div>
@@ -252,7 +252,7 @@
               <table class="item-table sort-table">
                 <thead>
                   <tr title="Sort by">
-                    <th>Name</th>
+                    <th class="sorted-by up">Name</th>
                     <th>Type</th>
                     {{ if hasPrefix $kind "modification" }}
                     <th>Ergonomics</th>
@@ -317,11 +317,11 @@
             <thead>
               <tr title="Sort by">
                 <th>Name</th>
-                <th>Type</th>
+                <th class="sorted-by up">Type</th>
               </tr>
             </thead>
             <tbody>
-            {{ range resolveItemList .Item.Compatibility }}
+            {{ range resolveItemList .Item.Compatibility "type" }}
               {{ range . }}
               {{ $cat := kindToCategory .Kind }}
               <tr>

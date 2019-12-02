@@ -66,13 +66,13 @@
                   <tr title="Sort by">
                     <th>Name</th>
                     <th>Damage</th>
-                    <th>Penetration</th>
+                    <th class="sorted-by down">Penetration</th>
                     <th>Armor Damage</th>
                     <th>Fragmentation</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 100 }}
+                  {{ $result := getAmmunitionByCaliber .Item.Caliber "-penetration" 100 }}
                   {{ range $result.Items }}
                   <tr {{ if eq .ID $.Item.ID }}title="Current selection" class="selected"{{ end }} data-name="{{ .ShortName }}" data-projectilecount="{{ .Projectiles }}" data-damage="{{ .Damage }}" data-penetration="{{ .Penetration }}" data-armordamage="{{ .ArmorDamage }}">
                     <td><a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a></td>

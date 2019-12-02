@@ -107,8 +107,12 @@ func getItem(id string, kind item.Kind) item.Entity {
 
 type resolvedItemList map[item.Kind][]item.Entity
 
-func resolveItemList(list item.ItemList) resolvedItemList {
-	return item.GetItemList(list)
+func resolveItemList(list item.ItemList, sort string) resolvedItemList {
+	if sort == "" {
+		sort = "name"
+	}
+
+	return item.GetItemList(list, sort)
 }
 
 func getAmmunitionByCaliber(caliber, sort string, limit int) item.EntityResult {
@@ -130,7 +134,7 @@ func getAmmunitionByCaliber(caliber, sort string, limit int) item.EntityResult {
 
 type resolvedSlots map[string]resolvedItemList
 
-func resolveSlots(slots item.Slots) resolvedSlots {
+func resolveSlots(slots item.Slots, sort string) resolvedSlots {
 	mutex := &sync.Mutex{}
 	wg := &sync.WaitGroup{}
 
@@ -200,7 +204,7 @@ func resolveSlots(slots item.Slots) resolvedSlots {
 				}
 			}
 
-			res := item.GetItemList(s.Filter)
+			res := item.GetItemList(s.Filter, sort)
 			mutex.Lock()
 			rs[n] = res
 			mutex.Unlock()

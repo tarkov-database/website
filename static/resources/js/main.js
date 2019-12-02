@@ -75,36 +75,38 @@ const sortTables = () => {
       const table = th.closest('table');
       const body = table.querySelector('tbody');
 
+      const clSorted = 'sorted-by';
+      const clAsc = 'up';
+      const clDesc = 'down';
+
+      if (th.classList.contains(clAsc)) this.asc = true;
+
       Array.from(body.querySelectorAll('tr'))
         .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
         .forEach(tr => body.appendChild(tr));
-
-      const clSorted = 'sorted-by';
-      const clUp = 'up';
-      const clDown = 'down';
 
       if (!th.classList.contains(clSorted)) {
         const last = table.querySelector(`.${clSorted}`);
         if (last) {
           last.classList.remove(clSorted);
-          if (last.classList.contains(clUp)) {
-            last.classList.remove(clUp);
-            th.classList.add(clDown);
+          if (last.classList.contains(clAsc)) {
+            last.classList.remove(clAsc);
+            th.classList.add(clDesc);
           } else {
-            last.classList.remove(clDown);
-            th.classList.add(clUp);
+            last.classList.remove(clDesc);
+            th.classList.add(clAsc);
           }
         } else {
-          th.classList.add(clUp);
+          th.classList.add(clAsc);
         }
         th.classList.add(clSorted);
         return;
       }
 
-      if (th.classList.contains(clUp)) {
-        th.classList.replace(clUp, clDown);
+      if (th.classList.contains(clAsc)) {
+        th.classList.replace(clAsc, clDesc);
       } else {
-        th.classList.replace(clDown, clUp);
+        th.classList.replace(clDesc, clAsc);
       }
     }));
 

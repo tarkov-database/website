@@ -89,7 +89,7 @@ func GetItemsBySearch(text string, limit int) (EntityResult, error) {
 	return result, nil
 }
 
-func GetItemList(items ItemList) map[Kind][]Entity {
+func GetItemList(items ItemList, sort string) map[Kind][]Entity {
 	ch := make(chan EntityResult)
 	wg := &sync.WaitGroup{}
 
@@ -101,7 +101,7 @@ func GetItemList(items ItemList) map[Kind][]Entity {
 			go func(k Kind, ids string) {
 				defer wg.Done()
 
-				res, err := GetItemsByID(ids, k, &api.Options{Limit: 100})
+				res, err := GetItemsByID(ids, k, &api.Options{Limit: 100, Sort: sort})
 				if err != nil {
 					logger.Error(err)
 					return
