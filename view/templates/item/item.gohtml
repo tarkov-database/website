@@ -278,17 +278,17 @@
                     {{ else }}
                     <td>{{ $cat | categoryToName | toTitle }}</td>
                     {{ end }}
-                    <td>{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
-                    <td>{{ if gt .Recoil 0.0 }}+{{ end }}{{ .Recoil }} %</td>
-                    <td>{{ if gt .Accuracy 0.0 }}+{{ end }}{{ .Accuracy }} %</td>
+                    <td data-value="{{ .Ergonomics }}">{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
+                    <td data-value="{{ .Recoil }}">{{ if gt .Recoil 0.0 }}+{{ end }}{{ .Recoil }} %</td>
+                    <td data-value="{{ .Accuracy }}">{{ if gt .Accuracy 0.0 }}+{{ end }}{{ .Accuracy }} %</td>
                     {{ else if eq $kind "armor" }}
                     <td>
                       <a title="{{ .Name }}" class="mod" href="/item/{{ $cat }}/{{ .ID }}">{{ .ShortName }}</a>
                     </td>
-                    <td>{{ .Type | toTitle }}</td>
-                    <td>{{ .Armor.Class }}</td>
-                    <td>{{ .Armor.Durability }}</td>
-                    <td>{{ if eq .Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Armor.Material.Name | toTitle }}{{ end }}</td>
+                    <td data-value="{{ .Type }}">{{ .Type | toTitle }}</td>
+                    <td data-value="{{ .Armor.Class }}">{{ .Armor.Class }}</td>
+                    <td data-value="{{ .Armor.Durability }}">{{ .Armor.Durability }}</td>
+                    <td data-value="{{ .Armor.Material.Name }}">{{ if eq .Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Armor.Material.Name | toTitle }}{{ end }}</td>
                     {{ else }}
                     <td>
                       <a title="{{ .Name }}" class="mod" href="/item/{{ $cat }}/{{ .ID }}">{{ .ShortName }}</a>

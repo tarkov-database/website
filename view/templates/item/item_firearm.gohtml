@@ -115,10 +115,10 @@
                     {{ range $result.Items }}
                     <tr>
                       <td><a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a></td>
-                      <td>{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
-                      <td>{{ .Penetration }}</td>
-                      <td>{{ .ArmorDamage }}</td>
-                      <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
+                      <td data-value="{{ .Damage }}">{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
+                      <td data-value="{{ .Penetration }}">{{ .Penetration }}</td>
+                      <td data-value="{{ .ArmorDamage }}">{{ .ArmorDamage }} %</td>
+                      <td data-value="{{ .Fragmentation.Chance }}" title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
                     </tr>
                     {{ end }}
                   </tbody>
@@ -145,10 +145,10 @@
                     {{ range . }}
                     <tr>
                       <td><a title="{{ .Name }}" href="/item/magazine/{{ .ID }}">{{ .ShortName }}</a></td>
-                      <td>{{ .Capacity }}</td>
-                      <td>{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
-                      <td>{{ if gt .Modifier.LoadUnload 0.0 }}+{{ end }}{{ .Modifier.LoadUnload }} %</td>
-                      <td>{{ if gt .Modifier.CheckTime  0.0 }}+{{ end }}{{ .Modifier.CheckTime  }} %</td>
+                      <td data-value="{{ .Capacity }}">{{ .Capacity }}</td>
+                      <td data-value="{{ .Ergonomics }}">{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
+                      <td data-value="{{ .Modifier.LoadUnload }}">{{ if gt .Modifier.LoadUnload 0.0 }}+{{ end }}{{ .Modifier.LoadUnload }} %</td>
+                      <td data-value="{{ .Modifier.CheckTime  }}">{{ if gt .Modifier.CheckTime  0.0 }}+{{ end }}{{ .Modifier.CheckTime  }} %</td>
                     </tr>
                     {{ end }}
                   {{ end }}

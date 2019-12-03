@@ -61,7 +61,8 @@ const sortTables = () => {
   const tables = document.querySelectorAll('.sort-table thead th');
   if (tables.len === 0) return;
 
-  const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+  const getCellValue = (tr, idx) =>
+    tr.children[idx].dataset.value || tr.children[idx].innerText || tr.children[idx].textContent;
 
   const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
     v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
@@ -69,8 +70,6 @@ const sortTables = () => {
 
 
   for (const th of tables) {
-    if (th.getElementsByTagName('a').length !== 0) continue;
-
     th.addEventListener('click', (() => {
       const table = th.closest('table');
       const body = table.querySelector('tbody');
@@ -79,34 +78,31 @@ const sortTables = () => {
       const clAsc = 'up';
       const clDesc = 'down';
 
-      if (th.classList.contains(clAsc)) this.asc = true;
-
-      Array.from(body.querySelectorAll('tr'))
-        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
-        .forEach(tr => body.appendChild(tr));
-
-      if (!th.classList.contains(clSorted)) {
-        const last = table.querySelector(`.${clSorted}`);
-        if (last) {
-          last.classList.remove(clSorted);
-          if (last.classList.contains(clAsc)) {
-            last.classList.remove(clAsc);
-            th.classList.add(clDesc);
-          } else {
-            last.classList.remove(clDesc);
-            th.classList.add(clAsc);
-          }
-        } else {
-          th.classList.add(clAsc);
+      if (th.asc === undefined) {
+        if (th.classList.contains(clAsc)) {
+          th.asc = true;
+        } else if (th.classList.contains(clDesc)) {
+          th.asc = false;
         }
-        th.classList.add(clSorted);
-        return;
       }
 
-      if (th.classList.contains(clAsc)) {
-        th.classList.replace(clAsc, clDesc);
+      Array.from(body.querySelectorAll('tr'))
+        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), th.asc = !th.asc))
+        .forEach(tr => body.appendChild(tr));
+
+      table.querySelectorAll(`.${clSorted}`)
+        .forEach(el => {
+          el.classList.remove(clSorted);
+          if (el.classList.contains(clAsc)) el.classList.remove(clAsc);
+          if (el.classList.contains(clDesc)) el.classList.remove(clDesc);
+        });
+
+      th.classList.add(clSorted);
+      
+      if (th.asc) {
+        th.classList.add(clAsc);
       } else {
-        th.classList.replace(clDesc, clAsc);
+        th.classList.add(clDesc);
       }
     }));
 
