@@ -3,7 +3,7 @@
 
         <div class="text">
           <div class="image">
-            <div id="image" data-id="{{ .Item.ID }}"></div>
+            <div id="itemImage" data-id="{{ .Item.ID }}"></div>
           </div>
           <time class="modified-date" itemprop="dateModified" datetime="{{ formatTime "RFC3339" .Item.Modified.Time }}" title="Modified date in TT.MM.YYYY HH:MM">{{ formatTime "02.01.2006 15:04" .Item.Modified.Time }}</time>
           <h1 itemprop="name">{{ .Item.Name }}</h1>

@@ -17,7 +17,7 @@ const openTab = (evt, tabName) => { // eslint-disable-line
 
 
 const loadImage = async () => {
-  const image = document.getElementById('image');
+  const image = document.getElementById('itemImage');
   if (image === null) return;
 
   const staticURL = function() {
@@ -70,39 +70,45 @@ const sortTables = () => {
 
 
   for (const th of tables) {
-    th.addEventListener('click', (() => {
-      const table = th.closest('table');
-      const body = table.querySelector('tbody');
+    th.addEventListener('click', (e => {
+      const el = e.currentTarget;
+      const table = el.closest('table');
+      const body = table.getElementsByTagName('tbody')[0];
 
       const clSorted = 'sorted-by';
       const clAsc = 'up';
       const clDesc = 'down';
 
-      if (th.asc === undefined) {
-        if (th.classList.contains(clAsc)) {
-          th.asc = true;
-        } else if (th.classList.contains(clDesc)) {
-          th.asc = false;
+      if (el.asc === undefined) {
+        if (el.classList.contains(clAsc)) {
+          el.asc = true;
+        } else if (el.classList.contains(clDesc)) {
+          el.asc = false;
         }
       }
 
-      Array.from(body.querySelectorAll('tr'))
-        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), th.asc = !th.asc))
+      Array.from(body.getElementsByTagName('tr'))
+        .sort(comparer(Array.from(el.parentNode.children).indexOf(th), el.asc = !el.asc))
         .forEach(tr => body.appendChild(tr));
 
-      table.querySelectorAll(`.${clSorted}`)
-        .forEach(el => {
-          el.classList.remove(clSorted);
-          if (el.classList.contains(clAsc)) el.classList.remove(clAsc);
-          if (el.classList.contains(clDesc)) el.classList.remove(clDesc);
-        });
+      const sorted = table.getElementsByClassName(clSorted)[0];
+      if (th !== sorted) {
+        sorted.classList.remove(clSorted);
+        el.classList.add(clSorted);
+      }
 
-      th.classList.add(clSorted);
-    
-      if (th.asc) {
-        th.classList.add(clAsc);
+      if (el.asc) {
+        if (el.classList.contains(clDesc)) {
+          el.classList.replace(clDesc, clAsc);
+        } else {
+          el.classList.add(clAsc);
+        }
       } else {
-        th.classList.add(clDesc);
+        if (el.classList.contains(clAsc)) {
+          el.classList.replace(clAsc, clDesc);
+        } else {
+          el.classList.add(clDesc);
+        }
       }
     }));
 
@@ -142,10 +148,8 @@ const initSearchSocket = async() => {
     const host = window.location.host;
     const path = 'search/ws';
 
-    let proto = '';
-    if (window.location.protocol === 'https:') {
-      proto = 'wss';
-    } else {
+    let proto = 'wss';
+    if (window.location.protocol !== 'https:') {
       proto = 'ws';
       console.warn('Insecure WebSocket protocol is used');
     }
@@ -160,6 +164,7 @@ const initSearchSocket = async() => {
     socket.addEventListener('open', () => {
       console.info('Search socket opened');
     });
+
     socket.addEventListener('close', e => {
       if (e.wasClean) {
         const msg = 'Search socket closed';
