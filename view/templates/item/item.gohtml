@@ -249,7 +249,7 @@
             {{ range $kind, $items := $kinds }}
             {{ $cat := kindToCategory $kind }}
             <div class="table-big">
-              <table class="item-table sort-table">
+              <table class="item-table sort-table client-sort">
                 <thead>
                   <tr title="Sort by">
                     <th class="sorted-by up">Name</th>
@@ -313,7 +313,7 @@
       {{ if .Item.Compatibility }}
       <div class="items">
         <div class="table-big">
-          <table class="item-table sort-table">
+          <table class="item-table sort-table client-sort">
             <thead>
               <tr title="Sort by">
                 <th>Name</th>

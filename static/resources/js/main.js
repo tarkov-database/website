@@ -58,7 +58,7 @@ loadImage();
 
 
 const sortTables = () => {
-  const tables = document.querySelectorAll('.sort-table thead th');
+  const tables = document.querySelectorAll('.sort-table.client-sort thead th');
   if (tables.len === 0) return;
 
   const getCellValue = (tr, idx) =>
