@@ -98,7 +98,7 @@ const sortTables = () => {
         });
 
       th.classList.add(clSorted);
-      
+    
       if (th.asc) {
         th.classList.add(clAsc);
       } else {

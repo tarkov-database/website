@@ -7,13 +7,13 @@
             {{ if .Item.Recoil }}
             <tr>
               <th>Recoil</th>
-              <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+              <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }} %</td>
             </tr>
             {{ end }}
             {{ if .Item.Accuracy }}
             <tr>
               <th>Accuracy</th>
-              <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }}</td>
+              <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }} %</td>
             </tr>
             {{ end }}
             <tr>
