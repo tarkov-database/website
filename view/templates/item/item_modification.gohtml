@@ -263,14 +263,10 @@
     </td>
   </tr>
   <tr>
-    <th>Variable Zoom</th>
-    <td>{{ if .Item.VariableZoom }}Yes{{ else }}No{{ end }}</td>
-  </tr>
-  <tr>
     <th class="tr-list">Zero Distances</th>
     <td>
       {{ range .Item.ZeroDistances }}
-      {{ . }}<br>
+      {{ . }}m<br>
       {{ end }}
     </td>
   </tr>
