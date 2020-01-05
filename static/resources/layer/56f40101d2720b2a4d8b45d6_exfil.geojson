@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"name": "PMC Exfil",
+"features": [
+{ "type": "Feature", "properties": { "fid": 1, "name": "ZB-1011" }, "geometry": { "type": "Point", "coordinates": [ 0.0038254, -0.0009229 ] } },
+{ "type": "Feature", "properties": { "fid": 2, "name": "ZB-1012" }, "geometry": { "type": "Point", "coordinates": [ 0.0023538, -0.0007921 ] } },
+{ "type": "Feature", "properties": { "fid": 3, "name": "Old Gas Station" }, "geometry": { "type": "Point", "coordinates": [ 0.0009874, -0.0013531 ] } },
+{ "type": "Feature", "properties": { "fid": 4, "name": "Dorms V-Ex" }, "geometry": { "type": "Point", "coordinates": [ -0.0001402, 0.0021813 ] } },
+{ "type": "Feature", "properties": { "fid": 5, "name": "Crossroads" }, "geometry": { "type": "Point", "coordinates": [ -0.004669, -0.0003996 ] } },
+{ "type": "Feature", "properties": { "fid": 6, "name": "Trailer Park" }, "geometry": { "type": "Point", "coordinates": [ -0.0046624, -0.0018024 ] } },
+{ "type": "Feature", "properties": { "fid": 7, "name": "RUAF Roadblock" }, "geometry": { "type": "Point", "coordinates": [ -0.0019465, -0.0008978 ] } },
+{ "type": "Feature", "properties": { "fid": 8, "name": "Smuggler's Boat" }, "geometry": { "type": "Point", "coordinates": [ -0.0021408, 0.0014043 ] } }
+]
+}

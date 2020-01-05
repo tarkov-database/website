@@ -1,0 +1,5 @@
+{{ define "content" }}
+      <div id="map" data-id="{{ .Location.ID }}"></div>
+      <div hidden id="dragMarker" class="drag-marker" title="Movable and shareable marker.&#13;Copy the URL to share with friends"></div>
+      <script src="{{ appendStaticHash "/resources/js/map.js" }}"></script>
+{{ end }}

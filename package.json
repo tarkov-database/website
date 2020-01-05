@@ -5,7 +5,9 @@
   "scripts": {
     "lint": "eslint . static/resources/js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-js": "cp node_modules/chart.js/dist/Chart.min.js static/resources/js/Chart.min.js"
+    "install-js": "cp node_modules/mapbox-gl/dist/mapbox-gl-csp.js static/resources/js/mapbox/mapbox-gl-csp.js && cp node_modules/mapbox-gl/dist/mapbox-gl-csp-worker.js static/resources/js/mapbox/mapbox-gl-csp-worker.js && cp node_modules/chart.js/dist/Chart.min.js static/resources/js/Chart.min.js",
+    "install-css": "cp node_modules/mapbox-gl/dist/mapbox-gl.css static/resources/css/mapbox-gl.css",
+    "install-statics": "npm run install-js && npm run install-css"
   },
   "repository": {
     "type": "git",
@@ -17,8 +19,8 @@
     "url": "https://github.com/tarkov-database/website/issues"
   },
   "homepage": "https://github.com/tarkov-database/website#readme",
-  "dependencies": {},
   "devDependencies": {
+    "mapbox-gl": "^1.6.1",
     "chart.js": "^2.9.3",
     "eslint": "^6.7.2"
   }

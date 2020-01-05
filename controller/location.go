@@ -53,3 +53,19 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 	view.Render("list", data, w)
 }
+
+func LocationMapGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	entity, err := location.GetLocation(ps.ByName("id"))
+	if err != nil {
+		getErrorStatus(err, w, r)
+		return
+	}
+
+	p, err := model.CreatePageWithAPI(r.URL)
+	if err != nil {
+		getErrorStatus(err, w, r)
+		return
+	}
+
+	view.Render("location_map", p.Location(entity), w)
+}

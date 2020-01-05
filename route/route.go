@@ -25,6 +25,7 @@ func routes() *httprouter.Router {
 	// Location
 	r.GET("/location", cntrl.LocationsGET)
 	r.GET("/location/:id", cntrl.LocationGET)
+	r.GET("/location/:id/map", cntrl.LocationMapGET)
 
 	// Search
 	r.GET("/search", cntrl.SearchGET)
