@@ -51,24 +51,20 @@
                     <tr title="Sort by">
                       <th>Name</th>
                       <th>Damage</th>
-                      <th>Penetration</th>
+                      <th class="sorted-by down">Penetration</th>
                       <th>Armor Damage</th>
                       <th>Fragmentation</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {{ $result := getAmmunitionByCaliber .Item.Caliber "name" 100 }}
+                    {{ $result := getAmmunitionByCaliber .Item.Caliber "-penetration" 100 }}
                     {{ range $result.Items }}
                     <tr>
-                      <td>
-                        <a href="/item/ammunition/{{ .ID }}">
-                          {{ .ShortName }}
-                        </a>
-                      </td>
-                      <td>{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
-                      <td>{{ .Penetration }}</td>
-                      <td>{{ .ArmorDamage }}</td>
-                      <td title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
+                      <td><a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a></td>
+                      <td data-value="{{ .Damage }}">{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
+                      <td data-value="{{ .Penetration }}">{{ .Penetration }}</td>
+                      <td data-value="{{ .ArmorDamage }}">{{ .ArmorDamage }} %</td>
+                      <td data-value="{{ .Fragmentation.Chance }}" title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
                     </tr>
                     {{ end }}
                   </tbody>
