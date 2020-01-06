@@ -6,7 +6,7 @@ const loadJSON = async addr => {
 
   try {
     const res = await fetch(req);
-    if(!res.ok) throw new Error(res.status);
+    if (!res.ok) throw new Error(res.status);
     return res.json();
   } catch (err) {
     return new Error(err);
@@ -18,14 +18,21 @@ const addDragMarker = async map => {
 
   let lngLat = [0, 0];
   const hashParams = new URLSearchParams(window.location.hash.replace('#', ''));
-  const markerKey = 'marker', zoomKey = 'zoom';
+  const markerKey = 'marker';
 
   if (hashParams.has(markerKey)) {
+    let zoom = map.getZoom();
     hashParams
       .get(markerKey)
-      .split(',')
-      .forEach((item, i) => lngLat[i] = parseFloat(item));
-    const zoom = hashParams.has(zoomKey) ? hashParams.get(zoomKey) : map.getZoom();
+      .split('/')
+      .forEach((v, i) => {
+        const val = parseFloat(v);
+        if (i === 2) {
+          zoom = val;
+        } else {
+          lngLat[i] = val;
+        }
+      });
     map.flyTo({center: lngLat, zoom});
   }
 
@@ -38,8 +45,7 @@ const addDragMarker = async map => {
 
   const setMarkerURL = () => {
     const pos = marker.getLngLat();
-    hashParams.set(markerKey, `${pos.lng},${pos.lat}`);
-    hashParams.set(zoomKey, map.getZoom());
+    hashParams.set(markerKey, `${pos.lng}/${pos.lat}/${map.getZoom()}`);
     window.location.hash = hashParams.toString();
   };
 
@@ -80,7 +86,7 @@ const addLayer = async (layer, id, map) => {
     closeOnClick: false
   });
 
-  map.on('mouseenter', layerName, function(e) {
+  map.on('mouseenter', layerName, e => {
     map.getCanvas().style.cursor = 'pointer';
 
     const coordinates = e.features[0].geometry.coordinates.slice();
@@ -96,7 +102,7 @@ const addLayer = async (layer, id, map) => {
       .addTo(map);
   });
 
-  map.on('mouseleave', layerName, function() {
+  map.on('mouseleave', layerName, () => {
     map.getCanvas().style.cursor = '';
     popup.remove();
   });
