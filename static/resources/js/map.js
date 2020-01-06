@@ -115,7 +115,7 @@ const initMap = async () => {
 
   let style = {};
   try {
-    style = await loadJSON(`/resources/styles/${locID}.json`);
+    style = await loadJSON(`/resources/style/${locID}.json`);
   } catch (err) {
     throw new Error(err);
   }
