@@ -128,7 +128,8 @@ footer {
   height: auto;
 }
 
-footer .location-name {
+footer .location-ident {
   color: var(--font-sec-color);
   font-size: 1.2rem;
+  user-select: none;
 }

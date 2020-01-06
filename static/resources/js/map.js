@@ -76,7 +76,13 @@ const addLayer = async (layer, id, map) => {
     'type': 'circle',
     'source': layerName,
     'paint': {
-      'circle-radius': 7,
+      'circle-radius': {
+        'base': 2,
+        'stops': [
+          [0, 7],
+          [22, 18]
+        ]
+      },
       'circle-color': 'rgb(43, 159, 26)'
     }
   });
