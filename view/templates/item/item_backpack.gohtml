@@ -16,7 +16,7 @@
             {{ if .Item.Penalties.Ergonomics }}
             <tr>
               <th >Ergonomics</th>
-              <td>{{ if gt .Item.Penalties.Ergonomics 0 }}+{{ end }}{{ .Item.Penalties.Ergonomics }}</td>
+              <td>{{ if gt .Item.Penalties.Ergonomics 0.0 }}+{{ end }}{{ .Item.Penalties.Ergonomics }}</td>
             </tr>
             {{ end }}
           </table>

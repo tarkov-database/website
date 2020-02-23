@@ -109,7 +109,7 @@
 
               <td>{{ .Capacity }}</td>
 
-              <td>{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
+              <td>{{ if gt .Ergonomics 0.0 }}+{{ end }}{{ .Ergonomics }}</td>
 
               <td>{{ if gt .Modifier.LoadUnload 0.0 }}+{{ end }}{{ .Modifier.LoadUnload }} %</td>
 

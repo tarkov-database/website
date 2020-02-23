@@ -8,7 +8,7 @@
             </tr>
             <tr>
               <th>Ergonomics</th>
-              <td>{{ if gt .Item.Ergonomics 0 }}+{{ end }}{{ .Item.Ergonomics }}</td>
+              <td>{{ if gt .Item.Ergonomics 0.0 }}+{{ end }}{{ .Item.Ergonomics }}</td>
             </tr>
             {{ if ne .Item.Modifier.LoadUnload 0.0 }}
             <tr>

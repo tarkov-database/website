@@ -24,7 +24,7 @@ const (
 type Modification struct {
 	Item `bson:",inline"`
 
-	Ergonomics    int64        `json:"ergonomics" bson:"ergonomics"`
+	Ergonomics    float64      `json:"ergonomicsFP" bson:"ergonomicsFP"`
 	Accuracy      float64      `json:"accuracy" bson:"accuracy"`
 	Recoil        float64      `json:"recoil" bson:"recoil"`
 	RaidModdable  int64        `json:"raidModdable" bson:"raidModdable"`

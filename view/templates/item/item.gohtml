@@ -206,7 +206,7 @@
   {{ if .Item.Penalties.Ergonomics }}
   <tr>
     <th >Ergonomics</th>
-    <td>{{ if gt .Item.Penalties.Ergonomics 0 }}+{{ end }}{{ .Item.Penalties.Ergonomics }}</td>
+    <td>{{ if gt .Item.Penalties.Ergonomics 0.0 }}+{{ end }}{{ .Item.Penalties.Ergonomics }}</td>
   </tr>
   {{ end }}
   {{ if and (.Item.Penalties.Deafness) (ne .Item.Penalties.Deafness "none") }}
@@ -278,7 +278,7 @@
                     {{ else }}
                     <td>{{ $cat | categoryToName | toTitle }}</td>
                     {{ end }}
-                    <td data-value="{{ .Ergonomics }}">{{ if gt .Ergonomics 0 }}+{{ end }}{{ .Ergonomics }}</td>
+                    <td data-value="{{ .Ergonomics }}">{{ if gt .Ergonomics 0.0 }}+{{ end }}{{ .Ergonomics }}</td>
                     <td data-value="{{ .Recoil }}">{{ if gt .Recoil 0.0 }}+{{ end }}{{ .Recoil }} %</td>
                     <td data-value="{{ .Accuracy }}">{{ if gt .Accuracy 0.0 }}+{{ end }}{{ .Accuracy }} %</td>
                     {{ else if eq $kind "armor" }}
