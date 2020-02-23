@@ -108,3 +108,14 @@ func getItemKind(id string) (item.Kind, error) {
 
 	return v, nil
 }
+
+func isSupportedMediaType(r *http.Request) bool {
+	switch r.Header.Get("Content-Type") {
+	case "application/json":
+		return true
+	case "application/geo+json":
+		return true
+	}
+
+	return false
+}

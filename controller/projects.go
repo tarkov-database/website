@@ -10,5 +10,5 @@ import (
 )
 
 func ProjectsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	view.Render("projects", model.CreatePage(r.URL), w)
+	view.RenderHTML("projects", model.CreatePage(r.URL), w)
 }

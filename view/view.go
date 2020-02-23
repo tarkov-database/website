@@ -85,7 +85,7 @@ func loadTemplate(name string, files []string, ch chan *template.Template, wg *s
 	wg.Done()
 }
 
-func Render(t string, d interface{}, w http.ResponseWriter) {
+func RenderHTML(t string, d interface{}, w http.ResponseWriter) {
 	tmpl, ok := templates[t]
 	if !ok {
 		switch strings.Split(t, "_")[0] {
@@ -103,5 +103,16 @@ func Render(t string, d interface{}, w http.ResponseWriter) {
 	if err := tmpl.ExecuteTemplate(w, "base", d); err != nil {
 		logger.Error(err)
 		http.Error(w, fmt.Sprint("500 Internal Server Error"), http.StatusInternalServerError)
+	}
+}
+
+func RenderJSON(data interface{}, status int, w http.ResponseWriter) {
+	if w.Header().Get("Content-Type") == "" {
+		w.Header().Set("Content-Type", "application/json")
+	}
+	w.WriteHeader(status)
+
+	if err := json.NewEncoder(w).Encode(&data); err != nil {
+		logger.Error(err)
 	}
 }

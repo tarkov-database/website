@@ -15,6 +15,8 @@ import (
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model"
 	"github.com/tarkov-database/website/model/item"
+	"github.com/tarkov-database/website/model/location"
+	"github.com/tarkov-database/website/model/location/feature"
 	"github.com/tarkov-database/website/view"
 
 	"github.com/google/logger"
@@ -34,7 +36,7 @@ func SearchGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 const (
 	maxRemoteConns = 5
 
-	socketReadSize  = 128
+	socketReadSize  = 96
 	socketWriteSize = 768
 
 	socketReadDeadline  = 3 * time.Minute
@@ -118,21 +120,142 @@ type socketConnections struct {
 }
 
 type socketRequest struct {
-	ID   int64  `json:"id"`
-	Text string `json:"text"`
+	ID        int64  `json:"id"`
+	Keyword   string `json:"keyword"`
+	Location  string `json:"location,omitempty"`
+	Items     bool   `json:"items"`
+	Locations bool   `json:"locations"`
+	Features  bool   `json:"features"`
 }
 
 type socketResponse struct {
 	ID    int64           `json:"id"`
-	Items []*socketResult `json:"items"`
+	Items []*socketResult `json:"items,omitempty"`
 	Error interface{}     `json:"error"`
 }
 
+type entityType int
+
+const (
+	Item entityType = iota
+	Location
+	Feature
+)
+
 type socketResult struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	ShortName string `json:"shortName"`
-	Category  string `json:"category"`
+	ID        string     `json:"id"`
+	Name      string     `json:"name"`
+	ShortName string     `json:"shortName,omitempty"`
+	Parent    string     `json:"parent,omitempty"`
+	Type      entityType `json:"type"`
+}
+
+func newSearch(q string) *searchOperation {
+	return &searchOperation{
+		Keyword: q,
+		Results: make(chan []*socketResult, 1),
+	}
+}
+
+type searchOperation struct {
+	Keyword string
+	Results chan []*socketResult
+	Error   error
+	Tasks   sync.WaitGroup
+	sync.RWMutex
+}
+
+func (sq *searchOperation) Close() {
+	go func() {
+		sq.Tasks.Wait()
+		close(sq.Results)
+	}()
+}
+
+func (sq *searchOperation) Items() {
+	defer sq.Tasks.Done()
+
+	result, err := item.GetItemsBySearch(sq.Keyword, 5)
+	if err != nil {
+		sq.Lock()
+		sq.Error = err
+		sq.Unlock()
+		return
+	}
+
+	items := result.GetEntities()
+
+	rs := make([]*socketResult, len(items))
+	for i, r := range items {
+		cat, err := item.KindToCategory(r.GetKind())
+		if err != nil {
+			sq.Lock()
+			sq.Error = err
+			sq.Unlock()
+			return
+		}
+
+		rs[i] = &socketResult{
+			ID:        r.GetID(),
+			Name:      r.GetName(),
+			ShortName: r.GetShortName(),
+			Parent:    strings.ReplaceAll(cat, " ", "-"),
+			Type:      Item,
+		}
+	}
+
+	sq.Results <- rs
+}
+
+func (sq *searchOperation) Locations() {
+	defer sq.Tasks.Done()
+
+	result, err := location.GetLocationsByText(sq.Keyword, 5)
+	if err != nil {
+		sq.Lock()
+		sq.Error = err
+		sq.Unlock()
+		return
+	}
+
+	items := result.Items
+
+	rs := make([]*socketResult, len(items))
+	for i, r := range items {
+		rs[i] = &socketResult{
+			ID:   r.ID,
+			Name: r.Name,
+			Type: Location,
+		}
+	}
+
+	sq.Results <- rs
+}
+
+func (sq *searchOperation) Features(lID string) {
+	defer sq.Tasks.Done()
+
+	result, err := feature.GetFeaturesByText(sq.Keyword, lID, 5)
+	if err != nil {
+		sq.Lock()
+		sq.Error = err
+		sq.Unlock()
+		return
+	}
+
+	items := result.Items
+
+	rs := make([]*socketResult, len(items))
+	for i, r := range items {
+		rs[i] = &socketResult{
+			ID:     r.ID,
+			Name:   r.Name,
+			Parent: r.Group,
+			Type:   Feature,
+		}
+	}
+
+	sq.Results <- rs
 }
 
 func (s *socket) read(remote string) {
@@ -212,7 +335,7 @@ func (s *socket) read(remote string) {
 		go func() {
 			res := &socketResponse{ID: req.ID}
 
-			q := req.Text
+			q := req.Keyword
 
 			if err := validateKeyword(q); err != nil {
 				res.Error = err
@@ -226,8 +349,28 @@ func (s *socket) read(remote string) {
 				return
 			}
 
-			result, err := item.GetItemsBySearch(q, 5)
-			if err != nil {
+			search := newSearch(q)
+
+			if req.Items {
+				search.Tasks.Add(1)
+				go search.Items()
+			}
+			if req.Locations {
+				search.Tasks.Add(1)
+				go search.Locations()
+			}
+			if req.Features {
+				search.Tasks.Add(1)
+				go search.Features(req.Location)
+			}
+
+			search.Close()
+
+			for r := range search.Results {
+				res.Items = append(res.Items, r...)
+			}
+
+			if err := search.Error; err != nil {
 				logger.Error(err)
 
 				var msg []byte
@@ -243,25 +386,6 @@ func (s *socket) read(remote string) {
 				}
 
 				return
-			}
-
-			items := result.GetEntities()
-
-			res.Items = make([]*socketResult, len(items))
-			for i, r := range items {
-				cat, err := item.KindToCategory(r.GetKind())
-				if err != nil {
-					res.Error = err
-					s.Send <- res
-					return
-				}
-
-				res.Items[i] = &socketResult{
-					ID:        r.GetID(),
-					Name:      r.GetName(),
-					ShortName: r.GetShortName(),
-					Category:  strings.ReplaceAll(cat, " ", "-"),
-				}
 			}
 
 			select {
@@ -308,7 +432,7 @@ func searchByText(kw string, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	view.Render("list", p.ItemResult(result, kw, true), w)
+	view.RenderHTML("list", p.ItemResult(result, kw, true), w)
 }
 
 func getOperator(q string) (operator string, query string) {

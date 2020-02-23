@@ -10,5 +10,5 @@ import (
 )
 
 func AboutGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	view.Render("about", model.CreatePage(r.URL), w)
+	view.RenderHTML("about", model.CreatePage(r.URL), w)
 }

@@ -1,4 +1,13 @@
 {{ define "content" }}
-      <div id="map" data-id="{{ .Location.ID }}"></div>
+      <div class="nav">
+        <form id="search" class="search">
+          <input type="search" name="query" placeholder="Search..." minlength="2" pattern=".{2,32}" maxlength="32" autocomplete="off">
+          <div class="suggestion hide"><ul></ul></div>
+        </form>
+        <div id="layers" class="layers"><div class="icon"></div></div>
+      </div>
+
       <div hidden id="dragMarker" class="drag-marker" title="Movable and shareable marker.&#13;Copy the URL to share with friends"></div>
+
+      <div id="map" data-id="{{ .Location.ID }}"></div>
 {{ end }}

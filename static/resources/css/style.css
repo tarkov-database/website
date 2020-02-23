@@ -457,6 +457,10 @@ header .search {
   background-image: url("../img/location.svg");
 }
 
+.icon.feature {
+  background-image: url("../img/feature.svg");
+}
+
 .icon.interactive-maps {
   background-image: url("../img/interactive-maps.svg");
 }

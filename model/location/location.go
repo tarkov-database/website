@@ -82,3 +82,24 @@ func GetLocations(opts *api.Options) (*LocationResult, error) {
 
 	return result, nil
 }
+
+func GetLocationsByText(txt string, limit int) (*LocationResult, error) {
+	opts := &api.Options{
+		Sort:  "",
+		Limit: limit,
+		Filter: map[string]string{
+			"text": txt,
+		},
+	}
+
+	result := &LocationResult{}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
+	if err := api.GET(ctx, "/location", opts, result); err != nil {
+		return result, err
+	}
+
+	return result, nil
+}

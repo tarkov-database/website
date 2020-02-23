@@ -17,5 +17,5 @@ func IndexGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
-	view.Render("index", p.GetIndex(), w)
+	view.RenderHTML("index", p.GetIndex(), w)
 }

@@ -39,7 +39,7 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		tmpl = fmt.Sprintf("item_%v", kind)
 	}
 
-	view.Render(tmpl, p.Item(entity), w)
+	view.RenderHTML(tmpl, p.Item(entity), w)
 }
 
 func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -107,5 +107,5 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		tmpl = "list"
 	}
 
-	view.Render(tmpl, data, w)
+	view.RenderHTML(tmpl, data, w)
 }

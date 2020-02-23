@@ -1,3 +1,4 @@
+let map = {};
 
 const openTab = (evt, tabName) => { // eslint-disable-line
   const tabcontent = document.getElementsByClassName('tab');
@@ -19,11 +20,11 @@ const loadImage = async () => {
   const image = document.getElementById('itemImage');
   if (image === null) return;
 
-  const staticURL = function() {
+  const staticURL = (() => {
     const host = window.location.host;
     const parts = host.split('.');
     return `//static.${parts.length > 2 ? [parts[parts.length-2], parts[parts.length-1]].join('.'): host}`;
-  }();
+  })();
   const imageID = image.dataset.id;
   const request = new Request(`${staticURL}/image/icon/1-1/${imageID}.png`);
 
@@ -35,10 +36,8 @@ const loadImage = async () => {
     const img = new Image();
     img.src = objectURL;
     img.onload = () => {
-      const imgWidth = img.naturalWeight;
-      const imgHeight = img.naturalHeight;
-      const boxWidth = image.boxWidth;
-      const boxHeight = image.offsetHeight;
+      const imgWidth = img.naturalWeight, imgHeight = img.naturalHeight;
+      const boxWidth = image.boxWidth, boxHeight = image.offsetHeight;
 
       if (imgHeight > boxHeight || imgWidth > boxWidth) image.style.backgroundSize = 'contain';
 
@@ -116,6 +115,7 @@ const sortTables = () => {
 };
 
 sortTables();
+
 
 const initSearchSocket = async() => {
   const form = document.getElementById('search');
@@ -216,7 +216,7 @@ const initSearchSocket = async() => {
 
     const ul = sugg.querySelector('ul');
 
-    if (data.items.length === 0) {
+    if (!data.items || data.items.length === 0) {
       hideSuggestions();
       return;
     }
@@ -230,10 +230,6 @@ const initSearchSocket = async() => {
       const text = document.createElement('span');
       const div = document.createElement('div');
 
-      div.innerHTML = '&nbsp;';
-      div.className = `icon ${item.category}`;
-      a.appendChild(div);
-
       const highlightMatches = str => {
         const re = new RegExp(`(${keywords})`, 'gi');
         const matches = str.match(re);
@@ -244,12 +240,30 @@ const initSearchSocket = async() => {
       };
 
       text.innerHTML = highlightMatches(item.name);
-      a.append(text);
-
       a.title = item.name;
-      a.href = `/item/${item.category}/${item.id}`;
-      li.appendChild(a);
 
+      switch (item.type) {
+      case 0:
+        a.href = `/item/${item.parent}/${item.id}`;
+        div.className = `icon ${item.parent}`;
+        break;
+      case 1:
+        a.href = `/location/${item.id}`;
+        a.href += window.location.pathname.endsWith('/map') ? '/map': '';
+        div.className = 'icon location';
+        break;
+      case 2:
+        a.addEventListener('click', async () => map.flyToFeature(await map.getFeature(item.id, item.parent)));
+        a.href = `#feature=${item.id}`;
+        div.className = 'icon feature';
+        break;
+      }
+
+      div.innerHTML = '&nbsp;';
+
+      a.appendChild(div);
+      a.append(text);
+      li.appendChild(a);
       newUl.appendChild(li);
     }
 
@@ -279,10 +293,23 @@ const initSearchSocket = async() => {
 
     qCount++;
 
-    const data = {
+    let data = {
       id: qCount,
-      text: val
+      keyword: val
     };
+
+    if (map.locationID) {
+      Object.assign(data, {
+        location: map.locationID,
+        locations: true,
+        features: true
+      });
+    } else {
+      Object.assign(data, {
+        items: true,
+        locations: true
+      });
+    }
 
     keyword = val;
 
@@ -305,3 +332,18 @@ const initSearchSocket = async() => {
 };
 
 initSearchSocket();
+
+
+const initMap = async () => {
+  const el = document.getElementById('map');
+  if (el === null) return;
+
+  try {
+    map = await import('./map.js');
+    await map.init(el);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+initMap();
