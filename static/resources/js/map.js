@@ -1,5 +1,4 @@
 /* global mapboxgl */
-'use strict';
 
 const loadJSON = async addr => {
   const req = new Request(addr);

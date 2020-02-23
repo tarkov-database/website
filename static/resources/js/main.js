@@ -1,4 +1,3 @@
-'use strict';
 
 const openTab = (evt, tabName) => { // eslint-disable-line
   const tabcontent = document.getElementsByClassName('tab');

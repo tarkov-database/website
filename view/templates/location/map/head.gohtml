@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="{{ appendStaticHash "/resources/css/mapbox-gl.css" }}">
 
     <!-- Scripts -->
-    <script src="{{ appendStaticHash "/resources/js/mapbox/mapbox-gl-csp.js" }}"></script>
+    <script type="module" src="{{ appendStaticHash "/resources/js/mapbox/mapbox-gl-csp.js" }}"></script>
+    <script type="module" src="{{ appendStaticHash "/resources/js/map.js" }}"></script>
+    <script type="module" src="{{ appendStaticHash "/resources/js/main.js" }}"></script>
 
     <!-- Misc -->
     <link rel="icon" type="image/svg+xml" href="{{ appendStaticHash "/resources/img/logo.svg" }}" sizes="any">

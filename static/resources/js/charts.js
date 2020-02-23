@@ -1,5 +1,4 @@
 /* global Chart */
-'use strict';
 
 const bgMainColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-main-color');
 const fontMainColor = getComputedStyle(document.documentElement).getPropertyValue('--font-main-color');
