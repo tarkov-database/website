@@ -7,15 +7,15 @@ const (
 type Melee struct {
 	Item `bson:",inline"`
 
-	Slash MeleeAttack `json:"slash" bson:"slash"`
-	Stab  MeleeAttack `json:"stab" bson:"stab"`
+	Slash MeleeAttack `json:"slash"`
+	Stab  MeleeAttack `json:"stab"`
 }
 
 type MeleeAttack struct {
-	Damage      float64 `json:"damage" bson:"damage"`
-	Rate        float64 `json:"rate" bson:"rate"`
-	Range       float64 `json:"range" bson:"range"`
-	Consumption float64 `json:"consumption" bson:"consumption"`
+	Damage      float64 `json:"damage"`
+	Rate        float64 `json:"rate"`
+	Range       float64 `json:"range"`
+	Consumption float64 `json:"consumption"`
 }
 
 type MeleeResult struct {

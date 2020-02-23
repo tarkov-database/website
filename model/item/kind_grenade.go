@@ -7,14 +7,14 @@ const (
 type Grenade struct {
 	Item `bson:",inline"`
 
-	Type              string  `json:"type" bson:"type"`
-	Delay             float64 `json:"delay" bson:"delay"`
-	FragmentCount     float64 `json:"fragCount" bson:"fragCount"`
-	MinDistance       float64 `json:"minDistance" bson:"minDistance"`
-	MaxDistance       float64 `json:"maxDistance" bson:"maxDistance"`
-	ContusionDistance float64 `json:"contusionDistance" bson:"contusionDistance"`
-	Strength          float64 `json:"strength" bson:"strength"`
-	EmitTime          float64 `json:"emitTime" bson:"emitTime"`
+	Type              string  `json:"type"`
+	Delay             float64 `json:"delay"`
+	FragmentCount     float64 `json:"fragCount"`
+	MinDistance       float64 `json:"minDistance"`
+	MaxDistance       float64 `json:"maxDistance"`
+	ContusionDistance float64 `json:"contusionDistance"`
+	Strength          float64 `json:"strength"`
+	EmitTime          float64 `json:"emitTime"`
 }
 
 type GrenadeResult struct {

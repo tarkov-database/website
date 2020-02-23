@@ -8,14 +8,14 @@ import (
 )
 
 type Index struct {
-	Total    int64                 `json:"total" bson:"total"`
-	Modified timestamp             `json:"modified" bson:"modified"`
-	Kinds    map[string]*KindStats `json:"kinds" bson:"kinds"`
+	Total    int64                 `json:"total"`
+	Modified timestamp             `json:"modified"`
+	Kinds    map[string]*KindStats `json:"kinds"`
 }
 
 type KindStats struct {
-	Count    int64     `json:"count" bson:"count"`
-	Modified timestamp `json:"modified" bson:"modified"`
+	Count    int64     `json:"count"`
+	Modified timestamp `json:"modified"`
 }
 
 func GetIndex(skipKinds bool) (*Index, error) {

@@ -7,10 +7,10 @@ const (
 type Food struct {
 	Item `bson:",inline"`
 
-	Type      string  `json:"type" bson:"type"`
-	Resources int64   `json:"resources" bson:"resources"`
-	UseTime   float64 `json:"useTime" bson:"useTime"`
-	Effects   Effects `json:"effects" bson:"effects"`
+	Type      string  `json:"type"`
+	Resources int64   `json:"resources"`
+	UseTime   float64 `json:"useTime"`
+	Effects   Effects `json:"effects"`
 }
 
 type FoodResult struct {

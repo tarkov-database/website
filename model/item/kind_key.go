@@ -7,7 +7,7 @@ const (
 type Key struct {
 	Item `bson:",inline"`
 
-	Location string `json:"location" bson:"location"`
+	Location string `json:"location"`
 }
 
 type KeyResult struct {

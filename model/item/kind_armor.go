@@ -7,12 +7,12 @@ const (
 type Armor struct {
 	Item `bson:",inline"`
 
-	Type          string    `json:"type" bson:"type"`
-	Armor         ArmorProp `json:"armor" bson:"armor"`
-	Penalties     Penalties `json:"penalties" bson:"penalties"`
-	Blocking      []string  `json:"blocking" bson:"blocking"`
-	Slots         Slots     `json:"slots" bson:"slots"`
-	Compatibility ItemList  `json:"compatibility" bson:"compatibility"`
+	Type          string    `json:"type"`
+	Armor         ArmorProp `json:"armor"`
+	Penalties     Penalties `json:"penalties"`
+	Blocking      []string  `json:"blocking"`
+	Slots         Slots     `json:"slots"`
+	Compatibility ItemList  `json:"compatibility"`
 }
 
 type ArmorResult struct {
@@ -34,14 +34,14 @@ func (r *ArmorResult) GetEntities() []Entity {
 }
 
 type ArmorProp struct {
-	Class           int64         `json:"class" bson:"class"`
-	Durability      float64       `json:"durability" bson:"durability"`
-	Material        ArmorMaterial `json:"material" bson:"material"`
-	BluntThroughput float64       `json:"bluntThroughput" bson:"bluntThroughput"`
-	Zones           []string      `json:"zones" bson:"zones"`
+	Class           int64         `json:"class"`
+	Durability      float64       `json:"durability"`
+	Material        ArmorMaterial `json:"material"`
+	BluntThroughput float64       `json:"bluntThroughput"`
+	Zones           []string      `json:"zones"`
 }
 
 type ArmorMaterial struct {
-	Name            string  `json:"name" bson:"name"`
-	Destructibility float64 `json:"destructibility" bson:"destructibility"`
+	Name            string  `json:"name"`
+	Destructibility float64 `json:"destructibility"`
 }

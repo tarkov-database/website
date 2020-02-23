@@ -7,19 +7,19 @@ const (
 type Firearm struct {
 	Item `bson:",inline"`
 
-	Type              string   `json:"type" bson:"type"`
-	Class             string   `json:"class" bson:"class"`
-	Caliber           string   `json:"caliber" bson:"caliber"`
-	RateOfFire        int64    `json:"rof" bson:"rof"`
-	Action            string   `json:"action" bson:"action"`
-	Modes             []string `json:"modes" bson:"modes"`
-	Velocity          float64  `json:"velocity" bson:"velocity"`
-	EffectiveDistance int64    `json:"effectiveDist" bson:"effectiveDist"`
-	Ergonomics        float64  `json:"ergonomicsFP" bson:"ergonomicsFP"`
-	FoldRectractable  bool     `json:"foldRectractable" bson:"foldRectractable"`
-	RecoilVertical    int64    `json:"recoilVertical" bson:"recoilVertical"`
-	RecoilHorizontal  int64    `json:"recoilHorizontal" bson:"recoilHorizontal"`
-	Slots             Slots    `json:"slots" bson:"slots"`
+	Type              string   `json:"type"`
+	Class             string   `json:"class"`
+	Caliber           string   `json:"caliber"`
+	RateOfFire        int64    `json:"rof"`
+	Action            string   `json:"action"`
+	Modes             []string `json:"modes"`
+	Velocity          float64  `json:"velocity"`
+	EffectiveDistance int64    `json:"effectiveDist"`
+	Ergonomics        float64  `json:"ergonomicsFP"`
+	FoldRectractable  bool     `json:"foldRectractable"`
+	RecoilVertical    int64    `json:"recoilVertical"`
+	RecoilHorizontal  int64    `json:"recoilHorizontal"`
+	Slots             Slots    `json:"slots"`
 }
 
 type FirearmResult struct {

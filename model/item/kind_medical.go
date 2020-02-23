@@ -7,11 +7,11 @@ const (
 type Medical struct {
 	Item `bson:",inline"`
 
-	Type         string  `json:"type" bson:"type"`
-	Resources    int64   `json:"resources" bson:"resources"`
-	ResourceRate int64   `json:"resourceRate" bson:"resourceRate"`
-	UseTime      float64 `json:"useTime" bson:"useTime"`
-	Effects      Effects `json:"effects" bson:"effects"`
+	Type         string  `json:"type"`
+	Resources    int64   `json:"resources"`
+	ResourceRate int64   `json:"resourceRate"`
+	UseTime      float64 `json:"useTime"`
+	Effects      Effects `json:"effects"`
 }
 
 type MedicalResult struct {

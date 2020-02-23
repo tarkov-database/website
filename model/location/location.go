@@ -14,17 +14,17 @@ type timestamp = api.Timestamp
 
 // Location describes the entity of a location
 type Location struct {
-	ID             objectID  `json:"_id" bson:"_id"`
-	Name           string    `json:"name" bson:"name"`
-	Description    string    `json:"description" bson:"description"`
-	MinimumPlayers int64     `json:"minPlayers" bson:"minPlayers"`
-	MaximumPlayers int64     `json:"maxPlayers" bson:"maxPlayers"`
-	EscapeTime     int64     `json:"escapeTime" bson:"escapeTime"`
-	Insurance      bool      `json:"insurance" bson:"insurance"`
-	Available      bool      `json:"available" bson:"available"`
-	Exits          []Exit    `json:"exits" bson:"exits"`
-	Bosses         []Boss    `json:"bosses" bson:"bosses"`
-	Modified       timestamp `json:"_modified" bson:"_modified"`
+	ID             objectID  `json:"_id"`
+	Name           string    `json:"name"`
+	Description    string    `json:"description"`
+	MinimumPlayers int64     `json:"minPlayers"`
+	MaximumPlayers int64     `json:"maxPlayers"`
+	EscapeTime     int64     `json:"escapeTime"`
+	Insurance      bool      `json:"insurance"`
+	Available      bool      `json:"available"`
+	Exits          []Exit    `json:"exits"`
+	Bosses         []Boss    `json:"bosses"`
+	Modified       timestamp `json:"_modified"`
 }
 
 type LocationResult struct {
@@ -34,21 +34,21 @@ type LocationResult struct {
 
 // Exit describes an exit of a location
 type Exit struct {
-	Name             string  `json:"name" bson:"name"`
-	Description      string  `json:"description" bson:"description"`
-	Chance           float64 `json:"chance" bson:"chance"`
-	MinimumTime      int64   `json:"minTime" bson:"minTime"`
-	MaximumTime      int64   `json:"maxTime" bson:"maxTime"`
-	ExfiltrationTime int64   `json:"exfilTime" bson:"exfilTime"`
-	Requirement      string  `json:"requirement,omitempty" bson:"requirement,omitempty"`
+	Name             string  `json:"name"`
+	Description      string  `json:"description"`
+	Chance           float64 `json:"chance"`
+	MinimumTime      int64   `json:"minTime"`
+	MaximumTime      int64   `json:"maxTime"`
+	ExfiltrationTime int64   `json:"exfilTime"`
+	Requirement      string  `json:"requirement,omitempty"`
 }
 
 // Boss describes a boss of a location
 type Boss struct {
-	Name        string  `json:"name" bson:"name"`
-	Description string  `json:"description" bson:"description"`
-	Chance      float64 `json:"chance" bson:"chance"`
-	Followers   int64   `json:"followers" bson:"followers"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Chance      float64 `json:"chance"`
+	Followers   int64   `json:"followers"`
 }
 
 const defaultSort = "name"

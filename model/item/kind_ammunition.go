@@ -7,19 +7,19 @@ const (
 type Ammunition struct {
 	Item `bson:",inline"`
 
-	Caliber             string         `json:"caliber" bson:"caliber"`
-	Type                string         `json:"type" bson:"type"`
-	Tracer              bool           `json:"tracer" bson:"tracer"`
-	TracerColor         string         `json:"tracerColor" bson:"tracerColor"`
-	Subsonic            bool           `json:"subsonic" bson:"subsonic"`
-	Velocity            float64        `json:"velocity" bson:"velocity"`
-	BallisticCoeficient float64        `json:"ballisticCoef" bson:"ballisticCoef"`
-	Damage              float64        `json:"damage" bson:"damage"`
-	Penetration         float64        `json:"penetration" bson:"penetration"`
-	ArmorDamage         float64        `json:"armorDamage" bson:"armorDamage"`
-	Fragmentation       AmmoFrag       `json:"fragmentation" bson:"fragmentation"`
-	Projectiles         int64          `json:"projectiles" bson:"projectiles"`
-	WeaponModifier      WeaponModifier `json:"weaponModifier" bson:"weaponModifier"`
+	Caliber             string         `json:"caliber"`
+	Type                string         `json:"type"`
+	Tracer              bool           `json:"tracer"`
+	TracerColor         string         `json:"tracerColor"`
+	Subsonic            bool           `json:"subsonic"`
+	Velocity            float64        `json:"velocity"`
+	BallisticCoeficient float64        `json:"ballisticCoef"`
+	Damage              float64        `json:"damage"`
+	Penetration         float64        `json:"penetration"`
+	ArmorDamage         float64        `json:"armorDamage"`
+	Fragmentation       AmmoFrag       `json:"fragmentation"`
+	Projectiles         int64          `json:"projectiles"`
+	WeaponModifier      WeaponModifier `json:"weaponModifier"`
 }
 
 type AmmunitionResult struct {
@@ -41,12 +41,12 @@ func (r *AmmunitionResult) GetEntities() []Entity {
 }
 
 type AmmoFrag struct {
-	Chance float64 `json:"chance" bson:"chance"`
-	Min    int64   `json:"min" bson:"min"`
-	Max    int64   `json:"max" bson:"max"`
+	Chance float64 `json:"chance"`
+	Min    int64   `json:"min"`
+	Max    int64   `json:"max"`
 }
 
 type WeaponModifier struct {
-	Accuracy float64 `json:"accuracy" bson:"accuracy"`
-	Recoil   float64 `json:"recoil" bson:"recoil"`
+	Accuracy float64 `json:"accuracy"`
+	Recoil   float64 `json:"recoil"`
 }

@@ -7,10 +7,10 @@ const (
 type Clothing struct {
 	Item `bson:",inline"`
 
-	Type      string    `json:"type" bson:"type"`
-	Blocking  []string  `json:"blocking" bson:"blocking"`
-	Penalties Penalties `json:"penalties" bson:"penalties"`
-	Slots     Slots     `json:"slots" bson:"slots"`
+	Type      string    `json:"type"`
+	Blocking  []string  `json:"blocking"`
+	Penalties Penalties `json:"penalties"`
+	Slots     Slots     `json:"slots"`
 }
 
 type ClothingResult struct {

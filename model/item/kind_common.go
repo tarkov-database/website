@@ -5,17 +5,17 @@ type ItemList map[Kind][]objectID
 const KindCommon Kind = "common"
 
 type Item struct {
-	ID          objectID       `json:"_id" bson:"_id"`
-	Name        string         `json:"name" bson:"name"`
-	ShortName   string         `json:"shortName" bson:"shortName"`
-	Description string         `json:"description" bson:"description"`
-	Price       int64          `json:"price" bson:"price"`
-	Weight      float64        `json:"weight" bson:"weight"`
-	MaxStack    int64          `json:"maxStack" bson:"maxStack"`
-	Rarity      string         `json:"rarity" bson:"rarity"`
-	Grid        GridProperties `json:"grid" bson:"grid"`
-	Modified    timestamp      `json:"_modified" bson:"_modified"`
-	Kind        Kind           `json:"_kind" bson:"_kind"`
+	ID          objectID       `json:"_id"`
+	Name        string         `json:"name"`
+	ShortName   string         `json:"shortName"`
+	Description string         `json:"description"`
+	Price       int64          `json:"price"`
+	Weight      float64        `json:"weight"`
+	MaxStack    int64          `json:"maxStack"`
+	Rarity      string         `json:"rarity"`
+	Grid        GridProperties `json:"grid"`
+	Modified    timestamp      `json:"_modified"`
+	Kind        Kind           `json:"_kind"`
 }
 
 func (i Item) GetID() objectID {
@@ -57,19 +57,19 @@ func (r *ItemResult) GetEntities() []Entity {
 }
 
 type GridProperties struct {
-	Color  RGBA  `json:"color" bson:"color"`
-	Height int64 `json:"height" bson:"height"`
-	Width  int64 `json:"width" bson:"width"`
+	Color  RGBA  `json:"color"`
+	Height int64 `json:"height"`
+	Width  int64 `json:"width"`
 }
 
 type GridModifier struct {
-	Height int64 `json:"height" bson:"height"`
-	Width  int64 `json:"width" bson:"width"`
+	Height int64 `json:"height"`
+	Width  int64 `json:"width"`
 }
 
 type RGBA struct {
-	R uint `json:"r" bson:"r"`
-	G uint `json:"g" bson:"g"`
-	B uint `json:"b" bson:"b"`
-	A uint `json:"a" bson:"a"`
+	R uint `json:"r"`
+	G uint `json:"g"`
+	B uint `json:"b"`
+	A uint `json:"a"`
 }

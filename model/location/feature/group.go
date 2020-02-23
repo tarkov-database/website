@@ -10,12 +10,12 @@ import (
 
 // Group ...
 type Group struct {
-	ID          objectID  `json:"_id" bson:"_id"`
-	Name        string    `json:"name" bson:"name"`
-	Description string    `json:"description" bson:"description"`
-	Tags        []string  `json:"tags" bson:"tags"`
-	Location    objectID  `json:"_location" bson:"_location"`
-	Modified    timestamp `json:"_modified" bson:"_modified"`
+	ID          objectID  `json:"_id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Tags        []string  `json:"tags"`
+	Location    objectID  `json:"_location"`
+	Modified    timestamp `json:"_modified"`
 }
 
 type GroupResult struct {

@@ -24,14 +24,14 @@ const (
 type Modification struct {
 	Item `bson:",inline"`
 
-	Ergonomics    float64      `json:"ergonomicsFP" bson:"ergonomicsFP"`
-	Accuracy      float64      `json:"accuracy" bson:"accuracy"`
-	Recoil        float64      `json:"recoil" bson:"recoil"`
-	RaidModdable  int64        `json:"raidModdable" bson:"raidModdable"`
-	GridModifier  GridModifier `json:"gridModifier" bson:"gridModifier"`
-	Slots         Slots        `json:"slots" bson:"slots"`
-	Compatibility ItemList     `json:"compatibility" bson:"compatibility"`
-	Conflicts     ItemList     `json:"conflicts" bson:"conflicts"`
+	Ergonomics    float64      `json:"ergonomicsFP"`
+	Accuracy      float64      `json:"accuracy"`
+	Recoil        float64      `json:"recoil"`
+	RaidModdable  int64        `json:"raidModdable"`
+	GridModifier  GridModifier `json:"gridModifier"`
+	Slots         Slots        `json:"slots"`
+	Compatibility ItemList     `json:"compatibility"`
+	Conflicts     ItemList     `json:"conflicts"`
 }
 
 type ModificationResult struct {
@@ -57,9 +57,9 @@ func (r *ModificationResult) GetEntities() []Entity {
 type Barrel struct {
 	Modification `bson:",inline"`
 
-	Length     float64 `json:"length" bson:"length"`
-	Velocity   float64 `json:"velocity" bson:"velocity"`
-	Suppressor bool    `json:"suppressor" bson:"suppressor"`
+	Length     float64 `json:"length"`
+	Velocity   float64 `json:"velocity"`
+	Suppressor bool    `json:"suppressor"`
 }
 
 type BarrelResult struct {
@@ -127,8 +127,8 @@ func (r *ChargeResult) GetEntities() []Entity {
 type Device struct {
 	Modification `bson:",inline"`
 
-	Type  string   `json:"type" bson:"type"`
-	Modes []string `json:"modes" bson:"modes"`
+	Type  string   `json:"type"`
+	Modes []string `json:"modes"`
 }
 
 type DeviceResult struct {
@@ -218,7 +218,7 @@ func (r *HandguardResult) GetEntities() []Entity {
 type Launcher struct {
 	Modification `bson:",inline"`
 
-	Caliber string `json:"caliber" bson:"caliber"`
+	Caliber string `json:"caliber"`
 }
 
 type LauncherResult struct {
@@ -264,8 +264,8 @@ func (r *MountResult) GetEntities() []Entity {
 type Muzzle struct {
 	Modification `bson:",inline"`
 
-	Type     string  `json:"type" bson:"type"`
-	Velocity float64 `json:"velocity" bson:"velocity"`
+	Type     string  `json:"type"`
+	Velocity float64 `json:"velocity"`
 }
 
 type MuzzleResult struct {
@@ -311,7 +311,7 @@ func (r *PistolGripResult) GetEntities() []Entity {
 type Receiver struct {
 	Modification `bson:",inline"`
 
-	Velocity float64 `json:"velocity" bson:"velocity"`
+	Velocity float64 `json:"velocity"`
 }
 
 type ReceiverResult struct {
@@ -335,10 +335,10 @@ func (r *ReceiverResult) GetEntities() []Entity {
 type Sight struct {
 	Modification `bson:",inline"`
 
-	Type          string   `json:"type" bson:"type"`
-	Magnification []string `json:"magnification" bson:"magnification"`
-	VariableZoom  bool     `json:"variableZoom" bson:"variableZoom"`
-	ZeroDistances []int64  `json:"zeroDistances" bson:"zeroDistances"`
+	Type          string   `json:"type"`
+	Magnification []string `json:"magnification"`
+	VariableZoom  bool     `json:"variableZoom"`
+	ZeroDistances []int64  `json:"zeroDistances"`
 }
 
 type SightResult struct {
@@ -385,7 +385,7 @@ func (r *SightSpecialResult) GetEntities() []Entity {
 type Stock struct {
 	Modification `bson:",inline"`
 
-	FoldRectractable bool `json:"foldRectractable" bson:"foldRectractable"`
+	FoldRectractable bool `json:"foldRectractable"`
 }
 
 type StockResult struct {
@@ -411,7 +411,7 @@ func (r *StockResult) GetEntities() []Entity {
 type Goggles struct {
 	Modification `bson:",inline"`
 
-	Type string `json:"type" bson:"type"`
+	Type string `json:"type"`
 }
 
 type GogglesResult struct {
@@ -458,7 +458,7 @@ func (r *GogglesSpecialResult) GetEntities() []Entity {
 // Properties //
 
 type OpticSpecial struct {
-	Modes []string `json:"modes" bson:"modes"`
-	Color RGBA     `json:"color" bson:"color"`
-	Noise string   `json:"noise" bson:"noise"`
+	Modes []string `json:"modes"`
+	Color RGBA     `json:"color"`
+	Noise string   `json:"noise"`
 }

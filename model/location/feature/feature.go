@@ -14,14 +14,14 @@ type timestamp = api.Timestamp
 
 // Feature ...
 type Feature struct {
-	ID         objectID               `json:"_id" bson:"_id"`
-	Name       string                 `json:"name" bson:"name"`
-	Type       FeatureType            `json:"type" bson:"type"`
-	Geometry   Geometry               `json:"geometry" bson:"geometry"`
-	Properties map[string]interface{} `json:"properties" bson:"properties"`
-	Group      objectID               `json:"group" bson:"group"`
-	Location   objectID               `json:"_location" bson:"_location"`
-	Modified   timestamp              `json:"_modified" bson:"_modified"`
+	ID         objectID               `json:"_id"`
+	Name       string                 `json:"name"`
+	Type       FeatureType            `json:"type"`
+	Geometry   Geometry               `json:"geometry"`
+	Properties map[string]interface{} `json:"properties"`
+	Group      objectID               `json:"group"`
+	Location   objectID               `json:"_location"`
+	Modified   timestamp              `json:"_modified"`
 }
 
 type FeatureResult struct {
