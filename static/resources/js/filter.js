@@ -3,6 +3,7 @@ const filterStatus = {
   'type': '',
   'class': '',
   'caliber': '',
+  'available': ''
 };
 
 const setFilter = (key, value) => {
@@ -77,12 +78,13 @@ const initFilters = () => {
     'type': [],
     'class': [],
     'caliber': [],
+    'available': []
   };
 
   const elements = list.querySelectorAll('li');
   for (const el of elements) {
-    for (const [key, value] of Object.entries(el.dataset)) {
-      if (key) filters[key].push(value);
+    for (let [key, value] of Object.entries(el.dataset)) {
+      if (filters[key]) filters[key].push(value);
     }
   }
 
@@ -119,7 +121,9 @@ const initFilters = () => {
 
       let title = name;
       if (prop === 'category' || prop === 'class' || prop === 'type') title = camelToTitle(title);
-      opt.innerHTML = `${title}`;
+      if (title === 'true') title = 'Yes';
+      if (title === 'false') title = 'No';
+      opt.innerHTML = title;
       opt.value = name;
 
       sel.appendChild(opt);
