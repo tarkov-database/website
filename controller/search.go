@@ -33,7 +33,7 @@ func SearchGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 const (
 	maxRemoteConns = 5
 
-	socketReadSize  = 96
+	socketReadSize  = 128
 	socketWriteSize = 768
 
 	socketReadDeadline  = 3 * time.Minute
