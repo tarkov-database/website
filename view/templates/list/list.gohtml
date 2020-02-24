@@ -10,14 +10,15 @@
         <ul id="list" class="items">
           {{ range .List }}
 
-          {{ if eq $.Type "item" }}
+          {{ if not $.IsSearch }}
+
+          {{ if eq $.Type.String "item" }}
           {{ $cat := kindToCategory .Kind }}
           <li data-category="{{ $cat | categoryToName }}"
-              {{ if not $.IsSearch }}
               {{ if eq .Kind "firearm" "armor" "grenade" "clothing" "medical" "food" "modificationGoggles" "modificationGogglesSpecial" "modificationSight" "modificationSightSpecial" "modificationMuzzle" "modificationDevice" }}data-type="{{ .Type }}"{{ end }}
               {{ if eq .Kind "ammunition" "magazine" "firearm" }}data-caliber="{{ .Caliber }}"{{ end }}
               {{ if eq .Kind "firearm" }}data-class="{{ .Class }}"{{ end }}
-              {{ if eq .Kind "armor" "tacticalrig" }}data-class="{{ .Armor.Class }}"{{ end }}{{ end }}>
+              {{ if eq .Kind "armor" "tacticalrig" }}data-class="{{ .Armor.Class }}"{{ end }}>
 
             <a title="{{ .Name }}" href="/item/{{ $cat }}/{{ .ID }}">
               <div class="icon {{ $cat }}" title="{{ $cat | categoryToName | toTitle }}">&nbsp;</div>
@@ -27,7 +28,7 @@
           </li>
           {{ end }}
 
-          {{ if eq $.Type "location" }}
+          {{ if eq $.Type.String "location" }}
           <li data-available="{{ .Available }}">
 
             <a title="{{ .Name }}" href="/location/{{ .ID }}">
@@ -39,9 +40,38 @@
           {{ end }}
 
           {{ else }}
+
+          {{ if eq .Type.String "item" }}
+          {{ $cat := .Parent }}
+          <li data-category="{{ $cat | categoryToName }}">
+
+            <a title="{{ .Name }}" href="/item/{{ $cat }}/{{ .ID }}">
+              <div class="icon {{ $cat }}" title="{{ $cat | categoryToName | toTitle }}">&nbsp;</div>
+              <span>{{ .ShortName }}</span>
+            </a>
+
+          </li>
+          {{ end }}
+
+          {{ if eq .Type.String "location" }}
+          <li data-category="Location">
+
+            <a title="{{ .Name }}" href="/location/{{ .ID }}">
+              <div class="icon location">&nbsp;</div>
+              <span>{{ .Name }}</span>
+            </a>
+
+          </li>
+          {{ end }}
+
+          {{ end }}
+
+          {{ else }}
+
           <div class="list no-results">
             No matches :-(
           </div>
+
           {{ end }}
         </ul>
 

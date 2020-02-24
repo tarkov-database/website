@@ -14,9 +14,6 @@ import (
 
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model"
-	"github.com/tarkov-database/website/model/item"
-	"github.com/tarkov-database/website/model/location"
-	"github.com/tarkov-database/website/model/location/feature"
 	"github.com/tarkov-database/website/view"
 
 	"github.com/google/logger"
@@ -129,133 +126,9 @@ type socketRequest struct {
 }
 
 type socketResponse struct {
-	ID    int64           `json:"id"`
-	Items []*socketResult `json:"items,omitempty"`
-	Error interface{}     `json:"error"`
-}
-
-type entityType int
-
-const (
-	Item entityType = iota
-	Location
-	Feature
-)
-
-type socketResult struct {
-	ID        string     `json:"id"`
-	Name      string     `json:"name"`
-	ShortName string     `json:"shortName,omitempty"`
-	Parent    string     `json:"parent,omitempty"`
-	Type      entityType `json:"type"`
-}
-
-func newSearch(q string) *searchOperation {
-	return &searchOperation{
-		Keyword: q,
-		Results: make(chan []*socketResult, 1),
-	}
-}
-
-type searchOperation struct {
-	Keyword string
-	Results chan []*socketResult
-	Error   error
-	Tasks   sync.WaitGroup
-	sync.RWMutex
-}
-
-func (sq *searchOperation) Close() {
-	go func() {
-		sq.Tasks.Wait()
-		close(sq.Results)
-	}()
-}
-
-func (sq *searchOperation) Items() {
-	defer sq.Tasks.Done()
-
-	result, err := item.GetItemsBySearch(sq.Keyword, 5)
-	if err != nil {
-		sq.Lock()
-		sq.Error = err
-		sq.Unlock()
-		return
-	}
-
-	items := result.GetEntities()
-
-	rs := make([]*socketResult, len(items))
-	for i, r := range items {
-		cat, err := item.KindToCategory(r.GetKind())
-		if err != nil {
-			sq.Lock()
-			sq.Error = err
-			sq.Unlock()
-			return
-		}
-
-		rs[i] = &socketResult{
-			ID:        r.GetID(),
-			Name:      r.GetName(),
-			ShortName: r.GetShortName(),
-			Parent:    strings.ReplaceAll(cat, " ", "-"),
-			Type:      Item,
-		}
-	}
-
-	sq.Results <- rs
-}
-
-func (sq *searchOperation) Locations() {
-	defer sq.Tasks.Done()
-
-	result, err := location.GetLocationsByText(sq.Keyword, 5)
-	if err != nil {
-		sq.Lock()
-		sq.Error = err
-		sq.Unlock()
-		return
-	}
-
-	items := result.Items
-
-	rs := make([]*socketResult, len(items))
-	for i, r := range items {
-		rs[i] = &socketResult{
-			ID:   r.ID,
-			Name: r.Name,
-			Type: Location,
-		}
-	}
-
-	sq.Results <- rs
-}
-
-func (sq *searchOperation) Features(lID string) {
-	defer sq.Tasks.Done()
-
-	result, err := feature.GetFeaturesByText(sq.Keyword, lID, 5)
-	if err != nil {
-		sq.Lock()
-		sq.Error = err
-		sq.Unlock()
-		return
-	}
-
-	items := result.Items
-
-	rs := make([]*socketResult, len(items))
-	for i, r := range items {
-		rs[i] = &socketResult{
-			ID:     r.ID,
-			Name:   r.Name,
-			Parent: r.Group,
-			Type:   Feature,
-		}
-	}
-
-	sq.Results <- rs
+	ID    int64                 `json:"id"`
+	Items []*model.SearchResult `json:"items,omitempty"`
+	Error interface{}           `json:"error"`
 }
 
 func (s *socket) read(remote string) {
@@ -349,7 +222,7 @@ func (s *socket) read(remote string) {
 				return
 			}
 
-			search := newSearch(q)
+			search := model.NewSearch(q, 5)
 
 			if req.Items {
 				search.Tasks.Add(1)
@@ -420,19 +293,26 @@ func (s *socket) write() {
 }
 
 func searchByText(kw string, w http.ResponseWriter, r *http.Request) {
-	result, err := item.GetItemsBySearch(kw, 60)
-	if err != nil {
-		getErrorStatus(err, w, r)
-		return
-	}
-
 	p, err := model.CreatePageWithAPI(r.URL)
 	if err != nil {
 		getErrorStatus(err, w, r)
 		return
 	}
 
-	view.RenderHTML("list", p.ItemResult(result, kw, true), w)
+	search := model.NewSearch(kw, 50)
+
+	search.Tasks.Add(2)
+	go search.Items()
+	go search.Locations()
+
+	search.Close()
+
+	result := make([]*model.SearchResult, 0)
+	for r := range search.Results {
+		result = append(result, r...)
+	}
+
+	view.RenderHTML("list", p.Result(result, kw), w)
 }
 
 func getOperator(q string) (operator string, query string) {

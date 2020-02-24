@@ -97,7 +97,7 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	data := p.ItemResult(result, kw, false)
+	data := p.Result(result, kw)
 
 	var tmpl string
 	switch r.URL.Query().Get("view") {

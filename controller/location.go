@@ -50,7 +50,7 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
-	data := p.LocationResult(result, "location", false)
+	data := p.Result(result, "location")
 
 	view.RenderHTML("list", data, w)
 }

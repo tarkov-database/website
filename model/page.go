@@ -14,11 +14,6 @@ import (
 	"github.com/google/logger"
 )
 
-const (
-	entityTypeItem     = "item"
-	entityTypeLocation = "location"
-)
-
 var host string
 
 func init() {
@@ -91,7 +86,7 @@ func (p *Page) Location(loc *location.Location) *LocationPage {
 
 type EntityList struct {
 	*Page
-	Type       string
+	Type       EntityType
 	IsSearch   bool
 	Keyword    string
 	TotalCount int64
@@ -99,6 +94,7 @@ type EntityList struct {
 	PageNumber int64
 	PageNext   *Pagination
 	PagePrev   *Pagination
+	List       interface{}
 }
 
 type Pagination struct {
@@ -165,48 +161,32 @@ func (l *EntityList) GetPagination() {
 	}
 }
 
-type ItemList struct {
-	*EntityList
-	List []item.Entity
-}
-
-func (p *Page) ItemResult(res item.EntityResult, kw string, search bool) *ItemList {
-	l := &ItemList{
-		EntityList: &EntityList{
-			Type:       entityTypeItem,
-			Page:       p,
-			IsSearch:   search,
-			Keyword:    kw,
-			TotalCount: res.GetCount(),
-			PageCount:  int64(len(res.GetEntities())),
-		},
-		List: res.GetEntities(),
+func (p *Page) Result(res interface{}, kw string) *EntityList {
+	el := &EntityList{
+		Page:    p,
+		Keyword: kw,
 	}
 
-	l.GetPagination()
-
-	return l
-}
-
-type LocationList struct {
-	*EntityList
-	List []location.Location
-}
-
-func (p *Page) LocationResult(res *location.LocationResult, kw string, search bool) *LocationList {
-	l := &LocationList{
-		EntityList: &EntityList{
-			Type:       entityTypeLocation,
-			Page:       p,
-			IsSearch:   search,
-			Keyword:    kw,
-			TotalCount: res.Count,
-			PageCount:  int64(len(res.Items)),
-		},
-		List: res.Items,
+	switch v := res.(type) {
+	case item.EntityResult:
+		list := v.GetEntities()
+		el.Type = Item
+		el.TotalCount = v.GetCount()
+		el.List = list
+		el.PageCount = int64(len(list))
+	case *location.LocationResult:
+		el.Type = Location
+		el.TotalCount = v.Count
+		el.List = v.Items
+		el.PageCount = int64(len(v.Items))
+	case []*SearchResult:
+		el.IsSearch = true
+		el.TotalCount = int64(len(v))
+		el.List = v
+		el.PageCount = el.TotalCount
 	}
 
-	l.GetPagination()
+	el.GetPagination()
 
-	return l
+	return el
 }
