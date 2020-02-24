@@ -27,7 +27,7 @@
 {{ define "sub_box" }}
       <div class="box sub">
         <ul class="tab-buttons">
-          {{ if .Item.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" onclick="openTab(event, 'slots')">Slots</li>{{ end }}
+          {{ if .Item.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" data-tab="slots">Slots</li>{{ end }}
         </ul>
 
         <ul class="tabs">

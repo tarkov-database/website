@@ -1,19 +1,30 @@
 let map = {};
 
-const openTab = (evt, tabName) => { // eslint-disable-line
-  const tabcontent = document.getElementsByClassName('tab');
-  for (const el of tabcontent) {
-    el.style.display = 'none';
-  }
+const registerTabs = () => {
+  const openTab = e => {
+    const tabcontent = document.getElementsByClassName('tab');
+    for (const el of tabcontent) {
+      el.style.display = 'none';
+    }
 
-  const clName = 'active';
+    const clName = 'active';
+    const tablinks = document.getElementsByClassName('tab-btn');
+    for (const el of tablinks) {
+      el.classList.remove(clName);
+    }
+
+    const el = e.currentTarget;
+    document.getElementById(el.dataset.tab).style.display = 'block';
+    el.classList.add(clName);
+  };
+
   const tablinks = document.getElementsByClassName('tab-btn');
   for (const el of tablinks) {
-    el.classList.remove(clName);
+    el.addEventListener('click', openTab);
   }
-  document.getElementById(tabName).style.display = 'block';
-  evt.currentTarget.classList.add(clName);
 };
+
+registerTabs();
 
 
 const loadImage = async () => {
