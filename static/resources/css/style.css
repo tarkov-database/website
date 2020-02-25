@@ -519,6 +519,7 @@ header form.search {
   display: none;
 }
 
+.s400,
 .s404,
 .s500,
 .s503 {

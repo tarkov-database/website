@@ -70,6 +70,7 @@ main {
   padding: .5rem;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0);
+  user-select: none;
 }
 
 .layers > .icon {

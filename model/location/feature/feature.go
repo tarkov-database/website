@@ -30,6 +30,10 @@ type FeatureResult struct {
 }
 
 func (r *FeatureResult) FeatureCollection() *FeatureCollection {
+	if len(r.Items) == 0 {
+		return &FeatureCollection{FeatureCollectionType, make([]Feature, 0)}
+	}
+
 	return &FeatureCollection{FeatureCollectionType, r.Items}
 }
 
@@ -54,6 +58,29 @@ func GetFeatures(lID objectID, opts *api.Options) (*FeatureResult, error) {
 	if opts.Sort == "" {
 		opts.Sort = defaultSort
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
+	if err := api.GET(ctx, fmt.Sprintf("/location/%s/feature", lID), opts, result); err != nil {
+		return result, err
+	}
+
+	return result, nil
+}
+
+func GetFeaturesByGroup(gID, lID objectID, opts *api.Options) (*FeatureResult, error) {
+	if opts.Filter == nil {
+		opts.Filter = make(map[string]string)
+	}
+
+	opts.Filter["group"] = gID
+
+	if opts.Sort == "" {
+		opts.Sort = defaultSort
+	}
+
+	result := &FeatureResult{}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()

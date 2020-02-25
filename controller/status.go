@@ -58,6 +58,18 @@ func statusServiceUnavailable(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func statusServiceBadRequest(w http.ResponseWriter, r *http.Request) {
+	status := http.StatusBadRequest
+
+	switch r.Header.Get("Content-Type") {
+	case "application/json", "application/geo+json":
+		view.RenderJSON(model.NewResponse("Bad Request", status), status, w)
+	default:
+		w.WriteHeader(status)
+		view.RenderHTML("status_400", model.CreatePage(r.URL), w)
+	}
+}
+
 func statusUnsupportedMediaType(w http.ResponseWriter, _ *http.Request) {
 	status := http.StatusUnsupportedMediaType
 	view.RenderJSON(model.NewResponse("Content type is not supported", status), status, w)

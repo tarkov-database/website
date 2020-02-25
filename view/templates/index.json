@@ -6,6 +6,13 @@
     "/header.gohtml",
     "/footer.gohtml"
   ],
+  "status_400": [
+    "/status/400.gohtml",
+    "/status/base.gohtml",
+    "/status/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
   "status_404": [
     "/status/404.gohtml",
     "/status/base.gohtml",

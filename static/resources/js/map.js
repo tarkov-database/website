@@ -3,6 +3,7 @@
 mapboxgl.workerUrl = '/resources/js/mapbox/mapbox-gl-csp-worker.js';
 
 let map = {};
+let loadedLayers = {};
 
 export let locationID = '';
 
@@ -95,8 +96,9 @@ const addLayer = (name, layer) => {
   map.on('mouseenter', id, e => {
     map.getCanvas().style.cursor = 'pointer';
 
-    const coordinates = e.features[0].geometry.coordinates.slice();
-    const content = `<center>${name}<br><b>${e.features[0].properties.title}</b></center>`;
+    const feature = e.features[0];
+    const coordinates = feature.geometry.coordinates.slice();
+    const content = `<center>${name}<br><b>${feature.properties.title || feature.name}</b></center>`;
 
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -112,9 +114,34 @@ const addLayer = (name, layer) => {
     map.getCanvas().style.cursor = '';
     popup.remove();
   });
+
+  loadedLayers[id] = {
+    id,
+    get: map.getLayer(id),
+    get visible() {
+      return map.getLayoutProperty(id, 'visibility') === 'visible';
+    },
+    toggleVisibility: function() {
+      if (!this.visible) {
+        map.setLayoutProperty(id, 'visibility', 'visible');
+        return true;
+      } else {
+        map.setLayoutProperty(id, 'visibility', 'none');
+        return false;
+      }
+    }
+  };
+
+  return loadedLayers[id];
 };
 
-const flyToPopup = new mapboxgl.Popup({
+const flyToCenter = () => {
+  const center = map.getCenter();
+  const zoom = 16.8;
+  map.flyTo({center, zoom});
+};
+
+const flyToFeaturePopup = new mapboxgl.Popup({
   closeButton: false,
   closeOnClick: true,
   closeOnMove: true
@@ -122,9 +149,16 @@ const flyToPopup = new mapboxgl.Popup({
 
 export const flyToFeature = async feature => {
   const layerID = feature.group;
-  const layer = map.getLayer(layerID);
-  if (layer && map.getLayoutProperty(layerID, 'visibility') === 'none') {
-    toggleLayerVisibility(layerID);
+  const layer = loadedLayers[layerID];
+
+  if (layer && !layer.visible) {
+    const sl = loadedLayers['search'];
+    if (sl && sl.visible) {
+      toggleSearchLayer();
+    } else {
+      layer.toggleVisibility();
+      setLayerUI(layer);
+    }
   }
 
   const lngLat = feature.geometry.coordinates.slice();
@@ -132,16 +166,16 @@ export const flyToFeature = async feature => {
 
   map.flyTo({center: lngLat, zoom});
 
-  const content = `<center><b>${feature.properties.title}</b></center>`;
+  const content = `<center><b>${feature.properties.title || feature.name}</b></center>`;
   map.once('moveend', layerID, () => {
-    flyToPopup
+    flyToFeaturePopup
       .setLngLat(lngLat)
       .setHTML(content)
       .addTo(map);
   });
 
   const removePopup = () => {
-    flyToPopup.remove();
+    flyToFeaturePopup.remove();
     map.off('mouseenter', layerID, removePopup);
   };
   map.on('mouseenter', layerID, removePopup);
@@ -181,17 +215,83 @@ export const getFeature = async (fID, gID) => {
   return data;
 };
 
-const toggleLayerVisibility = id => {
-  const el = document.querySelector(`#layers > .list input[name="${id}"]`);
-  const cl = 'active';
-  if (map.getLayoutProperty(id, 'visibility') !== 'visible') {
-    map.setLayoutProperty(id, 'visibility', 'visible');
-    el.checked = true;
-    el.parentElement.classList.add(cl);
+const getFeaturesByText = async keyword => {
+  const lID = locationID;
+
+  let data = {};
+  try {
+    const url = new URL(`/location/${lID}/feature`, window.location.href);
+    url.search = new URLSearchParams({text: keyword});
+    const req = new APIRequest(url);
+    data = await req.geojson();
+  } catch (err) {
+    return Promise.reject(err);
+  }
+
+  const id = 'search';
+
+  let search = loadedLayers[id];
+  if (search) {
+    map.getSource(id).setData(data);
   } else {
-    map.setLayoutProperty(id, 'visibility', 'none');
+    map.addSource(id, {type: 'geojson', data});
+    search = addLayer('Search result', {
+      'id': id,
+      'type': 'circle',
+      'source': id,
+      'layout': {
+        'visibility': 'none'
+      },
+      'paint': {
+        'circle-radius': {
+          'base': 3,
+          'stops': [
+            [0, 7],
+            [22, 18]
+          ]
+        },
+        'circle-color': 'rgb(118, 43, 170)'
+      }
+    });
+  }
+
+  if (!search.visible) toggleSearchLayer();
+};
+
+let layerWasVisible = {};
+
+const toggleSearchLayer = () => {
+  const search = loadedLayers['search'];
+  if (!search) return;
+
+  if (!search.visible) {
+    for (const id in loadedLayers) {
+      const l = loadedLayers[id];
+      if (id !== search.id && l.visible) {
+        l.toggleVisibility();
+        layerWasVisible[id] = true;
+      }
+    }
+  } else {
+    for (const id in loadedLayers) {
+      const l = loadedLayers[id];
+      if (layerWasVisible[id]) {
+        l.toggleVisibility();
+      }
+    }
+  }
+
+  search.toggleVisibility();
+};
+
+const setLayerUI = layer => {
+  const el = document.querySelector(`#layers input[value="${layer.id}"]`);
+  if (layer.visible) {
+    el.parentElement.classList.add('active');
+    el.checked = true;
+  } else {
+    el.parentElement.classList.remove('active');
     el.checked = false;
-    el.parentElement.classList.remove(cl);
   }
 };
 
@@ -211,12 +311,12 @@ const addGroupLayer = async group => {
   }
 
   map.addSource(id, {type: 'geojson', data});
-  addLayer(layerName, {
+  const layer = addLayer(layerName, {
     'id': id,
     'type': 'circle',
     'source': id,
     'layout': {
-      'visibility': 'none'
+      'visibility': 'visible'
     },
     'paint': {
       'circle-radius': {
@@ -230,7 +330,50 @@ const addGroupLayer = async group => {
     }
   });
 
-  toggleLayerVisibility(id);
+  const layers = document.getElementById('layers');
+  const ul = document.createElement('ul');
+  ul.classList.add('list');
+
+  const li = document.createElement('li');
+
+  const label = document.createElement('label');
+  label.classList.add('active');
+
+  const icon = document.createElement('div');
+  icon.classList.add('icon');
+
+  label.appendChild(icon);
+
+  const input = document.createElement('input');
+  input.value = id;
+  input.name = id;
+  input.type = 'checkbox';
+  input.checked = true;
+
+  input.addEventListener('change', e => {
+    const sl = loadedLayers['search'];
+    if (sl && sl.visible) return;
+
+    const visible = layer.toggleVisibility();
+    const el = e.target;
+
+    if (!visible) {
+      el.checked = false;
+      el.parentElement.classList.remove('active');
+    } else {
+      el.checked = true;
+      el.parentElement.classList.add('active');
+    }
+  });
+
+  const span = document.createElement('span');
+  span.innerText = layerName;
+
+  label.appendChild(span);
+  label.appendChild(input);
+  li.appendChild(label);
+  ul.appendChild(li);
+  layers.appendChild(ul);
 };
 
 const getGroups = async () => {
@@ -245,39 +388,25 @@ const getGroups = async () => {
     return Promise.reject(err);
   }
 
-  const layers = document.getElementById('layers');
-  const ul = document.createElement('ul');
-  ul.classList.add('list');
-
-  for (const g of data.items) {
-    const li = document.createElement('li');
-
-    const label = document.createElement('label');
-
-    const icon = document.createElement('div');
-    icon.classList.add('icon');
-
-    label.appendChild(icon);
-
-    const input = document.createElement('input');
-    input.value = g._id;
-    input.name = g._id;
-    input.type = 'checkbox';
-
-    input.addEventListener('change', e => toggleLayerVisibility(e.target.value));
-
-    const span = document.createElement('span');
-    span.innerText = g.name;
-
-    label.appendChild(span);
-    label.appendChild(input);
-    li.appendChild(label);
-    ul.appendChild(li);
-  }
-
-  layers.appendChild(ul);
-
   return data.items;
+};
+
+const registerSearch = () => {
+  const form = document.getElementById('search');
+  const input = form.querySelector('input[type=search]');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (e.isTrusted && input.value.length >= 3) {
+      getFeaturesByText(input.value);
+      flyToCenter();
+    }
+  });
+
+  input.addEventListener('input', e => {
+    const el = e.target;
+    if (el.value.length === 0) toggleSearchLayer();
+  });
 };
 
 export const init = async el => {
@@ -308,5 +437,6 @@ export const init = async el => {
     }
     const fID = featureFromURL();
     if (fID) flyToFeature(await getFeature(fID));
+    registerSearch();
   });
 };

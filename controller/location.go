@@ -2,6 +2,8 @@ package controller
 
 import (
 	"net/http"
+	"net/url"
+	"strconv"
 
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model"
@@ -92,27 +94,89 @@ func LocationFeaturesGET(w http.ResponseWriter, r *http.Request, ps httprouter.P
 		return
 	}
 
-	params := make(map[string]string)
-	params["group"] = r.URL.Query().Get("group")
+	var err error
 
-	opts := &api.Options{
-		Sort:   r.URL.Query().Get("sort"),
-		Filter: params,
+	lID := ps.ByName("id")
+
+	limit := 100
+	if v := r.URL.Query().Get("limit"); v != "" {
+		if limit, err = strconv.Atoi(v); err != nil {
+			statusServiceBadRequest(w, r)
+			return
+		}
 	}
 
-	entity, err := feature.GetFeatures(ps.ByName("id"), opts)
-	if err != nil {
-		getErrorStatus(err, w, r)
-		return
+	offset := 0
+	if v := r.URL.Query().Get("offset"); v != "" {
+		if offset, err = strconv.Atoi(v); err != nil {
+			statusServiceBadRequest(w, r)
+			return
+		}
+	}
+
+	opts := &api.Options{
+		Limit:  limit,
+		Offset: offset,
+		Filter: make(map[string]string),
+	}
+
+	var result *feature.FeatureResult
+Loop:
+	for p, v := range r.URL.Query() {
+		switch p {
+		case "group":
+			q, err := url.QueryUnescape(v[0])
+			if err != nil {
+				statusServiceBadRequest(w, r)
+				return
+			}
+
+			result, err = feature.GetFeaturesByGroup(q, lID, opts)
+			if err != nil {
+				getErrorStatus(err, w, r)
+				return
+			}
+
+			break Loop
+		case "text":
+			q, err := url.QueryUnescape(v[0])
+			if err != nil {
+				statusServiceBadRequest(w, r)
+				return
+			}
+
+			if err := validateKeyword(q); err != nil {
+				statusServiceBadRequest(w, r)
+				return
+			}
+
+			q = cleanupString(q)
+
+			result, err = feature.GetFeaturesByText(q, lID, 10)
+			if err != nil {
+				getErrorStatus(err, w, r)
+				return
+			}
+
+			break Loop
+		}
+	}
+
+	if result == nil {
+		result, err = feature.GetFeatures(lID, opts)
+		if err != nil {
+			getErrorStatus(err, w, r)
+			return
+		}
 	}
 
 	switch v := r.Header.Get("Content-Type"); v {
 	case "application/json":
 		w.Header().Set("Content-Type", v)
-		view.RenderJSON(entity, http.StatusOK, w)
+		view.RenderJSON(result, http.StatusOK, w)
 	case "application/geo+json":
 		w.Header().Set("Content-Type", v)
-		view.RenderJSON(entity.FeatureCollection(), http.StatusOK, w)
+		view.RenderJSON(result.FeatureCollection(), http.StatusOK, w)
 	}
 }
 
