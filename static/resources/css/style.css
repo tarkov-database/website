@@ -154,6 +154,7 @@ h1 {
   margin: 0 auto;
   margin-top: 4rem;
   max-width: 38rem;
+  user-select: none;
 }
 
 header .navbox {
@@ -227,23 +228,29 @@ header .navbox {
   opacity: .8;
 }
 
-.search {
+form.search {
+  box-sizing: border-box;
   position: relative;
   margin: .3rem auto;
   margin-top: 1.5rem;
 }
 
 header .search {
-  margin: .5rem 0 .3rem 0;
   width: 100%;
+}
+
+header form.search {
+  width: 100%;
+  margin-top: .8rem;
 }
 
 .search input[type="search"] {
   width: 100%;
   height: 3rem;
-  padding: .8rem;
+  /* padding: .6rem; */
   font-size: 1rem;
   border: none;
+  padding-left: 3rem;
 }
 
 .search input[type="search"]::placeholder {
@@ -379,10 +386,23 @@ header .search {
   background-size: contain;
 }
 
+#search .icon.search {
+  position: absolute;
+  left: 0;
+  width: 1.6rem;
+  height: 100%;
+  margin-left: .8rem;
+  opacity: .6;
+}
+
 .list .icon {
   width: 1.6rem;
   line-height: 1.6rem;
   margin: .5rem;
+}
+
+.icon.search {
+  background-image: url("../img/search.svg");
 }
 
 .icon.ammunition {
