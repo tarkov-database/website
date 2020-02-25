@@ -2,9 +2,9 @@
       <div class="box main" itemscope itemtype="http://schema.org/ItemPage" itemid="https://{{ .Host }}{{ .Path }}">
 
         <div class="text">
-          <time class="modified-date" itemprop="dateModified" datetime="{{ formatTime "RFC3339" .Location.Modified.Time }}" title="Modified date in TT.MM.YYYY HH:MM">{{ formatTime "02.01.2006 15:04" .Location.Modified.Time }}</time>
-          <h1 itemprop="name">{{ .Location.Name }}</h1>
-          <p itemprop="description">{{ .Location.Description }}</p>
+          <time class="modified-date" itemprop="dateModified" datetime="{{ formatTime "RFC3339" .Entity.Modified.Time }}" title="Modified date in TT.MM.YYYY HH:MM">{{ formatTime "02.01.2006 15:04" .Entity.Modified.Time }}</time>
+          <h1 itemprop="name">{{ .Entity.Name }}</h1>
+          <p itemprop="description">{{ .Entity.Description }}</p>
         </div>
 
         <div class="prop">
@@ -18,19 +18,19 @@
           <table>
             <tr>
               <th>Players</th>
-              <td>{{ .Location.MinimumPlayers }} - {{ .Location.MaximumPlayers }}</td>
+              <td>{{ .Entity.MinimumPlayers }} - {{ .Entity.MaximumPlayers }}</td>
             </tr>
             <tr>
               <th>Time to Escape</th>
-              <td>{{ .Location.EscapeTime }} min.</td>
+              <td>{{ .Entity.EscapeTime }} min.</td>
             </tr>
             <tr>
               <th>Insurance</th>
-              <td>{{ if .Location.Insurance }}Yes{{ else }}No{{ end }}</td>
+              <td>{{ if .Entity.Insurance }}Yes{{ else }}No{{ end }}</td>
             </tr>
             <tr>
               <th>Available</th>
-              <td>{{ if .Location.Available }}Yes{{ else }}No{{ end }}</td>
+              <td>{{ if .Entity.Available }}Yes{{ else }}No{{ end }}</td>
             </tr>
           </table>
         </div>
@@ -49,7 +49,7 @@
       </tr>
     </thead>
     <tbody>
-      {{ range .Location.Exits }}
+      {{ range .Entity.Exits }}
       <tr>
         <td>{{ .Name }}</td>
         <td class="center">{{ .Chance }} %</td>

@@ -3,29 +3,29 @@
             <tr>
               <th>Capacity</th>
               <td>
-                {{ .Item.Capacity }}
+                {{ .Entity.Capacity }}
               </td>
             </tr>
             <tr>
               <th>Ergonomics</th>
-              <td>{{ if gt .Item.Ergonomics 0.0 }}+{{ end }}{{ .Item.Ergonomics }}</td>
+              <td>{{ if gt .Entity.Ergonomics 0.0 }}+{{ end }}{{ .Entity.Ergonomics }}</td>
             </tr>
-            {{ if ne .Item.Modifier.LoadUnload 0.0 }}
+            {{ if ne .Entity.Modifier.LoadUnload 0.0 }}
             <tr>
               <th>Load/Unload Time</th>
-              <td>{{ if gt .Item.Modifier.LoadUnload 0.0 }}+{{ end }}{{ .Item.Modifier.LoadUnload }} %</td>
+              <td>{{ if gt .Entity.Modifier.LoadUnload 0.0 }}+{{ end }}{{ .Entity.Modifier.LoadUnload }} %</td>
             </tr>
             {{ end }}
-            {{ if ne .Item.Modifier.CheckTime 0.0 }}
+            {{ if ne .Entity.Modifier.CheckTime 0.0 }}
             <tr>
               <th>Check Time</th>
-              <td>{{ if gt .Item.Modifier.CheckTime 0.0 }}+{{ end }}{{ .Item.Modifier.CheckTime }} %</td>
+              <td>{{ if gt .Entity.Modifier.CheckTime 0.0 }}+{{ end }}{{ .Entity.Modifier.CheckTime }} %</td>
             </tr>
             {{ end }}
             <tr>
               <th>Caliber</th>
               <td>
-                <a class="underline" title="Show all magazines with caliber '{{ .Item.Caliber }}'" href="/item/magazine?caliber={{ .Item.Caliber }}">{{ .Item.Caliber }}</a>
+                <a class="underline" title="Show all magazines with caliber '{{ .Entity.Caliber }}'" href="/item/magazine?caliber={{ .Entity.Caliber }}">{{ .Entity.Caliber }}</a>
               </td>
             </tr>
           </table>
@@ -57,7 +57,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {{ $result := getAmmunitionByCaliber .Item.Caliber "-penetration" 100 }}
+                    {{ $result := getAmmunitionByCaliber .Entity.Caliber "-penetration" 100 }}
                     {{ range $result.Items }}
                     <tr>
                       <td><a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a></td>

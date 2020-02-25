@@ -2,15 +2,15 @@
           <table>
             <tr>
               <th>Ambient Reduction</th>
-              <td>{{ multiplyFloat .Item.AmbientVolume -1.0 }} dB</td>
+              <td>{{ multiplyFloat .Entity.AmbientVolume -1.0 }} dB</td>
             </tr>
             <tr>
               <th>Cutoff Frequency</th>
-              <td><{{ .Item.HighPassFilter.CutoffFrequency }} Hz</td>
+              <td><{{ .Entity.HighPassFilter.CutoffFrequency }} Hz</td>
             </tr>
             <tr>
               <th>Clarity</th>
-              <td>{{ subtractFloat 1.0 .Item.Distortion | decimalToPercent }} %</td>
+              <td>{{ subtractFloat 1.0 .Entity.Distortion | decimalToPercent }} %</td>
             </tr>
           </table>
 {{ end }}

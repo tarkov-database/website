@@ -64,24 +64,11 @@ func (p *Page) GetIndex() *IndexPage {
 
 type EntityPage struct {
 	*Page
+	Entity interface{}
 }
 
-type ItemPage struct {
-	*EntityPage
-	Item item.Entity
-}
-
-func (p *Page) Item(e item.Entity) *ItemPage {
-	return &ItemPage{EntityPage: &EntityPage{p}, Item: e}
-}
-
-type LocationPage struct {
-	*EntityPage
-	Location *location.Location
-}
-
-func (p *Page) Location(loc *location.Location) *LocationPage {
-	return &LocationPage{EntityPage: &EntityPage{p}, Location: loc}
+func (p *Page) Entity(e interface{}) *EntityPage {
+	return &EntityPage{Page: p, Entity: e}
 }
 
 type EntityList struct {

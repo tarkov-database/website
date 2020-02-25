@@ -3,37 +3,37 @@
             <tr>
               <th>Type</th>
               <td>
-                <a class="underline" title="Show all grenades with the same type" href="/item/grenade?type={{ .Item.Type }}">
-                  {{ if eq .Item.Type "frag" }}Fragmentation
-                  {{ else if eq .Item.Type "flash" }}Flash
-                  {{ else if eq .Item.Type "smoke" }}Smoke{{ end }}
+                <a class="underline" title="Show all grenades with the same type" href="/item/grenade?type={{ .Entity.Type }}">
+                  {{ if eq .Entity.Type "frag" }}Fragmentation
+                  {{ else if eq .Entity.Type "flash" }}Flash
+                  {{ else if eq .Entity.Type "smoke" }}Smoke{{ end }}
                 </a>
               </td>
             </tr>
             <tr>
               <th>Delay</th>
-              <td>{{ .Item.Delay }} sec.</td>
+              <td>{{ .Entity.Delay }} sec.</td>
             </tr>
-            {{ if eq .Item.Type "frag" }}
+            {{ if eq .Entity.Type "frag" }}
             <tr>
               <th>Fragment Count</th>
-              <td>{{ .Item.FragmentCount }}</td>
+              <td>{{ .Entity.FragmentCount }}</td>
             </tr>
             <tr>
               <th>Explosion Distance</th>
-              <td>{{ .Item.MinDistance }} - {{ .Item.MaxDistance }} m</td>
+              <td>{{ .Entity.MinDistance }} - {{ .Entity.MaxDistance }} m</td>
             </tr>
             {{ end }}
-            {{ if eq .Item.Type "flash" }}
+            {{ if eq .Entity.Type "flash" }}
             <tr>
               <th>Contusion Distance</th>
-              <td>{{ .Item.ContusionDistance }} m</td>
+              <td>{{ .Entity.ContusionDistance }} m</td>
             </tr>
             {{ end }}
-            {{ if eq .Item.Type "smoke" }}
+            {{ if eq .Entity.Type "smoke" }}
             <tr>
               <th>Burn Time</th>
-              <td>{{ .Item.EmitTime }} sec.</td>
+              <td>{{ .Entity.EmitTime }} sec.</td>
             </tr>
             {{ end }}
           </table>

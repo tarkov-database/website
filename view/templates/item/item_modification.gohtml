@@ -2,77 +2,77 @@
           <table>
             <tr>
               <th>Ergonomics</th>
-              <td>{{ if gt .Item.Ergonomics 0.0 }}+{{ end }}{{ .Item.Ergonomics }}</td>
+              <td>{{ if gt .Entity.Ergonomics 0.0 }}+{{ end }}{{ .Entity.Ergonomics }}</td>
             </tr>
-            {{ if .Item.Recoil }}
+            {{ if .Entity.Recoil }}
             <tr>
               <th>Recoil</th>
-              <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }} %</td>
+              <td>{{ if gt .Entity.Recoil 0.0 }}+{{ end }}{{ .Entity.Recoil }} %</td>
             </tr>
             {{ end }}
-            {{ if .Item.Accuracy }}
+            {{ if .Entity.Accuracy }}
             <tr>
               <th>Accuracy</th>
-              <td>{{ if gt .Item.Accuracy 0.0 }}+{{ end }}{{ .Item.Accuracy }} %</td>
+              <td>{{ if gt .Entity.Accuracy 0.0 }}+{{ end }}{{ .Entity.Accuracy }} %</td>
             </tr>
             {{ end }}
             <tr>
               <th>Raid Moddable</th>
               <td>
-                {{ if eq .Item.RaidModdable 0 }}No
-                {{ else if eq .Item.RaidModdable 1 }}Yes
-                {{ else if eq .Item.RaidModdable 2 }}Tool
+                {{ if eq .Entity.RaidModdable 0 }}No
+                {{ else if eq .Entity.RaidModdable 1 }}Yes
+                {{ else if eq .Entity.RaidModdable 2 }}Tool
                 {{ end }}
               </td>
             </tr>
           </table>
 
-          {{ if eq .Item.Kind "modificationBarrel" }}
+          {{ if eq .Entity.Kind "modificationBarrel" }}
           {{ template "modificationBarrel" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationBipod" }}
+          {{ if eq .Entity.Kind "modificationBipod" }}
           {{ template "modificationBipod" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationCharge" }}
+          {{ if eq .Entity.Kind "modificationCharge" }}
           {{ template "modificationCharge" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationDevice" }}
+          {{ if eq .Entity.Kind "modificationDevice" }}
           {{ template "modificationDevice" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationForegrip" }}
+          {{ if eq .Entity.Kind "modificationForegrip" }}
           {{ template "modificationForegrip" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationGasblock" }}
+          {{ if eq .Entity.Kind "modificationGasblock" }}
           {{ template "modificationGasblock" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationGoggles" }}
+          {{ if eq .Entity.Kind "modificationGoggles" }}
           {{ template "modificationGoggles" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationHandguard" }}
+          {{ if eq .Entity.Kind "modificationHandguard" }}
           {{ template "modificationHandguard" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationLauncher" }}
+          {{ if eq .Entity.Kind "modificationLauncher" }}
           {{ template "modificationLauncher" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationMount" }}
+          {{ if eq .Entity.Kind "modificationMount" }}
           {{ template "modificationMount" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationMuzzle" }}
+          {{ if eq .Entity.Kind "modificationMuzzle" }}
           {{ template "modificationMuzzle" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationPistolgrip" }}
+          {{ if eq .Entity.Kind "modificationPistolgrip" }}
           {{ template "modificationPistolgrip" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationReceiver" }}
+          {{ if eq .Entity.Kind "modificationReceiver" }}
           {{ template "modificationReceiver" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationSight" }}
+          {{ if eq .Entity.Kind "modificationSight" }}
           {{ template "modificationSight" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationSightSpecial" }}
+          {{ if eq .Entity.Kind "modificationSightSpecial" }}
           {{ template "modificationSightSpecial" . }}
           {{ end }}
-          {{ if eq .Item.Kind "modificationStock" }}
+          {{ if eq .Entity.Kind "modificationStock" }}
           {{ template "modificationStock" . }}
           {{ end }}
 
@@ -82,8 +82,8 @@
 {{ define "sub_box" }}
       <div class="box sub">
         <ul class="tab-buttons">
-          {{ if .Item.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" data-tab="slots">Slots</li>{{ end }}
-          {{ if .Item.Compatibility }}<li title="Can be installed on following items" class="tab-btn {{ if not .Item.Slots }}active{{ end }}" data-tab="compatible">Compatibility</li>{{ end }}
+          {{ if .Entity.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" data-tab="slots">Slots</li>{{ end }}
+          {{ if .Entity.Compatibility }}<li title="Can be installed on following items" class="tab-btn {{ if not .Entity.Slots }}active{{ end }}" data-tab="compatible">Compatibility</li>{{ end }}
         </ul>
 
         <ul class="tabs">
@@ -92,7 +92,7 @@
             {{ template "modSlots" . }}
           </li>
 
-          <li id="compatible" class="tab" {{ if not .Item.Slots }}style="display:block;"{{ end }}>
+          <li id="compatible" class="tab" {{ if not .Entity.Slots }}style="display:block;"{{ end }}>
             {{ template "compatibility" . }}
           </li>
 
@@ -104,15 +104,15 @@
 <table>
   <tr>
     <th>Length</th>
-    <td>{{ .Item.Length }} mm</td>
+    <td>{{ .Entity.Length }} mm</td>
   </tr>
   <tr>
     <th>Velocity</th>
-    <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
+    <td>{{ if gt .Entity.Velocity 0.0 }}+{{ end }}{{ .Entity.Velocity }}</td>
   </tr>
   <tr>
     <th>Suppressor</th>
-    <td>{{ if .Item.Suppressor }}Yes{{ else }}No{{ end }}</td>
+    <td>{{ if .Entity.Suppressor }}Yes{{ else }}No{{ end }}</td>
   </tr>
 </table>
 {{ end }}
@@ -128,15 +128,15 @@
   <tr>
     <th>Type</th>
     <td>
-      <a class="underline" title="Show all medicals with the same type" href="/item/device?type={{ .Item.Type }}">
-        {{ .Item.Type | toTitle }}
+      <a class="underline" title="Show all medicals with the same type" href="/item/device?type={{ .Entity.Type }}">
+        {{ .Entity.Type | toTitle }}
       </a>
     </td>
   </tr>
   <tr>
     <th class="tr-list">Modes</th>
     <td>
-      {{ range .Item.Modes }}
+      {{ range .Entity.Modes }}
       {{ . }}<br>
       {{ end }}
     </td>
@@ -157,11 +157,11 @@
 <table>
   <tr>
     <th>Recoil</th>
-    <td>{{ if gt .Item.Recoil 0.0 }}+{{ end }}{{ .Item.Recoil }}</td>
+    <td>{{ if gt .Entity.Recoil 0.0 }}+{{ end }}{{ .Entity.Recoil }}</td>
   </tr>
   <tr>
     <th>Caliber</th>
-    <td>{{ .Item.Caliber }}</td>
+    <td>{{ .Entity.Caliber }}</td>
   </tr>
 </table>
 {{ end }}
@@ -174,14 +174,14 @@
   <tr>
     <th>Type</th>
     <td>
-      <a class="underline" title="Show all medicals with the same type" href="/item/muzzle?type={{ .Item.Type }}">
-        {{ .Item.Type | toTitle }}
+      <a class="underline" title="Show all medicals with the same type" href="/item/muzzle?type={{ .Entity.Type }}">
+        {{ .Entity.Type | toTitle }}
       </a>
     </td>
   </tr>
   <tr>
     <th>Velocity</th>
-    <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
+    <td>{{ if gt .Entity.Velocity 0.0 }}+{{ end }}{{ .Entity.Velocity }}</td>
   </tr>
 </table>
 {{ end }}
@@ -191,8 +191,8 @@
   <tr>
     <th>Type</th>
     <td>
-      <a class="underline" title="Show all medicals with the same type" href="/item/goggles?type={{ .Item.Type }}">
-        {{ .Item.Type | toTitle }}
+      <a class="underline" title="Show all medicals with the same type" href="/item/goggles?type={{ .Entity.Type }}">
+        {{ .Entity.Type | toTitle }}
       </a>
     </td>
   </tr>
@@ -206,7 +206,7 @@
 <table>
   <tr>
     <th>Velocity</th>
-    <td>{{ if gt .Item.Velocity 0.0 }}+{{ end }}{{ .Item.Velocity }}</td>
+    <td>{{ if gt .Entity.Velocity 0.0 }}+{{ end }}{{ .Entity.Velocity }}</td>
   </tr>
 </table>
 {{ end }}
@@ -216,27 +216,27 @@
   <tr>
     <th>Type</th>
     <td>
-      <a class="underline" title="Show all medicals with the same type" href="/item/sight-special?type={{ .Item.Type }}">
-        {{ .Item.Type | toTitle }}
+      <a class="underline" title="Show all medicals with the same type" href="/item/sight-special?type={{ .Entity.Type }}">
+        {{ .Entity.Type | toTitle }}
       </a>
     </td>
   </tr>
   <tr>
     <th class="tr-list">Magnification</th>
     <td>
-      {{ range .Item.Magnification }}
+      {{ range .Entity.Magnification }}
       {{ . }}<br>
       {{ end }}
     </td>
   </tr>
   <tr>
     <th>Variable Zoom</th>
-    <td>{{ if .Item.VariableZoom }}Yes{{ else }}No{{ end }}</td>
+    <td>{{ if .Entity.VariableZoom }}Yes{{ else }}No{{ end }}</td>
   </tr>
   <tr>
     <th class="tr-list">Zero Distances</th>
     <td>
-      {{ range .Item.ZeroDistances }}
+      {{ range .Entity.ZeroDistances }}
       {{ . }}<br>
       {{ end }}
     </td>
@@ -249,15 +249,15 @@
   <tr>
     <th>Type</th>
     <td>
-      <a class="underline" title="Show all medicals with the same type" href="/item/sight?type={{ .Item.Type }}">
-        {{ .Item.Type | toTitle }}
+      <a class="underline" title="Show all medicals with the same type" href="/item/sight?type={{ .Entity.Type }}">
+        {{ .Entity.Type | toTitle }}
       </a>
     </td>
   </tr>
   <tr>
     <th class="tr-list">Magnification</th>
     <td>
-      {{ range .Item.Magnification }}
+      {{ range .Entity.Magnification }}
       {{ . }}<br>
       {{ end }}
     </td>
@@ -265,7 +265,7 @@
   <tr>
     <th class="tr-list">Zero Distances</th>
     <td>
-      {{ range .Item.ZeroDistances }}
+      {{ range .Entity.ZeroDistances }}
       {{ . }}m<br>
       {{ end }}
     </td>
@@ -277,7 +277,7 @@
 <table>
   <tr>
     <th>Fold-/Retractable</th>
-    <td>{{ if .Item.FoldRectractable }}Yes{{ else }}No{{ end }}</td>
+    <td>{{ if .Entity.FoldRectractable }}Yes{{ else }}No{{ end }}</td>
   </tr>
 </table>
 {{ end }}

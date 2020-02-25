@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -19,11 +18,6 @@ import (
 	"github.com/google/logger"
 	"github.com/gorilla/websocket"
 	"github.com/julienschmidt/httprouter"
-)
-
-var (
-	ErrTooLongShort = errors.New("keyword is too short or too long")
-	ErrIllegalChars = errors.New("keyword has illegal characters")
 )
 
 func SearchGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -342,15 +336,4 @@ func getQuery(w http.ResponseWriter, r *http.Request) {
 	default:
 		searchByText(q, w, r)
 	}
-}
-
-func validateKeyword(q string) error {
-	if len(q) < 3 || len(q) > 32 {
-		return ErrTooLongShort
-	}
-	if !isASCII(q) {
-		return ErrIllegalChars
-	}
-
-	return nil
 }

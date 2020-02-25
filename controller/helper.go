@@ -15,6 +15,11 @@ import (
 	"github.com/google/logger"
 )
 
+var (
+	ErrTooLongShort = errors.New("keyword is too short or too long")
+	ErrIllegalChars = errors.New("keyword has illegal characters")
+)
+
 var hostname string
 
 var itemKinds map[string]item.Kind
@@ -54,6 +59,17 @@ var regexNonASCII = regexp.MustCompile(`[^[:ascii:]]`)
 
 func isASCII(s string) bool {
 	return !regexNonASCII.MatchString(s)
+}
+
+func validateKeyword(q string) error {
+	if len(q) < 3 || len(q) > 32 {
+		return ErrTooLongShort
+	}
+	if !isASCII(q) {
+		return ErrIllegalChars
+	}
+
+	return nil
 }
 
 func getRemoteAddr(r *http.Request) string {

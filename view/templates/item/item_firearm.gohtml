@@ -3,59 +3,59 @@
             <tr>
               <th>Type</th>
               <td>
-                <a class="underline" title="Show all armor with the same type" href="/item/firearm?type={{ .Item.Type }}">
-                  {{ .Item.Type | toTitle }}
+                <a class="underline" title="Show all armor with the same type" href="/item/firearm?type={{ .Entity.Type }}">
+                  {{ .Entity.Type | toTitle }}
                 </a>
               </td>
             </tr>
             <tr>
               <th>Class</th>
               <td>
-                <a class="underline" title="Show all weapons with the same class" href="/item/firearm?class={{ .Item.Class }}">
-                  {{ if eq .Item.Class "pistol" }}Pistol
-                  {{ else if eq .Item.Class "sniperRifle" }}Sniper Rifle
-                  {{ else if eq .Item.Class "assaultRifle" }}Assault Rifle
-                  {{ else if eq .Item.Class "assaultCarbine" }}Assault Carbine
-                  {{ else if eq .Item.Class "marksmanRifle" }}Marksman Rifle
-                  {{ else if eq .Item.Class "machinegun" }}Machine Gun
-                  {{ else if eq .Item.Class "shotgun" }}Shotgun
-                  {{ else if eq .Item.Class "grenadeLauncher" }}Grenade Launcher
-                  {{ else if eq .Item.Class "smg" }}SMG{{ end }}
+                <a class="underline" title="Show all weapons with the same class" href="/item/firearm?class={{ .Entity.Class }}">
+                  {{ if eq .Entity.Class "pistol" }}Pistol
+                  {{ else if eq .Entity.Class "sniperRifle" }}Sniper Rifle
+                  {{ else if eq .Entity.Class "assaultRifle" }}Assault Rifle
+                  {{ else if eq .Entity.Class "assaultCarbine" }}Assault Carbine
+                  {{ else if eq .Entity.Class "marksmanRifle" }}Marksman Rifle
+                  {{ else if eq .Entity.Class "machinegun" }}Machine Gun
+                  {{ else if eq .Entity.Class "shotgun" }}Shotgun
+                  {{ else if eq .Entity.Class "grenadeLauncher" }}Grenade Launcher
+                  {{ else if eq .Entity.Class "smg" }}SMG{{ end }}
                 </a>
               </td>
             </tr>
             <tr>
               <th>Caliber</th>
               <td>
-                <a class="underline" title="Show all firearms with caliber '{{ .Item.Caliber }}'" href="/item/firearm?caliber={{ .Item.Caliber }}">{{ .Item.Caliber }}</a>
+                <a class="underline" title="Show all firearms with caliber '{{ .Entity.Caliber }}'" href="/item/firearm?caliber={{ .Entity.Caliber }}">{{ .Entity.Caliber }}</a>
               </td>
             </tr>
             <tr>
               <th>Action</th>
               <td>
-                {{ if eq .Item.Action "bolt" }}Bolt
-                {{ else if eq .Item.Action "pump" }}Pump
-                {{ else if eq .Item.Action "break" }}Break
-                {{ else if eq .Item.Action "lever" }}Lever
-                {{ else if eq .Item.Action "single" }}Single
-                {{ else if eq .Item.Action "double" }}Double
-                {{ else if eq .Item.Action "recoil" }}Recoil
-                {{ else if eq .Item.Action "blow" }}Blow
-                {{ else if eq .Item.Action "gas" }}Gas{{ end }}
+                {{ if eq .Entity.Action "bolt" }}Bolt
+                {{ else if eq .Entity.Action "pump" }}Pump
+                {{ else if eq .Entity.Action "break" }}Break
+                {{ else if eq .Entity.Action "lever" }}Lever
+                {{ else if eq .Entity.Action "single" }}Single
+                {{ else if eq .Entity.Action "double" }}Double
+                {{ else if eq .Entity.Action "recoil" }}Recoil
+                {{ else if eq .Entity.Action "blow" }}Blow
+                {{ else if eq .Entity.Action "gas" }}Gas{{ end }}
               </td>
             </tr>
             <tr>
               <th>Rate Of Fire</th>
-              <td>{{ .Item.RateOfFire }} RPM</td>
+              <td>{{ .Entity.RateOfFire }} RPM</td>
             </tr>
             <tr>
               <th>Effective Distance</th>
-              <td>{{ .Item.EffectiveDistance }} m</td>
+              <td>{{ .Entity.EffectiveDistance }} m</td>
             </tr>
             <tr>
               <th class="tr-list">Fire Modes</th>
               <td>
-                {{ range .Item.Modes }}
+                {{ range .Entity.Modes }}
                 {{ if eq . "single" }}<span title="Single">&#8226; </span>{{ end }}
                 {{ if eq . "burst" }}<span title="Burst">&#8226;&#8226; </span>{{ end }}
                 {{ if eq . "full" }}<span title="Fullauto">&#8226;&#8226;&#8226; </span>{{ end }}
@@ -68,17 +68,17 @@
             <tr>
               <th>Recoil</th>
               <td title="Vertical / Horizontal" class="tr-list">
-                &#65372; {{ .Item.RecoilVertical }}<br>
-                &#8213; {{ .Item.RecoilHorizontal }}
+                &#65372; {{ .Entity.RecoilVertical }}<br>
+                &#8213; {{ .Entity.RecoilHorizontal }}
               </td>
             </tr>
             <tr>
               <th>Ergonomics</th>
-              <td>{{ .Item.Ergonomics }}</td>
+              <td>{{ .Entity.Ergonomics }}</td>
             </tr>
             <tr>
               <th>Fold-/Retractable</th>
-              <td>{{ if .Item.FoldRectractable }}Yes{{ else }}No{{ end }}</td>
+              <td>{{ if .Entity.FoldRectractable }}Yes{{ else }}No{{ end }}</td>
             </tr>
           </table>
 {{end}}
@@ -111,7 +111,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {{ $result := getAmmunitionByCaliber .Item.Caliber "-penetration" 100 }}
+                    {{ $result := getAmmunitionByCaliber .Entity.Caliber "-penetration" 100 }}
                     {{ range $result.Items }}
                     <tr>
                       <td><a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a></td>
@@ -141,7 +141,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                  {{ range resolveItemList .Item.Slots.magazine.Filter "capacity" }}
+                  {{ range resolveItemList .Entity.Slots.magazine.Filter "capacity" }}
                     {{ range . }}
                     <tr>
                       <td><a title="{{ .Name }}" href="/item/magazine/{{ .ID }}">{{ .ShortName }}</a></td>

@@ -1,22 +1,22 @@
 {{ define "properties" }}
-          {{ if or .Item.Penalties.Mouse .Item.Penalties.Speed .Item.Penalties.Ergonomics }}
+          {{ if or .Entity.Penalties.Mouse .Entity.Penalties.Speed .Entity.Penalties.Ergonomics }}
           <table>
-            {{ if .Item.Penalties.Mouse }}
+            {{ if .Entity.Penalties.Mouse }}
             <tr>
               <th>Turn Speed</th>
-              <td>{{ .Item.Penalties.Mouse }} %</td>
+              <td>{{ .Entity.Penalties.Mouse }} %</td>
             </tr>
             {{ end }}
-            {{ if .Item.Penalties.Speed }}
+            {{ if .Entity.Penalties.Speed }}
             <tr>
               <th>Movement Speed</th>
-              <td>{{ .Item.Penalties.Speed }} %</td>
+              <td>{{ .Entity.Penalties.Speed }} %</td>
             </tr>
             {{ end }}
-            {{ if .Item.Penalties.Ergonomics }}
+            {{ if .Entity.Penalties.Ergonomics }}
             <tr>
               <th >Ergonomics</th>
-              <td>{{ if gt .Item.Penalties.Ergonomics 0.0 }}+{{ end }}{{ .Item.Penalties.Ergonomics }}</td>
+              <td>{{ if gt .Entity.Penalties.Ergonomics 0.0 }}+{{ end }}{{ .Entity.Penalties.Ergonomics }}</td>
             </tr>
             {{ end }}
           </table>

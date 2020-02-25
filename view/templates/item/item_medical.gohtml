@@ -3,34 +3,34 @@
             <tr>
               <th>Type</th>
               <td>
-                <a class="underline" title="Show all medicals with the same type" href="/item/medical?type={{ .Item.Type }}">
-                  {{ .Item.Type | toTitle }}
+                <a class="underline" title="Show all medicals with the same type" href="/item/medical?type={{ .Entity.Type }}">
+                  {{ .Entity.Type | toTitle }}
                 </a>
               </td>
             </tr>
             <tr>
               <th>Resources</th>
-              <td>{{ .Item.Resources }}</td>
+              <td>{{ .Entity.Resources }}</td>
             </tr>
             <tr>
               <th>Resource Rate</th>
-              <td>{{ .Item.ResourceRate }}</td>
+              <td>{{ .Entity.ResourceRate }}</td>
             </tr>
             <tr>
               <th>Use Time</th>
-              <td>{{ .Item.UseTime }} sec.</td>
+              <td>{{ .Entity.UseTime }} sec.</td>
             </tr>
           </table>
 
-          {{ if or .Item.Effects.Hydration.Value .Item.Effects.Energy.Value }}
+          {{ if or .Entity.Effects.Hydration.Value .Entity.Effects.Energy.Value }}
           <table>
             <tr>
               <th>Hydration</th>
-              <td>{{ if gt .Item.Effects.Hydration.Value 0.0 }}+{{ end }}{{ .Item.Effects.Hydration.Value }}</td>
+              <td>{{ if gt .Entity.Effects.Hydration.Value 0.0 }}+{{ end }}{{ .Entity.Effects.Hydration.Value }}</td>
             </tr>
             <tr>
               <th>Energy</th>
-              <td>{{ if gt .Item.Effects.Energy.Value 0.0 }}+{{ end }}{{ .Item.Effects.Energy.Value }}</td>
+              <td>{{ if gt .Entity.Effects.Energy.Value 0.0 }}+{{ end }}{{ .Entity.Effects.Energy.Value }}</td>
             </tr>
           </table>
           {{ end }}

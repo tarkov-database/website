@@ -3,17 +3,17 @@
             <tr>
               <th>Type</th>
               <td>
-                <a class="underline" title="Show all clothing with the same type" href="/item/clothing?type={{ .Item.Type }}">
-                  {{ if eq .Item.Type "faceCover" }}Face Cover
-                  {{ else }}{{ .Item.Type | toTitle }}{{ end }}
+                <a class="underline" title="Show all clothing with the same type" href="/item/clothing?type={{ .Entity.Type }}">
+                  {{ if eq .Entity.Type "faceCover" }}Face Cover
+                  {{ else }}{{ .Entity.Type | toTitle }}{{ end }}
                 </a>
               </td>
             </tr>
-            {{ if .Item.Blocking }}
+            {{ if .Entity.Blocking }}
             <tr>
               <th class="tr-list">Blocking</th>
               <td>
-                {{ range .Item.Blocking }}
+                {{ range .Entity.Blocking }}
                 {{ . }}<br>
                 {{ end }}
               </td>
@@ -27,7 +27,7 @@
 {{ define "sub_box" }}
       <div class="box sub">
         <ul class="tab-buttons">
-          {{ if .Item.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" data-tab="slots">Slots</li>{{ end }}
+          {{ if .Entity.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" data-tab="slots">Slots</li>{{ end }}
         </ul>
 
         <ul class="tabs">

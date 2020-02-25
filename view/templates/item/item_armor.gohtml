@@ -3,43 +3,43 @@
             <tr>
               <th>Type</th>
               <td>
-                <a class="underline" title="Show all armor with the same type" href="/item/armor?type={{ .Item.Type }}">
-                  {{ if eq .Item.Type "faceCover" }}Face Cover
-                  {{ else }}{{ .Item.Type | toTitle }}{{ end }}
+                <a class="underline" title="Show all armor with the same type" href="/item/armor?type={{ .Entity.Type }}">
+                  {{ if eq .Entity.Type "faceCover" }}Face Cover
+                  {{ else }}{{ .Entity.Type | toTitle }}{{ end }}
                 </a>
               </td>
             </tr>
             <tr>
               <th>Class</th>
               <td>
-                <a class="underline" title="Show all armor with the same class" href="/item/armor?class={{ .Item.Armor.Class }}">
-                  {{ .Item.Armor.Class }}
+                <a class="underline" title="Show all armor with the same class" href="/item/armor?class={{ .Entity.Armor.Class }}">
+                  {{ .Entity.Armor.Class }}
                 </a>
               </td>
             </tr>
             <tr>
               <th>Material</th>
-              <td title="{{ if eq .Item.Armor.Material.Name "uhmwpe" }}Ultra-high-molecular-weight polyethylene{{ end }}">
-                {{ if eq .Item.Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Item.Armor.Material.Name | toTitle }}{{ end }}
+              <td title="{{ if eq .Entity.Armor.Material.Name "uhmwpe" }}Ultra-high-molecular-weight polyethylene{{ end }}">
+                {{ if eq .Entity.Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Entity.Armor.Material.Name | toTitle }}{{ end }}
               </td>
             </tr>
             <tr>
               <th>Durability</th>
-              <td>{{ .Item.Armor.Durability }}</td>
+              <td>{{ .Entity.Armor.Durability }}</td>
             </tr>
             <tr>
               <th class="tr-list">Protected Zones</th>
               <td>
-                {{ range .Item.Armor.Zones }}
+                {{ range .Entity.Armor.Zones }}
                 {{ . }}<br>
                 {{ end }}
               </td>
             </tr>
-            {{ if .Item.Blocking }}
+            {{ if .Entity.Blocking }}
             <tr>
               <th class="tr-list">Blocking</th>
               <td>
-                {{ range .Item.Blocking }}
+                {{ range .Entity.Blocking }}
                 {{ . }}<br>
                 {{ end }}
               </td>
@@ -52,8 +52,8 @@
 {{ define "sub_box" }}
       <div class="box sub">
         <ul class="tab-buttons">
-          {{ if .Item.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" data-tab="slots">Slots</li>{{ end }}
-          {{ if .Item.Compatibility }}<li title="Can be installed on following items" class="tab-btn {{ if not .Item.Slots }}active{{ end }}" data-tab="compatible">Compatibility</li>{{ end }}
+          {{ if .Entity.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" data-tab="slots">Slots</li>{{ end }}
+          {{ if .Entity.Compatibility }}<li title="Can be installed on following items" class="tab-btn {{ if not .Entity.Slots }}active{{ end }}" data-tab="compatible">Compatibility</li>{{ end }}
         </ul>
 
         <ul class="tabs">
@@ -62,7 +62,7 @@
             {{ template "modSlots" . }}
           </li>
 
-          <li id="compatible" class="tab" {{ if not .Item.Slots }}style="display:block;"{{ end }}>
+          <li id="compatible" class="tab" {{ if not .Entity.Slots }}style="display:block;"{{ end }}>
             {{ template "compatibility" . }}
           </li>
 

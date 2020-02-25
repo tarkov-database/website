@@ -25,7 +25,7 @@ func LocationGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	view.RenderHTML("location", p.Location(entity), w)
+	view.RenderHTML("location", p.Entity(entity), w)
 }
 
 func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -68,7 +68,7 @@ func LocationMapGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 		return
 	}
 
-	view.RenderHTML("location_map", p.Location(entity), w)
+	view.RenderHTML("location_map", p.Entity(entity), w)
 }
 
 func LocationFeatureGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
