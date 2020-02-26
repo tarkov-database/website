@@ -49,7 +49,6 @@ main {
   position: fixed;
   right: 0;
   top: 0;
-  padding: .5rem;
   margin: 1rem;
   width: 30rem;
   justify-content: center;
@@ -59,8 +58,12 @@ main {
 }
 
 .nav .search {
-  margin: 0 .5rem 0 0;
+  margin: 0;
   width: 100%;
+}
+
+.nav .search .suggestion {
+  box-shadow: 0 .2rem .6rem -.3rem rgba(0, 0, 0, 0.4);
 }
 
 .layers {
@@ -71,6 +74,7 @@ main {
   justify-content: center;
   background-color: rgba(0, 0, 0, 0);
   user-select: none;
+  margin: 0 .3rem;
 }
 
 .layers > .icon {
@@ -90,11 +94,15 @@ main {
   opacity: 0;
   float: right;
   transition: opacity .3s linear;
-  min-width: 12rem;
+  min-width: 13rem;
   min-height: 10rem;
   box-shadow: 0 .2rem .6rem -.1rem rgba(0, 0, 0, 0.4);
   top: 0;
   right: 0;
+}
+
+.layers > .list li {
+  margin: .3rem 0;
 }
 
 .layers > .list label {
