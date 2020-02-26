@@ -331,8 +331,7 @@ const addGroupLayer = async group => {
   });
 
   const layers = document.getElementById('layers');
-  const ul = document.createElement('ul');
-  ul.classList.add('list');
+  const ul = layers.getElementsByClassName('list')[0];
 
   const li = document.createElement('li');
 
@@ -373,7 +372,6 @@ const addGroupLayer = async group => {
   label.appendChild(input);
   li.appendChild(label);
   ul.appendChild(li);
-  layers.appendChild(ul);
 };
 
 const getGroups = async () => {
