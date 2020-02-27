@@ -1,8 +1,10 @@
 /* global Chart */
 
-const bgMainColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-main-color');
-const fontMainColor = getComputedStyle(document.documentElement).getPropertyValue('--font-main-color');
-const fontSecColor = getComputedStyle(document.documentElement).getPropertyValue('--font-sec-color');
+const getCSSVariable = v => getComputedStyle(document.documentElement).getPropertyValue(v);
+
+const bgMainColor = getCSSVariable('--bg-main-color');
+const fontMainColor = getCSSVariable('--font-main-color');
+const fontSecColor = getCSSVariable('--font-sec-color');
 
 Chart.defaults.global.defaultFontSize = 16;
 Chart.defaults.global.defaultFontColor = fontMainColor;
