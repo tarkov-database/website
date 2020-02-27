@@ -37,6 +37,13 @@ header .title {
   align-items: center;
 }
 
+@media only screen and (max-width: 900px) {
+  header {
+    display: none;
+  }
+}
+
+
 main {
   height: 100%;
   width: 100%;
@@ -57,7 +64,8 @@ main {
   right: 0;
   top: 0;
   margin: 1rem;
-  width: 30rem;
+  width: 90%;
+  max-width: 30rem;
   justify-content: center;
   align-items: center;
   background-color: var(--bg-third-color);
