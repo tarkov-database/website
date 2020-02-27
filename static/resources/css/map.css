@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+:root {
+  /* layer colors */
+  --layer-exfil-color: rgb(43, 159, 26);
+  --layer-cache-color: rgb(226, 169, 0);
+  --layer-search-color: rgb(118, 43, 170);
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -107,14 +114,24 @@ main {
 
 .layers > .list label {
   display: inline-flex;
+  align-items: center;
 }
 
-.layers > .list .icon {
+/* .layers > .list .icon {
   width: 1.2rem;
   height: 1.2rem;
   margin: unset;
   margin-right: .5rem;
   background-image: url("../img/feature.svg");
+} */
+
+.layers > .list .dot {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  margin-right: .5rem;
+  background-color: var(--font-main-color);
 }
 
 .layers > .list input[type=checkbox] {

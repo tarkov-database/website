@@ -2,6 +2,14 @@
 
 mapboxgl.workerUrl = '/resources/js/mapbox/mapbox-gl-csp-worker.js';
 
+const getCSSVariable = v => getComputedStyle(document.documentElement).getPropertyValue(v);
+
+const layerColors = {
+  'search': getCSSVariable('--layer-search-color'),
+  'exfil': getCSSVariable('--layer-exfil-color'),
+  'cache': getCSSVariable('--layer-cache-color'),
+};
+
 let map = {};
 let loadedLayers = {};
 
@@ -82,6 +90,19 @@ class APIRequest {
 //
 //   el.hidden = false;
 // };
+
+const getRandomLayerColor = () => {
+  const random = (min, max) => {
+    min = Math.ceil(min), max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const h = random(80, 320);
+  const s = random(70, 90);
+  const l = random(55, 65);
+
+  return `hsl(${h}, ${s}%, ${l}%)`;
+};
 
 const addLayer = (name, layer) => {
   const id = layer['id'];
@@ -250,7 +271,7 @@ const getFeaturesByText = async keyword => {
             [22, 18]
           ]
         },
-        'circle-color': 'rgb(118, 43, 170)'
+        'circle-color': layerColors[id]
       }
     });
   }
@@ -310,6 +331,8 @@ const addGroupLayer = async group => {
     return Promise.reject(err);
   }
 
+  const color = layerColors[group.tags[0]] || getRandomLayerColor();
+
   map.addSource(id, {type: 'geojson', data});
   const layer = addLayer(layerName, {
     'id': id,
@@ -326,7 +349,7 @@ const addGroupLayer = async group => {
           [22, 18]
         ]
       },
-      'circle-color': 'rgb(43, 159, 26)'
+      'circle-color': color
     }
   });
 
@@ -338,10 +361,11 @@ const addGroupLayer = async group => {
   const label = document.createElement('label');
   label.classList.add('active');
 
-  const icon = document.createElement('div');
-  icon.classList.add('icon');
+  const dot = document.createElement('span');
+  dot.classList.add('dot');
+  dot.style.backgroundColor = color;
 
-  label.appendChild(icon);
+  label.appendChild(dot);
 
   const input = document.createElement('input');
   input.value = id;
