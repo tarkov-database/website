@@ -152,7 +152,7 @@ Loop:
 
 			q = cleanupString(q)
 
-			result, err = feature.GetFeaturesByText(q, lID, 10)
+			result, err = feature.GetFeaturesByText(q, lID, 50)
 			if err != nil {
 				getErrorStatus(err, w, r)
 				return
