@@ -54,7 +54,7 @@ main {
   justify-content: center;
   align-items: center;
   background-color: var(--bg-third-color);
-  box-shadow: 0 .2rem .6rem -.1rem rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 .8rem -.1rem rgba(0, 0, 0, 0.4);
 }
 
 .nav .search {
@@ -63,7 +63,7 @@ main {
 }
 
 .nav .search .suggestion {
-  box-shadow: 0 .2rem .6rem -.3rem rgba(0, 0, 0, 0.4);
+  box-shadow: 0 .3rem .6rem -.1rem rgba(0, 0, 0, 0.4);
 }
 
 .layers {
