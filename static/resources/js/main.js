@@ -349,8 +349,10 @@ const initMap = async () => {
   const el = document.getElementById('map');
   if (el === null) return;
 
+  const libPath = document.getElementById('mapLib').src;
+
   try {
-    map = await import('./map.js');
+    map = await import(libPath);
     await map.init(el);
   } catch (err) {
     console.error(err);
