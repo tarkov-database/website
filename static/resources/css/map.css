@@ -43,7 +43,6 @@ header .title {
   }
 }
 
-
 main {
   height: 100%;
   width: 100%;
@@ -64,12 +63,19 @@ main {
   right: 0;
   top: 0;
   margin: 1rem;
-  width: 90%;
+  width: calc(100% - 2rem);
   max-width: 30rem;
   justify-content: center;
   align-items: center;
   background-color: var(--bg-third-color);
   box-shadow: 0 0 .8rem -.1rem rgba(0, 0, 0, 0.4);
+}
+
+@media only screen and (max-width: 32rem) {
+  .nav {
+    width: calc(100% - 1rem);
+    margin: .5rem;
+  }
 }
 
 .nav .search {
