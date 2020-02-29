@@ -1,2 +1,2 @@
 *.min.js
-mapbox-gl*.js
+*.js.map
