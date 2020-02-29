@@ -244,10 +244,34 @@ footer {
   width: fit-content;
   width: -moz-fit-content;
   height: auto;
+  user-select: none;
 }
 
-footer .location-ident {
+footer .location-info .name {
   color: var(--font-sec-color);
   font-size: 1.2rem;
-  user-select: none;
+}
+
+footer .location-info .details {
+  visibility: hidden;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: calc(100% - 4rem);
+  max-width: 25rem;
+  background-color: var(--bg-sec-color);
+  padding: 1rem;
+  margin: 1rem;
+  transition: opacity .3s linear;
+  opacity: 0;
+}
+
+footer .location-info .details th {
+  text-align: left;
+  padding-right: 1rem;
+}
+
+footer .location-info:hover .details {
+  visibility: visible;
+  opacity: .97;
 }
