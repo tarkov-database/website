@@ -1,6 +1,6 @@
 /* global mapboxgl */
 
-mapboxgl.workerUrl = '/resources/js/mapbox/mapbox-gl-csp-worker.js';
+mapboxgl.workerUrl = '/resources/js/lib/mapbox-gl-csp-worker.min.js';
 
 const getCSSVariable = v => getComputedStyle(document.documentElement).getPropertyValue(v);
 
