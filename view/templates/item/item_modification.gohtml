@@ -88,11 +88,13 @@
 
         <ul class="tabs">
 
+          {{ if .Entity.Slots }}
           <li id="slots" class="tab active">
             {{ template "modSlots" . }}
           </li>
+          {{ end }}
 
-          <li id="compatible" class="tab" {{ if not .Entity.Slots }}style="display:block;"{{ end }}>
+          <li id="compatible" class="tab {{ if not .Entity.Slots }}active{{ end }}">
             {{ template "compatibility" . }}
           </li>
 
