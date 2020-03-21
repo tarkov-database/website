@@ -272,6 +272,27 @@ const initSearchSocket = async() => {
 
       div.innerHTML = '&nbsp;';
 
+      a.addEventListener('keydown', e => {
+        const current = e.target.parentNode;
+
+        let next = {};
+        switch (e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          next = current.previousElementSibling;
+          if (!next) input.focus();
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          next = current.nextElementSibling;
+          break;
+        default:
+          return;
+        }
+
+        if (next) next.querySelector('a').focus();
+      });
+
       a.appendChild(div);
       a.append(text);
       li.appendChild(a);
@@ -337,6 +358,14 @@ const initSearchSocket = async() => {
 
     sugg.hidden = false;
   };
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = sugg.querySelector('ul > li > a');
+      if (next) next.focus();
+    }
+  });
 
   input.addEventListener('focusin', onFocusIn);
   input.addEventListener('input', onInput);

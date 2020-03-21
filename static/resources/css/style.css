@@ -297,6 +297,10 @@ header form.search {
   background-color: var(--bg-fourth-color);
 }
 
+.search .suggestion li > a:focus {
+  outline: .01rem solid rgba(150, 136, 103, .2);
+}
+
 .search .suggestion .icon {
   width: 1rem;
   line-height: 1rem;
