@@ -5,8 +5,8 @@
   "scripts": {
     "lint": "eslint . static/resources/js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install-js": "cp node_modules/mapbox-gl/dist/mapbox-gl-csp.js static/resources/js/lib/mapbox-gl-csp.js && cp node_modules/mapbox-gl/dist/mapbox-gl-csp-worker.js static/resources/js/lib/mapbox-gl-csp-worker.js && cp node_modules/chart.js/dist/Chart.min.js static/resources/js/Chart.min.js",
-    "install-css": "cp node_modules/mapbox-gl/dist/mapbox-gl.css static/resources/css/lib/mapbox-gl.css",
+    "install-js": "cp node_modules/mapbox-gl/dist/mapbox-gl-csp.js static/resources/js/lib/mapbox-gl-csp.min.js && cp node_modules/mapbox-gl/dist/mapbox-gl-csp-worker.js static/resources/js/lib/mapbox-gl-csp-worker.min.js && cp node_modules/chart.js/dist/Chart.min.js static/resources/js/lib/Chart.min.js",
+    "install-css": "cp node_modules/mapbox-gl/dist/mapbox-gl.css static/resources/css/lib/mapbox-gl.min.css",
     "install-statics": "npm run install-js && npm run install-css"
   },
   "repository": {
