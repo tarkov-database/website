@@ -266,7 +266,7 @@ const initSearchSocket = async() => {
       a.addEventListener('keydown', e => {
         const current = e.target.parentNode;
 
-        let next = {};
+        let next = null;
         switch (e.key) {
         case 'ArrowUp':
           e.preventDefault();
@@ -276,6 +276,10 @@ const initSearchSocket = async() => {
         case 'ArrowDown':
           e.preventDefault();
           next = current.nextElementSibling;
+          break;
+        case 'Escape':
+          current.blur();
+          hideSuggestions();
           break;
         default:
           return;
@@ -305,9 +309,20 @@ const initSearchSocket = async() => {
       return;
     }
 
-    const val = event.target.value.trim();
-    if (val === keyword || !regexValidQuery.test(val)) return;
-    if (val.length < 3) {
+    const el = event.target;
+    const val = el.value.trim();
+
+    if (val === keyword) {
+      showSuggestions();
+      return;
+    }
+
+    let isValid = false;
+    if (regexValidQuery.test(val) && val.length >= 3) isValid = true;
+
+    el.dataset.valid = isValid;
+
+    if (!isValid) {
       hideSuggestions();
       return;
     }
@@ -339,7 +354,7 @@ const initSearchSocket = async() => {
     socket.send(JSON.stringify(data));
   };
 
-  const onFocusIn = async () => {
+  const onFocusIn = async e => {
     try {
       await connect();
     } catch (err) {
@@ -347,14 +362,23 @@ const initSearchSocket = async() => {
       return;
     }
 
-    sugg.hidden = false;
+    if (e.target.dataset.valid === 'true' && sugg.querySelector('ul > li')) showSuggestions();
   };
 
   input.addEventListener('keydown', e => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
+    const selFirstSugg = () => {
       const next = sugg.querySelector('ul > li > a');
       if (next) next.focus();
+    };
+
+    switch (e.key) {
+    case 'ArrowDown':
+      e.preventDefault();
+      selFirstSugg();
+      break;
+    case 'Escape':
+      hideSuggestions();
+      break;
     }
   });
 
