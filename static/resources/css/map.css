@@ -259,10 +259,10 @@ footer .location-info .details {
   right: 0;
   width: calc(100% - 4rem);
   max-width: 25rem;
-  background-color: var(--bg-sec-color);
+  background-color: rgba(14, 14, 14, .95);
   padding: 1rem;
   margin: 1rem;
-  transition: opacity .3s linear;
+  transition: opacity .2s linear;
   opacity: 0;
 }
 
@@ -273,5 +273,5 @@ footer .location-info .details th {
 
 footer .location-info:hover .details {
   visibility: visible;
-  opacity: .97;
+  opacity: 1;
 }
