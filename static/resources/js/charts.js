@@ -2,17 +2,17 @@
 
 const getCSSVariable = v => getComputedStyle(document.documentElement).getPropertyValue(v);
 
-const bgMainColor = getCSSVariable('--bg-main-color');
-const fontMainColor = getCSSVariable('--font-main-color');
-const fontSecColor = getCSSVariable('--font-sec-color');
+const bgMainColor = getCSSVariable('--bg-main-color').trim();
+const fontMainColor = getCSSVariable('--font-main-color').trim();
+const fontSecColor = getCSSVariable('--font-sec-color').trim();
 
-Chart.defaults.global.defaultFontSize = 16;
-Chart.defaults.global.defaultFontColor = fontMainColor;
-Chart.defaults.global.defaultFontFamily = 'Bender';
-Chart.defaults.global.elements.line.backgroundColor = fontSecColor;
-Chart.defaults.global.elements.point.hitRadius = 15;
-Chart.defaults.global.tooltips.backgroundColor = bgMainColor;
-Chart.defaults.global.tooltips.titleFontColor = fontSecColor;
+Chart.defaults.fontSize = 16;
+Chart.defaults.fontColor = fontMainColor;
+Chart.defaults.fontFamily = 'Bender';
+Chart.defaults.elements.line.backgroundColor = fontSecColor;
+Chart.defaults.elements.point.hitRadius = 15;
+Chart.defaults.tooltips.backgroundColor = bgMainColor;
+Chart.defaults.tooltips.titleFontColor = fontSecColor;
 
 const ammoTypeChart = () => {
   const el = document.getElementById('ammoTypeChart');
@@ -32,11 +32,11 @@ const ammoTypeChart = () => {
       },
       tooltips: {
         callbacks: {
-          label: (tooltipItem, data) => `${data.labels[tooltipItem.datasetIndex]} (PEN: ${tooltipItem.xLabel}, DMG: ${tooltipItem.yLabel})`
+          label: (tooltipItem, data) => `${data.labels[tooltipItem.datasetIndex]} (PEN: ${tooltipItem.label}, DMG: ${tooltipItem.value})`
         }
       },
       scales: {
-        xAxes: [{
+        x: {
           scaleLabel: {
             display: true,
             labelString: 'Penetration',
@@ -47,8 +47,8 @@ const ammoTypeChart = () => {
           },
           type: 'linear',
           position: 'bottom'
-        }],
-        yAxes: [{
+        },
+        y: {
           scaleLabel: {
             display: true,
             labelString: 'Damage',
@@ -57,7 +57,7 @@ const ammoTypeChart = () => {
             color: 'rgba(150, 136, 103, .1)',
             drawBorder: false
           }
-        }]
+        }
       }
     }
   };
