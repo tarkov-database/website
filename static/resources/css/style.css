@@ -167,7 +167,7 @@ header .navbox {
 
 @media only screen and (max-width: 500px) {
   header .navbox {
-    margin-top: .3rem;
+    margin-top: .6rem;
   }
 }
 
