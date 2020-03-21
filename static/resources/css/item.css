@@ -215,6 +215,10 @@ main {
   width: 100%;
 }
 
+.sub .tab.active {
+  display: block;
+}
+
 @keyframes fade {
   from {
     opacity: 0;

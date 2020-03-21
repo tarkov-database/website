@@ -2,26 +2,17 @@ let map = {};
 
 const registerTabs = () => {
   const openTab = e => {
-    const tabcontent = document.getElementsByClassName('tab');
-    for (const el of tabcontent) {
-      el.style.display = 'none';
-    }
-
-    const clName = 'active';
-    const tablinks = document.getElementsByClassName('tab-btn');
-    for (const el of tablinks) {
-      el.classList.remove(clName);
-    }
+    const cl = 'active';
+    document.querySelector(`.tab.${cl}`).classList.remove(cl);
+    document.querySelector(`.tab-btn.${cl}`).classList.remove(cl);
 
     const el = e.currentTarget;
-    document.getElementById(el.dataset.tab).style.display = 'block';
-    el.classList.add(clName);
+    document.getElementById(el.dataset.tab).classList.add(cl);
+    el.classList.add(cl);
   };
 
   const tablinks = document.getElementsByClassName('tab-btn');
-  for (const el of tablinks) {
-    el.addEventListener('click', openTab);
-  }
+  for (const el of tablinks) el.addEventListener('click', openTab);
 };
 
 registerTabs();
