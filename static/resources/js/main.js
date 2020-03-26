@@ -255,7 +255,10 @@ const initSearchSocket = async() => {
         div.className = 'icon location';
         break;
       case 2:
-        a.addEventListener('click', async () => map.flyToFeature(await map.getFeature(item.id, item.parent)));
+        a.addEventListener('click', async () => {
+          hideSuggestions();
+          map.flyToFeature(await map.getFeature(item.id, item.parent));
+        });
         a.href = `#feature=${item.id}`;
         div.className = 'icon feature';
         break;
