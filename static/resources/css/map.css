@@ -87,59 +87,86 @@ main {
   box-shadow: 0 .3rem .6rem -.1rem rgba(0, 0, 0, 0.4);
 }
 
-.layers {
+.menu {
+  display: flex;
   position: relative;
   z-index: 20;
   box-sizing: border-box;
-  padding: .5rem;
+  padding: .3rem;
   justify-content: center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0);
   user-select: none;
-  margin: 0 .3rem;
+  margin-left: .3rem;
+  width: 2.9rem;
+  height: 2.9rem;
 }
 
-.layers > .icon {
-  width: 2rem;
-  height: 2rem;
+.menu.main > .icon {
+  width: 80%;
+  height: 80%;
+  background-size: contain;
+  background-image: url("../img/menu.svg");
+}
+
+.menu.layers > .icon {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
   background-image: url("../img/layers.svg");
 }
 
-.layers > .list {
+.menu > ul {
   position: absolute;
   visibility: hidden;
   box-sizing: border-box;
   list-style: none;
-  padding: 1rem;
   margin: 0;
+  padding: 0;
   background-color: var(--bg-third-color);
   opacity: 0;
   float: right;
   transition: opacity .3s linear;
-  min-width: 13rem;
-  min-height: 10rem;
   box-shadow: 0 .2rem .6rem -.1rem rgba(0, 0, 0, 0.4);
   top: 0;
   right: 0;
+  width: max-content;
+  min-height: 10rem;
 }
 
-.layers > .list li {
-  margin: .3rem 0;
+.menu.layers > ul {
+  padding: .3rem 0;
 }
 
-.layers > .list label {
+.menu li {
+  width: 100%;
+}
+
+.menu li:hover {
+  background-color: var(--bg-fourth-color);
+}
+
+.menu.main li .icon {
+  width: 2.2rem;
+  line-height: 2.2rem;
+  margin: .5rem;
+}
+
+.menu.main > ul .icon.ruler {
+  background-image: url("../img/ruler.svg");
+}
+
+.menu.layers > ul li {
+  box-sizing: border-box;
+  padding: .2rem .8rem;
+}
+
+.menu.layers > ul label {
   display: inline-flex;
   align-items: center;
 }
 
-/* .layers > .list .icon {
-  width: 1.2rem;
-  height: 1.2rem;
-  margin: unset;
-  margin-right: .5rem;
-  background-image: url("../img/feature.svg");
-} */
-
-.layers > .list .dot {
+.menu.layers > ul .dot {
   display: inline-block;
   width: 0.8rem;
   height: 0.8rem;
@@ -148,28 +175,20 @@ main {
   background-color: var(--font-main-color);
 }
 
-.layers > .list input[type=checkbox] {
+.menu.layers > ul input[type=checkbox] {
   display: none;
 }
 
-.layers > .list label {
+.menu.layers > ul label {
   cursor: pointer;
   opacity: .5;
 }
 
-.layers > .list label.active {
+.menu.layers > ul label.active {
   opacity: 1;
 }
 
-/* .layers:hover {
-  background-color: var(--bg-third-color);
-  min-width: 12rem;
-  min-height: 10rem;
-  float: right;
-  box-shadow: 0 .2rem .6rem -.1rem rgba(0, 0, 0, 0.4);
-} */
-
-.layers:hover > .list {
+.menu:hover > ul {
   visibility: visible;
   opacity: 1;
 }
@@ -204,6 +223,46 @@ main {
   100% {
     box-shadow: 0 0 0 0 rgba(251, 69, 69, 0);
   }
+}
+
+.distance-container {
+  visibility: hidden;
+  z-index: 10;
+  position: absolute;
+  bottom: 5rem;
+  display: inline-flex;
+  left: calc(50% - 6rem);
+  width: 12rem;
+  box-sizing: border-box;
+  background-color: rgba(14, 14, 14, .95);
+  color: var(--font-sec-color);
+  text-align: center;
+  padding: .3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.distance-container > .icon {
+  margin: 0 .3rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  user-select: none;
+}
+
+.distance-container > .icon.ruler {
+  background-size: contain;
+  background-image: url("../img/ruler-white.svg");
+}
+
+.distance-container > .icon.close {
+  background-size: .8rem;
+  background-image: url("../img/close-white.svg");
+}
+
+.distance-container > span {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .mapboxgl-popup-content {

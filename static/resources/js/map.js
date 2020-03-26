@@ -1,4 +1,4 @@
-/* global mapboxgl */
+/* global mapboxgl, turf */
 
 mapboxgl.workerUrl = '/resources/js/lib/mapbox-gl-csp-worker.min.js';
 
@@ -90,6 +90,144 @@ class APIRequest {
 //
 //   el.hidden = false;
 // };
+
+const enableMeasureLines = async () => {
+  const valueContainer = document.getElementById('distance');
+
+  if (valueContainer.style.visibility !== 'visible') {
+    valueContainer.style.visibility = 'visible';
+  } else {
+    return;
+  }
+
+  const geojson = {
+    'type': 'FeatureCollection',
+    'features': []
+  };
+
+  const linestring = {
+    'type': 'Feature',
+    'geometry': {
+      'type': 'LineString',
+      'coordinates': []
+    }
+  };
+
+  const sourceID = 'measurement';
+  map.addSource(sourceID, {
+    'type': 'geojson',
+    'data': geojson
+  });
+
+  const pointsID = 'measure-points';
+  map.addLayer({
+    id: pointsID,
+    type: 'circle',
+    source: sourceID,
+    paint: {
+      'circle-radius': 5,
+      'circle-color': 'rgb(157, 59, 255)'
+    },
+    filter: ['in', '$type', 'Point']
+  });
+
+  const linesID = 'measure-lines';
+  map.addLayer({
+    id: linesID,
+    type: 'line',
+    source: sourceID,
+    layout: {
+      'line-cap': 'round',
+      'line-join': 'round'
+    },
+    paint: {
+      'line-color': 'rgb(157, 59, 255)',
+      'line-width': 2.5
+    },
+    filter: ['in', '$type', 'LineString']
+  });
+
+  const addPoint = e => {
+    const features = map.queryRenderedFeatures(e.point, {
+      layers: [pointsID]
+    });
+
+    if (geojson.features.length > 1) geojson.features.pop();
+
+    if (features.length) {
+      const id = features[0].properties.id;
+      geojson.features = geojson.features.filter(point => point.properties.id !== id);
+    } else {
+      const point = {
+        'type': 'Feature',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [e.lngLat.lng, e.lngLat.lat]
+        },
+        'properties': {
+          'id': String(new Date().getTime())
+        }
+      };
+
+      geojson.features.push(point);
+    }
+
+    if (geojson.features.length > 1) {
+      linestring.geometry.coordinates = geojson.features.map(point => point.geometry.coordinates);
+      geojson.features.push(linestring);
+
+      const val = valueContainer.getElementsByTagName('span')[0];
+      val.innerText = `${(turf.length(linestring) * 1000).toLocaleString()}m`;
+    }
+
+    map.getSource(sourceID).setData(geojson);
+  };
+
+  map.on('click', addPoint);
+
+  const changeCursor = e => {
+    const features = map.queryRenderedFeatures(e.point, {
+      layers: [pointsID]
+    });
+    map.getCanvas().style.cursor = features.length
+      ? 'pointer'
+      : 'crosshair';
+  };
+
+  map.on('mousemove', changeCursor);
+
+  const removeMeasurement = () => {
+    valueContainer.style.visibility = 'hidden';
+    valueContainer.getElementsByTagName('span')[0].innerText = '0.0m';
+    map.off('click', addPoint);
+    map.off('mousemove', changeCursor);
+    map.getCanvas().style.cursor = '';
+    map.removeLayer(pointsID);
+    map.removeLayer(linesID);
+    map.removeSource(sourceID);
+  };
+
+  const mapEl = map.getContainer();
+  const escKey = e => {
+    closeEl.removeEventListener('click', closeClick);
+    if (e.key === 'Escape') removeMeasurement();
+  };
+  mapEl.addEventListener('keydown', escKey, { once: true });
+
+  const closeEl = document.getElementById('closeMeasurement');
+  closeEl.style.cursor = 'pointer';
+  const closeClick = () => {
+    mapEl.removeEventListener('keydown', escKey);
+    removeMeasurement();
+  };
+  closeEl.addEventListener('click', closeClick, { once: true });
+};
+
+const registerMenu = () => {
+  const measure = document.getElementById('measure');
+  measure.addEventListener('click', () => enableMeasureLines());
+  measure.style.cursor = 'pointer';
+};
 
 const getRandomLayerColor = () => {
   const random = (min, max) => {
@@ -354,7 +492,7 @@ const addGroupLayer = async group => {
   });
 
   const layers = document.getElementById('layers');
-  const ul = layers.getElementsByClassName('list')[0];
+  const ul = layers.getElementsByTagName('ul')[0];
 
   const li = document.createElement('li');
 
@@ -453,12 +591,10 @@ export const init = async el => {
   });
 
   map.on('load', async () => {
-    // addDragMarker(map);
-    for (const g of await getGroups()) {
-      addGroupLayer(g);
-    }
+    for (const g of await getGroups()) addGroupLayer(g);
     const fID = featureFromURL();
     if (fID) flyToFeature(await getFeature(fID));
     registerSearch();
+    registerMenu();
   });
 };

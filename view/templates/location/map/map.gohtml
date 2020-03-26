@@ -5,13 +5,27 @@
           <input type="search" name="query" placeholder="Search..." minlength="2" pattern=".{2,32}" maxlength="32" autocomplete="off">
           <div class="suggestion hide"><ul></ul></div>
         </form>
-        <div id="layers" class="layers">
+        <div id="layers" class="menu layers">
           <div class="icon"></div>
-          <ul class="list"></ul>
+          <ul></ul>
+        </div>
+        <div id="menu" class="menu main">
+          <div class="icon"></div>
+          <ul>
+            <li id="measure" title="Measure Distance">
+              <div class="icon ruler">&nbsp;</div>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <div hidden id="dragMarker" class="drag-marker" title="Movable and shareable marker.&#13;Copy the URL to share with friends"></div>
+      <div id="distance" class="distance-container">
+        <div class="icon ruler">&nbsp;</div>
+        <span title="Measured distance">0.0m</span>
+        <div id="closeMeasurement" class="icon close" title="Close measurement">&nbsp;</div>
+      </div>
+      
+      <!-- <div hidden id="dragMarker" class="drag-marker" title="Movable and shareable marker.&#13;Copy the URL to share with friends"></div> -->
 
       <div id="map" data-id="{{ .Entity.ID }}"></div>
 {{ end }}
