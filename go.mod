@@ -3,7 +3,7 @@ module github.com/tarkov-database/website
 go 1.14
 
 require (
-	github.com/google/logger v1.0.1
+	github.com/google/logger v1.1.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/julienschmidt/httprouter v1.3.0
 	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
