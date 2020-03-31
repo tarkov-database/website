@@ -21,7 +21,7 @@
   "homepage": "https://github.com/tarkov-database/website#readme",
   "devDependencies": {
     "@turf/length": "^6.0.2",
-    "browserify": "^16.5.0",
+    "browserify": "^16.5.1",
     "chart.js": "^3.0.0-alpha",
     "eslint": "^6.8.0",
     "mapbox-gl": "^1.9.0"
