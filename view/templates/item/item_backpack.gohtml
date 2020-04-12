@@ -1,27 +1,4 @@
 {{ define "properties" }}
-          {{ if or .Entity.Penalties.Mouse .Entity.Penalties.Speed .Entity.Penalties.Ergonomics }}
-          <table>
-            {{ if .Entity.Penalties.Mouse }}
-            <tr>
-              <th>Turn Speed</th>
-              <td>{{ .Entity.Penalties.Mouse }} %</td>
-            </tr>
-            {{ end }}
-            {{ if .Entity.Penalties.Speed }}
-            <tr>
-              <th>Movement Speed</th>
-              <td>{{ .Entity.Penalties.Speed }} %</td>
-            </tr>
-            {{ end }}
-            {{ if .Entity.Penalties.Ergonomics }}
-            <tr>
-              <th >Ergonomics</th>
-              <td>{{ if gt .Entity.Penalties.Ergonomics 0.0 }}+{{ end }}{{ .Entity.Penalties.Ergonomics }}</td>
-            </tr>
-            {{ end }}
-          </table>
-          {{ end }}
-
           {{ template "grids" . }}
 {{ end }}
 
