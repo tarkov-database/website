@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model"
@@ -20,6 +21,8 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
+	apiStart := time.Now()
+
 	entity, err := item.GetItem(ps.ByName("id"), kind)
 	if err != nil {
 		getErrorStatus(err, w, r)
@@ -31,6 +34,8 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		getErrorStatus(err, w, r)
 		return
 	}
+
+	addTimingHeader(timingMetrics{"api": time.Since(apiStart)}, w)
 
 	var tmpl string
 	if strings.HasPrefix(kind.String(), "modification") {
@@ -73,6 +78,8 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 	opts.Limit, opts.Offset = getLimitOffset(getPage(r))
 
+	apiStart := time.Now()
+
 	result, err := item.GetItems(kind, opts)
 	if err != nil {
 		getErrorStatus(err, w, r)
@@ -84,6 +91,8 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		getErrorStatus(err, w, r)
 		return
 	}
+
+	addTimingHeader(timingMetrics{"api": time.Since(apiStart)}, w)
 
 	cat, err := item.KindToCategory(kind)
 	if err != nil {

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"errors"
+	"fmt"
 	"net"
 	"net/http"
 	"net/url"
@@ -9,6 +10,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/tarkov-database/website/model/item"
 
@@ -134,4 +136,15 @@ func isSupportedMediaType(r *http.Request) bool {
 	}
 
 	return false
+}
+
+type timingMetrics map[string]time.Duration
+
+func addTimingHeader(metrics timingMetrics, w http.ResponseWriter) {
+	v := make([]string, 0, len(metrics))
+	for k, d := range metrics {
+		v = append(v, fmt.Sprintf("%s;dur=%.3f,", k, float64(d.Microseconds())/1000))
+	}
+
+	w.Header().Add("Server-Timing", strings.Join(v, ","))
 }
