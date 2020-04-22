@@ -21,7 +21,7 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	apiStart := time.Now()
+	timeAPI := time.Now()
 
 	entity, err := item.GetItem(ps.ByName("id"), kind)
 	if err != nil {
@@ -35,7 +35,7 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	addTimingHeader(timingMetrics{"api": time.Since(apiStart)}, w)
+	addTimingHeader(timingMetrics{"api": time.Since(timeAPI)}, w)
 
 	var tmpl string
 	if strings.HasPrefix(kind.String(), "modification") {
@@ -44,7 +44,13 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		tmpl = fmt.Sprintf("item_%v", kind)
 	}
 
+	w.Header().Set("Trailer", "Server-Timing")
+
+	timeRender := time.Now()
+
 	view.RenderHTML(tmpl, p.Entity(entity), w)
+
+	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
 }
 
 func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -78,7 +84,7 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 	opts.Limit, opts.Offset = getLimitOffset(getPage(r))
 
-	apiStart := time.Now()
+	timeAPI := time.Now()
 
 	result, err := item.GetItems(kind, opts)
 	if err != nil {
@@ -92,7 +98,7 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	addTimingHeader(timingMetrics{"api": time.Since(apiStart)}, w)
+	addTimingHeader(timingMetrics{"api": time.Since(timeAPI)}, w)
 
 	cat, err := item.KindToCategory(kind)
 	if err != nil {
@@ -116,5 +122,11 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		tmpl = "list"
 	}
 
+	w.Header().Set("Trailer", "Server-Timing")
+
+	timeRender := time.Now()
+	
 	view.RenderHTML(tmpl, data, w)
+
+	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
 }

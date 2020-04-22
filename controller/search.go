@@ -287,6 +287,8 @@ func (s *socket) write() {
 }
 
 func searchByText(kw string, w http.ResponseWriter, r *http.Request) {
+	timeAPI := time.Now()
+
 	p, err := model.CreatePageWithAPI(r.URL)
 	if err != nil {
 		getErrorStatus(err, w, r)
@@ -306,7 +308,14 @@ func searchByText(kw string, w http.ResponseWriter, r *http.Request) {
 		result = append(result, r...)
 	}
 
+	addTimingHeader(timingMetrics{"api": time.Since(timeAPI)}, w)
+
+	w.Header().Set("Trailer", "Server-Timing")
+
+	timeRender := time.Now()
 	view.RenderHTML("list", p.Result(result, kw), w)
+
+	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
 }
 
 func getOperator(q string) (operator string, query string) {

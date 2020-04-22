@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"time"
 
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model"
@@ -15,6 +16,8 @@ import (
 )
 
 func LocationGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	timeAPI := time.Now()
+
 	entity, err := location.GetLocation(ps.ByName("id"))
 	if err != nil {
 		getErrorStatus(err, w, r)
@@ -27,7 +30,15 @@ func LocationGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
+	addTimingHeader(timingMetrics{"api": time.Since(timeAPI)}, w)
+
+	w.Header().Set("Trailer", "Server-Timing")
+
+	timeRender := time.Now()
+	
 	view.RenderHTML("location", p.Entity(entity), w)
+
+	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
 }
 
 func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -39,6 +50,8 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		Filter: params,
 	}
 	opts.Limit, opts.Offset = getLimitOffset(getPage(r))
+
+	timeAPI := time.Now()
 
 	result, err := location.GetLocations(opts)
 	if err != nil {
@@ -52,12 +65,22 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
+	addTimingHeader(timingMetrics{"api": time.Since(timeAPI)}, w)
+
 	data := p.Result(result, "location")
 
+	w.Header().Set("Trailer", "Server-Timing")
+
+	timeRender := time.Now()
+
 	view.RenderHTML("list", data, w)
+
+	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
 }
 
 func LocationMapGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	timeAPI := time.Now()
+
 	entity, err := location.GetLocation(ps.ByName("id"))
 	if err != nil {
 		getErrorStatus(err, w, r)
@@ -70,7 +93,14 @@ func LocationMapGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 		return
 	}
 
+	addTimingHeader(timingMetrics{"api": time.Since(timeAPI)}, w)
+
+	w.Header().Set("Trailer", "Server-Timing")
+
+	timeRender := time.Now()
 	view.RenderHTML("location_map", p.Entity(entity), w)
+
+	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
 }
 
 func LocationFeatureGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
