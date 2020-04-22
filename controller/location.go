@@ -35,7 +35,7 @@ func LocationGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	w.Header().Set("Trailer", "Server-Timing")
 
 	timeRender := time.Now()
-	
+
 	view.RenderHTML("location", p.Entity(entity), w)
 
 	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
