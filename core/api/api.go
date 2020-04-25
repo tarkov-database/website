@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"github.com/google/logger"
 )
 
 var (
@@ -17,20 +15,19 @@ var (
 	ErrParsing          = errors.New("api: parsing error")
 )
 
-type response struct {
+type Response struct {
 	Status     string `json:"status"`
 	Message    string `json:"message"`
 	StatusCode int    `json:"code"`
 }
 
-func (e *response) Error() error {
-	return fmt.Errorf("%v: %v", e.StatusCode, e.Message)
+func (e Response) Error() string {
+	return fmt.Sprintf("%v: %v", e.StatusCode, e.Message)
 }
 
-func getStatus(res *http.Response) (*response, error) {
-	e := &response{}
+func getStatus(res *http.Response) (*Response, error) {
+	e := &Response{}
 	if err := decodeBody(res.Body, e); err != nil {
-		logger.Errorf("Error while parsing json: %s", err)
 		return e, ErrParsing
 	}
 
@@ -43,7 +40,7 @@ func statusToError(res *http.Response) error {
 		return err
 	}
 
-	return r.Error()
+	return r
 }
 
 type Timestamp struct {

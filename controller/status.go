@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"errors"
 	"net/http"
-	"strings"
 
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model"
@@ -76,11 +76,16 @@ func statusUnsupportedMediaType(w http.ResponseWriter, _ *http.Request) {
 }
 
 func getErrorStatus(err error, w http.ResponseWriter, r *http.Request) {
-	code := strings.Split(err.Error(), ":")[0]
+	var status int
+	var apiResponse *api.Response
+	if errors.As(err, &apiResponse) {
+		status = apiResponse.StatusCode
+	}
+
 	switch {
-	case code == "404", err == item.ErrInvalidCategory:
+	case status == 404, errors.Is(err, item.ErrInvalidCategory):
 		statusNotFound(w, r)
-	case err == api.ErrUnreachable:
+	case errors.Is(err, api.ErrUnreachable):
 		logger.Error(err)
 		statusServiceUnavailable(w, r)
 	default:

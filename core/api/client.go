@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
 )
 
 const contentTypeJSON = "application/json"
@@ -34,21 +35,21 @@ func request(ctx context.Context, method, path string, body io.Reader) (*http.Re
 	req.Header.Set("Content-Type", contentTypeJSON)
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", cfg.Token))
 
-	res, err := client.Do(req.WithContext(ctx))
+	resp, err := client.Do(req.WithContext(ctx))
 	if err != nil {
 		switch {
-		case strings.HasSuffix(err.Error(), context.DeadlineExceeded.Error()), strings.HasSuffix(err.Error(), "connection refused"):
-			return res, ErrUnreachable
+		case errors.Is(err, context.DeadlineExceeded), errors.Is(err, &net.OpError{}), errors.Is(err, &net.DNSError{}):
+			return resp, ErrUnreachable
 		default:
-			return res, err
+			return resp, err
 		}
 	}
 
-	if res.Header.Get("Content-Type") != contentTypeJSON {
-		return res, ErrWrongContentType
+	if resp.Header.Get("Content-Type") != contentTypeJSON {
+		return resp, ErrWrongContentType
 	}
 
-	return res, nil
+	return resp, nil
 }
 
 func decodeBody(body io.ReadCloser, target interface{}) error {
@@ -84,17 +85,19 @@ func GET(ctx context.Context, path string, opts *Options, target interface{}) er
 		v.Add("offset", strconv.Itoa(opts.Offset))
 	}
 
-	res, err := request(ctx, "GET", fmt.Sprintf("%s?%s", path, v.Encode()), nil)
+	path = fmt.Sprintf("%s?%s", path, v.Encode())
+
+	res, err := request(ctx, "GET", path, nil)
 	if err != nil {
-		return err
+		return fmt.Errorf("GET %s %w", path, err)
 	}
 
 	if res.StatusCode >= 300 {
-		return statusToError(res)
+		return fmt.Errorf("GET %s %w", path, statusToError(res))
 	}
 
 	if err = decodeBody(res.Body, target); err != nil {
-		return ErrParsing
+		return fmt.Errorf("GET %s %w", path, ErrParsing)
 	}
 
 	return nil
@@ -104,17 +107,17 @@ func POST(ctx context.Context, path string, source interface{}) error {
 	buf := new(bytes.Buffer)
 
 	if err := encodeBody(buf, source); err != nil {
-		return ErrParsing
+		return fmt.Errorf("POST %s %w", path, ErrParsing)
 	}
 
 	res, err := request(ctx, "POST", path, buf)
 	if err != nil {
-		return err
+		return fmt.Errorf("POST %s %w", path, err)
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode >= 300 {
-		return statusToError(res)
+		return fmt.Errorf("POST %s %w", path, statusToError(res))
 	}
 
 	return nil
@@ -124,17 +127,17 @@ func PUT(ctx context.Context, path string, source interface{}) error {
 	buf := new(bytes.Buffer)
 
 	if err := encodeBody(buf, source); err != nil {
-		return ErrParsing
+		return fmt.Errorf("PUT %s %w", path, ErrParsing)
 	}
 
 	res, err := request(ctx, "PUT", path, buf)
 	if err != nil {
-		return err
+		return fmt.Errorf("PUT %s %w", path, err)
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode >= 300 {
-		return statusToError(res)
+		return fmt.Errorf("PUT %s %w", path, statusToError(res))
 	}
 
 	return nil
