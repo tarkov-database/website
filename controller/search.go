@@ -20,9 +20,16 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+func init() {
+	sig = make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+}
+
 func SearchGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	getQuery(w, r)
 }
+
+var sig chan os.Signal
 
 const (
 	maxRemoteConns = 5
@@ -80,9 +87,6 @@ func SearchWS(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	connections.Unlock()
 
 	go func() {
-		sig := make(chan os.Signal, 1)
-		signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
-
 		select {
 		case <-socket.Close:
 			return
