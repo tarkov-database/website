@@ -15,6 +15,8 @@ bin:
 
 lint:
 	revive -config revive.toml -formatter stylish ./...
+	test -z $(shell gofmt -l .) || (gofmt -l . && exit 1)
+	npm run lint
 
 fmt:
 	go fmt ./...
