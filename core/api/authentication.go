@@ -8,15 +8,27 @@ import (
 	"github.com/google/logger"
 )
 
-var tokenExp int64
+func refreshScheduler() {
+	if err := refreshToken(); err != nil {
+		logger.Error(err)
+		time.Sleep(3 * time.Second)
+		go refreshScheduler()
+		return
+	}
 
-func setTokenExpiration() {
 	claims, err := cfg.GetTokenClaims()
 	if err != nil {
 		logger.Fatal(err)
 		return
 	}
-	tokenExp = int64(claims["exp"].(float64)) - 20
+
+	refresh := claims.ExpirationTime.Add(-30 * time.Second).Sub(time.Now())
+	time.Sleep(refresh)
+	go refreshScheduler()
+}
+
+type tokenResponse struct {
+	Token string `json:"token"`
 }
 
 func refreshToken() error {
@@ -32,17 +44,16 @@ func refreshToken() error {
 		return statusToError(res)
 	}
 
-	var j map[string]interface{}
-	if err = decodeBody(res.Body, &j); err != nil {
+	resp := tokenResponse{}
+
+	if err = decodeBody(res.Body, &resp); err != nil {
 		logger.Errorf("Error while parsing json: %s", err)
 		return ErrParsing
 	}
 
-	if token, ok := j["token"].(string); res.StatusCode == http.StatusCreated && ok {
-		cfg.Token = token
+	if res.StatusCode == http.StatusCreated {
+		cfg.Token = resp.Token
 	}
-
-	setTokenExpiration()
 
 	return nil
 }

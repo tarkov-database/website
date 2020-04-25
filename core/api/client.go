@@ -10,9 +10,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
-
-	"github.com/google/logger"
 )
 
 const contentTypeJSON = "application/json"
@@ -23,16 +20,6 @@ var (
 )
 
 func request(ctx context.Context, method, path string, body io.Reader) (*http.Response, error) {
-	if path != "/token" && tokenExp < time.Now().Unix() {
-		if err := refreshToken(); err != nil {
-			logger.Errorf("Error while refreshing token: %s", err)
-			if err != ErrUnreachable {
-				err = ErrAuthentication
-			}
-			return &http.Response{}, err
-		}
-	}
-
 	u := cfg.URL
 	if len(path) > 1 {
 		u += path

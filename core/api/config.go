@@ -51,7 +51,7 @@ func init() {
 
 	userAgent = fmt.Sprintf("%s", userAgent)
 
-	setTokenExpiration()
+	go refreshScheduler()
 }
 
 type config struct {
@@ -130,7 +130,7 @@ func (c *config) GetTLSCertificate() (tls.Certificate, *x509.CertPool, error) {
 			return clientCert, rootCAs, err
 		}
 
-		if ok := rootCAs.AppendCertsFromPEM(caPEM); ok != true {
+		if ok := rootCAs.AppendCertsFromPEM(caPEM); !ok {
 			return clientCert, rootCAs, errors.New("failed to load root CA")
 		}
 	}
@@ -138,8 +138,14 @@ func (c *config) GetTLSCertificate() (tls.Certificate, *x509.CertPool, error) {
 	return clientCert, rootCAs, nil
 }
 
-func (c *config) GetTokenClaims() (map[string]interface{}, error) {
-	var claims map[string]interface{}
+type tokenClaims struct {
+	ExpirationTime Timestamp `json:"exp"`
+	NotBefore      Timestamp `json:"nbf"`
+	IssuedAt       Timestamp `json:"iat"`
+}
+
+func (c *config) GetTokenClaims() (*tokenClaims, error) {
+	claims := &tokenClaims{}
 
 	seg := strings.Split(c.Token, ".")[1]
 	if l := len(seg) % 4; l > 0 {
