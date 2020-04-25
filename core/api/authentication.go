@@ -2,15 +2,14 @@ package api
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
-
-	"github.com/google/logger"
 )
 
 func refreshScheduler() {
 	if err := refreshToken(); err != nil {
-		logger.Error(err)
+		log.Printf("Error while refreshing token: %s", err)
 		time.Sleep(3 * time.Second)
 		go refreshScheduler()
 		return
@@ -18,7 +17,7 @@ func refreshScheduler() {
 
 	claims, err := cfg.GetTokenClaims()
 	if err != nil {
-		logger.Fatal(err)
+		log.Fatalf("Error while getting token claims: %s", err)
 		return
 	}
 
@@ -47,7 +46,6 @@ func refreshToken() error {
 	resp := tokenResponse{}
 
 	if err = decodeBody(res.Body, &resp); err != nil {
-		logger.Errorf("Error while parsing json: %s", err)
 		return ErrParsing
 	}
 

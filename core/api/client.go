@@ -7,10 +7,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"net"
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 )
 
 const contentTypeJSON = "application/json"
@@ -38,7 +38,7 @@ func request(ctx context.Context, method, path string, body io.Reader) (*http.Re
 	resp, err := client.Do(req.WithContext(ctx))
 	if err != nil {
 		switch {
-		case errors.Is(err, context.DeadlineExceeded), errors.Is(err, &net.OpError{}), errors.Is(err, &net.DNSError{}):
+		case errors.Is(err, context.DeadlineExceeded), strings.Contains(err.Error(), "connect:"):
 			return resp, ErrUnreachable
 		default:
 			return resp, err
