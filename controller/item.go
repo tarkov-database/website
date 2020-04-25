@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
 
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model"
@@ -21,8 +20,6 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	timeAPI := time.Now()
-
 	entity, err := item.GetItem(ps.ByName("id"), kind)
 	if err != nil {
 		getErrorStatus(err, w, r)
@@ -35,8 +32,6 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	addTimingHeader(timingMetrics{"api": time.Since(timeAPI)}, w)
-
 	var tmpl string
 	if strings.HasPrefix(kind.String(), "modification") {
 		tmpl = "item_modification"
@@ -44,13 +39,7 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		tmpl = fmt.Sprintf("item_%v", kind)
 	}
 
-	w.Header().Set("Trailer", "Server-Timing")
-
-	timeRender := time.Now()
-
 	view.RenderHTML(tmpl, p.Entity(entity), w)
-
-	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
 }
 
 func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -84,8 +73,6 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 	opts.Limit, opts.Offset = getLimitOffset(getPage(r))
 
-	timeAPI := time.Now()
-
 	result, err := item.GetItems(kind, opts)
 	if err != nil {
 		getErrorStatus(err, w, r)
@@ -97,8 +84,6 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		getErrorStatus(err, w, r)
 		return
 	}
-
-	addTimingHeader(timingMetrics{"api": time.Since(timeAPI)}, w)
 
 	cat, err := item.KindToCategory(kind)
 	if err != nil {
@@ -122,11 +107,5 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		tmpl = "list"
 	}
 
-	w.Header().Set("Trailer", "Server-Timing")
-
-	timeRender := time.Now()
-
 	view.RenderHTML(tmpl, data, w)
-
-	addTimingHeader(timingMetrics{"render": time.Since(timeRender)}, w)
 }
