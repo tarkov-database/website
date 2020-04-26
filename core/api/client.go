@@ -11,6 +11,8 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+
+	"golang.org/x/net/http2"
 )
 
 const contentTypeJSON = "application/json"
@@ -54,7 +56,16 @@ func request(ctx context.Context, method, path string, body io.Reader) (*http.Re
 
 func decodeBody(body io.ReadCloser, target interface{}) error {
 	defer body.Close()
-	return json.NewDecoder(body).Decode(target)
+
+	err := json.NewDecoder(body).Decode(target)
+	if err != nil {
+		var goAway *http2.GoAwayError
+		if errors.As(err, goAway) && goAway.ErrCode == http2.ErrCodeNo {
+			return nil
+		}
+	}
+
+	return err
 }
 
 func encodeBody(w io.Writer, source interface{}) error {
