@@ -77,12 +77,14 @@ func statusUnsupportedMediaType(w http.ResponseWriter, _ *http.Request) {
 
 func getErrorStatus(err error, w http.ResponseWriter, r *http.Request) {
 	var status int
-	var apiResponse *api.Response
-	if errors.As(err, &apiResponse) {
-		status = apiResponse.StatusCode
+	var apiResp *api.Response
+	if errors.As(err, &apiResp) {
+		status = apiResp.StatusCode
 	}
 
 	switch {
+	case status == 400:
+		statusServiceBadRequest(w, r)
 	case status == 404, errors.Is(err, item.ErrInvalidCategory):
 		statusNotFound(w, r)
 	case errors.Is(err, api.ErrUnreachable):
