@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -46,7 +47,7 @@ func refreshToken() error {
 	resp := tokenResponse{}
 
 	if err = decodeBody(res.Body, &resp); err != nil {
-		return ErrParsing
+		return fmt.Errorf("%w: %s", ErrParsing, err)
 	}
 
 	if res.StatusCode == http.StatusCreated {

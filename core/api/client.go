@@ -89,15 +89,15 @@ func GET(ctx context.Context, path string, opts *Options, target interface{}) er
 
 	res, err := request(ctx, "GET", path, nil)
 	if err != nil {
-		return fmt.Errorf("GET %s %w", path, err)
+		return fmt.Errorf("GET \"%s\" %w", path, err)
 	}
 
 	if res.StatusCode >= 300 {
-		return fmt.Errorf("GET %s %w", path, statusToError(res))
+		return fmt.Errorf("GET \"%s\" %w", path, statusToError(res))
 	}
 
 	if err = decodeBody(res.Body, target); err != nil {
-		return fmt.Errorf("GET %s %w", path, ErrParsing)
+		return fmt.Errorf("GET \"%s\" %w: %s", path, ErrParsing, err)
 	}
 
 	return nil
@@ -107,17 +107,17 @@ func POST(ctx context.Context, path string, source interface{}) error {
 	buf := new(bytes.Buffer)
 
 	if err := encodeBody(buf, source); err != nil {
-		return fmt.Errorf("POST %s %w", path, ErrParsing)
+		return fmt.Errorf("POST \"%s\" %w: %s", path, ErrParsing, err)
 	}
 
 	res, err := request(ctx, "POST", path, buf)
 	if err != nil {
-		return fmt.Errorf("POST %s %w", path, err)
+		return fmt.Errorf("POST \"%s\" %w", path, err)
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode >= 300 {
-		return fmt.Errorf("POST %s %w", path, statusToError(res))
+		return fmt.Errorf("POST \"%s\" %w", path, statusToError(res))
 	}
 
 	return nil
@@ -127,17 +127,17 @@ func PUT(ctx context.Context, path string, source interface{}) error {
 	buf := new(bytes.Buffer)
 
 	if err := encodeBody(buf, source); err != nil {
-		return fmt.Errorf("PUT %s %w", path, ErrParsing)
+		return fmt.Errorf("PUT \"%s\" %w: %s", path, ErrParsing, err)
 	}
 
 	res, err := request(ctx, "PUT", path, buf)
 	if err != nil {
-		return fmt.Errorf("PUT %s %w", path, err)
+		return fmt.Errorf("PUT \"%s\" %w", path, err)
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode >= 300 {
-		return fmt.Errorf("PUT %s %w", path, statusToError(res))
+		return fmt.Errorf("PUT \"%s\" %w", path, statusToError(res))
 	}
 
 	return nil

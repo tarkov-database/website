@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	ErrUnreachable      = errors.New("api: server unreachable")
-	ErrAuthentication   = errors.New("api: authentication failed")
-	ErrWrongContentType = errors.New("api: wrong content type")
-	ErrParsing          = errors.New("api: parsing error")
+	ErrUnreachable      = errors.New("server unreachable")
+	ErrAuthentication   = errors.New("authentication failed")
+	ErrWrongContentType = errors.New("wrong content type")
+	ErrParsing          = errors.New("parsing error")
 )
 
 type Response struct {
@@ -28,7 +28,7 @@ func (e Response) Error() string {
 func getStatus(res *http.Response) (*Response, error) {
 	e := &Response{}
 	if err := decodeBody(res.Body, e); err != nil {
-		return e, ErrParsing
+		return e, fmt.Errorf("%w: %s", ErrParsing, err)
 	}
 
 	return e, nil
