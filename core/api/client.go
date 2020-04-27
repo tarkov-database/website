@@ -60,7 +60,7 @@ func decodeBody(body io.ReadCloser, target interface{}) error {
 	err := json.NewDecoder(body).Decode(target)
 	if err != nil {
 		var goAway *http2.GoAwayError
-		if errors.As(err, goAway) && goAway.ErrCode == http2.ErrCodeNo {
+		if errors.As(err, &goAway) && goAway.ErrCode == http2.ErrCodeNo {
 			return nil
 		}
 	}
