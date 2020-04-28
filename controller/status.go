@@ -83,7 +83,7 @@ func getErrorStatus(err error, w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch {
-	case status == 400:
+	case status == 400, errors.Is(err, model.ErrInvalidInput):
 		statusServiceBadRequest(w, r)
 	case status == 404, errors.Is(err, item.ErrInvalidCategory):
 		statusNotFound(w, r)

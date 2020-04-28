@@ -97,7 +97,11 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	data := p.Result(result, kw)
+	data, err := p.Result(result, kw)
+	if err != nil {
+		getErrorStatus(err, w, r)
+		return
+	}
 
 	var tmpl string
 	switch r.URL.Query().Get("view") {

@@ -310,7 +310,13 @@ func searchByText(kw string, w http.ResponseWriter, r *http.Request) {
 		result = append(result, r...)
 	}
 
-	view.RenderHTML("list", p.Result(result, kw), w)
+	data, err := p.Result(result, kw)
+	if err != nil {
+		getErrorStatus(err, w, r)
+		return
+	}
+
+	view.RenderHTML("list", data, w)
 }
 
 func getOperator(q string) (operator string, query string) {

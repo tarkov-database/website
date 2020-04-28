@@ -91,12 +91,11 @@ type Pagination struct {
 
 const itemLimit = 100
 
-func (l *EntityList) GetPagination() {
+func (l *EntityList) GetPagination() error {
 	if l.TotalCount > itemLimit && l.URI != "" {
 		u, err := url.Parse(l.URI)
 		if err != nil {
-			logger.Error(err)
-			return
+			return fmt.Errorf("%w: %s", ErrInvalidInput, err)
 		}
 		query := u.Query()
 
@@ -109,8 +108,7 @@ func (l *EntityList) GetPagination() {
 		if len(*page) != 0 {
 			p, err = strconv.ParseInt(*page, 10, 0)
 			if err != nil {
-				logger.Error(err)
-				return
+				return fmt.Errorf("%w: %s", ErrInvalidInput, err)
 			}
 		}
 		if p < 1 {
@@ -146,9 +144,11 @@ func (l *EntityList) GetPagination() {
 			URL:    fmt.Sprintf("%s?%s", u.Path, query.Encode()),
 		}
 	}
+
+	return nil
 }
 
-func (p *Page) Result(res interface{}, kw string) *EntityList {
+func (p *Page) Result(res interface{}, kw string) (*EntityList, error) {
 	el := &EntityList{
 		Page:    p,
 		Keyword: kw,
@@ -173,7 +173,9 @@ func (p *Page) Result(res interface{}, kw string) *EntityList {
 		el.PageCount = el.TotalCount
 	}
 
-	el.GetPagination()
+	if err := el.GetPagination(); err != nil {
+		return nil, err
+	}
 
-	return el
+	return el, nil
 }

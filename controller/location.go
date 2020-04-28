@@ -52,7 +52,11 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
-	data := p.Result(result, "location")
+	data, err := p.Result(result, "location")
+	if err != nil {
+		getErrorStatus(err, w, r)
+		return
+	}
 
 	view.RenderHTML("list", data, w)
 }
