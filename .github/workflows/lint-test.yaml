@@ -19,12 +19,12 @@ jobs:
     steps:
 
     - name: Set up Go
-      uses: actions/setup-go@v1
+      uses: actions/setup-go@v2
       with:
         go-version: '1.14'
 
     - name: Check out
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
 
     - name: Run Revive Action
       uses: docker://morphy/revive-action:v1
@@ -42,7 +42,7 @@ jobs:
     steps:
 
     - name: Check out
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
 
     - name: Set up Node
       uses: actions/setup-node@v1
@@ -50,7 +50,7 @@ jobs:
         node-version: 12
 
     - name: Install packages
-      run: npm i
+      run: npm ci
 
     - name: Run linter
       run: npm run lint
