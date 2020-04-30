@@ -66,7 +66,7 @@ func decodeBody(body io.ReadCloser, target interface{}) error {
 			// Temporary for debugging
 			errors.WithStack(err)
 			log.Printf("GoAwayError: %+v\n", goAway)
-			log.Printf("GoAway encoded body: %+v\n", target)
+			log.Printf("GoAway decoded body: %+v\n", target)
 
 			return nil
 		}
