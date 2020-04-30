@@ -4,14 +4,16 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
+	// "errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/pkg/errors"
 	"golang.org/x/net/http2"
 )
 
@@ -61,6 +63,11 @@ func decodeBody(body io.ReadCloser, target interface{}) error {
 	if err != nil {
 		var goAway http2.GoAwayError
 		if errors.As(err, &goAway) && goAway.ErrCode == http2.ErrCodeNo {
+			// Temporary for debugging
+			errors.WithStack(err)
+			log.Printf("GoAwayError: %+v\n", goAway)
+			log.Printf("GoAway encoded body: %+v\n", target)
+
 			return nil
 		}
 	}
