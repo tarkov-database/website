@@ -4,16 +4,14 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	// "errors"
+	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
-	"github.com/pkg/errors"
 	"golang.org/x/net/http2"
 )
 
@@ -53,26 +51,16 @@ func request(ctx context.Context, method, path string, body io.Reader) (*http.Re
 		return resp, ErrWrongContentType
 	}
 
+	if resp.StatusCode >= 300 {
+		return resp, statusToError(resp)
+	}
+
 	return resp, nil
 }
 
 func decodeBody(body io.ReadCloser, target interface{}) error {
 	defer body.Close()
-
-	err := json.NewDecoder(body).Decode(target)
-	if err != nil {
-		var goAway http2.GoAwayError
-		if errors.As(err, &goAway) && goAway.ErrCode == http2.ErrCodeNo {
-			// Temporary for debugging
-			errors.WithStack(err)
-			log.Printf("GoAwayError: %+v\n", goAway)
-			log.Printf("GoAway decoded body: %+v\n", target)
-
-			return nil
-		}
-	}
-
-	return err
+	return json.NewDecoder(body).Decode(target)
 }
 
 func encodeBody(w io.Writer, source interface{}) error {
@@ -103,18 +91,31 @@ func GET(ctx context.Context, path string, opts *Options, target interface{}) er
 		v.Add("offset", strconv.Itoa(opts.Offset))
 	}
 
-	path = fmt.Sprintf("%s?%s", path, v.Encode())
+	if len(v) > 0 {
+		path = fmt.Sprintf("%s?%s", path, v.Encode())
+	}
 
-	res, err := request(ctx, "GET", path, nil)
+	res, err := request(ctx, http.MethodGet, path, nil)
 	if err != nil {
 		return fmt.Errorf("GET \"%s\" %w", path, err)
 	}
 
-	if res.StatusCode >= 300 {
-		return fmt.Errorf("GET \"%s\" %w", path, statusToError(res))
-	}
-
 	if err = decodeBody(res.Body, target); err != nil {
+		// Retry after server closes the TCP connection after sending a GOAWAY frame with code 0.
+		// Workaround for a probably faulty HTTP2 client or server implementation.
+		// See https://github.com/golang/go/issues/18112, https://github.com/minio/minio/issues/7271
+		var goAway http2.GoAwayError
+		if errors.As(err, &goAway) && goAway.ErrCode == http2.ErrCodeNo {
+			res, err := request(ctx, http.MethodGet, path, nil)
+			if err != nil {
+				return fmt.Errorf("GET \"%s\" %w", path, err)
+			}
+
+			if err = decodeBody(res.Body, target); err != nil {
+				return fmt.Errorf("GET \"%s\" %w", path, err)
+			}
+		}
+
 		return fmt.Errorf("GET \"%s\" %w: %s", path, ErrParsing, err)
 	}
 
@@ -128,15 +129,11 @@ func POST(ctx context.Context, path string, source interface{}) error {
 		return fmt.Errorf("POST \"%s\" %w: %s", path, ErrParsing, err)
 	}
 
-	res, err := request(ctx, "POST", path, buf)
+	res, err := request(ctx, http.MethodPost, path, buf)
 	if err != nil {
 		return fmt.Errorf("POST \"%s\" %w", path, err)
 	}
 	defer res.Body.Close()
-
-	if res.StatusCode >= 300 {
-		return fmt.Errorf("POST \"%s\" %w", path, statusToError(res))
-	}
 
 	return nil
 }
@@ -148,15 +145,11 @@ func PUT(ctx context.Context, path string, source interface{}) error {
 		return fmt.Errorf("PUT \"%s\" %w: %s", path, ErrParsing, err)
 	}
 
-	res, err := request(ctx, "PUT", path, buf)
+	res, err := request(ctx, http.MethodPut, path, buf)
 	if err != nil {
 		return fmt.Errorf("PUT \"%s\" %w", path, err)
 	}
 	defer res.Body.Close()
-
-	if res.StatusCode >= 300 {
-		return fmt.Errorf("PUT \"%s\" %w", path, statusToError(res))
-	}
 
 	return nil
 }

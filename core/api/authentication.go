@@ -2,9 +2,7 @@ package api
 
 import (
 	"context"
-	"fmt"
 	"log"
-	"net/http"
 	"time"
 )
 
@@ -35,24 +33,13 @@ func refreshToken() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 8*time.Second)
 	defer cancel()
 
-	res, err := request(ctx, "GET", "/token", nil)
-	if err != nil {
+	resp := &tokenResponse{}
+
+	if err := GET(ctx, "/token", &Options{}, resp); err != nil {
 		return err
 	}
 
-	if res.StatusCode >= 300 {
-		return statusToError(res)
-	}
-
-	resp := tokenResponse{}
-
-	if err = decodeBody(res.Body, &resp); err != nil {
-		return fmt.Errorf("%w: %s", ErrParsing, err)
-	}
-
-	if res.StatusCode == http.StatusCreated {
-		cfg.Token = resp.Token
-	}
+	cfg.Token = resp.Token
 
 	return nil
 }
