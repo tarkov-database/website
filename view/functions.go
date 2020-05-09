@@ -190,6 +190,12 @@ func resolveSlots(slots item.Slots, sort string) resolvedSlots {
 				n = "Front Sight"
 			case "sightRear":
 				n = "Rear Sight"
+			case "trigger":
+				n = "Trigger"
+			case "hammer":
+				n = "Hammer"
+			case "catch":
+				n = "Catch"
 			default:
 				logger.Warningf("Unknown slot name \"%s\"", t)
 			}
