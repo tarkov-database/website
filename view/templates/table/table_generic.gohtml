@@ -20,17 +20,17 @@
                 </th>
                 {{ end }}
 
-                {{ if hasQuery $.URI "sort" "spawnChance" }}
+                {{ if hasQuery $.URI "sort" "rarity" }}
                 <th class="sorted-by up">
-                  <a href="{{ setQuery $.URI "sort" "-spawnChance" }}">Spawn Chance</a>
+                  <a href="{{ setQuery $.URI "sort" "-rarity" }}">Rarity</a>
                 </th>
-                {{ else if hasQuery $.URI "sort" "-spawnChance" }}
+                {{ else if hasQuery $.URI "sort" "-rarity" }}
                 <th class="sorted-by down">
-                  <a href="{{ setQuery $.URI "sort" "spawnChance" }}">Spawn Chance</a>
+                  <a href="{{ setQuery $.URI "sort" "rarity" }}">Rarity</a>
                 </th>
                 {{ else }}
                 <th>
-                  <a href="{{ setQuery $.URI "sort" "spawnChance" }}">Spawn Chance</a>
+                  <a href="{{ setQuery $.URI "sort" "rarity" }}">Rarity</a>
                 </th>
                 {{ end }}
 
@@ -59,7 +59,7 @@
                 </a>
               </td>
 
-              <td>{{ .SpawnChance }} %</td>
+              <td>{{ if eq .Rarity "none" }}-{{ else }}{{ .Rarity | toTitle }}{{ end }}</td>
 
               <td>&#8381; {{ .Price }}</td>
 
@@ -93,6 +93,6 @@
           </ul>
         </nav>
         {{ end }}
-        
+
       </div>
 {{ end }}
