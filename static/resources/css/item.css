@@ -142,14 +142,9 @@ main {
   margin-bottom: .5rem;
 }
 
-.item-info > div {
-  padding: 2rem;
-}
-
 .item-info table {
   margin: 0 auto;
   padding: 0;
-  max-width: 20rem;
   width: 100%;
   background: none;
 }
@@ -160,6 +155,8 @@ main {
 
 .item-info td,
 .item-info th {
+  box-sizing: border-box;
+  max-width: 10rem;
   text-align: left;
   padding: .4rem .8rem;
 }
