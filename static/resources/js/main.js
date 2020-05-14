@@ -145,7 +145,7 @@ const initSearchSocket = async() => {
 
   const errErrorClosure = new Error('Search socket was closed with an error');
 
-  const openSocket = async msgListener => {
+  const openSocket = msgListener => {
     const host = window.location.host;
     const path = 'search/ws';
 
@@ -157,7 +157,7 @@ const initSearchSocket = async() => {
 
     let socket;
     try {
-      socket = await new WebSocket(`${proto}://${host}/${path}`);
+      socket = new WebSocket(`${proto}://${host}/${path}`);
     } catch (err) {
       return Promise.reject(err);
     }
@@ -279,6 +279,7 @@ const initSearchSocket = async() => {
         case 'ArrowDown':
           e.preventDefault();
           next = current.nextElementSibling;
+          if (!next) input.focus();
           break;
         case 'Escape':
           current.blur();
@@ -370,7 +371,11 @@ const initSearchSocket = async() => {
 
   input.addEventListener('keydown', e => {
     const selFirstSugg = () => {
-      const next = sugg.querySelector('ul > li > a');
+      const next = sugg.querySelector('ul > li:first-child > a');
+      if (next) next.focus();
+    };
+    const selLastSugg = () => {
+      const next = sugg.querySelector('ul > li:last-child > a');
       if (next) next.focus();
     };
 
@@ -378,6 +383,10 @@ const initSearchSocket = async() => {
     case 'ArrowDown':
       e.preventDefault();
       selFirstSugg();
+      break;
+    case 'ArrowUp':
+      e.preventDefault();
+      selLastSugg();
       break;
     case 'Escape':
       hideSuggestions();
