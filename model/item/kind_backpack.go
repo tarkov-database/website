@@ -12,12 +12,8 @@ type Backpack struct {
 }
 
 type BackpackResult struct {
-	Count int64      `json:"total"`
+	*Result
 	Items []Backpack `json:"items"`
-}
-
-func (r *BackpackResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *BackpackResult) GetEntities() []Entity {

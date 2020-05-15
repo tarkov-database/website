@@ -21,12 +21,8 @@ type MagazineModifier struct {
 }
 
 type MagazineResult struct {
-	Count int64      `json:"total"`
+	*Result
 	Items []Magazine `json:"items"`
-}
-
-func (r *MagazineResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *MagazineResult) GetEntities() []Entity {
@@ -36,4 +32,8 @@ func (r *MagazineResult) GetEntities() []Entity {
 	}
 
 	return e
+}
+
+var magazineFilter = Filter{
+	"caliber": calibers[:],
 }

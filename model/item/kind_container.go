@@ -11,12 +11,8 @@ type Container struct {
 }
 
 type ContainerResult struct {
-	Count int64       `json:"total"`
+	*Result
 	Items []Container `json:"items"`
-}
-
-func (r *ContainerResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *ContainerResult) GetEntities() []Entity {

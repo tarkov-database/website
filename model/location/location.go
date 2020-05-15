@@ -103,3 +103,22 @@ func GetLocationsByText(txt string, limit int) (*LocationResult, error) {
 
 	return result, nil
 }
+
+type Filter map[string][]string
+
+func (f Filter) GetAll() map[string][]string {
+	return f
+}
+
+func (f Filter) Get(k string) []string {
+	return f[k]
+}
+
+func GetFilter() Filter {
+	return Filter{
+		"available": {
+			"true",
+			"false",
+		},
+	}
+}

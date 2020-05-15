@@ -13,12 +13,8 @@ type TacticalRig struct {
 }
 
 type TacticalRigResult struct {
-	Count int64         `json:"total"`
+	*Result
 	Items []TacticalRig `json:"items"`
-}
-
-func (r *TacticalRigResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *TacticalRigResult) GetEntities() []Entity {
@@ -28,4 +24,9 @@ func (r *TacticalRigResult) GetEntities() []Entity {
 	}
 
 	return e
+}
+
+var tacticalFilter = Filter{
+	"class":    armorClasses[:],
+	"material": armorMaterial[:],
 }

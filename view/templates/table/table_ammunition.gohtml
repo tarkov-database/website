@@ -1,8 +1,29 @@
 {{ define "table" }}
       <div class="box table">
+        <div class="listTitle">Table of {{ .Keyword | toTitle }}</div>
+
+      {{ if .Filter }}
+        <div id="listFilter" class="filters">
+          <ul>
+            {{ range $name, $options := .Filter.GetAll }}
+            <li>
+              <label>{{ $name | toTitle }}</label>
+              <select name="{{ $name }}">
+                <option value="all">All</option>
+                {{ range $options }}
+                <option value="{{ . }}" {{ if hasQuery $.URI $name . }}selected{{ end }}>
+                  {{ if eq . "true" }}Yes{{ else if eq . "false" }}No{{ else }}{{ . | toTitle }}{{ end }}
+                </option>
+                {{ end }}
+              </select>
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+        {{ end }}
+
         <div class="table-big">
           <table class="item-table sort-table">
-            <caption>Table of {{ .Keyword | toTitle }}</caption>
             <thead>
               <tr title="Sort by">
 
@@ -20,6 +41,7 @@
                 </th>
                 {{ end }}
 
+                {{ if not (hasQuery $.URI "caliber" "*" ) }}
                 {{ if hasQuery $.URI "sort" "caliber" }}
                 <th class="sorted-by up">
                   <a href="{{ setQuery $.URI "sort" "-caliber" }}">Caliber</a>
@@ -32,6 +54,7 @@
                 <th>
                   <a href="{{ setQuery $.URI "sort" "caliber" }}">Caliber</a>
                 </th>
+                {{ end }}
                 {{ end }}
 
                 {{ if hasQuery $.URI "sort" "damage" }}
@@ -102,11 +125,13 @@
                   </a>
                 </td>
 
+                {{ if not (hasQuery $.URI "caliber" "*") }}
                 <td>
                   <a href="{{ setQuery (setQuery $.URI "p" "1") "caliber" .Caliber }}">
                     {{ .Caliber }}
                   </a>
                 </td>
+                {{ end }}
 
                 <td>{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
 

@@ -9,12 +9,8 @@ type Map struct {
 }
 
 type MapResult struct {
-	Count int64 `json:"total"`
+	*Result
 	Items []Map `json:"items"`
-}
-
-func (r *MapResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *MapResult) GetEntities() []Entity {

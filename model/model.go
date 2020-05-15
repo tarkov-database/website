@@ -7,9 +7,9 @@ import (
 type EntityType int
 
 const (
-	Item EntityType = iota
-	Location
-	Feature
+	TypeItem EntityType = iota
+	TypeLocation
+	TypeFeature
 )
 
 var entityTypeString = [...]string{
@@ -20,6 +20,11 @@ var entityTypeString = [...]string{
 
 func (et EntityType) String() string {
 	return entityTypeString[et]
+}
+
+type Filter interface {
+	GetAll() map[string][]string
+	Get(string) []string
 }
 
 // Response describes a JSON status response

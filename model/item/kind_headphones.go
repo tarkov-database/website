@@ -28,12 +28,8 @@ type Compressor struct {
 }
 
 type HeadphoneResult struct {
-	Count int64       `json:"total"`
+	*Result
 	Items []Headphone `json:"items"`
-}
-
-func (r *HeadphoneResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *HeadphoneResult) GetEntities() []Entity {

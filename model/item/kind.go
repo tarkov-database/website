@@ -24,6 +24,7 @@ type Entity interface {
 }
 
 type EntityResult interface {
+	GetKind() Kind
 	GetCount() int64
 	GetEntities() []Entity
 }
@@ -147,75 +148,75 @@ func (k Kind) GetEntityResult() (EntityResult, error) {
 
 	switch k {
 	case KindAmmunition:
-		r = &AmmunitionResult{}
+		r = &AmmunitionResult{Result: &Result{Kind: KindAmmunition}}
 	case KindArmor:
-		r = &ArmorResult{}
+		r = &ArmorResult{Result: &Result{Kind: KindArmor}}
 	case KindBackpack:
-		r = &BackpackResult{}
+		r = &BackpackResult{Result: &Result{Kind: KindBackpack}}
 	case KindBarter:
-		r = &BarterResult{}
+		r = &BarterResult{Result: &Result{Kind: KindBarter}}
 	case KindClothing:
-		r = &ClothingResult{}
+		r = &ClothingResult{Result: &Result{Kind: KindClothing}}
 	case KindCommon:
-		r = &ItemResult{}
+		r = &ItemResult{Result: &Result{Kind: KindCommon}}
 	case KindContainer:
-		r = &ContainerResult{}
+		r = &ContainerResult{Result: &Result{Kind: KindContainer}}
 	case KindFirearm:
-		r = &FirearmResult{}
+		r = &FirearmResult{Result: &Result{Kind: KindFirearm}}
 	case KindFood:
-		r = &FoodResult{}
+		r = &FoodResult{Result: &Result{Kind: KindFood}}
 	case KindGrenade:
-		r = &GrenadeResult{}
+		r = &GrenadeResult{Result: &Result{Kind: KindGrenade}}
 	case KindHeadphone:
-		r = &HeadphoneResult{}
+		r = &HeadphoneResult{Result: &Result{Kind: KindHeadphone}}
 	case KindKey:
-		r = &KeyResult{}
+		r = &KeyResult{Result: &Result{Kind: KindKey}}
 	case KindMagazine:
-		r = &MagazineResult{}
+		r = &MagazineResult{Result: &Result{Kind: KindMagazine}}
 	case KindMap:
-		r = &MapResult{}
+		r = &MapResult{Result: &Result{Kind: KindMap}}
 	case KindMedical:
-		r = &MedicalResult{}
+		r = &MedicalResult{Result: &Result{Kind: KindMedical}}
 	case KindMelee:
-		r = &MeleeResult{}
+		r = &MeleeResult{Result: &Result{Kind: KindMelee}}
 	case KindModification:
-		r = &ModificationResult{}
+		r = &ModificationResult{Result: &Result{Kind: KindModification}}
 	case KindModificationBarrel:
-		r = &BarrelResult{}
+		r = &BarrelResult{Result: &Result{Kind: KindModificationBarrel}}
 	case KindModificationBipod:
-		r = &BipodResult{}
+		r = &BipodResult{Result: &Result{Kind: KindModificationBipod}}
 	case KindModificationCharge:
-		r = &ChargeResult{}
+		r = &ChargeResult{Result: &Result{Kind: KindModificationCharge}}
 	case KindModificationDevice:
-		r = &DeviceResult{}
+		r = &DeviceResult{Result: &Result{Kind: KindModificationDevice}}
 	case KindModificationForegrip:
-		r = &ForegripResult{}
+		r = &ForegripResult{Result: &Result{Kind: KindModificationForegrip}}
 	case KindModificationGasblock:
-		r = &GasBlockResult{}
+		r = &GasBlockResult{Result: &Result{Kind: KindModificationGasblock}}
 	case KindModificationGoggles:
-		r = &GogglesResult{}
+		r = &GogglesResult{Result: &Result{Kind: KindModificationGoggles}}
 	case KindModificationHandguard:
-		r = &HandguardResult{}
+		r = &HandguardResult{Result: &Result{Kind: KindModificationHandguard}}
 	case KindModificationLauncher:
-		r = &LauncherResult{}
+		r = &LauncherResult{Result: &Result{Kind: KindModificationLauncher}}
 	case KindModificationMount:
-		r = &MountResult{}
+		r = &MountResult{Result: &Result{Kind: KindModificationMount}}
 	case KindModificationMuzzle:
-		r = &MuzzleResult{}
+		r = &MuzzleResult{Result: &Result{Kind: KindModificationMuzzle}}
 	case KindModificationPistolgrip:
-		r = &PistolGripResult{}
+		r = &PistolGripResult{Result: &Result{Kind: KindModificationPistolgrip}}
 	case KindModificationReceiver:
-		r = &ReceiverResult{}
+		r = &ReceiverResult{Result: &Result{Kind: KindModificationReceiver}}
 	case KindModificationSight:
-		r = &SightResult{}
+		r = &SightResult{Result: &Result{Kind: KindModificationSight}}
 	case KindModificationSightSpecial:
-		r = &SightSpecialResult{}
+		r = &SightSpecialResult{Result: &Result{Kind: KindModificationSightSpecial}}
 	case KindModificationStock:
-		r = &StockResult{}
+		r = &StockResult{Result: &Result{Kind: KindModificationStock}}
 	case KindMoney:
-		r = &MoneyResult{}
+		r = &MoneyResult{Result: &Result{Kind: KindMoney}}
 	case KindTacticalrig:
-		r = &TacticalRigResult{}
+		r = &TacticalRigResult{Result: &Result{Kind: KindTacticalrig}}
 	default:
 		return r, ErrInvalidKind
 	}
@@ -259,4 +260,62 @@ var KindList = [...]Kind{
 	KindModificationStock,
 	KindMoney,
 	KindTacticalrig,
+}
+
+type Result struct {
+	Kind  Kind  `json:"kind"`
+	Count int64 `json:"total"`
+}
+
+func (r Result) GetKind() Kind {
+	return r.Kind
+}
+
+func (r Result) GetCount() int64 {
+	return r.Count
+}
+
+type Filter map[string][]string
+
+func (f Filter) GetAll() map[string][]string {
+	return f
+}
+
+func (f Filter) Get(k string) []string {
+	return f[k]
+}
+
+func (k Kind) GetFilter() Filter {
+	switch k {
+	case KindAmmunition:
+		return ammunitionFilter
+	case KindArmor:
+		return armorFilter
+	case KindClothing:
+		return clothingFilter
+	case KindFirearm:
+		return firearmFilter
+	case KindFood:
+		return foodFilter
+	case KindGrenade:
+		return grenadeFilter
+	case KindMagazine:
+		return magazineFilter
+	case KindMedical:
+		return medicalFilter
+	case KindModificationBarrel:
+		return modBarrelFilter
+	case KindModificationDevice:
+		return modDeviceFilter
+	case KindModificationMuzzle:
+		return modMuzzleFilter
+	case KindModificationSight:
+		return modSightFilter
+	case KindModificationGoggles, KindModificationGogglesSpecial:
+		return modGogglesFilter
+	case KindTacticalrig:
+		return tacticalFilter
+	default:
+		return Filter{}
+	}
 }

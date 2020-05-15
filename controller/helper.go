@@ -32,8 +32,8 @@ func init() {
 	}
 }
 
-func getPage(r *http.Request) int {
-	page := r.URL.Query().Get("p")
+func getPage(u *url.URL) int {
+	page := u.Query().Get("p")
 	var p int
 	if len(page) != 0 {
 		p, _ = strconv.Atoi(page)

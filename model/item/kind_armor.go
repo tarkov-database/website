@@ -16,12 +16,8 @@ type Armor struct {
 }
 
 type ArmorResult struct {
-	Count int64   `json:"total"`
+	*Result
 	Items []Armor `json:"items"`
-}
-
-func (r *ArmorResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *ArmorResult) GetEntities() []Entity {
@@ -44,4 +40,36 @@ type ArmorProp struct {
 type ArmorMaterial struct {
 	Name            string  `json:"name"`
 	Destructibility float64 `json:"destructibility"`
+}
+
+var armorClasses = [...]string{
+	"1",
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+}
+
+var armorMaterial = [...]string{
+	"aluminium",
+	"aramid",
+	"ceramic",
+	"combined",
+	"glass",
+	"steel",
+	"titanium",
+	"uhmwpe",
+}
+
+var armorFilter = Filter{
+	"type": {
+		"attachment",
+		"body",
+		"faceCover",
+		"helmet",
+		"visor",
+	},
+	"class":    armorClasses[:],
+	"material": armorMaterial[:],
 }

@@ -15,12 +15,8 @@ type Medical struct {
 }
 
 type MedicalResult struct {
-	Count int64     `json:"total"`
+	*Result
 	Items []Medical `json:"items"`
-}
-
-func (r *MedicalResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *MedicalResult) GetEntities() []Entity {
@@ -30,4 +26,13 @@ func (r *MedicalResult) GetEntities() []Entity {
 	}
 
 	return e
+}
+
+var medicalFilter = Filter{
+	"type": {
+		"accessory",
+		"drug",
+		"medkit",
+		"stimulator",
+	},
 }

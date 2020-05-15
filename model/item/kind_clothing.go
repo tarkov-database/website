@@ -14,12 +14,8 @@ type Clothing struct {
 }
 
 type ClothingResult struct {
-	Count int64      `json:"total"`
+	*Result
 	Items []Clothing `json:"items"`
-}
-
-func (r *ClothingResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *ClothingResult) GetEntities() []Entity {
@@ -29,4 +25,13 @@ func (r *ClothingResult) GetEntities() []Entity {
 	}
 
 	return e
+}
+
+var clothingFilter = Filter{
+	"type": {
+		"eyewear",
+		"faceCover",
+		"headwear",
+		"unknown",
+	},
 }

@@ -68,7 +68,7 @@ func (so *SearchOperation) Items() {
 			Name:      r.GetName(),
 			ShortName: r.GetShortName(),
 			Parent:    cat,
-			Type:      Item,
+			Type:      TypeItem,
 		}
 	}
 
@@ -93,7 +93,7 @@ func (so *SearchOperation) Locations() {
 		rs[i] = &SearchResult{
 			ID:   r.ID,
 			Name: r.Name,
-			Type: Location,
+			Type: TypeLocation,
 		}
 	}
 
@@ -119,7 +119,7 @@ func (so *SearchOperation) Features(lID string) {
 			ID:     r.ID,
 			Name:   r.Name,
 			Parent: r.Group,
-			Type:   Feature,
+			Type:   TypeFeature,
 		}
 	}
 

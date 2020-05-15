@@ -11,12 +11,8 @@ type Key struct {
 }
 
 type KeyResult struct {
-	Count int64 `json:"total"`
+	*Result
 	Items []Key `json:"items"`
-}
-
-func (r *KeyResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *KeyResult) GetEntities() []Entity {

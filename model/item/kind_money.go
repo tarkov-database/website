@@ -9,12 +9,8 @@ type Money struct {
 }
 
 type MoneyResult struct {
-	Count int64   `json:"total"`
+	*Result
 	Items []Money `json:"items"`
-}
-
-func (r *MoneyResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *MoneyResult) GetEntities() []Entity {

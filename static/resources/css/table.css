@@ -20,6 +20,10 @@ table caption {
   overflow-x: auto;
 }
 
+.box.table .table-big {
+  margin-top: 1rem;
+}
+
 .table-big table {
   width: 100%;
   margin: 0 !important;

@@ -401,6 +401,38 @@ const initSearchSocket = async() => {
 initSearchSocket();
 
 
+const initFilter = () => {
+  const el = document.getElementById('listFilter');
+  if (el === null) return;
+
+  const changeFilter = e => {
+    const params = new URLSearchParams(window.location.search);
+    const name = e.target.name, value = e.target.value;
+
+    if (!value || value === 'all') {
+      params.delete(name);
+    } else {
+      params.set(name, value);
+    }
+
+    const pageKey = 'p';
+    if (params.has(pageKey)) params.delete(pageKey);
+
+    window.location.search = params.toString();
+  };
+
+  const ul = el.querySelectorAll('ul > li');
+  for (const li of ul) {
+    const sel = li.getElementsByTagName('select')[0];
+    sel.addEventListener('change', changeFilter);
+  }
+
+  
+};
+
+initFilter();
+
+
 const initMap = async () => {
   const el = document.getElementById('map');
   if (el === null) return;

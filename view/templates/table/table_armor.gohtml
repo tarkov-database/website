@@ -1,8 +1,30 @@
 {{ define "table" }}
       <div class="box table">
+        <div class="listTitle">Table of {{ .Keyword | toTitle }}</div>
+
+      {{ if .Filter }}
+        <div id="listFilter" class="filters">
+          <ul>
+            {{ range $name, $options := .Filter.GetAll }}
+            <li>
+              <label>{{ $name | toTitle }}</label>
+              <select name="{{ $name }}">
+                <option value="all">All</option>
+                {{ range $options }}
+                <option value="{{ . }}" {{ if hasQuery $.URI $name . }}selected{{ end }}>
+                  {{ if eq . "true" }}Yes{{ else if eq . "false" }}No{{ else }}{{ . | toTitle }}{{ end }}
+                </option>
+                {{ end }}
+              </select>
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+        {{ end }}
+
+
         <div class="table-big">
           <table class="item-table sort-table">
-            <caption>Table of {{ .Keyword | toTitle }}</caption>
             <thead>
               <tr title="Sort by">
 
@@ -20,6 +42,7 @@
                 </th>
                 {{ end }}
 
+                {{ if not (hasQuery $.URI "type" "*" ) }}
                 {{ if hasQuery $.URI "sort" "type" }}
                 <th class="sorted-by up">
                   <a href="{{ setQuery $.URI "sort" "-type" }}">Type</a>
@@ -33,7 +56,9 @@
                   <a href="{{ setQuery $.URI "sort" "type" }}">Type</a>
                 </th>
                 {{ end }}
+                {{ end }}
 
+                {{ if not (hasQuery $.URI "class" "*" ) }}
                 {{ if hasQuery $.URI "sort" "armor.class" }}
                 <th class="sorted-by up">
                   <a href="{{ setQuery $.URI "sort" "-armor.class" }}">Class</a>
@@ -46,6 +71,7 @@
                 <th>
                   <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
                 </th>
+                {{ end }}
                 {{ end }}
 
                 {{ if hasQuery $.URI "sort" "armor.durability" }}
@@ -62,6 +88,7 @@
                 </th>
                 {{ end }}
 
+                {{ if not (hasQuery $.URI "material" "*" ) }}
                 {{ if hasQuery $.URI "sort" "armor.material.name" }}
                 <th class="sorted-by up">
                   <a href="{{ setQuery $.URI "sort" "-armor.material.name" }}">Material</a>
@@ -75,6 +102,7 @@
                   <a href="{{ setQuery $.URI "sort" "armor.material.name" }}">Material</a>
                 </th>
                 {{ end }}
+                {{ end }}
 
               </tr>
             </thead>
@@ -87,21 +115,31 @@
                 </a>
               </td>
 
+              {{ if not (hasQuery $.URI "type" "*" ) }}
               <td>
                 <a href="{{ setQuery (setQuery $.URI "p" "1") "type" .Type }}">
                   {{ .Type | toTitle }}
                 </a>
               </td>
+              {{ end }}
 
+              {{ if not (hasQuery $.URI "class" "*" ) }}
               <td>
                 <a href="{{ setQuery (setQuery $.URI "p" "1") "class" .Armor.Class }}">
                   {{ .Armor.Class }}
                 </a>
               </td>
+              {{ end }}
 
               <td>{{ .Armor.Durability }}</td>
 
-              <td>{{ if eq .Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Armor.Material.Name | toTitle }}{{ end }}</td>
+              {{ if not (hasQuery $.URI "material" "*" ) }}
+              <td>
+                <a href="{{ setQuery (setQuery $.URI "p" "1") "material" .Armor.Material.Name }}">
+                  {{ if eq .Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Armor.Material.Name | toTitle }}{{ end }}
+                </a>
+              </td>
+              {{ end }}
 
             </tr>
             {{ end }}

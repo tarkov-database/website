@@ -9,12 +9,8 @@ type Barter struct {
 }
 
 type BarterResult struct {
-	Count int64    `json:"total"`
+	*Result
 	Items []Barter `json:"items"`
-}
-
-func (r *BarterResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *BarterResult) GetEntities() []Entity {

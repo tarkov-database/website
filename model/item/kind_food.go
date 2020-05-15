@@ -14,12 +14,8 @@ type Food struct {
 }
 
 type FoodResult struct {
-	Count int64  `json:"total"`
+	*Result
 	Items []Food `json:"items"`
-}
-
-func (r *FoodResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *FoodResult) GetEntities() []Entity {
@@ -29,4 +25,11 @@ func (r *FoodResult) GetEntities() []Entity {
 	}
 
 	return e
+}
+
+var foodFilter = Filter{
+	"type": {
+		"drink",
+		"food",
+	},
 }

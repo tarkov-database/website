@@ -19,12 +19,8 @@ type MeleeAttack struct {
 }
 
 type MeleeResult struct {
-	Count int64   `json:"total"`
+	*Result
 	Items []Melee `json:"items"`
-}
-
-func (r *MeleeResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *MeleeResult) GetEntities() []Entity {

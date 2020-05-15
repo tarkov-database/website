@@ -60,9 +60,9 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	case item.KindFirearm:
 		params["type"], params["caliber"], params["class"] = r.URL.Query().Get("type"), r.URL.Query().Get("caliber"), r.URL.Query().Get("class")
 	case item.KindArmor:
-		params["type"], params["class"] = r.URL.Query().Get("type"), r.URL.Query().Get("class")
+		params["type"], params["armor.class"], params["armor.material.name"] = r.URL.Query().Get("type"), r.URL.Query().Get("class"), r.URL.Query().Get("material")
 	case item.KindTacticalrig:
-		params["class"] = r.URL.Query().Get("class")
+		params["armor.class"], params["armor.material.name"] = r.URL.Query().Get("class"), r.URL.Query().Get("material")
 	case item.KindMedical, item.KindFood, item.KindGrenade, item.KindClothing, item.KindModificationMuzzle, item.KindModificationDevice, item.KindModificationSight, item.KindModificationSightSpecial, item.KindModificationGoggles, item.KindModificationGogglesSpecial:
 		params["type"] = r.URL.Query().Get("type")
 	}
@@ -71,7 +71,7 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		Sort:   r.URL.Query().Get("sort"),
 		Filter: params,
 	}
-	opts.Limit, opts.Offset = getLimitOffset(getPage(r))
+	opts.Limit, opts.Offset = getLimitOffset(getPage(r.URL))
 
 	result, err := item.GetItems(kind, opts)
 	if err != nil {

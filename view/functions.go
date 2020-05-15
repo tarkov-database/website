@@ -80,8 +80,9 @@ func hasQuery(path, key string, val interface{}) bool {
 		return false
 	}
 
-	q := u.Query()
-	if q.Get(key) == fmt.Sprintf("%v", val) {
+	a := u.Query().Get(key)
+	b := fmt.Sprintf("%v", val)
+	if a != "" && (b == a || b == "*") {
 		return true
 	}
 

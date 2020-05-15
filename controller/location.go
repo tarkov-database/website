@@ -38,7 +38,7 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		Sort:   r.URL.Query().Get("sort"),
 		Filter: params,
 	}
-	opts.Limit, opts.Offset = getLimitOffset(getPage(r))
+	opts.Limit, opts.Offset = getLimitOffset(getPage(r.URL))
 
 	result, err := location.GetLocations(opts)
 	if err != nil {

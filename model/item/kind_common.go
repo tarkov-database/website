@@ -39,12 +39,8 @@ func (i Item) GetDescription() string {
 }
 
 type ItemResult struct {
-	Count int64  `json:"total"`
+	*Result
 	Items []Item `json:"items"`
-}
-
-func (r *ItemResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *ItemResult) GetEntities() []Entity {

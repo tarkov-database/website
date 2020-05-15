@@ -3,10 +3,27 @@
         <div class="listTitle">
           {{ if .IsSearch }}Result for "{{ .Keyword }}"{{ else }}{{ .Keyword | toTitle }}{{ end }} ({{ .PageCount }} of {{ .TotalCount }})
         </div>
-        <div class="filters" hidden>
-          <ul id="filters">
+
+        {{ if .Filter }}
+        <div id="listFilter" class="filters">
+          <ul>
+            {{ range $name, $options := .Filter.GetAll }}
+            <li>
+              <label>{{ $name | toTitle }}</label>
+              <select name="{{ $name }}">
+                <option value="all">All</option>
+                {{ range $options }}
+                <option value="{{ . }}" {{ if hasQuery $.URI $name . }}selected{{ end }}>
+                  {{ if eq . "true" }}Yes{{ else if eq . "false" }}No{{ else }}{{ . | toTitle }}{{ end }}
+                </option>
+                {{ end }}
+              </select>
+            </li>
+            {{ end }}
           </ul>
         </div>
+        {{ end }}
+
         <ul id="list" class="items">
           {{ range .List }}
 
@@ -14,12 +31,7 @@
 
           {{ if eq $.Type.String "item" }}
           {{ $cat := kindToCategory .Kind }}
-          <li data-category="{{ $cat | categoryToName }}"
-              {{ if eq .Kind "firearm" "armor" "grenade" "clothing" "medical" "food" "modificationGoggles" "modificationGogglesSpecial" "modificationSight" "modificationSightSpecial" "modificationMuzzle" "modificationDevice" }}data-type="{{ .Type }}"{{ end }}
-              {{ if eq .Kind "ammunition" "magazine" "firearm" }}data-caliber="{{ .Caliber }}"{{ end }}
-              {{ if eq .Kind "firearm" }}data-class="{{ .Class }}"{{ end }}
-              {{ if eq .Kind "armor" "tacticalrig" }}data-class="{{ .Armor.Class }}"{{ end }}>
-
+          <li>
             <a title="{{ .Name }}" href="/item/{{ $cat }}/{{ .ID }}">
               <div class="icon {{ $cat }}" title="{{ $cat | categoryToName | toTitle }}">&nbsp;</div>
               <span>{{ .ShortName }}</span>

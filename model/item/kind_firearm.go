@@ -23,12 +23,8 @@ type Firearm struct {
 }
 
 type FirearmResult struct {
-	Count int64     `json:"total"`
+	*Result
 	Items []Firearm `json:"items"`
-}
-
-func (r *FirearmResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *FirearmResult) GetEntities() []Entity {
@@ -38,4 +34,23 @@ func (r *FirearmResult) GetEntities() []Entity {
 	}
 
 	return e
+}
+
+var firearmFilter = Filter{
+	"type": {
+		"primary",
+		"secondary",
+	},
+	"class": {
+		"assaultCarbine",
+		"assaultRifle",
+		"grenadeLauncher",
+		"machinegun",
+		"marksmanRifle",
+		"pistol",
+		"shotgun",
+		"smg",
+		"sniperRifle",
+	},
+	"caliber": calibers[:],
 }

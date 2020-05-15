@@ -35,12 +35,8 @@ type Modification struct {
 }
 
 type ModificationResult struct {
-	Count int64          `json:"total"`
+	*Result
 	Items []Modification `json:"items"`
-}
-
-func (r *ModificationResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *ModificationResult) GetEntities() []Entity {
@@ -63,12 +59,8 @@ type Barrel struct {
 }
 
 type BarrelResult struct {
-	Count int64    `json:"total"`
+	*Result
 	Items []Barrel `json:"items"`
-}
-
-func (r *BarrelResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *BarrelResult) GetEntities() []Entity {
@@ -80,17 +72,20 @@ func (r *BarrelResult) GetEntities() []Entity {
 	return e
 }
 
+var modBarrelFilter = Filter{
+	"suppressor": {
+		"true",
+		"false",
+	},
+}
+
 type Bipod struct {
 	Modification `bson:",inline"`
 }
 
 type BipodResult struct {
-	Count int64   `json:"total"`
+	*Result
 	Items []Bipod `json:"items"`
-}
-
-func (r *BipodResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *BipodResult) GetEntities() []Entity {
@@ -107,12 +102,8 @@ type Charge struct {
 }
 
 type ChargeResult struct {
-	Count int64    `json:"total"`
+	*Result
 	Items []Charge `json:"items"`
-}
-
-func (r *ChargeResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *ChargeResult) GetEntities() []Entity {
@@ -132,12 +123,8 @@ type Device struct {
 }
 
 type DeviceResult struct {
-	Count int64    `json:"total"`
+	*Result
 	Items []Device `json:"items"`
-}
-
-func (r *DeviceResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *DeviceResult) GetEntities() []Entity {
@@ -149,17 +136,20 @@ func (r *DeviceResult) GetEntities() []Entity {
 	return e
 }
 
+var modDeviceFilter = Filter{
+	"type": {
+		"combo",
+		"light",
+	},
+}
+
 type Foregrip struct {
 	Modification `bson:",inline"`
 }
 
 type ForegripResult struct {
-	Count int64      `json:"total"`
+	*Result
 	Items []Foregrip `json:"items"`
-}
-
-func (r *ForegripResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *ForegripResult) GetEntities() []Entity {
@@ -176,12 +166,8 @@ type GasBlock struct {
 }
 
 type GasBlockResult struct {
-	Count int64      `json:"total"`
+	*Result
 	Items []GasBlock `json:"items"`
-}
-
-func (r *GasBlockResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *GasBlockResult) GetEntities() []Entity {
@@ -198,12 +184,8 @@ type Handguard struct {
 }
 
 type HandguardResult struct {
-	Count int64       `json:"total"`
+	*Result
 	Items []Handguard `json:"items"`
-}
-
-func (r *HandguardResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *HandguardResult) GetEntities() []Entity {
@@ -222,12 +204,8 @@ type Launcher struct {
 }
 
 type LauncherResult struct {
-	Count int64      `json:"total"`
+	*Result
 	Items []Launcher `json:"items"`
-}
-
-func (r *LauncherResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *LauncherResult) GetEntities() []Entity {
@@ -244,12 +222,8 @@ type Mount struct {
 }
 
 type MountResult struct {
-	Count int64   `json:"total"`
+	*Result
 	Items []Mount `json:"items"`
-}
-
-func (r *MountResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *MountResult) GetEntities() []Entity {
@@ -269,12 +243,8 @@ type Muzzle struct {
 }
 
 type MuzzleResult struct {
-	Count int64    `json:"total"`
+	*Result
 	Items []Muzzle `json:"items"`
-}
-
-func (r *MuzzleResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *MuzzleResult) GetEntities() []Entity {
@@ -286,17 +256,22 @@ func (r *MuzzleResult) GetEntities() []Entity {
 	return e
 }
 
+var modMuzzleFilter = Filter{
+	"type": {
+		"brake",
+		"combo",
+		"compensator",
+		"supressor",
+	},
+}
+
 type PistolGrip struct {
 	Modification `bson:",inline"`
 }
 
 type PistolGripResult struct {
-	Count int64        `json:"total"`
+	*Result
 	Items []PistolGrip `json:"items"`
-}
-
-func (r *PistolGripResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *PistolGripResult) GetEntities() []Entity {
@@ -315,12 +290,8 @@ type Receiver struct {
 }
 
 type ReceiverResult struct {
-	Count int64      `json:"total"`
+	*Result
 	Items []Receiver `json:"items"`
-}
-
-func (r *ReceiverResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *ReceiverResult) GetEntities() []Entity {
@@ -342,12 +313,8 @@ type Sight struct {
 }
 
 type SightResult struct {
-	Count int64   `json:"total"`
+	*Result
 	Items []Sight `json:"items"`
-}
-
-func (r *SightResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *SightResult) GetEntities() []Entity {
@@ -359,18 +326,23 @@ func (r *SightResult) GetEntities() []Entity {
 	return e
 }
 
+var modSightFilter = Filter{
+	"type": {
+		"hybrid",
+		"iron",
+		"reflex",
+		"telescopic",
+	},
+}
+
 type SightSpecial struct {
 	Sight        `bson:",inline"`
 	OpticSpecial `bson:",inline"`
 }
 
 type SightSpecialResult struct {
-	Count int64          `json:"total"`
+	*Result
 	Items []SightSpecial `json:"items"`
-}
-
-func (r *SightSpecialResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *SightSpecialResult) GetEntities() []Entity {
@@ -389,12 +361,8 @@ type Stock struct {
 }
 
 type StockResult struct {
-	Count int64   `json:"total"`
+	*Result
 	Items []Stock `json:"items"`
-}
-
-func (r *StockResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *StockResult) GetEntities() []Entity {
@@ -415,12 +383,8 @@ type Goggles struct {
 }
 
 type GogglesResult struct {
-	Count int64     `json:"total"`
+	*Result
 	Items []Goggles `json:"items"`
-}
-
-func (r *GogglesResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *GogglesResult) GetEntities() []Entity {
@@ -432,18 +396,21 @@ func (r *GogglesResult) GetEntities() []Entity {
 	return e
 }
 
+var modGogglesFilter = Filter{
+	"type": {
+		"nightVision",
+		"thermalVision",
+	},
+}
+
 type GogglesSpecial struct {
 	Goggles      `bson:",inline"`
 	OpticSpecial `bson:",inline"`
 }
 
 type GogglesSpecialResult struct {
-	Count int64            `json:"total"`
+	*Result
 	Items []GogglesSpecial `json:"items"`
-}
-
-func (r *GogglesSpecialResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *GogglesSpecialResult) GetEntities() []Entity {

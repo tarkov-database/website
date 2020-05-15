@@ -81,6 +81,7 @@ type EntityList struct {
 	PageNumber int64
 	PageNext   *Pagination
 	PagePrev   *Pagination
+	Filter     Filter
 	List       interface{}
 }
 
@@ -156,16 +157,18 @@ func (p *Page) Result(res interface{}, kw string) (*EntityList, error) {
 
 	switch v := res.(type) {
 	case item.EntityResult:
-		list := v.GetEntities()
-		el.Type = Item
+		el.Type = TypeItem
 		el.TotalCount = v.GetCount()
+		list := v.GetEntities()
 		el.List = list
 		el.PageCount = int64(len(list))
+		el.Filter = v.GetKind().GetFilter()
 	case *location.LocationResult:
-		el.Type = Location
+		el.Type = TypeLocation
 		el.TotalCount = v.Count
 		el.List = v.Items
 		el.PageCount = int64(len(v.Items))
+		el.Filter = location.GetFilter()
 	case []*SearchResult:
 		el.IsSearch = true
 		el.TotalCount = int64(len(v))

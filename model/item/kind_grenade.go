@@ -18,12 +18,8 @@ type Grenade struct {
 }
 
 type GrenadeResult struct {
-	Count int64     `json:"total"`
+	*Result
 	Items []Grenade `json:"items"`
-}
-
-func (r *GrenadeResult) GetCount() int64 {
-	return r.Count
 }
 
 func (r *GrenadeResult) GetEntities() []Entity {
@@ -33,4 +29,12 @@ func (r *GrenadeResult) GetEntities() []Entity {
 	}
 
 	return e
+}
+
+var grenadeFilter = Filter{
+	"type": {
+		"flash",
+		"frag",
+		"smoke",
+	},
 }
