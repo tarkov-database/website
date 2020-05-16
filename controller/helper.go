@@ -61,11 +61,23 @@ func isASCII(s string) bool {
 	return !regexNonASCII.MatchString(s)
 }
 
+var regexNonAlnum = regexp.MustCompile(`[^[:alnum:]]`)
+
+func isAlnum(s string) bool {
+	return !regexNonAlnum.MatchString(s)
+}
+
+var regexNonAlnumExtended = regexp.MustCompile(`[^[:alnum:][:blank:]!#$%&'()*+,\-./:;?_~]`)
+
+func isAlnumExtended(s string) bool {
+	return !regexNonAlnumExtended.MatchString(s)
+}
+
 func validateKeyword(q string) error {
 	if len(q) < 3 || len(q) > 32 {
 		return ErrTooLongShort
 	}
-	if !isASCII(q) {
+	if !isAlnumExtended(q) {
 		return ErrIllegalChars
 	}
 
