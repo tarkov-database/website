@@ -209,7 +209,7 @@ func (s *socket) read(remote string) {
 			q := req.Keyword
 
 			if err := validateKeyword(q); err != nil {
-				res.Error = err
+				res.Error = err.Error()
 				s.Send <- res
 				return
 			}
