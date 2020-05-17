@@ -393,6 +393,14 @@ const initSearchSocket = async() => {
 
   input.addEventListener('focusin', onFocusIn);
   input.addEventListener('input', onInput);
+
+  document.addEventListener('keydown', e => {
+    if (document.activeElement.nodeName === 'INPUT') return;
+    if (e.ctrlKey && e.key === 'f' || e.key === 'F3' || e.key === '/') {
+      e.preventDefault();
+      input.focus();
+    }
+  });
 };
 
 initSearchSocket();
