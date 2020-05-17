@@ -1,22 +1,22 @@
 {{ define "content" }}
       <div class="nav">
-        <form id="search" class="search">
-          <div class="icon search">&nbsp;</div>
-          <input type="search" name="query" placeholder="Search..." minlength="2" pattern=".{2,32}" maxlength="32" autocomplete="off">
-          <div class="suggestion hide"><ul></ul></div>
-        </form>
-        <div id="layers" class="menu layers">
-          <div class="icon"></div>
-          <ul></ul>
-        </div>
-        <div id="menu" class="menu main">
-          <div class="icon"></div>
-          <ul>
-            <li id="measure" title="Measure Distance">
-              <div class="icon ruler">&nbsp;</div>
-            </li>
-          </ul>
-        </div>
+
+          {{ template "search" . }}
+
+          <div id="layers" class="menu layers">
+            <div class="icon"></div>
+            <ul></ul>
+          </div>
+
+          <div id="menu" class="menu main">
+            <div class="icon"></div>
+            <ul>
+              <li id="measure" title="Measure Distance">
+                <div class="icon ruler">&nbsp;</div>
+              </li>
+            </ul>
+          </div>
+
       </div>
 
       <div id="distance" class="distance-container">

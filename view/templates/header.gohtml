@@ -17,7 +17,7 @@
 {{ define "search" }}
 <form id="search" class="search" action="/search" method="get">
   <div class="icon search">&nbsp;</div>
-  <input required type="search" name="query" placeholder="Search..." minlength="2" pattern="^[A-Za-z0-9!#$%&'()*+,\-./:;?_~ ]{2,32}$" maxlength="32" autocomplete="off">
+  <input required type="search" name="query" placeholder="Search..." minlength="3" pattern="^[A-Za-z0-9!#$%&'()*+,\-./:;?_~ ]{3,32}$" maxlength="32" autocomplete="off">
   <div class="suggestion hide"><ul></ul></div>
 </form>
 {{ end }}

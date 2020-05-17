@@ -250,11 +250,16 @@ header form.search {
   padding: .3rem .6rem .3rem 3.2rem;
   font-size: 1rem;
   border: none;
+  transition: color 300ms ease;
 }
 
 .search input[type="search"]::placeholder {
   color: var(--font-main-color);
   opacity: .5;
+}
+
+.search input[type="search"]:invalid {
+  color: rgba(150, 136, 103, .6);
 }
 
 .search .suggestion {

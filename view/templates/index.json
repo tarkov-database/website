@@ -2,7 +2,7 @@
   "index": [
     "/index/index.gohtml",
     "/index/base.gohtml",
-		"/index/head.gohtml",
+    "/index/head.gohtml",
     "/header.gohtml",
     "/footer.gohtml"
   ],
@@ -215,6 +215,7 @@
     "/location/map/base.gohtml",
     "/location/map/head.gohtml",
     "/location/map/header.gohtml",
-    "/location/map/footer.gohtml"
+    "/location/map/footer.gohtml",
+    "/header.gohtml"
   ]
 }

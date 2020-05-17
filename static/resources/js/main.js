@@ -138,7 +138,7 @@ const initSearchSocket = async() => {
   const regexMeta = new RegExp(/[.*+?^${}()|[\]\\]/, 'g');
   const regexQuoteMeta = str => str.replace(regexMeta, '\\$&');
 
-  const regexValidQuery = new RegExp(/^[A-Za-z0-9!#$%&'()*+,\-./:;?_~ ]{2,32}$/);
+  // const regexValidQuery = new RegExp(/^[A-Za-z0-9!#$%&'()*+,\-./:;?_~ ]{3,32}$/);
 
   const showSuggestions = () => sugg.classList.replace('hide', 'show');
   const hideSuggestions = () => sugg.classList.replace('show', 'hide');
@@ -321,10 +321,7 @@ const initSearchSocket = async() => {
       return;
     }
 
-    let isValid = false;
-    if (regexValidQuery.test(val) && val.length >= 3) isValid = true;
-
-    el.dataset.valid = isValid;
+    const isValid = el.validity.valid;
 
     if (!isValid) {
       hideSuggestions();
