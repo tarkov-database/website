@@ -5,7 +5,7 @@ const (
 )
 
 type Money struct {
-	Item `bson:",inline"`
+	Item
 }
 
 type MoneyResult struct {

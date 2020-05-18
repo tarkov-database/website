@@ -5,7 +5,7 @@ const (
 )
 
 type TacticalRig struct {
-	Item `bson:",inline"`
+	Item
 
 	Grids     []Grid    `json:"grids"`
 	Penalties Penalties `json:"penalties"`

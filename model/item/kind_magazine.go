@@ -5,7 +5,7 @@ const (
 )
 
 type Magazine struct {
-	Item `bson:",inline"`
+	Item
 
 	Capacity      int64            `json:"capacity"`
 	Caliber       string           `json:"caliber"`

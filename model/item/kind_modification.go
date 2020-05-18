@@ -22,7 +22,7 @@ const (
 )
 
 type Modification struct {
-	Item `bson:",inline"`
+	Item
 
 	Ergonomics    float64      `json:"ergonomicsFP"`
 	Accuracy      float64      `json:"accuracy"`
@@ -51,7 +51,7 @@ func (r *ModificationResult) GetEntities() []Entity {
 // Weapon modifications //
 
 type Barrel struct {
-	Modification `bson:",inline"`
+	Modification
 
 	Length     float64 `json:"length"`
 	Velocity   float64 `json:"velocity"`
@@ -80,7 +80,7 @@ var modBarrelFilter = Filter{
 }
 
 type Bipod struct {
-	Modification `bson:",inline"`
+	Modification
 }
 
 type BipodResult struct {
@@ -98,7 +98,7 @@ func (r *BipodResult) GetEntities() []Entity {
 }
 
 type Charge struct {
-	Modification `bson:",inline"`
+	Modification
 }
 
 type ChargeResult struct {
@@ -116,7 +116,7 @@ func (r *ChargeResult) GetEntities() []Entity {
 }
 
 type Device struct {
-	Modification `bson:",inline"`
+	Modification
 
 	Type  string   `json:"type"`
 	Modes []string `json:"modes"`
@@ -144,7 +144,7 @@ var modDeviceFilter = Filter{
 }
 
 type Foregrip struct {
-	Modification `bson:",inline"`
+	Modification
 }
 
 type ForegripResult struct {
@@ -162,7 +162,7 @@ func (r *ForegripResult) GetEntities() []Entity {
 }
 
 type GasBlock struct {
-	Modification `bson:",inline"`
+	Modification
 }
 
 type GasBlockResult struct {
@@ -180,7 +180,7 @@ func (r *GasBlockResult) GetEntities() []Entity {
 }
 
 type Handguard struct {
-	Modification `bson:",inline"`
+	Modification
 }
 
 type HandguardResult struct {
@@ -198,7 +198,7 @@ func (r *HandguardResult) GetEntities() []Entity {
 }
 
 type Launcher struct {
-	Modification `bson:",inline"`
+	Modification
 
 	Caliber string `json:"caliber"`
 }
@@ -218,7 +218,7 @@ func (r *LauncherResult) GetEntities() []Entity {
 }
 
 type Mount struct {
-	Modification `bson:",inline"`
+	Modification
 }
 
 type MountResult struct {
@@ -236,7 +236,7 @@ func (r *MountResult) GetEntities() []Entity {
 }
 
 type Muzzle struct {
-	Modification `bson:",inline"`
+	Modification
 
 	Type     string  `json:"type"`
 	Velocity float64 `json:"velocity"`
@@ -266,7 +266,7 @@ var modMuzzleFilter = Filter{
 }
 
 type PistolGrip struct {
-	Modification `bson:",inline"`
+	Modification
 }
 
 type PistolGripResult struct {
@@ -284,7 +284,7 @@ func (r *PistolGripResult) GetEntities() []Entity {
 }
 
 type Receiver struct {
-	Modification `bson:",inline"`
+	Modification
 
 	Velocity float64 `json:"velocity"`
 }
@@ -304,7 +304,7 @@ func (r *ReceiverResult) GetEntities() []Entity {
 }
 
 type Sight struct {
-	Modification `bson:",inline"`
+	Modification
 
 	Type          string   `json:"type"`
 	Magnification []string `json:"magnification"`
@@ -336,8 +336,8 @@ var modSightFilter = Filter{
 }
 
 type SightSpecial struct {
-	Sight        `bson:",inline"`
-	OpticSpecial `bson:",inline"`
+	Sight
+	OpticSpecial
 }
 
 type SightSpecialResult struct {
@@ -362,7 +362,7 @@ var modSightSpecialFilter = Filter{
 }
 
 type Stock struct {
-	Modification `bson:",inline"`
+	Modification
 
 	FoldRectractable bool `json:"foldRectractable"`
 }
@@ -384,7 +384,7 @@ func (r *StockResult) GetEntities() []Entity {
 // Gear modifications //
 
 type Goggles struct {
-	Modification `bson:",inline"`
+	Modification
 
 	Type string `json:"type"`
 }
@@ -411,8 +411,8 @@ var modGogglesFilter = Filter{
 }
 
 type GogglesSpecial struct {
-	Goggles      `bson:",inline"`
-	OpticSpecial `bson:",inline"`
+	Goggles
+	OpticSpecial
 }
 
 type GogglesSpecialResult struct {

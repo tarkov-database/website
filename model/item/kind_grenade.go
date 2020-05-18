@@ -5,7 +5,7 @@ const (
 )
 
 type Grenade struct {
-	Item `bson:",inline"`
+	Item
 
 	Type              string  `json:"type"`
 	Delay             float64 `json:"delay"`

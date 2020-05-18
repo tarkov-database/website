@@ -5,7 +5,7 @@ const (
 )
 
 type Firearm struct {
-	Item `bson:",inline"`
+	Item
 
 	Type              string   `json:"type"`
 	Class             string   `json:"class"`

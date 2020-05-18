@@ -5,7 +5,7 @@ const (
 )
 
 type Barter struct {
-	Item `bson:",inline"`
+	Item
 }
 
 type BarterResult struct {

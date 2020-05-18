@@ -5,7 +5,7 @@ const (
 )
 
 type Key struct {
-	Item `bson:",inline"`
+	Item
 
 	Location string `json:"location"`
 }

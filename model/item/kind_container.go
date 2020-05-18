@@ -5,7 +5,7 @@ const (
 )
 
 type Container struct {
-	Item `bson:",inline"`
+	Item
 
 	Grids []Grid `json:"grids"`
 }

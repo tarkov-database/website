@@ -5,7 +5,7 @@ const (
 )
 
 type Armor struct {
-	Item `bson:",inline"`
+	Item
 
 	Type          string    `json:"type"`
 	Armor         ArmorProp `json:"armor"`

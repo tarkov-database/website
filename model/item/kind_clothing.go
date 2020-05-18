@@ -5,7 +5,7 @@ const (
 )
 
 type Clothing struct {
-	Item `bson:",inline"`
+	Item
 
 	Type      string    `json:"type"`
 	Blocking  []string  `json:"blocking"`

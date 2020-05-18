@@ -5,7 +5,7 @@ const (
 )
 
 type Backpack struct {
-	Item `bson:",inline"`
+	Item
 
 	Grids     []Grid    `json:"grids"`
 	Penalties Penalties `json:"penalties"`

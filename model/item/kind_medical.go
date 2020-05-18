@@ -5,7 +5,7 @@ const (
 )
 
 type Medical struct {
-	Item `bson:",inline"`
+	Item
 
 	Type         string  `json:"type"`
 	Resources    int64   `json:"resources"`

@@ -5,7 +5,7 @@ const (
 )
 
 type Map struct {
-	Item `bson:",inline"`
+	Item
 }
 
 type MapResult struct {

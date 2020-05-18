@@ -5,7 +5,7 @@ const (
 )
 
 type Melee struct {
-	Item `bson:",inline"`
+	Item
 
 	Slash MeleeAttack `json:"slash"`
 	Stab  MeleeAttack `json:"stab"`

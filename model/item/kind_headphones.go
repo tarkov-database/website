@@ -5,7 +5,7 @@ const (
 )
 
 type Headphone struct {
-	Item `bson:",inline"`
+	Item
 
 	AmbientVolume  float64    `json:"ambientVol"`
 	DryVolume      float64    `json:"dryVol"`

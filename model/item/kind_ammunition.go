@@ -5,7 +5,7 @@ const (
 )
 
 type Ammunition struct {
-	Item `bson:",inline"`
+	Item
 
 	Caliber             string         `json:"caliber"`
 	Type                string         `json:"type"`
