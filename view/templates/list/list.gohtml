@@ -91,7 +91,7 @@
           {{ end }}
         </ul>
 
-        {{ if gt .PageNumber 0 }}
+        {{ if gt .PageTotal 1 }}
         <nav class="pagination">
           <ul>
             <li>
@@ -103,7 +103,7 @@
             </li>
             <li>
               <div class="number">
-                {{ .PageNumber }}
+                {{ .PageCurrent }} / {{ .PageTotal }}
               </div>
             </li>
             <li>

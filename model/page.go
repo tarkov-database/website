@@ -73,16 +73,17 @@ func (p *Page) Entity(e interface{}) *EntityPage {
 
 type EntityList struct {
 	*Page
-	Type       EntityType
-	IsSearch   bool
-	Keyword    string
-	TotalCount int64
-	PageCount  int64
-	PageNumber int64
-	PageNext   *Pagination
-	PagePrev   *Pagination
-	Filter     Filter
-	List       interface{}
+	Type        EntityType
+	IsSearch    bool
+	Keyword     string
+	TotalCount  int64
+	PageCount   int64
+	PageTotal   int64
+	PageCurrent int64
+	PageNext    *Pagination
+	PagePrev    *Pagination
+	Filter      Filter
+	List        interface{}
 }
 
 type Pagination struct {
@@ -90,7 +91,10 @@ type Pagination struct {
 	URL    string
 }
 
-const itemLimit = 100
+const (
+	itemLimit = 100
+	pageKey   = "p"
+)
 
 func (l *EntityList) GetPagination() error {
 	if l.TotalCount > itemLimit && l.URI != "" {
@@ -98,31 +102,28 @@ func (l *EntityList) GetPagination() error {
 		if err != nil {
 			return fmt.Errorf("%w: %s", ErrInvalidInput, err)
 		}
+
 		query := u.Query()
 
-		if len(query.Get("p")) == 0 {
-			query.Set("p", "")
-		}
-		page := &query["p"][0]
-
 		var p int64 = 1
-		if len(*page) != 0 {
-			p, err = strconv.ParseInt(*page, 10, 0)
+		if v := query.Get(pageKey); v != "" && v != "1" {
+			p, err = strconv.ParseInt(v, 10, 0)
 			if err != nil {
 				return fmt.Errorf("%w: %s", ErrInvalidInput, err)
 			}
 		}
+
 		if p < 1 {
 			p = 1
 		}
 
-		total := l.TotalCount / itemLimit
+		l.PageTotal = l.TotalCount / itemLimit
 		if (l.TotalCount % itemLimit) != 0 {
-			total = total + 1
+			l.PageTotal = l.PageTotal + 1
 		}
 
 		var next int64
-		if total > p {
+		if l.PageTotal > p {
 			next = p + 1
 		}
 
@@ -131,15 +132,15 @@ func (l *EntityList) GetPagination() error {
 			prev = p - 1
 		}
 
-		l.PageNumber = p
+		l.PageCurrent = p
 
-		*page = strconv.FormatInt(next, 10)
+		query.Set(pageKey, strconv.FormatInt(next, 10))
 		l.PageNext = &Pagination{
 			Number: next,
 			URL:    fmt.Sprintf("%s?%s", u.Path, query.Encode()),
 		}
 
-		*page = strconv.FormatInt(prev, 10)
+		query.Set(pageKey, strconv.FormatInt(prev, 10))
 		l.PagePrev = &Pagination{
 			Number: prev,
 			URL:    fmt.Sprintf("%s?%s", u.Path, query.Encode()),
