@@ -43,9 +43,9 @@ func ItemGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 }
 
 func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	c := ps.ByName("category")
+	cat := ps.ByName("category")
 
-	kind, err := item.CategoryToKind(c)
+	kind, err := item.CategoryToKind(cat)
 	if err != nil {
 		getErrorStatus(err, w, r)
 		return
@@ -80,12 +80,6 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 
 	p, err := model.CreatePageWithAPI(r.URL)
-	if err != nil {
-		getErrorStatus(err, w, r)
-		return
-	}
-
-	cat, err := item.KindToCategory(kind)
 	if err != nil {
 		getErrorStatus(err, w, r)
 		return
