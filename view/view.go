@@ -27,6 +27,7 @@ var (
 		"subtractFloat":    subtractFloat,
 		"multiplyFloat":    multiplyFloat,
 		"toTitle":          strings.Title,
+		"camelToTitle":     camelToTitle,
 		"formatTime":       formatTime,
 		"localeString":     localeString,
 		"setQuery":         setQuery,

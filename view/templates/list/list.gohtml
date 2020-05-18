@@ -14,7 +14,11 @@
                 <option value="all">All</option>
                 {{ range $options }}
                 <option value="{{ . }}" {{ if hasQuery $.URI $name . }}selected{{ end }}>
+                  {{ if or (eq $name "type") (eq $name "class") }}
+                  {{ . | camelToTitle }}
+                  {{ else }}
                   {{ if eq . "true" }}Yes{{ else if eq . "false" }}No{{ else }}{{ . | toTitle }}{{ end }}
+                  {{ end }}
                 </option>
                 {{ end }}
               </select>

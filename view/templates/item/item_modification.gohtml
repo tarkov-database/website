@@ -194,7 +194,7 @@
     <th>Type</th>
     <td>
       <a class="underline" title="Show all medicals with the same type" href="/item/goggles?type={{ .Entity.Type }}">
-        {{ .Entity.Type | toTitle }}
+        {{ .Entity.Type | camelToTitle }}
       </a>
     </td>
   </tr>
@@ -219,7 +219,7 @@
     <th>Type</th>
     <td>
       <a class="underline" title="Show all medicals with the same type" href="/item/sight-special?type={{ .Entity.Type }}">
-        {{ .Entity.Type | toTitle }}
+        {{ .Entity.Type | camelToTitle }}
       </a>
     </td>
   </tr>

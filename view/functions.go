@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"net/url"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -95,6 +96,12 @@ func decimalToPercent(d float64) float64 {
 
 func localeString(v interface{}) string {
 	return message.NewPrinter(language.English).Sprint(v)
+}
+
+var regexUpperCase = regexp.MustCompile(`([A-Z])`)
+
+func camelToTitle(s string) string {
+	return strings.Title(regexUpperCase.ReplaceAllString(s, " $1"))
 }
 
 func getItem(id string, kind item.Kind) item.Entity {

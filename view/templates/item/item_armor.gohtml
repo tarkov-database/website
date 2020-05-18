@@ -4,8 +4,7 @@
               <th>Type</th>
               <td>
                 <a class="underline" title="Show all armor with the same type" href="/item/armor?type={{ .Entity.Type }}">
-                  {{ if eq .Entity.Type "faceCover" }}Face Cover
-                  {{ else }}{{ .Entity.Type | toTitle }}{{ end }}
+                  {{ .Entity.Type | camelToTitle }}
                 </a>
               </td>
             </tr>
@@ -31,7 +30,7 @@
               <th class="tr-list">Protected Zones</th>
               <td>
                 {{ range .Entity.Armor.Zones }}
-                {{ . }}<br>
+                {{ . | camelToTitle }}<br>
                 {{ end }}
               </td>
             </tr>
@@ -40,7 +39,7 @@
               <th class="tr-list">Blocking</th>
               <td>
                 {{ range .Entity.Blocking }}
-                {{ . }}<br>
+                {{ . | camelToTitle }}<br>
                 {{ end }}
               </td>
             {{ end }}

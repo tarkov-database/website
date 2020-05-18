@@ -12,15 +12,7 @@
               <th>Class</th>
               <td>
                 <a class="underline" title="Show all weapons with the same class" href="/item/firearm?class={{ .Entity.Class }}">
-                  {{ if eq .Entity.Class "pistol" }}Pistol
-                  {{ else if eq .Entity.Class "sniperRifle" }}Sniper Rifle
-                  {{ else if eq .Entity.Class "assaultRifle" }}Assault Rifle
-                  {{ else if eq .Entity.Class "assaultCarbine" }}Assault Carbine
-                  {{ else if eq .Entity.Class "marksmanRifle" }}Marksman Rifle
-                  {{ else if eq .Entity.Class "machinegun" }}Machine Gun
-                  {{ else if eq .Entity.Class "shotgun" }}Shotgun
-                  {{ else if eq .Entity.Class "grenadeLauncher" }}Grenade Launcher
-                  {{ else if eq .Entity.Class "smg" }}SMG{{ end }}
+                  {{ if eq .Entity.Class "smg" }}SMG{{ else }}{{ .Entity.Class | camelToTitle }}{{ end }}
                 </a>
               </td>
             </tr>
@@ -33,15 +25,7 @@
             <tr>
               <th>Action</th>
               <td>
-                {{ if eq .Entity.Action "bolt" }}Bolt
-                {{ else if eq .Entity.Action "pump" }}Pump
-                {{ else if eq .Entity.Action "break" }}Break
-                {{ else if eq .Entity.Action "lever" }}Lever
-                {{ else if eq .Entity.Action "single" }}Single
-                {{ else if eq .Entity.Action "double" }}Double
-                {{ else if eq .Entity.Action "recoil" }}Recoil
-                {{ else if eq .Entity.Action "blow" }}Blow
-                {{ else if eq .Entity.Action "gas" }}Gas{{ end }}
+                {{ .Entity.Action | toTitle }}
               </td>
             </tr>
             <tr>
