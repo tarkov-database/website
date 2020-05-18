@@ -311,6 +311,8 @@ func (k Kind) GetFilter() Filter {
 		return modMuzzleFilter
 	case KindModificationSight:
 		return modSightFilter
+	case KindModificationSightSpecial:
+		return modSightSpecialFilter
 	case KindModificationGoggles, KindModificationGogglesSpecial:
 		return modGogglesFilter
 	case KindTacticalrig:

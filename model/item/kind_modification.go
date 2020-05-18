@@ -354,6 +354,13 @@ func (r *SightSpecialResult) GetEntities() []Entity {
 	return e
 }
 
+var modSightSpecialFilter = Filter{
+	"type": {
+		"nightVision",
+		"thermalVision",
+	},
+}
+
 type Stock struct {
 	Modification `bson:",inline"`
 
