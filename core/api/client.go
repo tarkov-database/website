@@ -81,7 +81,7 @@ func GET(ctx context.Context, path string, opts *Options, target interface{}) er
 			v.Add(key, url.QueryEscape(val))
 		}
 	}
-	if len(opts.Sort) > 0 {
+	if opts.Sort != "" {
 		v.Add("sort", opts.Sort)
 	}
 	if opts.Limit > 0 {
@@ -92,7 +92,7 @@ func GET(ctx context.Context, path string, opts *Options, target interface{}) er
 	}
 
 	if len(v) > 0 {
-		path = fmt.Sprintf("%s?%s", path, v.Encode())
+		path = path + "?" + v.Encode()
 	}
 
 	res, err := request(ctx, http.MethodGet, path, nil)

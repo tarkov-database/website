@@ -431,8 +431,6 @@ const initFilter = () => {
     const sel = li.getElementsByTagName('select')[0];
     sel.addEventListener('change', changeFilter);
   }
-
-  
 };
 
 initFilter();

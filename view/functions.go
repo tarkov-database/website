@@ -46,7 +46,7 @@ func hasPrefix(v interface{}, p string) bool {
 
 func appendStaticHash(p string) string {
 	if sum, ok := version.StaticSums[strings.TrimPrefix(p, "/")]; ok {
-		p += fmt.Sprintf("?v=%s", sum[:8])
+		p += "?v=" + sum[:8]
 	}
 
 	return p
@@ -71,7 +71,7 @@ func setQuery(path, key string, val interface{}) string {
 	q := u.Query()
 	q.Set(key, fmt.Sprintf("%v", val))
 
-	return fmt.Sprintf("%s?%s", u.Path, q.Encode())
+	return u.Path + "?" + q.Encode()
 }
 
 func hasQuery(path, key string, val interface{}) bool {

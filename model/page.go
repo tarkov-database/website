@@ -98,7 +98,7 @@ const (
 
 func (l *EntityList) GetPagination() error {
 	if l.TotalCount > itemLimit && l.URI != "" {
-		u, err := url.Parse(l.URI)
+		u, err := url.ParseRequestURI(l.URI)
 		if err != nil {
 			return fmt.Errorf("%w: %s", ErrInvalidInput, err)
 		}
@@ -137,13 +137,13 @@ func (l *EntityList) GetPagination() error {
 		query.Set(pageKey, strconv.FormatInt(next, 10))
 		l.PageNext = &Pagination{
 			Number: next,
-			URL:    fmt.Sprintf("%s?%s", u.Path, query.Encode()),
+			URL:    u.Path + "?" + query.Encode(),
 		}
 
 		query.Set(pageKey, strconv.FormatInt(prev, 10))
 		l.PagePrev = &Pagination{
 			Number: prev,
-			URL:    fmt.Sprintf("%s?%s", u.Path, query.Encode()),
+			URL:    u.Path + "?" + query.Encode(),
 		}
 	}
 
