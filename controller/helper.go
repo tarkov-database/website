@@ -2,6 +2,7 @@ package controller
 
 import (
 	"errors"
+	"fmt"
 	"net"
 	"net/http"
 	"net/url"
@@ -16,8 +17,8 @@ import (
 )
 
 var (
-	ErrTooLongShort = errors.New("keyword is too short or too long")
-	ErrIllegalChars = errors.New("keyword has illegal characters")
+	ErrTooLongShort = errors.New("string is too short or too long")
+	ErrIllegalChars = errors.New("string has illegal characters")
 )
 
 var hostname string
@@ -71,6 +72,25 @@ var regexNonAlnumExtended = regexp.MustCompile(`[^[:alnum:][:blank:]!#$%&'()*+,\
 
 func isAlnumExtended(s string) bool {
 	return !regexNonAlnumExtended.MatchString(s)
+}
+
+func validateQueryValues(q url.Values) error {
+	for k, v := range q {
+		for _, e := range v {
+			v, err := url.QueryUnescape(e)
+			if err != nil {
+				return fmt.Errorf("error in value of \"%s\": %w", k, err)
+			}
+			if len(v) > 100 {
+				return fmt.Errorf("error in value of \"%s\": %w", k, ErrTooLongShort)
+			}
+			if !isAlnumExtended(v) {
+				return fmt.Errorf("error in value of \"%s\": %w", k, ErrIllegalChars)
+			}
+		}
+	}
+
+	return nil
 }
 
 func validateKeyword(q string) error {

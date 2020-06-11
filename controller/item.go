@@ -51,6 +51,11 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
+	if err := validateQueryValues(r.URL.Query()); err != nil {
+		statusBadRequest(w, r)
+		return
+	}
+
 	params := make(map[string]string)
 	switch kind {
 	case item.KindAmmunition:

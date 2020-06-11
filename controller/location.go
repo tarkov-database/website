@@ -31,6 +31,11 @@ func LocationGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 }
 
 func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	if err := validateQueryValues(r.URL.Query()); err != nil {
+		statusBadRequest(w, r)
+		return
+	}
+
 	params := make(map[string]string)
 	params["available"] = r.URL.Query().Get("available")
 
@@ -98,6 +103,11 @@ func LocationFeaturesGET(w http.ResponseWriter, r *http.Request, ps httprouter.P
 		return
 	}
 
+	if err := validateQueryValues(r.URL.Query()); err != nil {
+		statusBadRequest(w, r)
+		return
+	}
+
 	var err error
 
 	lID := ps.ByName("id")
@@ -105,7 +115,7 @@ func LocationFeaturesGET(w http.ResponseWriter, r *http.Request, ps httprouter.P
 	limit := 100
 	if v := r.URL.Query().Get("limit"); v != "" {
 		if limit, err = strconv.Atoi(v); err != nil {
-			statusServiceBadRequest(w, r)
+			statusBadRequest(w, r)
 			return
 		}
 	}
@@ -113,7 +123,7 @@ func LocationFeaturesGET(w http.ResponseWriter, r *http.Request, ps httprouter.P
 	offset := 0
 	if v := r.URL.Query().Get("offset"); v != "" {
 		if offset, err = strconv.Atoi(v); err != nil {
-			statusServiceBadRequest(w, r)
+			statusBadRequest(w, r)
 			return
 		}
 	}
@@ -131,7 +141,7 @@ Loop:
 		case "group":
 			q, err := url.QueryUnescape(v[0])
 			if err != nil {
-				statusServiceBadRequest(w, r)
+				statusBadRequest(w, r)
 				return
 			}
 
@@ -145,12 +155,12 @@ Loop:
 		case "text":
 			q, err := url.QueryUnescape(v[0])
 			if err != nil {
-				statusServiceBadRequest(w, r)
+				statusBadRequest(w, r)
 				return
 			}
 
 			if err := validateKeyword(q); err != nil {
-				statusServiceBadRequest(w, r)
+				statusBadRequest(w, r)
 				return
 			}
 
@@ -202,6 +212,11 @@ func LocationFeatureGroupGET(w http.ResponseWriter, r *http.Request, ps httprout
 func LocationFeatureGroupsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	if !isSupportedMediaType(r) {
 		statusUnsupportedMediaType(w, r)
+		return
+	}
+
+	if err := validateQueryValues(r.URL.Query()); err != nil {
+		statusBadRequest(w, r)
 		return
 	}
 

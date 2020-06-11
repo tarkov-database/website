@@ -58,7 +58,7 @@ func statusServiceUnavailable(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func statusServiceBadRequest(w http.ResponseWriter, r *http.Request) {
+func statusBadRequest(w http.ResponseWriter, r *http.Request) {
 	status := http.StatusBadRequest
 
 	switch r.Header.Get("Content-Type") {
@@ -84,7 +84,7 @@ func getErrorStatus(err error, w http.ResponseWriter, r *http.Request) {
 
 	switch {
 	case status == 400, errors.Is(err, model.ErrInvalidInput):
-		statusServiceBadRequest(w, r)
+		statusBadRequest(w, r)
 	case status == 404, errors.Is(err, item.ErrInvalidCategory):
 		statusNotFound(w, r)
 	case errors.Is(err, api.ErrUnreachable):
