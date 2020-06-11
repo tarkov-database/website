@@ -33,13 +33,13 @@ func refreshToken() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 8*time.Second)
 	defer cancel()
 
-	resp := &tokenResponse{}
+	res := &tokenResponse{}
 
-	if err := GET(ctx, "/token", &Options{}, resp); err != nil {
+	if err := GET(ctx, "/token", &Options{}, res); err != nil {
 		return err
 	}
 
-	cfg.Token = resp.Token
+	cfg.Token = res.Token
 
 	return nil
 }

@@ -35,25 +35,25 @@ func request(ctx context.Context, method, path string, body io.Reader) (*http.Re
 	req.Header.Set("Content-Type", contentTypeJSON)
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", cfg.Token))
 
-	resp, err := client.Do(req.WithContext(ctx))
+	res, err := client.Do(req.WithContext(ctx))
 	if err != nil {
 		switch {
 		case errors.Is(err, context.DeadlineExceeded), strings.Contains(err.Error(), "connect:"):
-			return resp, ErrUnreachable
+			return res, ErrUnreachable
 		default:
-			return resp, err
+			return res, err
 		}
 	}
 
-	if resp.Header.Get("Content-Type") != contentTypeJSON {
-		return resp, ErrWrongContentType
+	if res.Header.Get("Content-Type") != contentTypeJSON {
+		return res, ErrWrongContentType
 	}
 
-	if resp.StatusCode >= 300 {
-		return resp, statusToError(resp)
+	if res.StatusCode >= 300 {
+		return res, statusToError(res)
 	}
 
-	return resp, nil
+	return res, nil
 }
 
 func decodeBody(body io.ReadCloser, target interface{}) error {
