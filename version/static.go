@@ -41,18 +41,18 @@ type File struct {
 	Path, Sum string
 }
 
-var hasher = blake3.New()
-
 func hashFile(p string, ch chan File, wg *sync.WaitGroup) {
 	d, err := ioutil.ReadFile(p)
 	if err != nil {
 		logger.Fatal(err)
 	}
 
-	sum := hasher.Sum(d)
-	defer hasher.Reset()
+	h := blake3.New()
+	if _, err := h.Write(d); err != nil {
+		logger.Fatal(err)
+	}
 
-	ch <- File{p, hex.EncodeToString(sum)}
+	ch <- File{p, hex.EncodeToString(h.Sum(nil))}
 
 	wg.Done()
 }
