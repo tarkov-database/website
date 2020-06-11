@@ -11,8 +11,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-
-	"golang.org/x/net/http2"
 )
 
 const contentTypeJSON = "application/json"
@@ -101,21 +99,6 @@ func GET(ctx context.Context, path string, opts *Options, target interface{}) er
 	}
 
 	if err = decodeBody(res.Body, target); err != nil {
-		// Retry after server closes the TCP connection after sending a GOAWAY frame with code 0.
-		// Workaround for a probably faulty HTTP2 client or server implementation.
-		// See https://github.com/golang/go/issues/18112, https://github.com/minio/minio/issues/7271
-		var goAway http2.GoAwayError
-		if errors.As(err, &goAway) && goAway.ErrCode == http2.ErrCodeNo {
-			res, err := request(ctx, http.MethodGet, path, nil)
-			if err != nil {
-				return fmt.Errorf("GET \"%s\" %w", path, err)
-			}
-
-			if err = decodeBody(res.Body, target); err != nil {
-				return fmt.Errorf("GET \"%s\" %w", path, err)
-			}
-		}
-
 		return fmt.Errorf("GET \"%s\" %w: %s", path, ErrParsing, err)
 	}
 
