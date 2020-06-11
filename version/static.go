@@ -8,7 +8,7 @@ import (
 	"sync"
 
 	"github.com/google/logger"
-	"golang.org/x/crypto/blake2b"
+	"github.com/zeebo/blake3"
 )
 
 const rootDir = "./static"
@@ -41,15 +41,18 @@ type File struct {
 	Path, Sum string
 }
 
+var hasher = blake3.New()
+
 func hashFile(p string, ch chan File, wg *sync.WaitGroup) {
 	d, err := ioutil.ReadFile(p)
 	if err != nil {
 		logger.Fatal(err)
 	}
 
-	sum := blake2b.Sum256(d)
+	sum := hasher.Sum(d)
+	defer hasher.Reset()
 
-	ch <- File{p, hex.EncodeToString(sum[:])}
+	ch <- File{p, hex.EncodeToString(sum)}
 
 	wg.Done()
 }
