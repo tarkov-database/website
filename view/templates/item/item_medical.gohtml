@@ -22,19 +22,6 @@
             </tr>
           </table>
 
-          {{ if or .Entity.Effects.Hydration.Value .Entity.Effects.Energy.Value }}
-          <table>
-            <tr>
-              <th>Hydration</th>
-              <td>{{ if gt .Entity.Effects.Hydration.Value 0.0 }}+{{ end }}{{ .Entity.Effects.Hydration.Value }}</td>
-            </tr>
-            <tr>
-              <th>Energy</th>
-              <td>{{ if gt .Entity.Effects.Energy.Value 0.0 }}+{{ end }}{{ .Entity.Effects.Energy.Value }}</td>
-            </tr>
-          </table>
-          {{ end }}
-
           {{ template "effects" . }}
 {{end}}
 

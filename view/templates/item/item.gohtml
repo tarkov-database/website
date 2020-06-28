@@ -57,7 +57,52 @@
 {{ end }}
 
 {{ define "effects" }}
-{{ if or .Entity.Effects.Bloodloss.Removes .Entity.Effects.Fracture.Removes .Entity.Effects.Pain.Removes .Entity.Effects.Contusion.Removes .Entity.Effects.Toxication.Removes .Entity.Effects.RadiationExposure.Removes }}
+
+{{ if or .Entity.Effects.Health.Value .Entity.Effects.Stamina.Value .Entity.Effects.Hydration.Value .Entity.Effects.Energy.Value }}
+<table>
+  {{ if .Entity.Effects.Health.Value }}
+  <tr>
+    <th>Health</th>
+    {{ if .Entity.Resources }}
+    <td>{{ if gt .Entity.Effects.Health.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Health.ResourceCosts }}{{ divideFloat .Entity.Effects.Health.Value .Entity.Effects.Health.ResourceCosts | printf "%.2f" }}{{ else }}{{ divideFloat .Entity.Effects.Health.Value .Entity.Resources | printf "%.2f" }}{{ end }}/res.</td>
+    {{ else }}
+    <td>{{ if gt .Entity.Effects.Health.Value 0.0 }}+{{ end }}{{ .Entity.Effects.Health.Value }}</td>
+    {{ end }}
+  </tr>
+  {{ end }}
+  {{ if .Entity.Effects.Stamina.Value }}
+  <tr>
+    <th>Stamina</th>
+    {{ if .Entity.Resources }}
+    <td>{{ if gt .Entity.Effects.Stamina.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Stamina.ResourceCosts }}{{ divideFloat .Entity.Effects.Stamina.Value .Entity.Effects.Stamina.ResourceCosts | printf "%.2f" }}{{ else }}{{ divideFloat .Entity.Effects.Stamina.Value .Entity.Resources | printf "%.2f" }}{{ end }}/res.</td>
+    {{ else }}
+    <td>{{ if gt .Entity.Effects.Stamina.Value 0.0 }}+{{ end }}{{ .Entity.Effects.Stamina.Value }}</td>
+    {{ end }}
+  </tr>
+  {{ end }}
+  {{ if .Entity.Effects.Hydration.Value }}
+  <tr>
+    <th>Hydration</th>
+    {{ if and (eq .Entity.Kind "food") .Entity.Resources }}
+    <td>{{ if gt .Entity.Effects.Hydration.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Hydration.ResourceCosts }}{{ divideFloat .Entity.Effects.Hydration.Value .Entity.Effects.Hydration.ResourceCosts | printf "%.2f" }}{{ else }}{{ divideFloat .Entity.Effects.Hydration.Value .Entity.Resources | printf "%.2f" }}{{ end }}/res.</td>
+    {{ else }}
+    <td>{{ if gt .Entity.Effects.Hydration.Value 0.0 }}+{{ end }}{{ .Entity.Effects.Hydration.Value }}</td>
+    {{ end }}
+  </tr>
+  {{ end }}
+  {{ if .Entity.Effects.Energy.Value }}
+  <tr>
+    <th>Energy</th>
+    {{ if and (eq .Entity.Kind "food") .Entity.Resources }}
+    <td>{{ if gt .Entity.Effects.Energy.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Energy.ResourceCosts }}{{ divideFloat .Entity.Effects.Energy.Value .Entity.Effects.Energy.ResourceCosts | printf "%.2f" }}{{ else }}{{ divideFloat .Entity.Effects.Energy.Value .Entity.Resources | printf "%.2f" }}{{ end }}/res.</td>
+    {{ else }}
+    <td>{{ if gt .Entity.Effects.Energy.Value 0.0 }}+{{ end }}{{ .Entity.Effects.Energy.Value }}</td>
+    {{ end }}
+  </tr>
+  {{ end }}
+</table>
+{{ end }}
+
 <div class="table-big">
   <table>
     <thead>
@@ -71,44 +116,97 @@
       </th>
     </thead>
     <tbody>
-      <tr {{ if .Entity.Effects.Bloodloss.Removes }}{{ else }}class="no-effect"{{ end }}>
+      <tr {{ if or .Entity.Effects.Bloodloss.Removes .Entity.Effects.Bloodloss.Duration }}{{ else }}class="no-effect"{{ end }}>
         <th>Bloodloss</th>
         <td class="center">{{ if .Entity.Effects.Bloodloss.Removes }}Yes{{ else }}No{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Bloodloss.Removes }}{{ .Entity.Effects.Bloodloss.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.Bloodloss.Duration }}{{ .Entity.Effects.Bloodloss.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Bloodloss.Removes }}{{ .Entity.Effects.Bloodloss.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if .Entity.Effects.Fracture.Removes }}{{ else }}class="no-effect"{{ end }}>
+      <tr {{ if or .Entity.Effects.Fracture.Removes .Entity.Effects.Fracture.Duration }}{{ else }}class="no-effect"{{ end }}>
         <th>Fracture</th>
         <td class="center">{{ if .Entity.Effects.Fracture.Removes }}Yes{{ else }}No{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Fracture.Removes }}{{ .Entity.Effects.Fracture.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.Fracture.Duration }}{{ .Entity.Effects.Fracture.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Fracture.Removes }}{{ .Entity.Effects.Fracture.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if .Entity.Effects.Pain.Removes }}{{ else }}class="no-effect"{{ end }}>
+      <tr {{ if or .Entity.Effects.Pain.Removes .Entity.Effects.Pain.Duration }}{{ else }}class="no-effect"{{ end }}>
         <th>Pain</th>
         <td class="center">{{ if .Entity.Effects.Pain.Removes }}Yes{{ else }}No{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Pain.Removes }}{{ .Entity.Effects.Pain.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.Pain.Duration }}{{ .Entity.Effects.Pain.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Pain.Removes }}{{ .Entity.Effects.Pain.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if .Entity.Effects.Contusion.Removes }}{{ else }}class="no-effect"{{ end }}>
+      <tr {{ if or .Entity.Effects.Contusion.Removes .Entity.Effects.Contusion.Duration }}{{ else }}class="no-effect"{{ end }}>
         <th>Contusion</th>
         <td class="center">{{ if .Entity.Effects.Contusion.Removes }}Yes{{ else }}No{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Contusion.Removes }}{{ .Entity.Effects.Contusion.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.Contusion.Duration }}{{ .Entity.Effects.Contusion.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Contusion.Removes }}{{ .Entity.Effects.Contusion.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if .Entity.Effects.Toxication.Removes }}{{ else }}class="no-effect"{{ end }}>
+      <tr {{ if or .Entity.Effects.Toxication.Removes .Entity.Effects.Toxication.Duration }}{{ else }}class="no-effect"{{ end }}>
         <th>Toxication</th>
         <td class="center">{{ if .Entity.Effects.Toxication.Removes }}Yes{{ else }}No{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Toxication.Removes }}{{ .Entity.Effects.Toxication.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.Toxication.Duration }}{{ .Entity.Effects.Toxication.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Toxication.Removes }}{{ .Entity.Effects.Toxication.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if .Entity.Effects.RadiationExposure.Removes }}{{ else }}class="no-effect"{{ end }}>
+      <tr {{ if or .Entity.Effects.RadiationExposure.Removes .Entity.Effects.RadiationExposure.Duration }}{{ else }}class="no-effect"{{ end }}>
         <th>Radiation</th>
         <td class="center">{{ if .Entity.Effects.RadiationExposure.Removes }}Yes{{ else }}No{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.RadiationExposure.Removes }}{{ .Entity.Effects.RadiationExposure.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.RadiationExposure.Duration }}{{ .Entity.Effects.RadiationExposure.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.RadiationExposure.Removes }}{{ .Entity.Effects.RadiationExposure.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-    </table>
+      <tr {{ if or .Entity.Effects.Tremor.Removes .Entity.Effects.Tremor.Duration }}{{ else }}class="no-effect"{{ end }}>
+        <th>Tremor</th>
+        <td class="center">{{ if .Entity.Effects.Tremor.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.Tremor.Duration }}{{ .Entity.Effects.Tremor.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.Tremor.Removes }}{{ .Entity.Effects.Tremor.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      <tr {{ if or .Entity.Effects.TunnelVision.Removes .Entity.Effects.TunnelVision.Duration }}{{ else }}class="no-effect"{{ end }}>
+        <th>Tunnel Vision</th>
+        <td class="center">{{ if .Entity.Effects.TunnelVision.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.TunnelVision.Duration }}{{ .Entity.Effects.TunnelVision.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.TunnelVision.Removes }}{{ .Entity.Effects.TunnelVision.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      <tr {{ if or .Entity.Effects.DestroyedPart.Removes .Entity.Effects.DestroyedPart.Duration }}{{ else }}class="no-effect"{{ end }}>
+        <th>Destroyed Part</th>
+        <td class="center">{{ if .Entity.Effects.DestroyedPart.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.DestroyedPart.Duration }}{{ .Entity.Effects.DestroyedPart.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.DestroyedPart.Removes }}{{ .Entity.Effects.DestroyedPart.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
     </tbody>
+    </table>
+</div>
+
+{{ if or .Entity.Effects.EnergyRate.Value .Entity.Effects.HealthRate.Value .Entity.Effects.HydrationRate.Value .Entity.Effects.StaminaRate.Value }}
+<div class="table-big">
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th class="center">Rate</th>
+        <th class="center">Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr {{ if .Entity.Effects.HealthRate.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Health Rate</th>
+        <td class="center">{{ if gt .Entity.Effects.HealthRate.Value 0.0 }}+{{ end }}{{ .Entity.Effects.HealthRate.Value }}</td>
+        <td class="center">{{ if .Entity.Effects.HealthRate.Duration }}{{ .Entity.Effects.HealthRate.Duration }}{{ else }}-{{ end }} sec.</td>
+      </tr>
+      <tr {{ if .Entity.Effects.HydrationRate.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Hydration Rate</th>
+        <td class="center">{{ if gt .Entity.Effects.HydrationRate.Value 0.0 }}+{{ end }}{{ .Entity.Effects.HydrationRate.Value }}</td>
+        <td class="center">{{ if .Entity.Effects.HydrationRate.Duration }}{{ .Entity.Effects.HydrationRate.Duration }}{{ else }}-{{ end }} sec.</td>
+      </tr>
+      <tr {{ if .Entity.Effects.EnergyRate.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Energy Rate</th>
+        <td class="center">{{ if gt .Entity.Effects.EnergyRate.Value 0.0 }}+{{ end }}{{ .Entity.Effects.EnergyRate.Value }}</td>
+        <td class="center">{{ if .Entity.Effects.EnergyRate.Duration }}{{ .Entity.Effects.EnergyRate.Duration }}{{ else }}-{{ end }} sec.</td>
+      </tr>
+      <tr {{ if .Entity.Effects.StaminaRate.Value }}{{ else }}class="no-effect"{{ end }}>
+        <th>Stamina Rate</th>
+        <td class="center">{{ if gt .Entity.Effects.StaminaRate.Value 0.0 }}+{{ end }}{{ .Entity.Effects.StaminaRate.Value }}</td>
+        <td class="center">{{ if .Entity.Effects.StaminaRate.Duration }}{{ .Entity.Effects.StaminaRate.Duration }}{{ else }}-{{ end }} sec.</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 {{ end }}
 
@@ -126,32 +224,56 @@
       <tr {{ if .Entity.Effects.LootSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
         <th>Loot</th>
         <td class="center">{{ if .Entity.Effects.LootSpeed.Value }}{{ .Entity.Effects.LootSpeed.Value }}{{ else }}0{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.LootSpeed.Duration }}{{ .Entity.Effects.LootSpeed.Duration }}{{ else }}-{{ end }} min.</td>
+        <td class="center">{{ if .Entity.Effects.LootSpeed.Duration }}{{ .Entity.Effects.LootSpeed.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
       <tr {{ if .Entity.Effects.Mobility.Value }}{{ else }}class="no-effect"{{ end }}>
         <th>Mobility</th>
         <td class="center">{{ if .Entity.Effects.Mobility.Value }}{{ .Entity.Effects.Mobility.Value }}{{ else }}0{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Mobility.Duration }}{{ .Entity.Effects.Mobility.Duration }}{{ else }}-{{ end }} min.</td>
+        <td class="center">{{ if .Entity.Effects.Mobility.Duration }}{{ .Entity.Effects.Mobility.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
       <tr {{ if .Entity.Effects.Recoil.Value }}{{ else }}class="no-effect"{{ end }}>
         <th>Recoil</th>
         <td class="center">{{ if .Entity.Effects.Recoil.Value }}{{ .Entity.Effects.Recoil.Value }}{{ else }}0{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Recoil.Duration }}{{ .Entity.Effects.Recoil.Duration }}{{ else }}-{{ end }} min.</td>
+        <td class="center">{{ if .Entity.Effects.Recoil.Duration }}{{ .Entity.Effects.Recoil.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
       <tr {{ if .Entity.Effects.ReloadSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
         <th>Reload</th>
         <td class="center">{{ if .Entity.Effects.ReloadSpeed.Value }}{{ .Entity.Effects.ReloadSpeed.Value }}{{ else }}0{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.ReloadSpeed.Duration }}{{ .Entity.Effects.ReloadSpeed.Duration }}{{ else }}-{{ end }} min.</td>
+        <td class="center">{{ if .Entity.Effects.ReloadSpeed.Duration }}{{ .Entity.Effects.ReloadSpeed.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
       <tr {{ if .Entity.Effects.UnlockSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
         <th>Unlock</th>
         <td class="center">{{ if .Entity.Effects.UnlockSpeed.Value }}{{ .Entity.Effects.UnlockSpeed.Value }}{{ else }}0{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.UnlockSpeed.Duration }}{{ .Entity.Effects.UnlockSpeed.Duration }}{{ else }}-{{ end }} min.</td>
+        <td class="center">{{ if .Entity.Effects.UnlockSpeed.Duration }}{{ .Entity.Effects.UnlockSpeed.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
-    </table>
     </tbody>
+  </table>
 </div>
 {{ end }}
+
+{{ if .Entity.Effects.Skill }}
+<div class="table-big">
+  <table>
+    <thead>
+      <tr>
+        <th>Skill</th>
+        <th class="center">Level</th>
+        <th class="center">Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range .Entity.Effects.Skill }}
+      <tr>
+        <td>{{ .Name | camelToTitle }}</td>
+        <td class="center">{{ if gt .Value 0.0 }}+{{ end }}{{ .Value }}</td>
+        <td class="center">{{ .Duration }} sec.</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+{{ end }}
+
 {{ end }}
 
 {{ define "grids" }}

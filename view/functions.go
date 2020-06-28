@@ -19,16 +19,104 @@ import (
 	"golang.org/x/text/message"
 )
 
-func addFloat(a, b float64) float64 {
-	return a + b
+func addFloat(a, b interface{}) float64 {
+	var af, bf float64
+
+	switch v := a.(type) {
+	case float64:
+		af = v
+	case int64:
+		af = float64(v)
+	case int:
+		af = float64(v)
+	}
+
+	switch v := b.(type) {
+	case float64:
+		bf = v
+	case int64:
+		bf = float64(v)
+	case int:
+		bf = float64(v)
+	}
+
+	return af + bf
 }
 
-func subtractFloat(a, b float64) float64 {
-	return a - b
+func subtractFloat(a, b interface{}) float64 {
+	var af, bf float64
+
+	switch v := a.(type) {
+	case float64:
+		af = v
+	case int64:
+		af = float64(v)
+	case int:
+		af = float64(v)
+	}
+
+	switch v := b.(type) {
+	case float64:
+		bf = v
+	case int64:
+		bf = float64(v)
+	case int:
+		bf = float64(v)
+	}
+
+	return af - bf
 }
 
-func multiplyFloat(a, b float64) float64 {
-	return a * b
+func multiplyFloat(a, b interface{}) float64 {
+	var af, bf float64
+
+	switch v := a.(type) {
+	case float64:
+		af = v
+	case int64:
+		af = float64(v)
+	case int:
+		af = float64(v)
+	}
+
+	switch v := b.(type) {
+	case float64:
+		bf = v
+	case int64:
+		bf = float64(v)
+	case int:
+		bf = float64(v)
+	}
+
+	return af * bf
+}
+
+func divideFloat(a, b interface{}) float64 {
+	var af, bf float64
+
+	switch v := a.(type) {
+	case float64:
+		af = v
+	case int64:
+		af = float64(v)
+	case int:
+		af = float64(v)
+	}
+
+	switch v := b.(type) {
+	case float64:
+		bf = v
+	case int64:
+		bf = float64(v)
+	case int:
+		bf = float64(v)
+	}
+
+	return af / bf
+}
+
+func decimalToPercent(d float64) float64 {
+	return math.Round((d*100)*100) / 100
 }
 
 func hasPrefix(v interface{}, p string) bool {
@@ -88,10 +176,6 @@ func hasQuery(path, key string, val interface{}) bool {
 	}
 
 	return false
-}
-
-func decimalToPercent(d float64) float64 {
-	return math.Round((d*100)*100) / 100
 }
 
 func localeString(v interface{}) string {

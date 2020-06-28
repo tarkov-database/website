@@ -26,6 +26,8 @@ var (
 		"addFloat":         addFloat,
 		"subtractFloat":    subtractFloat,
 		"multiplyFloat":    multiplyFloat,
+		"divideFloat":      divideFloat,
+		"decimalToPercent": decimalToPercent,
 		"toTitle":          strings.Title,
 		"camelToTitle":     camelToTitle,
 		"formatTime":       formatTime,
@@ -33,7 +35,7 @@ var (
 		"setQuery":         setQuery,
 		"hasQuery":         hasQuery,
 		"hasPrefix":        hasPrefix,
-		"decimalToPercent": decimalToPercent,
+
 		"appendStaticHash": appendStaticHash,
 		"categoryToName":   item.CategoryToDisplayName,
 		"kindToCategory":   item.KindToCategory,
