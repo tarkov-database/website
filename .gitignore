@@ -12,4 +12,7 @@ frontendserver
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# Environment variable file
+.env
+
 node_modules

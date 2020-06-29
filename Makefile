@@ -1,3 +1,5 @@
+-include .env
+
 OUT := frontendserver
 
 BUILD_DATE := $(shell date +%s)
