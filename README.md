@@ -1,5 +1,4 @@
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Ftarkov-database%2Fwebsite%2Fbadge&style=flat)](https://actions-badge.atrox.dev/tarkov-database/website/goto)
-[![Dependabot status](https://api.dependabot.com/badges/status?host=github&repo=tarkov-database/website)](https://dependabot.com/)
 [![Lines of code](https://tokei.rs/b1/github/tarkov-database/website)](https://github.com/XAMPPRocky/tokei)
 
 # Tarkov Database Website
