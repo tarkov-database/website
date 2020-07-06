@@ -346,11 +346,15 @@ func getFilter(t string) (*model.SearchFilter, string, error) {
 	filter := &model.SearchFilter{}
 
 	if kv := strings.Split(t, ":"); len(kv) == 2 {
+		v := strings.TrimSpace(kv[1])
 		switch k := kv[0]; k {
 		case "item":
-			vt := strings.SplitN(kv[1], " ", 2)
-			filter.Category = strings.TrimSpace(vt[0])
-			t = strings.TrimSpace(vt[1])
+			if vt := strings.SplitN(v, " ", 2); len(vt) >= 2 {
+				filter.Category = strings.TrimSpace(vt[0])
+				t = strings.TrimSpace(vt[1])
+			} else {
+				return filter, "", errors.New("term is missing")
+			}
 		default:
 			return filter, "", fmt.Errorf("unknown filter key \"%s\"", k)
 		}
