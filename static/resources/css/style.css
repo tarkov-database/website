@@ -250,6 +250,7 @@ header form.search {
   padding: .3rem .6rem .3rem 3.2rem;
   font-size: 1rem;
   border: none;
+  background-color: rgba(21, 21, 21, .7);
   transition: color 300ms ease;
 }
 
@@ -260,6 +261,20 @@ header form.search {
 
 .search input[type="search"]:invalid {
   color: rgba(150, 136, 103, .6);
+}
+
+.search .inline-suggestion {
+  z-index: -1;
+  box-sizing: border-box;
+  display: inline-flex;
+  position: absolute;
+  align-items: center;
+  left: 3.2rem;
+  height: 100%;
+}
+
+.search .inline-suggestion.hide {
+  visibility: hidden;
 }
 
 .search .suggestion {

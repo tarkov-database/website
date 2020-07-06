@@ -3,6 +3,7 @@ package model
 import (
 	"sync"
 
+	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model/item"
 	"github.com/tarkov-database/website/model/location"
 	"github.com/tarkov-database/website/model/location/feature"
@@ -16,21 +17,28 @@ type SearchResult struct {
 	Type      EntityType `json:"type"`
 }
 
-func NewSearch(q string, limit int) *SearchOperation {
-	return &SearchOperation{
-		Keyword: q,
-		Limit:   limit,
-		Results: make(chan []*SearchResult, 1),
-	}
-}
-
 type SearchOperation struct {
-	Keyword string
+	Term    string
+	Filter  *SearchFilter
 	Limit   int
 	Results chan []*SearchResult
 	Error   error
 	Tasks   sync.WaitGroup
 	sync.RWMutex
+}
+
+type SearchFilter struct {
+	Category string
+	Location string
+}
+
+func NewSearch(term string, filter *SearchFilter, limit int) *SearchOperation {
+	return &SearchOperation{
+		Term:    term,
+		Filter:  filter,
+		Limit:   limit,
+		Results: make(chan []*SearchResult, 1),
+	}
 }
 
 func (so *SearchOperation) Close() {
@@ -43,7 +51,25 @@ func (so *SearchOperation) Close() {
 func (so *SearchOperation) Items() {
 	defer so.Tasks.Done()
 
-	result, err := item.GetItemsBySearch(so.Keyword, so.Limit)
+	var err error
+	var result item.EntityResult
+
+	if c := so.Filter.Category; c != "" {
+		var k item.Kind
+		if k, err = item.CategoryToKind(c); err != nil {
+			so.Lock()
+			so.Error = err
+			so.Unlock()
+			return
+		}
+
+		result, err = item.GetItems(k, &api.Options{
+			Filter: map[string]string{"text": so.Term},
+			Limit:  so.Limit,
+		})
+	} else {
+		result, err = item.GetItemsBySearch(so.Term, so.Limit)
+	}
 	if err != nil {
 		so.Lock()
 		so.Error = err
@@ -78,7 +104,7 @@ func (so *SearchOperation) Items() {
 func (so *SearchOperation) Locations() {
 	defer so.Tasks.Done()
 
-	result, err := location.GetLocationsByText(so.Keyword, so.Limit)
+	result, err := location.GetLocationsByText(so.Term, so.Limit)
 	if err != nil {
 		so.Lock()
 		so.Error = err
@@ -100,10 +126,10 @@ func (so *SearchOperation) Locations() {
 	so.Results <- rs
 }
 
-func (so *SearchOperation) Features(lID string) {
+func (so *SearchOperation) Features() {
 	defer so.Tasks.Done()
 
-	result, err := feature.GetFeaturesByText(so.Keyword, lID, so.Limit)
+	result, err := feature.GetFeaturesByText(so.Term, so.Filter.Location, so.Limit)
 	if err != nil {
 		so.Lock()
 		so.Error = err

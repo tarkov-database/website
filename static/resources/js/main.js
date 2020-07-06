@@ -1,5 +1,22 @@
 let map = {};
 
+const initMap = async () => {
+  const el = document.getElementById('map');
+  if (el === null) return;
+
+  const libPath = document.getElementById('mapLib').src;
+
+  try {
+    map = await import(libPath);
+    await map.init(el);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+initMap();
+
+
 const registerTabs = () => {
   const openTab = e => {
     const cl = 'active';
@@ -124,26 +141,182 @@ const initSearchSocket = async() => {
   if (form === null) return;
 
   const input = form.querySelector('input[type="search"]');
-  const sugg = form.querySelector('.suggestion');
+  const suggBox = form.querySelector('.suggestion');
+  const suggInline = form.querySelector('.inline-suggestion');
 
   let socket;
   let idleTimeout;
   let noReconnect = false;
   let qCount = 0;
 
-  let keyword = '';
+  let lastTerm = '';
 
   const wait = time => new Promise(resolve => setTimeout(() => resolve(), time));
 
   const regexMeta = new RegExp(/[.*+?^${}()|[\]\\]/, 'g');
-  const regexQuoteMeta = str => str.replace(regexMeta, '\\$&');
+  const quoteMeta = str => str.replace(regexMeta, '\\$&');
 
-  // const regexValidQuery = new RegExp(/^[A-Za-z0-9!#$%&'()*+,\-./:;?_~ ]{3,32}$/);
+  const regexFilterPrefix = new RegExp(/(?:^\s*(?<key>\w+):)(?:\s*(?<value>\w+)\s)?(?:\s*(?<term>.*))/, 'i');
+  const getFilterPrefix = str => regexFilterPrefix.exec(str);
 
-  const showSuggestions = () => sugg.classList.replace('hide', 'show');
-  const hideSuggestions = () => sugg.classList.replace('show', 'hide');
+  const showElement = el => el.classList.replace('hide', 'show');
+  const hideElement = el => el.classList.replace('show', 'hide');
+
+  const isInteractiveMap = window.location.pathname.endsWith('/map');
 
   const errErrorClosure = new Error('Search socket was closed with an error');
+
+  const updateBoxSuggestions = (items, term) => {
+    const newUl = document.createElement('ul');
+
+    for (const item of items) {
+      const a = document.createElement('a');
+      const li = document.createElement('li');
+      const text = document.createElement('span');
+      const div = document.createElement('div');
+
+      const highlightMatches = str => {
+        const regex = new RegExp(`(${term})`, 'gi');
+        const matches = str.match(regex);
+        if (matches) {
+          for (const m of matches) {
+            str = str.replace(m, `<b>${m}</b>`);
+          }
+        }
+
+        return str;
+      };
+
+      text.innerHTML = highlightMatches(item.name);
+      a.title = item.name;
+
+      switch (item.type) {
+      case 0:
+        a.href = `/item/${item.parent}/${item.id}`;
+        div.className = `icon ${item.parent}`;
+        break;
+      case 1:
+        a.href = `/location/${item.id}`;
+        a.href += isInteractiveMap ? '/map': '';
+        div.className = 'icon location';
+        break;
+      case 2:
+        a.addEventListener('click', async () => {
+          hideElement(suggBox);
+          map.flyToFeature(await map.getFeature(item.id, item.parent));
+        });
+        a.href = `#feature=${item.id}`;
+        div.className = 'icon feature';
+        break;
+      }
+
+      div.innerHTML = '&nbsp;';
+
+      a.addEventListener('keydown', e => {
+        const current = e.target.parentNode;
+
+        let next = null;
+        switch (e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          next = current.previousElementSibling;
+          if (!next) input.focus();
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          next = current.nextElementSibling;
+          if (!next) input.focus();
+          break;
+        case 'Escape':
+          current.blur();
+          hideElement(suggBox);
+          break;
+        default:
+          return;
+        }
+
+        if (next) next.querySelector('a').focus();
+      });
+
+      a.appendChild(div);
+      a.append(text);
+      li.appendChild(a);
+      newUl.appendChild(li);
+    }
+
+    const ul = suggBox.querySelector('ul');
+    suggBox.replaceChild(newUl, ul);
+  };
+
+  const updateInlineSuggestion = val => {
+    suggInline.innerHTML = val.replace(' ', '&nbsp;');
+    suggInline.dataset.value = val;
+  };
+
+  const filters = {
+    _data: {
+      item: {
+        available: !isInteractiveMap,
+        values: [
+          'ammunition',
+          'armor',
+          'backpack',
+          'barrel',
+          'barter',
+          'bipod',
+          'charge',
+          'clothing',
+          'common',
+          'container',
+          'device',
+          'firearm',
+          'food',
+          'foregrip',
+          'gasblock',
+          'goggles',
+          'grenade',
+          'handguard',
+          'headphone',
+          'key',
+          'launcher',
+          'magazine',
+          'map',
+          'medical',
+          'melee',
+          'mod-other',
+          'money',
+          'mount',
+          'muzzle',
+          'pistolgrip',
+          'receiver',
+          'sight-special',
+          'sight',
+          'stock',
+          'tacticalrig'
+        ],
+      }
+    },
+
+    contains(key) {
+      return Object.prototype.hasOwnProperty.call(this._data, key) && 
+        this._data[key].available;
+    },
+
+    includes(key, value) {
+      const entry = this._data[key];
+      return entry.available && entry.values.includes(value);
+    },
+
+    firstMatch(key)  {
+      const match = Object.entries(this._data).find(v => v[1].available && v[0].startsWith(key));
+      return match ? match[0]: '';
+    },
+
+    firstMatchIn(key, value)  {
+      const entry = this._data[key];
+      return entry.available ? entry.values.find(v => v.startsWith(value)): '';
+    }
+  };
 
   const openSocket = msgListener => {
     const host = window.location.host;
@@ -214,93 +387,17 @@ const initSearchSocket = async() => {
       return;
     }
 
-    if (data.id !== qCount) return;
-
-    const ul = sugg.querySelector('ul');
+    if (data.id < qCount) return;
 
     if (!data.items || data.items.length === 0) {
-      hideSuggestions();
+      hideElement(suggBox);
       return;
     }
 
-    const keywords = regexQuoteMeta(keyword).replace(' ', '|');
-
-    const newUl = document.createElement('ul');
-    for (const item of data.items) {
-      const a = document.createElement('a');
-      const li = document.createElement('li');
-      const text = document.createElement('span');
-      const div = document.createElement('div');
-
-      const highlightMatches = str => {
-        const re = new RegExp(`(${keywords})`, 'gi');
-        const matches = str.match(re);
-        if (!matches) return str;
-        let bold = str;
-        matches.forEach(m => bold = bold.replace(m, `<b>${m}</b>`));
-        return bold;
-      };
-
-      text.innerHTML = highlightMatches(item.name);
-      a.title = item.name;
-
-      switch (item.type) {
-      case 0:
-        a.href = `/item/${item.parent}/${item.id}`;
-        div.className = `icon ${item.parent}`;
-        break;
-      case 1:
-        a.href = `/location/${item.id}`;
-        a.href += window.location.pathname.endsWith('/map') ? '/map': '';
-        div.className = 'icon location';
-        break;
-      case 2:
-        a.addEventListener('click', async () => {
-          hideSuggestions();
-          map.flyToFeature(await map.getFeature(item.id, item.parent));
-        });
-        a.href = `#feature=${item.id}`;
-        div.className = 'icon feature';
-        break;
-      }
-
-      div.innerHTML = '&nbsp;';
-
-      a.addEventListener('keydown', e => {
-        const current = e.target.parentNode;
-
-        let next = null;
-        switch (e.key) {
-        case 'ArrowUp':
-          e.preventDefault();
-          next = current.previousElementSibling;
-          if (!next) input.focus();
-          break;
-        case 'ArrowDown':
-          e.preventDefault();
-          next = current.nextElementSibling;
-          if (!next) input.focus();
-          break;
-        case 'Escape':
-          current.blur();
-          hideSuggestions();
-          break;
-        default:
-          return;
-        }
-
-        if (next) next.querySelector('a').focus();
-      });
-
-      a.appendChild(div);
-      a.append(text);
-      li.appendChild(a);
-      newUl.appendChild(li);
-    }
-
-    sugg.replaceChild(newUl, ul);
-
-    showSuggestions();
+    const term = quoteMeta(lastTerm).replace(' ', '|');
+    
+    updateBoxSuggestions(data.items, term);
+    showElement(suggBox);
   };
 
   const onInput = async event => {
@@ -313,49 +410,97 @@ const initSearchSocket = async() => {
       return;
     }
 
-    const el = event.target;
-    const val = el.value.trim();
+    const input = event.target;
+    const val = input.value;
 
-    if (val === keyword) {
-      showSuggestions();
+    if (!input.validity.valid) {
+      hideElement(suggBox);
+      hideElement(suggInline);
       return;
     }
 
-    const isValid = el.validity.valid;
+    const keyCompletion = val => {
+      const match = filters.firstMatch(val);
+      if (match) {
+        const v = input.value.replace(val, `${match}:`);
+        updateInlineSuggestion(v);
+        showElement(suggInline);
+      } else {
+        hideElement(suggInline);
+      }
+    };
 
-    if (!isValid) {
-      hideSuggestions();
+    const valueCompletion = (key, val) => {
+      const match = filters.firstMatchIn(key, val);
+      if (match) {
+        const v = input.value.replace(val, `${match} `);
+        updateInlineSuggestion(v);
+        showElement(suggInline);
+      } else {
+        hideElement(suggInline);
+      }
+    };
+
+    const prefix = getFilterPrefix(val);
+
+    if (prefix !== null && filters.contains(prefix.groups.key)) {
+      const {key, value, term} = prefix.groups;
+      
+      if (!value && term.length >= 2) {
+        valueCompletion(key, term);
+      } else {
+        hideElement(suggInline);
+      }
+    } else {
+      keyCompletion(val.trim());
+    }
+
+    let currentTerm = '';
+    let filter = {};
+
+    if (prefix !== null && prefix.groups.value) {
+      const {key, value, term} = prefix.groups;
+
+      if (!filters.contains(key) || !filters.includes(key, value)) return;
+
+      currentTerm = term;
+      filter[key] = value;
+    } else {
+      currentTerm = val.trim();
+    }
+    
+
+    if (currentTerm.length < 3) return;
+
+    if (currentTerm === lastTerm) {
+      showElement(suggBox);
       return;
+    }
+
+    if (map.locationID) {
+      filter.location = map.locationID;
     }
 
     if (count < qCount) return;
 
     qCount++;
 
-    let data = {
+    const data = {
       id: qCount,
-      keyword: val
+      term: currentTerm,
+      items: !filter.location,
+      locations: !filter.item,
+      features: !!filter.location
     };
 
-    if (map.locationID) {
-      Object.assign(data, {
-        location: map.locationID,
-        locations: true,
-        features: true
-      });
-    } else {
-      Object.assign(data, {
-        items: true,
-        locations: true
-      });
-    }
-
-    keyword = val;
+    if (Object.keys(filter).length) data.filter = filter;
 
     socket.send(JSON.stringify(data));
+
+    lastTerm = currentTerm;
   };
 
-  const onFocusIn = async e => {
+  const onInputFocusIn = async e => {
     try {
       await connect();
     } catch (err) {
@@ -363,50 +508,62 @@ const initSearchSocket = async() => {
       return;
     }
 
-    if (e.target.dataset.valid === 'true' && sugg.querySelector('ul > li')) showSuggestions();
+    if (e.target.dataset.valid === 'true' && suggBox.querySelector('ul > li')) showElement(suggBox);
   };
 
-  input.addEventListener('keydown', e => {
-    const selFirstSugg = () => {
-      const next = sugg.querySelector('ul > li:first-child > a');
+  const onInputKeydown = e => {
+    const selFirstBoxSugg = () => {
+      const next = suggBox.querySelector('ul > li:first-child > a');
       if (next) next.focus();
     };
-    const selLastSugg = () => {
-      const next = sugg.querySelector('ul > li:last-child > a');
+    const selLastBoxSugg = () => {
+      const next = suggBox.querySelector('ul > li:last-child > a');
       if (next) next.focus();
+    };
+    const applyInlineSugg = () => {
+      const {dataset, classList} = suggInline;
+      if (classList.contains('show') && dataset.value) input.value = dataset.value;
     };
 
     switch (e.key) {
     case 'ArrowDown':
       e.preventDefault();
-      selFirstSugg();
+      selFirstBoxSugg();
       break;
     case 'ArrowUp':
       e.preventDefault();
-      selLastSugg();
+      selLastBoxSugg();
+      break;
+    case 'Tab':
+      e.preventDefault();
+      applyInlineSugg();
+      hideElement(suggInline);
       break;
     case 'Escape':
-      hideSuggestions();
+      hideElement(suggBox);
       break;
     }
-  });
+  };
 
-  input.addEventListener('focusin', onFocusIn);
+  input.addEventListener('keydown', onInputKeydown);
+  input.addEventListener('focusin', onInputFocusIn);
   input.addEventListener('input', onInput);
 
-  document.addEventListener('keydown', e => {
+  const onDocKeydown = e => {
     if (document.activeElement.nodeName === 'INPUT') return;
     if (e.ctrlKey && e.key === 'f' || e.key === 'F3' || e.key === '/') {
       e.preventDefault();
       input.focus();
     }
-  });
+  };
+
+  document.addEventListener('keydown', onDocKeydown);
 };
 
 initSearchSocket();
 
 
-const initFilter = () => {
+const initListFilter = () => {
   const el = document.getElementById('listFilter');
   if (el === null) return;
 
@@ -433,21 +590,4 @@ const initFilter = () => {
   }
 };
 
-initFilter();
-
-
-const initMap = async () => {
-  const el = document.getElementById('map');
-  if (el === null) return;
-
-  const libPath = document.getElementById('mapLib').src;
-
-  try {
-    map = await import(libPath);
-    await map.init(el);
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-initMap();
+initListFilter();

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -13,6 +14,7 @@ import (
 
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model"
+	"github.com/tarkov-database/website/model/item"
 	"github.com/tarkov-database/website/view"
 
 	"github.com/google/logger"
@@ -34,8 +36,8 @@ var sig chan os.Signal
 const (
 	maxRemoteConns = 5
 
-	socketReadSize  = 128
-	socketWriteSize = 768
+	socketReadSize  = 160
+	socketWriteSize = 800
 
 	socketReadDeadline  = 3 * time.Minute
 	socketWriteDeadline = 20 * time.Second
@@ -115,12 +117,17 @@ type socketConnections struct {
 }
 
 type socketRequest struct {
-	ID        int64  `json:"id"`
-	Keyword   string `json:"keyword"`
-	Location  string `json:"location,omitempty"`
-	Items     bool   `json:"items"`
-	Locations bool   `json:"locations"`
-	Features  bool   `json:"features"`
+	ID        int64        `json:"id"`
+	Term      string       `json:"term"`
+	Filter    socketFilter `json:"filter"`
+	Items     bool         `json:"items"`
+	Locations bool         `json:"locations"`
+	Features  bool         `json:"features"`
+}
+
+type socketFilter struct {
+	Category string `json:"item,omitempty"`
+	Location string `json:"location,omitempty"`
 }
 
 type socketResponse struct {
@@ -206,7 +213,7 @@ func (s *socket) read(remote string) {
 		go func() {
 			res := &socketResponse{ID: req.ID}
 
-			q := req.Keyword
+			q := req.Term
 
 			if err := validateKeyword(q); err != nil {
 				res.Error = err.Error()
@@ -216,11 +223,12 @@ func (s *socket) read(remote string) {
 
 			q = cleanupString(q)
 
-			if op, _ := getOperator(q); op != "" {
-				return
+			filter := &model.SearchFilter{
+				Category: req.Filter.Category,
+				Location: req.Filter.Location,
 			}
 
-			search := model.NewSearch(q, 5)
+			search := model.NewSearch(q, filter, 6)
 
 			if req.Items {
 				search.Tasks.Add(1)
@@ -232,7 +240,7 @@ func (s *socket) read(remote string) {
 			}
 			if req.Features {
 				search.Tasks.Add(1)
-				go search.Features(req.Location)
+				go search.Features()
 			}
 
 			search.Close()
@@ -245,8 +253,12 @@ func (s *socket) read(remote string) {
 				logger.Error(err)
 
 				var msg []byte
-				switch err {
-				case api.ErrUnreachable:
+				switch {
+				case errors.Is(err, item.ErrInvalidCategory):
+					res.Error = err.Error()
+					s.Send <- res
+					return
+				case errors.Is(err, api.ErrUnreachable):
 					msg = websocket.FormatCloseMessage(websocket.CloseTryAgainLater, "Service currently unavailable")
 				default:
 					msg = websocket.FormatCloseMessage(websocket.CloseInternalServerErr, "Internal server error")
@@ -290,14 +302,20 @@ func (s *socket) write() {
 	}
 }
 
-func searchByText(kw string, w http.ResponseWriter, r *http.Request) {
+func searchByText(term string, w http.ResponseWriter, r *http.Request) {
+	f, t, err := getFilter(term)
+	if err != nil {
+		statusBadRequest(w, r)
+		return
+	}
+
 	p, err := model.CreatePageWithAPI(r.URL)
 	if err != nil {
 		getErrorStatus(err, w, r)
 		return
 	}
 
-	search := model.NewSearch(kw, 50)
+	search := model.NewSearch(t, f, 50)
 
 	search.Tasks.Add(2)
 	go search.Items()
@@ -310,7 +328,12 @@ func searchByText(kw string, w http.ResponseWriter, r *http.Request) {
 		result = append(result, r...)
 	}
 
-	data, err := p.Result(result, kw)
+	if err := search.Error; err != nil {
+		getErrorStatus(err, w, r)
+		return
+	}
+
+	data, err := p.Result(result, term)
 	if err != nil {
 		getErrorStatus(err, w, r)
 		return
@@ -319,31 +342,31 @@ func searchByText(kw string, w http.ResponseWriter, r *http.Request) {
 	view.RenderHTML("list", data, w)
 }
 
-func getOperator(q string) (operator string, query string) {
-	if parts := strings.Split(q, ":"); len(parts) >= 2 {
-		switch parts[0] {
-		case "category", "cat":
-			operator = "category"
-			query = strings.ToLower(strings.TrimSpace(parts[1]))
+func getFilter(t string) (*model.SearchFilter, string, error) {
+	filter := &model.SearchFilter{}
+
+	if kv := strings.Split(t, ":"); len(kv) == 2 {
+		switch k := kv[0]; k {
+		case "item":
+			vt := strings.SplitN(kv[1], " ", 2)
+			filter.Category = strings.TrimSpace(vt[0])
+			t = strings.TrimSpace(vt[1])
+		default:
+			return filter, "", fmt.Errorf("unknown filter key \"%s\"", k)
 		}
 	}
 
-	return
+	return filter, t, nil
 }
 
 func getQuery(w http.ResponseWriter, r *http.Request) {
 	q := r.FormValue("query")
 	if err := validateKeyword(q); err != nil {
-		http.Error(w, err.Error(), http.StatusUnprocessableEntity)
+		statusBadRequest(w, r)
 		return
 	}
 
 	q = cleanupString(q)
 
-	switch op, query := getOperator(q); op {
-	case "category":
-		http.Redirect(w, r, fmt.Sprintf("/item/%s", query), http.StatusMovedPermanently)
-	default:
-		searchByText(q, w, r)
-	}
+	searchByText(q, w, r)
 }

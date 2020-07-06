@@ -11,8 +11,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/tarkov-database/website/model/item"
-
 	"github.com/google/logger"
 )
 
@@ -22,8 +20,6 @@ var (
 )
 
 var hostname string
-
-var itemKinds map[string]item.Kind
 
 func init() {
 	if env := os.Getenv("HOST"); len(env) > 0 {
@@ -94,7 +90,7 @@ func validateQueryValues(q url.Values) error {
 }
 
 func validateKeyword(q string) error {
-	if len(q) < 3 || len(q) > 32 {
+	if len(q) < 3 || len(q) > 56 {
 		return ErrTooLongShort
 	}
 	if !isAlnumExtended(q) {
@@ -146,15 +142,6 @@ func checkOrigin(r *http.Request) bool {
 	}
 
 	return originHost == hostname
-}
-
-func getItemKind(id string) (item.Kind, error) {
-	v, ok := itemKinds[id]
-	if !ok {
-		return v, errors.New("item not found")
-	}
-
-	return v, nil
 }
 
 func isSupportedMediaType(r *http.Request) bool {
