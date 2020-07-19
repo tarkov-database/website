@@ -322,11 +322,8 @@ const initSearchSocket = async() => {
     const host = window.location.host;
     const path = 'search/ws';
 
-    let proto = 'wss';
-    if (window.location.protocol !== 'https:') {
-      proto = 'ws';
-      console.warn('Insecure WebSocket protocol is used');
-    }
+    const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    if (proto === 'ws') console.warn('Insecure WebSocket protocol is used');
 
     let socket;
     try {
@@ -468,7 +465,6 @@ const initSearchSocket = async() => {
     } else {
       currentTerm = val.trim();
     }
-    
 
     if (currentTerm.length < 3) return;
 
