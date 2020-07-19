@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint . static/resources/js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install-js": "cp node_modules/mapbox-gl/dist/mapbox-gl-csp.js static/resources/js/lib/mapbox-gl-csp.min.js && cp node_modules/mapbox-gl/dist/mapbox-gl-csp-worker.js static/resources/js/lib/mapbox-gl-csp-worker.min.js && cp node_modules/chart.js/dist/Chart.min.js static/resources/js/lib/Chart.min.js && browserify static/resources/js/lib/turf.config.js --standalone turf > static/resources/js/lib/turf.bundle.js",
+    "install-js": "cp node_modules/mapbox-gl/dist/mapbox-gl-csp.js static/resources/js/lib/mapbox-gl-csp.min.js && cp node_modules/mapbox-gl/dist/mapbox-gl-csp-worker.js static/resources/js/lib/mapbox-gl-csp-worker.min.js && cp node_modules/chart.js/dist/chart.min.js static/resources/js/lib/chart.min.js && browserify static/resources/js/lib/turf.config.js --standalone turf > static/resources/js/lib/turf.bundle.js",
     "install-css": "cp node_modules/mapbox-gl/dist/mapbox-gl.css static/resources/css/lib/mapbox-gl.min.css",
     "install-statics": "npm run install-js && npm run install-css"
   },
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@turf/length": "^6.0.2",
     "browserify": "^16.5.1",
-    "chart.js": "^3.0.0-alpha",
+    "chart.js": "^3.0.0-alpha.2",
     "eslint": "^7.4.0",
     "mapbox-gl": "^1.11.1"
   }

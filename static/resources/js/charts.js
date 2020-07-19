@@ -6,13 +6,14 @@ const bgMainColor = getCSSVariable('--bg-main-color').trim();
 const fontMainColor = getCSSVariable('--font-main-color').trim();
 const fontSecColor = getCSSVariable('--font-sec-color').trim();
 
-Chart.defaults.fontSize = 16;
-Chart.defaults.fontColor = fontMainColor;
-Chart.defaults.fontFamily = 'Bender';
+Chart.defaults.font.size = 16;
+Chart.defaults.font.color = fontMainColor;
+Chart.defaults.font.family = 'Bender';
 Chart.defaults.elements.line.backgroundColor = fontSecColor;
 Chart.defaults.elements.point.hitRadius = 15;
-Chart.defaults.tooltips.backgroundColor = bgMainColor;
-Chart.defaults.tooltips.titleFontColor = fontSecColor;
+Chart.defaults.elements.point.hoverRadius = 5;
+Chart.defaults.plugins.tooltip.backgroundColor = bgMainColor;
+Chart.defaults.plugins.tooltip.titleFontColor = fontSecColor;
 
 const ammoTypeChart = () => {
   const el = document.getElementById('ammoTypeChart');
@@ -32,7 +33,7 @@ const ammoTypeChart = () => {
       },
       tooltips: {
         callbacks: {
-          label: (tooltipItem, data) => `${data.labels[tooltipItem.datasetIndex]} (PEN: ${tooltipItem.label}, DMG: ${tooltipItem.value})`
+          label: ({dataset, dataPoint}) => `${dataset.label} (PEN: ${dataPoint.x}, DMG: ${dataPoint.y})`
         }
       },
       scales: {
