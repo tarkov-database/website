@@ -455,7 +455,7 @@ const initSearchSocket = async() => {
     let currentTerm = '';
     let filter = {};
 
-    if (prefix !== null && prefix.groups.value) {
+    if (prefix !== null) {
       const {key, value, term} = prefix.groups;
 
       if (!filters.contains(key) || !filters.includes(key, value)) return;

@@ -1,9 +1,12 @@
 package model
 
 import (
+	"context"
+	"fmt"
 	"sync"
+	"time"
 
-	"github.com/tarkov-database/website/core/api"
+	"github.com/tarkov-database/website/core/search"
 	"github.com/tarkov-database/website/model/item"
 	"github.com/tarkov-database/website/model/location"
 	"github.com/tarkov-database/website/model/location/feature"
@@ -51,25 +54,31 @@ func (so *SearchOperation) Close() {
 func (so *SearchOperation) Items() {
 	defer so.Tasks.Done()
 
-	var err error
-	var result item.EntityResult
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	query := &search.Query{
+		Term:  so.Term,
+		Index: search.IndexItem,
+	}
 
 	if c := so.Filter.Category; c != "" {
-		var k item.Kind
-		if k, err = item.CategoryToKind(c); err != nil {
+		k, err := item.CategoryToKind(c)
+		if err != nil {
 			so.Lock()
 			so.Error = err
 			so.Unlock()
 			return
 		}
 
-		result, err = item.GetItems(k, &api.Options{
-			Filter: map[string]string{"text": so.Term},
-			Limit:  so.Limit,
-		})
-	} else {
-		result, err = item.GetItemsBySearch(so.Term, so.Limit)
+		query.Term = fmt.Sprintf("kind:%s AND %s", k, query.Term)
 	}
+
+	opts := &search.Options{
+		Limit: so.Limit,
+	}
+
+	result, err := search.Search(ctx, query, opts)
 	if err != nil {
 		so.Lock()
 		so.Error = err
@@ -77,11 +86,9 @@ func (so *SearchOperation) Items() {
 		return
 	}
 
-	items := result.GetEntities()
-
-	rs := make([]*SearchResult, len(items))
-	for i, r := range items {
-		cat, err := item.KindToCategory(r.GetKind())
+	rs := make([]*SearchResult, len(result.Data))
+	for i, r := range result.Data {
+		cat, err := item.KindToCategory(item.Kind(r.Kind))
 		if err != nil {
 			so.Lock()
 			so.Error = err
@@ -90,9 +97,9 @@ func (so *SearchOperation) Items() {
 		}
 
 		rs[i] = &SearchResult{
-			ID:        r.GetID(),
-			Name:      r.GetName(),
-			ShortName: r.GetShortName(),
+			ID:        r.ID,
+			Name:      r.Name,
+			ShortName: r.ShortName,
 			Parent:    cat,
 			Type:      TypeItem,
 		}

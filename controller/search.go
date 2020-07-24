@@ -211,7 +211,10 @@ func (s *socket) read(remote string) {
 		}
 
 		go func() {
-			res := &socketResponse{ID: req.ID}
+			res := &socketResponse{
+				ID:    req.ID,
+				Items: make([]*model.SearchResult, 0, 10),
+			}
 
 			q := req.Term
 
@@ -221,14 +224,14 @@ func (s *socket) read(remote string) {
 				return
 			}
 
-			q = cleanupString(q)
+			q = fmt.Sprintf("name:%s", cleanupString(q))
 
 			filter := &model.SearchFilter{
 				Category: req.Filter.Category,
 				Location: req.Filter.Location,
 			}
 
-			search := model.NewSearch(q, filter, 6)
+			search := model.NewSearch(q, filter, 5)
 
 			if req.Items {
 				search.Tasks.Add(1)
@@ -323,7 +326,7 @@ func searchByText(term string, w http.ResponseWriter, r *http.Request) {
 
 	search.Close()
 
-	result := make([]*model.SearchResult, 0)
+	result := make([]*model.SearchResult, 0, 50)
 	for r := range search.Results {
 		result = append(result, r...)
 	}
