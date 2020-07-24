@@ -1,23 +1,24 @@
-FROM golang:1.14.6
-
-LABEL homepage="https://tarkov-database.com"
-LABEL repository="https://github.com/tarkov-database/website"
-LABEL maintainer="Markus Wiegand <mail@morphy2k.dev>"
+FROM golang:1.14.6 as build-env
 
 ARG BRANCH=""
 
 ENV BRANCH=${BRANCH}
-
-EXPOSE 8080
 
 WORKDIR /tmp/github.com/tarkov-database/website
 COPY . .
 
 RUN make bin && \
     mkdir -p /usr/share/tarkov-database/website && \
-    mv -t /usr/share/tarkov-database/website frontendserver view static && \
-    rm -rf /tmp/github.com/tarkov-database/website
+    mv -t /usr/share/tarkov-database/website frontendserver view static
 
-WORKDIR /usr/share/tarkov-database/website
+FROM gcr.io/distroless/base
 
-CMD ["/usr/share/tarkov-database/website/frontendserver"]
+LABEL homepage="https://tarkov-database.com"
+LABEL repository="https://github.com/tarkov-database/website"
+LABEL maintainer="Markus Wiegand <mail@morphy2k.dev>"
+
+COPY --from=build-env /usr/share/tarkov-database/website /
+
+EXPOSE 8080
+
+CMD ["/frontendserver"]
