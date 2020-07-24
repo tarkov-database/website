@@ -224,11 +224,12 @@ func (s *socket) read(remote string) {
 				return
 			}
 
-			q = fmt.Sprintf("name:%s", cleanupString(q))
+			q = cleanupString(q)
 
 			filter := &model.SearchFilter{
 				Category: req.Filter.Category,
 				Location: req.Filter.Location,
+				ByName:   true,
 			}
 
 			search := model.NewSearch(q, filter, 5)

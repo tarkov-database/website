@@ -33,6 +33,7 @@ type SearchOperation struct {
 type SearchFilter struct {
 	Category string
 	Location string
+	ByName   bool
 }
 
 func NewSearch(term string, filter *SearchFilter, limit int) *SearchOperation {
@@ -60,6 +61,10 @@ func (so *SearchOperation) Items() {
 	query := &search.Query{
 		Term:  so.Term,
 		Index: search.IndexItem,
+	}
+
+	if so.Filter.ByName {
+		query.Term = fmt.Sprintf("name:%s", query.Term)
 	}
 
 	if c := so.Filter.Category; c != "" {
