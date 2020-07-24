@@ -60,7 +60,7 @@ func newConfig() (*clientConfig, error) {
 	if env := os.Getenv("SEARCH_HOST"); len(env) > 4 {
 		c.Host = env
 	} else {
-		return c, errors.New("api host not set")
+		return c, errors.New("search host not set")
 	}
 
 	if env := os.Getenv("SEARCH_TLS"); len(env) > 3 {
@@ -74,7 +74,7 @@ func newConfig() (*clientConfig, error) {
 			if env := os.Getenv("SEARCH_KEY"); len(env) > 0 {
 				c.PrivateKey = env
 			} else {
-				return c, errors.New("api private key not set")
+				return c, errors.New("search private key not set")
 			}
 		}
 
