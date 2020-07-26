@@ -28,7 +28,12 @@ func init() {
 }
 
 func SearchGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	getQuery(w, r)
+	if err := validateQueryValues(r.URL.Query()); err != nil {
+		statusBadRequest(w, r)
+		return
+	}
+
+	searchByText(w, r)
 }
 
 var sig chan os.Signal
@@ -218,7 +223,7 @@ func (s *socket) read(remote string) {
 
 			q := req.Term
 
-			if err := validateKeyword(q); err != nil {
+			if err := validateTerm(q); err != nil {
 				res.Error = err.Error()
 				s.Send <- res
 				return
@@ -304,9 +309,16 @@ func (s *socket) write() {
 	}
 }
 
-func searchByText(term string, w http.ResponseWriter, r *http.Request) {
-	f, t, err := getFilter(term)
+func searchByText(w http.ResponseWriter, r *http.Request) {
+	query := cleanupString(r.FormValue("query"))
+
+	f, t, err := getFilter(query)
 	if err != nil {
+		statusBadRequest(w, r)
+		return
+	}
+
+	if err := validateTerm(t); err != nil {
 		statusBadRequest(w, r)
 		return
 	}
@@ -335,7 +347,7 @@ func searchByText(term string, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := p.Result(result, term)
+	data, err := p.Result(result, query)
 	if err != nil {
 		getErrorStatus(err, w, r)
 		return
@@ -363,16 +375,4 @@ func getFilter(t string) (*model.SearchFilter, string, error) {
 	}
 
 	return filter, t, nil
-}
-
-func getQuery(w http.ResponseWriter, r *http.Request) {
-	q := r.FormValue("query")
-	if err := validateKeyword(q); err != nil {
-		statusBadRequest(w, r)
-		return
-	}
-
-	q = cleanupString(q)
-
-	searchByText(q, w, r)
 }

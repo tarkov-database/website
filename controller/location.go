@@ -159,7 +159,7 @@ Loop:
 				return
 			}
 
-			if err := validateKeyword(q); err != nil {
+			if err := validateTerm(q); err != nil {
 				statusBadRequest(w, r)
 				return
 			}

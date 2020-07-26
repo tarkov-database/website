@@ -466,7 +466,7 @@ const initSearchSocket = async() => {
       currentTerm = val.trim();
     }
 
-    if (currentTerm.length < 3) return;
+    if (currentTerm.length < 3 || currentTerm.length > 32) return;
 
     if (currentTerm === lastTerm) {
       showElement(suggBox);

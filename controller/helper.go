@@ -89,8 +89,8 @@ func validateQueryValues(q url.Values) error {
 	return nil
 }
 
-func validateKeyword(q string) error {
-	if len(q) < 3 || len(q) > 56 {
+func validateTerm(q string) error {
+	if len(q) < 3 || len(q) > 32 {
 		return ErrTooLongShort
 	}
 	if !isAlnumExtended(q) {
