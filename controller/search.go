@@ -224,15 +224,13 @@ func (s *socket) read(remote string) {
 				return
 			}
 
-			q = cleanupString(q)
-
 			filter := &model.SearchFilter{
 				Category: req.Filter.Category,
 				Location: req.Filter.Location,
 				ByName:   true,
 			}
 
-			search := model.NewSearch(q, filter, 5)
+			search := model.NewSearch(cleanupString(q), filter, 5)
 
 			if req.Items {
 				search.Tasks.Add(1)

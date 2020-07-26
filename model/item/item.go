@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/tarkov-database/website/core/api"
+	"github.com/tarkov-database/website/core/search"
 
 	"github.com/google/logger"
 )
@@ -150,4 +151,56 @@ func toQueryArray(arr []objectID) []string {
 	qa[count-1] = strings.Join(arr[s:], ",")
 
 	return qa
+}
+
+func Search(term string, limit int, kind *Kind) (*search.Result, error) {
+	if kind != nil {
+		term = fmt.Sprintf("kind:%s AND %s", kind, term)
+	}
+
+	query := &search.Query{
+		Term:  term,
+		Index: search.IndexItem,
+	}
+
+	opts := &search.Options{
+		Limit: limit,
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	result, err := search.Search(ctx, query, opts)
+	if err != nil {
+		return result, err
+	}
+
+	return result, nil
+}
+
+func SearchByName(term string, limit int, kind *Kind) (*search.Result, error) {
+	if kind != nil {
+		term = fmt.Sprintf("kind:%s AND name:%s", kind, term)
+	} else {
+		term = fmt.Sprintf("name:%s", term)
+	}
+
+	query := &search.Query{
+		Term:  term,
+		Index: search.IndexItem,
+	}
+
+	opts := &search.Options{
+		Limit: limit,
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	result, err := search.Search(ctx, query, opts)
+	if err != nil {
+		return result, err
+	}
+
+	return result, nil
 }

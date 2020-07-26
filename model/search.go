@@ -1,10 +1,7 @@
 package model
 
 import (
-	"context"
-	"fmt"
 	"sync"
-	"time"
 
 	"github.com/tarkov-database/website/core/search"
 	"github.com/tarkov-database/website/model/item"
@@ -55,18 +52,7 @@ func (so *SearchOperation) Close() {
 func (so *SearchOperation) Items() {
 	defer so.Tasks.Done()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	query := &search.Query{
-		Term:  so.Term,
-		Index: search.IndexItem,
-	}
-
-	if so.Filter.ByName {
-		query.Term = fmt.Sprintf("name:%s", query.Term)
-	}
-
+	var kind *item.Kind
 	if c := so.Filter.Category; c != "" {
 		k, err := item.CategoryToKind(c)
 		if err != nil {
@@ -76,14 +62,16 @@ func (so *SearchOperation) Items() {
 			return
 		}
 
-		query.Term = fmt.Sprintf("kind:%s AND %s", k, query.Term)
+		kind = &k
 	}
 
-	opts := &search.Options{
-		Limit: so.Limit,
+	var err error
+	var result *search.Result
+	if so.Filter.ByName {
+		result, err = item.SearchByName(so.Term, so.Limit, kind)
+	} else {
+		result, err = item.Search(so.Term, so.Limit, kind)
 	}
-
-	result, err := search.Search(ctx, query, opts)
 	if err != nil {
 		so.Lock()
 		so.Error = err
