@@ -55,7 +55,7 @@ var calibers = [...]string{
 	"12ga",
 	"20ga",
 	"30x29mm",
-	"40×46mm",
+	"40x46mm",
 	"5.45x39mm",
 	"5.56x45mm NATO",
 	"5.7x28mm",
