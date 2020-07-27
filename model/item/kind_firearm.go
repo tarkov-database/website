@@ -51,6 +51,7 @@ var firearmFilter = Filter{
 		"shotgun",
 		"smg",
 		"sniperRifle",
+		"specialWeapon",
 	},
 	"caliber": calibers[:],
 }
