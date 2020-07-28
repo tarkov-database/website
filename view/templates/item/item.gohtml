@@ -58,9 +58,9 @@
 
 {{ define "effects" }}
 
-{{ if or .Entity.Effects.Health.Value .Entity.Effects.Stamina.Value .Entity.Effects.Hydration.Value .Entity.Effects.Energy.Value }}
+{{ if or .Entity.Effects.Health.Chance .Entity.Effects.Stamina.Chance .Entity.Effects.Hydration.Chance .Entity.Effects.Energy.Chance }}
 <table>
-  {{ if .Entity.Effects.Health.Value }}
+  {{ if .Entity.Effects.Health.Chance }}
   <tr>
     <th>Health</th>
     {{ if .Entity.Resources }}
@@ -70,7 +70,7 @@
     {{ end }}
   </tr>
   {{ end }}
-  {{ if .Entity.Effects.Stamina.Value }}
+  {{ if .Entity.Effects.Stamina.Chance }}
   <tr>
     <th>Stamina</th>
     {{ if .Entity.Resources }}
@@ -80,7 +80,7 @@
     {{ end }}
   </tr>
   {{ end }}
-  {{ if .Entity.Effects.Hydration.Value }}
+  {{ if .Entity.Effects.Hydration.Chance }}
   <tr>
     <th>Hydration</th>
     {{ if and (eq .Entity.Kind "food") .Entity.Resources }}
@@ -90,7 +90,7 @@
     {{ end }}
   </tr>
   {{ end }}
-  {{ if .Entity.Effects.Energy.Value }}
+  {{ if .Entity.Effects.Energy.Chance }}
   <tr>
     <th>Energy</th>
     {{ if and (eq .Entity.Kind "food") .Entity.Resources }}
@@ -103,12 +103,15 @@
 </table>
 {{ end }}
 
+{{ if or .Entity.Effects.Bloodloss.Chance .Entity.Effects.Fracture.Chance .Entity.Effects.Pain.Chance .Entity.Effects.Contusion.Chance .Entity.Effects.Toxication.Chance .Entity.Effects.RadiationExposure.Chance .Entity.Effects.Tremor.Chance .Entity.Effects.TunnelVision.Chance .Entity.Effects.WeightLimit.Chance .Entity.Effects.DamageModifier.Chance .Entity.Effects.DestroyedPart.Chance }}
 <div class="table-big">
   <table>
     <thead>
       <th>
         <tr>
           <th></th>
+          <th class="center">Chance</th>
+          <th class="center">Value</th>
           <th class="center">Removes</th>
           <th class="center">Duration</th>
           <th class="center">Cost</th>
@@ -116,65 +119,122 @@
       </th>
     </thead>
     <tbody>
-      <tr {{ if or .Entity.Effects.Bloodloss.Removes .Entity.Effects.Bloodloss.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ if .Entity.Effects.Bloodloss.Chance }}
+      <tr>
         <th>Bloodloss</th>
+        <td class="center">{{ .Entity.Effects.Bloodloss.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.Bloodloss.Value 0.0 }}{{ if gt .Entity.Effects.Bloodloss.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Bloodloss.IsPercent }}{{ .Entity.Effects.Bloodloss.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.Bloodloss.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Bloodloss.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Bloodloss.Duration }}{{ .Entity.Effects.Bloodloss.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Bloodloss.Removes }}{{ .Entity.Effects.Bloodloss.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if or .Entity.Effects.Fracture.Removes .Entity.Effects.Fracture.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.Fracture.Chance }}}}
+      <tr>
         <th>Fracture</th>
+        <td class="center">{{ .Entity.Effects.Fracture.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.Fracture.Value 0.0 }}{{ if gt .Entity.Effects.Fracture.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Fracture.IsPercent }}{{ .Entity.Effects.Fracture.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.Fracture.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Fracture.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Fracture.Duration }}{{ .Entity.Effects.Fracture.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Fracture.Removes }}{{ .Entity.Effects.Fracture.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if or .Entity.Effects.Pain.Removes .Entity.Effects.Pain.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.Pain.Chance }}
+      <tr>
         <th>Pain</th>
+        <td class="center">{{ .Entity.Effects.Pain.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.Pain.Value 0.0 }}{{ if gt .Entity.Effects.Pain.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Pain.IsPercent }}{{ .Entity.Effects.Pain.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.Pain.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Pain.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Pain.Duration }}{{ .Entity.Effects.Pain.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Pain.Removes }}{{ .Entity.Effects.Pain.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if or .Entity.Effects.Contusion.Removes .Entity.Effects.Contusion.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.Contusion.Chance }}
+      <tr>
         <th>Contusion</th>
+        <td class="center">{{ .Entity.Effects.Contusion.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.Contusion.Value 0.0 }}{{ if gt .Entity.Effects.Contusion.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Contusion.IsPercent }}{{ .Entity.Effects.Contusion.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.Contusion.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Contusion.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Contusion.Duration }}{{ .Entity.Effects.Contusion.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Contusion.Removes }}{{ .Entity.Effects.Contusion.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if or .Entity.Effects.Toxication.Removes .Entity.Effects.Toxication.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.Toxication.Chance }}
+      <tr>
         <th>Toxication</th>
+        <td class="center">{{ .Entity.Effects.Toxication.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.Toxication.Value 0.0 }}{{ if gt .Entity.Effects.Toxication.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Toxication.IsPercent }}{{ .Entity.Effects.Toxication.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.Toxication.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Toxication.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Toxication.Duration }}{{ .Entity.Effects.Toxication.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Toxication.Removes }}{{ .Entity.Effects.Toxication.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if or .Entity.Effects.RadiationExposure.Removes .Entity.Effects.RadiationExposure.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.RadiationExposure.Chance }}
+      <tr>
         <th>Radiation</th>
+        <td class="center">{{ .Entity.Effects.RadiationExposure.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.RadiationExposure.Value 0.0 }}{{ if gt .Entity.Effects.RadiationExposure.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.RadiationExposure.IsPercent }}{{ .Entity.Effects.RadiationExposure.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.RadiationExposure.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.RadiationExposure.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.RadiationExposure.Duration }}{{ .Entity.Effects.RadiationExposure.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.RadiationExposure.Removes }}{{ .Entity.Effects.RadiationExposure.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if or .Entity.Effects.Tremor.Removes .Entity.Effects.Tremor.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.Tremor.Chance }}
+      <tr>
         <th>Tremor</th>
+        <td class="center">{{ .Entity.Effects.Tremor.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.Tremor.Value 0.0 }}{{ if gt .Entity.Effects.Tremor.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Tremor.IsPercent }}{{ .Entity.Effects.Tremor.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.Tremor.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Tremor.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Tremor.Duration }}{{ .Entity.Effects.Tremor.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.Tremor.Removes }}{{ .Entity.Effects.Tremor.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if or .Entity.Effects.TunnelVision.Removes .Entity.Effects.TunnelVision.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.TunnelVision.Chance }}
+      <tr>
         <th>Tunnel Vision</th>
+        <td class="center">{{ .Entity.Effects.TunnelVision.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.TunnelVision.Value 0.0 }}{{ if gt .Entity.Effects.TunnelVision.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.TunnelVision.IsPercent }}{{ .Entity.Effects.TunnelVision.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.TunnelVision.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.TunnelVision.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.TunnelVision.Duration }}{{ .Entity.Effects.TunnelVision.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.TunnelVision.Removes }}{{ .Entity.Effects.TunnelVision.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
-      <tr {{ if or .Entity.Effects.DestroyedPart.Removes .Entity.Effects.DestroyedPart.Duration }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.WeightLimit.Chance }}
+      <tr>
+        <th>Weight Limit</th>
+        <td class="center">{{ .Entity.Effects.WeightLimit.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.WeightLimit.Value 0.0 }}{{ if gt .Entity.Effects.WeightLimit.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.WeightLimit.IsPercent }}{{ .Entity.Effects.WeightLimit.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.WeightLimit.Value }}{{ end }}{{ else }}-{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.WeightLimit.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.WeightLimit.Duration }}{{ .Entity.Effects.WeightLimit.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.WeightLimit.Removes }}{{ .Entity.Effects.WeightLimit.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      {{ end }}
+      {{ if .Entity.Effects.DamageModifier.Chance }}
+      <tr>
+        <th>Damage</th>
+        <td class="center">{{ .Entity.Effects.DamageModifier.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.DamageModifier.Value 0.0 }}{{ if gt .Entity.Effects.DamageModifier.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.DamageModifier.IsPercent }}{{ .Entity.Effects.DamageModifier.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.DamageModifier.Value }}{{ end }}{{ else }}-{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.DamageModifier.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.DamageModifier.Duration }}{{ .Entity.Effects.DamageModifier.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.DamageModifier.Removes }}{{ .Entity.Effects.DamageModifier.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      {{ end }}
+      {{ if .Entity.Effects.DestroyedPart.Chance }}
+      <tr>
         <th>Destroyed Part</th>
+        <td class="center">{{ .Entity.Effects.DestroyedPart.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.DestroyedPart.Value 0.0 }}{{ if gt .Entity.Effects.DestroyedPart.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.DestroyedPart.IsPercent }}{{ .Entity.Effects.DestroyedPart.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.DestroyedPart.Value }}{{ end }}{{ else }}-{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.DestroyedPart.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.DestroyedPart.Duration }}{{ .Entity.Effects.DestroyedPart.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.DestroyedPart.Removes }}{{ .Entity.Effects.DestroyedPart.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
+      {{ end }}
     </tbody>
     </table>
 </div>
+{{ end }}
 
-{{ if or .Entity.Effects.EnergyRate.Value .Entity.Effects.HealthRate.Value .Entity.Effects.HydrationRate.Value .Entity.Effects.StaminaRate.Value }}
+{{ if or .Entity.Effects.EnergyRate.Chance .Entity.Effects.HealthRate.Chance .Entity.Effects.HydrationRate.Chance .Entity.Effects.StaminaRate.Chance }}
 <div class="table-big">
   <table>
     <thead>
@@ -185,26 +245,34 @@
       </tr>
     </thead>
     <tbody>
-      <tr {{ if .Entity.Effects.HealthRate.Value }}{{ else }}class="no-effect"{{ end }}>
+      {{ if .Entity.Effects.HealthRate.Chance }}
+      <tr>
         <th>Health Rate</th>
         <td class="center">{{ if gt .Entity.Effects.HealthRate.Value 0.0 }}+{{ end }}{{ .Entity.Effects.HealthRate.Value }}</td>
         <td class="center">{{ if .Entity.Effects.HealthRate.Duration }}{{ .Entity.Effects.HealthRate.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
-      <tr {{ if .Entity.Effects.HydrationRate.Value }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.HydrationRate.Chance }}
+      <tr>
         <th>Hydration Rate</th>
         <td class="center">{{ if gt .Entity.Effects.HydrationRate.Value 0.0 }}+{{ end }}{{ .Entity.Effects.HydrationRate.Value }}</td>
         <td class="center">{{ if .Entity.Effects.HydrationRate.Duration }}{{ .Entity.Effects.HydrationRate.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
-      <tr {{ if .Entity.Effects.EnergyRate.Value }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.EnergyRate.Chance }}
+      <tr>
         <th>Energy Rate</th>
         <td class="center">{{ if gt .Entity.Effects.EnergyRate.Value 0.0 }}+{{ end }}{{ .Entity.Effects.EnergyRate.Value }}</td>
         <td class="center">{{ if .Entity.Effects.EnergyRate.Duration }}{{ .Entity.Effects.EnergyRate.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
-      <tr {{ if .Entity.Effects.StaminaRate.Value }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.StaminaRate.Chance }}
+      <tr>
         <th>Stamina Rate</th>
         <td class="center">{{ if gt .Entity.Effects.StaminaRate.Value 0.0 }}+{{ end }}{{ .Entity.Effects.StaminaRate.Value }}</td>
         <td class="center">{{ if .Entity.Effects.StaminaRate.Duration }}{{ .Entity.Effects.StaminaRate.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
+      {{ end }}
     </tbody>
   </table>
 </div>
@@ -221,31 +289,41 @@
       </tr>
     </thead>
     <tbody>
-      <tr {{ if .Entity.Effects.LootSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
+    {{ if .Entity.Effects.LootSpeed.Chance }}
+      <tr>
         <th>Loot</th>
         <td class="center">{{ if .Entity.Effects.LootSpeed.Value }}{{ .Entity.Effects.LootSpeed.Value }}{{ else }}0{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.LootSpeed.Duration }}{{ .Entity.Effects.LootSpeed.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
-      <tr {{ if .Entity.Effects.Mobility.Value }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.Mobility.Chance }}
+      <tr>
         <th>Mobility</th>
         <td class="center">{{ if .Entity.Effects.Mobility.Value }}{{ .Entity.Effects.Mobility.Value }}{{ else }}0{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Mobility.Duration }}{{ .Entity.Effects.Mobility.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
-      <tr {{ if .Entity.Effects.Recoil.Value }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.Recoil.Chance }}
+      <tr>
         <th>Recoil</th>
         <td class="center">{{ if .Entity.Effects.Recoil.Value }}{{ .Entity.Effects.Recoil.Value }}{{ else }}0{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.Recoil.Duration }}{{ .Entity.Effects.Recoil.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
-      <tr {{ if .Entity.Effects.ReloadSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.ReloadSpeed.Chance }}
+      <tr>
         <th>Reload</th>
         <td class="center">{{ if .Entity.Effects.ReloadSpeed.Value }}{{ .Entity.Effects.ReloadSpeed.Value }}{{ else }}0{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.ReloadSpeed.Duration }}{{ .Entity.Effects.ReloadSpeed.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
-      <tr {{ if .Entity.Effects.UnlockSpeed.Value }}{{ else }}class="no-effect"{{ end }}>
+      {{ end }}
+      {{ if .Entity.Effects.UnlockSpeed.Chance }}
+      <tr>
         <th>Unlock</th>
         <td class="center">{{ if .Entity.Effects.UnlockSpeed.Value }}{{ .Entity.Effects.UnlockSpeed.Value }}{{ else }}0{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.UnlockSpeed.Duration }}{{ .Entity.Effects.UnlockSpeed.Duration }}{{ else }}-{{ end }} sec.</td>
       </tr>
+      {{ end }}
     </tbody>
   </table>
 </div>

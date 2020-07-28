@@ -23,6 +23,8 @@ type Effects struct {
 	LootSpeed         Effect   `json:"lootSpeed,omitempty"`
 	UnlockSpeed       Effect   `json:"unlockSpeed,omitempty"`
 	DestroyedPart     Effect   `json:"destroyedPart,omitempty"`
+	WeightLimit       Effect   `json:"weightLimit,omitempty"`
+	DamageModifier    Effect   `json:"damageModifier,omitempty"`
 	Skill             []Effect `json:"skill,omitempty"`
 }
 
