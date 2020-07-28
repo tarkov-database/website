@@ -43,6 +43,22 @@
             </tr>
           </table>
 
+          {{ if eq .Entity.Type "grenade" }}
+          <table>
+            <tr>
+              <th>Delay</th>
+              <td>{{ .Entity.GrenadeProperties.Delay }} sec.</td>
+            </tr>
+            <tr>
+              <th>Fragments</th>
+              <td>{{ .Entity.GrenadeProperties.FragmentCount }}</td>
+            </tr>
+            <tr>
+              <th>Radius</th>
+              <td>{{ .Entity.GrenadeProperties.MinRadius }} - {{ .Entity.GrenadeProperties.MaxRadius }} m</td>
+            </tr>
+          </table>
+
           {{ if or .Entity.WeaponModifier.Accuracy .Entity.WeaponModifier.Recoil }}
           <table>
             <tr>
@@ -54,6 +70,9 @@
               <td>{{ if gt .Entity.WeaponModifier.Recoil 0.0 }}+{{ end }}{{ .Entity.WeaponModifier.Recoil }} %</td>
             </tr>
           </table>
+          {{ end }}
+
+          
           {{ end }}
 {{ end }}
 
