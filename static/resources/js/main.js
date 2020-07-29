@@ -410,6 +410,8 @@ const initSearchSocket = async() => {
     const input = event.target;
     const val = input.value;
 
+    input.setCustomValidity('');
+
     if (!input.validity.valid) {
       hideElement(suggBox);
       hideElement(suggInline);
@@ -458,7 +460,10 @@ const initSearchSocket = async() => {
     if (prefix !== null) {
       const {key, value, term} = prefix.groups;
 
-      if (!filters.contains(key) || !filters.includes(key, value)) return;
+      if (!filters.contains(key) || !filters.includes(key, value)) {
+        input.setCustomValidity('Filter is invalid');
+        return;
+      }
 
       currentTerm = term;
       filter[key] = value;
@@ -466,7 +471,15 @@ const initSearchSocket = async() => {
       currentTerm = val.trim();
     }
 
-    if (currentTerm.length < 3 || currentTerm.length > 32) return;
+    if (currentTerm.length < 3) {
+      input.setCustomValidity('Term is too short (min. 3 characters)');
+      return;
+    }
+  
+    if (currentTerm.length > 32) {
+      input.setCustomValidity('Term is too long (max. 32 characters)');
+      return;
+    }
 
     if (currentTerm === lastTerm) {
       showElement(suggBox);
