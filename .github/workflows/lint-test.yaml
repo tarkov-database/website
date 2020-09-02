@@ -10,6 +10,17 @@ on:
       - '.eslint*'
       - 'package*.json'
       - '.github/workflows/lint-test.yaml'
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    paths:
+      - '**.go'
+      - '**.js'
+      - 'go.mod'
+      - 'go.sum'
+      - 'revive.toml'
+      - '.eslint*'
+      - 'package*.json'
+      - '.github/workflows/lint-test.yaml'
 
 jobs:
 
@@ -21,7 +32,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: '1.14'
+        go-version: '1.15'
 
     - name: Check out
       uses: actions/checkout@v2
