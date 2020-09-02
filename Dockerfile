@@ -1,4 +1,4 @@
-FROM golang:1.15-rc as build-env
+FROM golang:1.15.1 as build-env
 
 ARG BRANCH=""
 
@@ -11,7 +11,7 @@ RUN make bin && \
     mkdir -p /usr/share/tarkov-database/website && \
     mv -t /usr/share/tarkov-database/website frontendserver view static
 
-FROM gcr.io/distroless/base
+FROM gcr.io/distroless/base-debian10
 
 LABEL homepage="https://tarkov-database.com"
 LABEL repository="https://github.com/tarkov-database/website"
