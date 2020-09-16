@@ -129,7 +129,7 @@
         <td class="center">{{ if .Entity.Effects.Bloodloss.Removes }}{{ .Entity.Effects.Bloodloss.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
       {{ end }}
-      {{ if .Entity.Effects.Fracture.Chance }}}}
+      {{ if .Entity.Effects.Fracture.Chance }}
       <tr>
         <th>Fracture</th>
         <td class="center">{{ .Entity.Effects.Fracture.Chance | decimalToPercent }} %</td>
