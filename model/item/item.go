@@ -155,6 +155,7 @@ func toQueryArray(arr []objectID) []string {
 
 func Search(term string, limit int, kind *Kind) (*search.Result, error) {
 	if kind != nil {
+		term = strings.ReplaceAll(term, " ", " OR ")
 		term = fmt.Sprintf("kind:%s AND %s", kind, term)
 	}
 
@@ -180,6 +181,7 @@ func Search(term string, limit int, kind *Kind) (*search.Result, error) {
 
 func SearchByName(term string, limit int, kind *Kind) (*search.Result, error) {
 	if kind != nil {
+		term = strings.ReplaceAll(term, " ", " OR ")
 		term = fmt.Sprintf("kind:%s AND name:%s", kind, term)
 	} else {
 		term = fmt.Sprintf("name:%s", term)
