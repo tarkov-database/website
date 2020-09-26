@@ -58,6 +58,7 @@
               <td>{{ .Entity.GrenadeProperties.MinRadius }} - {{ .Entity.GrenadeProperties.MaxRadius }} m</td>
             </tr>
           </table>
+          {{ end }}
 
           {{ if or .Entity.WeaponModifier.Accuracy .Entity.WeaponModifier.Recoil }}
           <table>
@@ -72,8 +73,6 @@
           </table>
           {{ end }}
 
-          
-          {{ end }}
 {{ end }}
 
 {{ define "sub_box" }}
