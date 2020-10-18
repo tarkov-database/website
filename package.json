@@ -22,7 +22,7 @@
   "devDependencies": {
     "@turf/length": "^6.0.2",
     "browserify": "^16.5.2",
-    "chart.js": "^3.0.0-beta",
+    "chart.js": "^3.0.0-beta.4",
     "eslint": "^7.11.0",
     "mapbox-gl": "^1.12.0"
   }
