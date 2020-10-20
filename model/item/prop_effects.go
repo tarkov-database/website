@@ -9,7 +9,8 @@ type Effects struct {
 	StaminaRate       Effect   `json:"staminaRate,omitempty"`
 	Health            Effect   `json:"health,omitempty"`
 	HealthRate        Effect   `json:"healthRate,omitempty"`
-	Bloodloss         Effect   `json:"bloodloss,omitempty"`
+	LightBleeding     Effect   `json:"lightBleeding,omitempty"`
+	HeavyBleeding     Effect   `json:"heavyBleeding,omitempty"`
 	Fracture          Effect   `json:"fracture,omitempty"`
 	Contusion         Effect   `json:"contusion,omitempty"`
 	Pain              Effect   `json:"pain,omitempty"`

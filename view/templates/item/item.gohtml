@@ -119,14 +119,24 @@
       </th>
     </thead>
     <tbody>
-      {{ if .Entity.Effects.Bloodloss.Chance }}
+      {{ if .Entity.Effects.LightBleeding.Chance }}
       <tr>
-        <th>Bloodloss</th>
-        <td class="center">{{ .Entity.Effects.Bloodloss.Chance | decimalToPercent }} %</td>
-        <td class="center">{{ if ne .Entity.Effects.Bloodloss.Value 0.0 }}{{ if gt .Entity.Effects.Bloodloss.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Bloodloss.IsPercent }}{{ .Entity.Effects.Bloodloss.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.Bloodloss.Value }}{{ end }}{{ else }}-{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Bloodloss.Removes }}Yes{{ else }}No{{ end }}</td>
-        <td class="center">{{ if .Entity.Effects.Bloodloss.Duration }}{{ .Entity.Effects.Bloodloss.Duration }}{{ else }}-{{ end }} sec.</td>
-        <td class="center">{{ if .Entity.Effects.Bloodloss.Removes }}{{ .Entity.Effects.Bloodloss.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+        <th>Light Bleeding</th>
+        <td class="center">{{ .Entity.Effects.LightBleeding.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.LightBleeding.Value 0.0 }}{{ if gt .Entity.Effects.LightBleeding.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.LightBleeding.IsPercent }}{{ .Entity.Effects.LightBleeding.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.LightBleeding.Value }}{{ end }}{{ else }}-{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.LightBleeding.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.LightBleeding.Duration }}{{ .Entity.Effects.LightBleeding.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.LightBleeding.Removes }}{{ .Entity.Effects.LightBleeding.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      {{ end }}
+      {{ if .Entity.Effects.HeavyBleeding.Chance }}
+      <tr>
+        <th>Heavy Bleeding</th>
+        <td class="center">{{ .Entity.Effects.HeavyBleeding.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.HeavyBleeding.Value 0.0 }}{{ if gt .Entity.Effects.HeavyBleeding.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.HeavyBleeding.IsPercent }}{{ .Entity.Effects.HeavyBleeding.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.HeavyBleeding.Value }}{{ end }}{{ else }}-{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.HeavyBleeding.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.HeavyBleeding.Duration }}{{ .Entity.Effects.HeavyBleeding.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.HeavyBleeding.Removes }}{{ .Entity.Effects.HeavyBleeding.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
       {{ end }}
       {{ if .Entity.Effects.Fracture.Chance }}
