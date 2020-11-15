@@ -24,8 +24,13 @@ const ammoTypeChart = () => {
   const options = {
     type: 'scatter',
     data: {
-      labels: [],
-      datasets: []
+      datasets: [
+        {
+          borderColor: fontMainColor,
+          backgroundColor: fontMainColor,
+          data: []
+        }
+      ]
     },
     options: {
       legend: {
@@ -33,7 +38,7 @@ const ammoTypeChart = () => {
       },
       tooltips: {
         callbacks: {
-          label: ({dataset, dataPoint}) => `${dataset.label} (PEN: ${dataPoint.x}, DMG: ${dataPoint.y})`
+          label: ({ dataIndex, dataPoint, dataset }) => `${dataset.data[dataIndex].label} (PEN: ${dataPoint.x}, DMG: ${dataPoint.y})`
         }
       },
       scales: {
@@ -71,15 +76,10 @@ const ammoTypeChart = () => {
     const count = parseInt(type.dataset.projectilecount);
     const data = {
       label: type.dataset.name,
-      borderColor: fontMainColor,
-      backgroundColor: fontMainColor,
-      data: [{
-        x: pen,
-        y: count * dmg || dmg
-      }]
+      x: pen,
+      y: count * dmg || dmg
     };
-    options.data.labels.push(data.label);
-    options.data.datasets.push(data);
+    options.data.datasets[0].data.push(data);
   }
 
   const element = document.querySelector('.chart.ammo');
