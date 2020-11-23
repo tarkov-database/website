@@ -23,7 +23,7 @@
     "@turf/length": "^6.0.2",
     "browserify": "^17.0.0",
     "chart.js": "^3.0.0-beta.6",
-    "eslint": "^7.13.0",
+    "eslint": "^7.14.0",
     "mapbox-gl": "^1.13.0"
   }
 }
