@@ -133,7 +133,7 @@ func hasPrefix(v interface{}, p string) bool {
 }
 
 func appendStaticHash(p string) string {
-	if sum, ok := version.StaticSums[strings.TrimPrefix(p, "/")]; ok {
+	if sum, err := version.SumOf(strings.TrimPrefix(p, "/")); err == nil {
 		p += "?v=" + sum[:8]
 	}
 

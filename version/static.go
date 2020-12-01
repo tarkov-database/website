@@ -1,78 +1,44 @@
 package version
 
 import (
-	"encoding/hex"
-	"fmt"
-	"io/ioutil"
-	"strings"
-	"sync"
+	"errors"
 
-	"github.com/google/logger"
-	"github.com/zeebo/blake3"
+	"github.com/tarkov-database/website/utils"
 )
 
-const rootDir = "./static"
+const staticDir = "static/public"
 
-type FileSums map[string]string
-
-var StaticSums FileSums
+var staticSums utils.FileSums
 
 func init() {
-	ch := make(chan File, 1)
-	wg := &sync.WaitGroup{}
+	RefreshSumAll()
+}
 
-	wg.Add(1)
-	go hashFiles(rootDir, ch, wg)
-
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	StaticSums = make(FileSums)
-	prefix := rootDir + "/"
-	for m := range ch {
-		k := strings.TrimPrefix(m.Path, prefix)
-		StaticSums[k] = m.Sum
+func SumOf(path string) (string, error) {
+	sum, ok := staticSums[path]
+	if !ok {
+		return "", errors.New("path not found")
 	}
+
+	return sum, nil
 }
 
-type File struct {
-	Path, Sum string
-}
-
-func hashFile(p string, ch chan File, wg *sync.WaitGroup) {
-	d, err := ioutil.ReadFile(p)
+func RefreshSumOf(path string) error {
+	sum, err := utils.SumFile(path, staticDir)
 	if err != nil {
-		logger.Fatal(err)
+		return err
+	}
+	if _, ok := staticSums[sum.Path]; !ok {
+		return errors.New("file does not exist")
 	}
 
-	h := blake3.New()
-	if _, err := h.Write(d); err != nil {
-		logger.Fatal(err)
-	}
+	staticSums[sum.Path] = sum.Sum
 
-	ch <- File{p, hex.EncodeToString(h.Sum(nil))}
-
-	wg.Done()
+	return nil
 }
-
-func hashFiles(p string, ch chan File, wg *sync.WaitGroup) {
-	index, err := ioutil.ReadDir(p)
-	if err != nil {
-		logger.Fatal(err)
-	}
-
-	wg.Add(len(index))
-
-	for _, e := range index {
-		path := fmt.Sprintf("%s/%s", p, e.Name())
-		if e.IsDir() {
-			go hashFiles(path, ch, wg)
-		} else {
-			go hashFile(path, ch, wg)
-		}
-	}
-
-	wg.Done()
+func RefreshSumAll() {
+	staticSums = utils.SumDir(staticDir, &utils.SumOptions{
+		BasePath:  staticDir,
+		Recursive: true,
+	})
 }
