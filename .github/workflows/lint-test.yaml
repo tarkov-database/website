@@ -8,6 +8,7 @@ on:
       - 'go.sum'
       - 'revive.toml'
       - '.eslint*'
+      - 'tsconfig.json'
       - 'package*.json'
       - '.github/workflows/lint-test.yaml'
   pull_request:
@@ -19,6 +20,7 @@ on:
       - 'go.sum'
       - 'revive.toml'
       - '.eslint*'
+      - 'tsconfig.json'
       - 'package*.json'
       - '.github/workflows/lint-test.yaml'
 
@@ -65,3 +67,22 @@ jobs:
 
     - name: Run linter
       run: npm run lint
+
+  js-test:
+    name: JS Test
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out
+      uses: actions/checkout@v2
+
+    - name: Set up Node
+      uses: actions/setup-node@v2.1.2
+      with:
+        node-version: 15
+
+    - name: Install packages
+      run: npm ci
+
+    - name: Run linter
+      run: npm run test
