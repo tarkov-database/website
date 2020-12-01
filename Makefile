@@ -23,7 +23,7 @@ debug: bin
 
 statics:
 	go run ${MAIN_PKG}/bundler/cmd -source=static/src -out=static/public/resources/js -sourcemap
-	cp node_modules/mapbox-gl/dist/mapbox-gl.css static/public/resources/css/lib/mapbox-gl.min.css
+	cp node_modules/mapbox-gl/dist/mapbox-gl.css static/public/resources/css/mapbox-gl.min.css
 
 lint:
 	revive -config revive.toml -formatter stylish ./...

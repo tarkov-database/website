@@ -19,7 +19,10 @@ frontendserver
 node_modules
 
 # JavaScript files
-static/resources/**.js
+static/public/resources/js/*
+
+# CSS files
+static/public/resources/css/*.min.css
 
 *.log
 *.tsbuildinfo
