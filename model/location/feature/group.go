@@ -25,17 +25,17 @@ type GroupResult struct {
 
 // const defaultSort = "name"
 
-func GetGroup(lID, fID objectID) (*Group, error) {
-	loc := &Group{}
+func GetGroup(lID, gID objectID) (*Group, error) {
+	group := &Group{}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	if err := api.GET(ctx, fmt.Sprintf("/location/%s/featuregroup/%s", lID, fID), &api.Options{}, loc); err != nil {
-		return loc, err
+	if err := api.GET(ctx, fmt.Sprintf("/location/%s/featuregroup/%s", lID, gID), &api.Options{}, group); err != nil {
+		return group, err
 	}
 
-	return loc, nil
+	return group, nil
 }
 
 func GetGroups(lID objectID, opts *api.Options) (*GroupResult, error) {

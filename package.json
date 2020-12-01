@@ -1,13 +1,9 @@
 {
   "name": "tarkov-database-website",
   "version": "0.1.0",
-  "description": "The website, the main frontend of Tarkov Database",
   "scripts": {
-    "lint": "eslint . static/resources/js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install-js": "cp node_modules/mapbox-gl/dist/mapbox-gl-csp.js static/resources/js/lib/mapbox-gl-csp.min.js && cp node_modules/mapbox-gl/dist/mapbox-gl-csp-worker.js static/resources/js/lib/mapbox-gl-csp-worker.min.js && cp node_modules/chart.js/dist/chart.min.js static/resources/js/lib/chart.min.js && browserify static/resources/js/lib/turf.config.js --standalone turf > static/resources/js/lib/turf.bundle.js",
-    "install-css": "cp node_modules/mapbox-gl/dist/mapbox-gl.css static/resources/css/lib/mapbox-gl.min.css",
-    "install-statics": "npm run install-js && npm run install-css"
+    "lint": "eslint . static/src",
+    "test": "tsc"
   },
   "repository": {
     "type": "git",
@@ -19,11 +15,17 @@
     "url": "https://github.com/tarkov-database/website/issues"
   },
   "homepage": "https://github.com/tarkov-database/website#readme",
-  "devDependencies": {
+  "dependencies": {
     "@turf/length": "^6.0.2",
-    "browserify": "^17.0.0",
     "chart.js": "^3.0.0-beta.6",
-    "eslint": "^7.14.0",
     "mapbox-gl": "^1.13.0"
+  },
+  "devDependencies": {
+    "@types/mapbox-gl": "^1.12.8",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "browserify": "^17.0.0",
+    "eslint": "^7.14.0",
+    "typescript": "^4.1.2"
   }
 }

@@ -15,4 +15,11 @@ frontendserver
 # Environment variable file
 .env
 
+# NodeJS module dir
 node_modules
+
+# JavaScript files
+static/resources/**.js
+
+*.log
+*.tsbuildinfo
