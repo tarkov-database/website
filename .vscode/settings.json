@@ -1,0 +1,10 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "go.buildTags": "DEBUG",
+    "go.lintFlags": [
+        "-config=${workspaceFolder}/revive.toml"
+    ],
+    "gopls.env": {
+        "GOFLAGS": "-tags=DEBUG"
+    }
+}
