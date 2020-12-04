@@ -1,9 +1,9 @@
 interface Item {
-    id: string,
-    name: string,
-    shortName?: string,
-    parent?: string,
-    type: ItemType,
+    id: string;
+    name: string;
+    shortName?: string;
+    parent?: string;
+    type: ItemType;
 }
 
 enum ItemType {
@@ -13,65 +13,77 @@ enum ItemType {
 }
 
 interface SocketRequest {
-    id: number
-    term: string
+    id: number;
+    term: string;
     filter?: {
-        item?: string,
-        location?: string,
-    }
-    items: boolean
-    locations: boolean
-    features: boolean
+        item?: string;
+        location?: string;
+    };
+    items: boolean;
+    locations: boolean;
+    features: boolean;
 }
 
 interface SocketResponse {
-    id: number,
-    items?: Array<Item>,
-    error?: Error,
+    id: number;
+    items?: Array<Item>;
+    error?: Error;
 }
 
-const errErrorClosure = new Error('Search socket was closed with an error');
+const errErrorClosure = new Error("Search socket was closed with an error");
 
-const wait = (time: number) => new Promise<void>(resolve => setTimeout(() => resolve(), time));
+const wait = (time: number) =>
+    new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
-const regexMeta = new RegExp(/[.*+?^${}()|[\]\\]/, 'g');
-const quoteMeta = (str: string) => str.replace(regexMeta, '\\$&');
+const regexMeta = new RegExp(/[.*+?^${}()|[\]\\]/, "g");
+const quoteMeta = (str: string) => str.replace(regexMeta, "\\$&");
 
-const regexFilterPrefix = new RegExp(/(?:^\s*(?<key>\w+):)(?:\s*(?<value>\w+)\s)?(?:\s*(?<term>.*))/, 'i');
+const regexFilterPrefix = new RegExp(
+    /(?:^\s*(?<key>\w+):)(?:\s*(?<value>\w+)\s)?(?:\s*(?<term>.*))/,
+    "i"
+);
 const getFilterPrefix = (str: string) => regexFilterPrefix.exec(str);
 
-const showElement = (el: HTMLElement | null) => el?.classList.replace('hide', 'show');
-const hideElement = (el: HTMLElement | null) => el?.classList.replace('show', 'hide');
+const showElement = (el: HTMLElement | null) =>
+    el?.classList.replace("hide", "show");
+const hideElement = (el: HTMLElement | null) =>
+    el?.classList.replace("show", "hide");
 
-export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: any): Promise<void> => {
-    const input = element.querySelector<HTMLInputElement>('input[type="search"]');
-    const suggBox = element.querySelector<HTMLElement>('.suggestion');
-    const suggInline = element.querySelector<HTMLElement>('.inline-suggestion');
+export const initSearchSocket = async (
+    element: HTMLFormElement,
+    mapInstance?: any
+): Promise<void> => {
+    const input = element.querySelector<HTMLInputElement>(
+        'input[type="search"]'
+    );
+    const suggBox = element.querySelector<HTMLElement>(".suggestion");
+    const suggInline = element.querySelector<HTMLElement>(".inline-suggestion");
 
     let socket: WebSocket;
     let idleTimeout: number | undefined;
     let noReconnect = false;
     let qCount = 0;
 
-    let lastTerm = '';
+    let lastTerm = "";
 
     const map = mapInstance;
 
     const updateBoxSuggestions = (items: Array<Item>, term: string) => {
-        const newUl = document.createElement('ul');
+        const newUl = document.createElement("ul");
 
         for (const item of items) {
-            const a = document.createElement('a');
-            const li = document.createElement('li');
-            const text = document.createElement('span');
-            const div = document.createElement('div');
+            const a = document.createElement("a");
+            const li = document.createElement("li");
+            const text = document.createElement("span");
+            const div = document.createElement("div");
 
             const highlightMatches = (str: string) => {
-                const regex = new RegExp(`(${term})`, 'gi');
+                const regex = new RegExp(`(${term})`, "gi");
                 const matches = str.match(regex);
-                if (matches) for (const m of matches) {
-                    str = str.replace(m, `<b>${m}</b>`);
-                }
+                if (matches)
+                    for (const m of matches) {
+                        str = str.replace(m, `<b>${m}</b>`);
+                    }
 
                 return str;
             };
@@ -86,46 +98,51 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
                     break;
                 case 1:
                     a.href = `/location/${item.id}`;
-                    a.href += map ? '/map' : '';
-                    div.className = 'icon location';
+                    a.href += map ? "/map" : "";
+                    div.className = "icon location";
                     break;
                 case 2:
-                    a.addEventListener('click', async () => {
+                    a.addEventListener("click", async () => {
                         hideElement(suggBox);
-                        map?.flyToFeature(await map?.getFeature(item.id, item.parent));
+                        map?.flyToFeature(
+                            await map?.getFeature(item.id, item.parent)
+                        );
                     });
                     a.href = `#feature=${item.id}`;
-                    div.className = 'icon feature';
+                    div.className = "icon feature";
                     break;
             }
 
-            div.innerHTML = '&nbsp;';
+            div.innerHTML = "&nbsp;";
 
-            a.addEventListener('keydown', function (this: HTMLAnchorElement, e: KeyboardEvent) {
-                const current = this.parentNode as HTMLLIElement;
+            a.addEventListener(
+                "keydown",
+                function (this: HTMLAnchorElement, e: KeyboardEvent) {
+                    const current = this.parentNode as HTMLLIElement;
 
-                let next: Element | null = null;
-                switch (e.key) {
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        next = current.previousElementSibling;
-                        if (!next) input?.focus();
-                        break;
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        next = current.nextElementSibling;
-                        if (!next) input?.focus();
-                        break;
-                    case 'Escape':
-                        current.blur();
-                        hideElement(suggBox);
-                        break;
-                    default:
-                        return;
+                    let next: Element | null = null;
+                    switch (e.key) {
+                        case "ArrowUp":
+                            e.preventDefault();
+                            next = current.previousElementSibling;
+                            if (!next) input?.focus();
+                            break;
+                        case "ArrowDown":
+                            e.preventDefault();
+                            next = current.nextElementSibling;
+                            if (!next) input?.focus();
+                            break;
+                        case "Escape":
+                            current.blur();
+                            hideElement(suggBox);
+                            break;
+                        default:
+                            return;
+                    }
+
+                    next?.querySelector("a")?.focus();
                 }
-
-                next?.querySelector('a')?.focus();
-            });
+            );
 
             a.appendChild(div);
             a.append(text);
@@ -133,24 +150,26 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
             newUl.appendChild(li);
         }
 
-        const ul = suggBox?.querySelector('ul');
+        const ul = suggBox?.querySelector("ul");
         if (ul != null) suggBox?.replaceChild(newUl, ul);
     };
 
     const updateInlineSuggestion = (val: string) => {
         if (suggInline === null) return;
-        suggInline.innerHTML = val?.replace(' ', '&nbsp;');
+        suggInline.innerHTML = val?.replace(" ", "&nbsp;");
         suggInline.dataset.value = val;
     };
 
     const filters = new Filters({ isInteractiveMap: !!map });
 
-    const openSocket = (msgListener: (this: WebSocket, ev: MessageEvent<any>) => any) => {
+    const openSocket = (
+        msgListener: (this: WebSocket, ev: MessageEvent<any>) => any
+    ) => {
         const host = window.location.host;
-        const path = 'search/ws';
+        const path = "search/ws";
 
-        const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
-        if (proto === 'ws') console.warn('Insecure WebSocket protocol is used');
+        const proto = window.location.protocol === "https:" ? "wss" : "ws";
+        if (proto === "ws") console.warn("Insecure WebSocket protocol is used");
 
         let socket;
         try {
@@ -159,28 +178,29 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
             return Promise.reject(err);
         }
 
-        socket.addEventListener('open', () => {
-            console.info('Search socket opened');
+        socket.addEventListener("open", () => {
+            console.info("Search socket opened");
         });
 
-        socket.addEventListener('close', e => {
+        socket.addEventListener("close", (e) => {
             if (e.wasClean) {
-                const msg = 'Search socket closed';
+                const msg = "Search socket closed";
                 console.info(e.reason ? `${msg}: ${e.reason}` : msg);
                 if (e.code !== 1000) noReconnect = true;
-                if (e.code === 1012) wait(1000).then(() => noReconnect = false);
+                if (e.code === 1012)
+                    wait(1000).then(() => (noReconnect = false));
             } else {
-                const msg = 'Search socket closed unexpectedly';
+                const msg = "Search socket closed unexpectedly";
                 console.error(e.reason ? `${msg}: ${e.reason}` : msg);
                 noReconnect = true;
             }
         });
 
-        socket.addEventListener('error', e => {
-            console.error('Search socket error: %s', e);
+        socket.addEventListener("error", (e) => {
+            console.error("Search socket error: %s", e);
         });
 
-        socket.addEventListener('message', msgListener);
+        socket.addEventListener("message", msgListener);
 
         return socket;
     };
@@ -198,7 +218,10 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
         while (socket.readyState === 0) await wait(50);
 
         clearTimeout(idleTimeout);
-        idleTimeout = setTimeout(() => socket.close(1000, 'Idle timeout'), 30 * 1000);
+        idleTimeout = setTimeout(
+            () => socket.close(1000, "Idle timeout"),
+            30 * 1000
+        );
 
         return;
     };
@@ -218,7 +241,7 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
             return;
         }
 
-        const term = quoteMeta(lastTerm).replace(' ', '|');
+        const term = quoteMeta(lastTerm).replace(" ", "|");
 
         updateBoxSuggestions(data.items, term);
         showElement(suggBox);
@@ -236,7 +259,7 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
 
         const val = this.value;
 
-        this.setCustomValidity('');
+        this.setCustomValidity("");
 
         if (!this.validity.valid) {
             hideElement(suggBox);
@@ -269,9 +292,9 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
         const prefix = getFilterPrefix(val);
 
         if (prefix?.groups && filters.contains(prefix.groups.key)) {
-            const key = prefix.groups['key'],
-                value = prefix.groups['value'],
-                term = prefix.groups['term'];
+            const key = prefix.groups["key"],
+                value = prefix.groups["value"],
+                term = prefix.groups["term"];
 
             if (!value && term.length >= 2) {
                 valueCompletion(key, term);
@@ -282,17 +305,17 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
             keyCompletion(val.trim());
         }
 
-        let currentTerm = '';
+        let currentTerm = "";
 
         const filter: { [key: string]: string } = {};
 
         if (prefix?.groups) {
-            const key = prefix.groups['key'],
-                value = prefix.groups['value'],
-                term = prefix.groups['term'];
+            const key = prefix.groups["key"],
+                value = prefix.groups["value"],
+                term = prefix.groups["term"];
 
             if (!filters.contains(key) || !filters.includes(key, value)) {
-                this.setCustomValidity('Filter is invalid');
+                this.setCustomValidity("Filter is invalid");
                 return;
             }
 
@@ -303,12 +326,12 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
         }
 
         if (currentTerm.length < 3) {
-            this.setCustomValidity('Term is too short (min. 3 characters)');
+            this.setCustomValidity("Term is too short (min. 3 characters)");
             return;
         }
 
         if (currentTerm.length > 32) {
-            this.setCustomValidity('Term is too long (max. 32 characters)');
+            this.setCustomValidity("Term is too long (max. 32 characters)");
             return;
         }
 
@@ -330,7 +353,7 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
             term: currentTerm,
             items: !filter.location,
             locations: !filter.item,
-            features: !!filter.location
+            features: !!filter.location,
         };
 
         if (Object.keys(filter).length) data.filter = filter;
@@ -348,75 +371,79 @@ export const initSearchSocket = async (element: HTMLFormElement, mapInstance?: a
             return;
         }
 
-        if (this.dataset.valid === 'true' && suggBox?.querySelector('ul > li')) showElement(suggBox);
+        if (this.dataset.valid === "true" && suggBox?.querySelector("ul > li"))
+            showElement(suggBox);
     };
 
     const onInputKeydown = function (this: HTMLElement, event: KeyboardEvent) {
         const selFirstBoxSugg = () => {
-            const next = suggBox?.querySelector<HTMLLinkElement>('ul > li:first-child > a');
+            const next = suggBox?.querySelector<HTMLLinkElement>(
+                "ul > li:first-child > a"
+            );
             if (next) next.focus();
         };
         const selLastBoxSugg = () => {
-            const next = suggBox?.querySelector<HTMLLinkElement>('ul > li:last-child > a');
+            const next = suggBox?.querySelector<HTMLLinkElement>(
+                "ul > li:last-child > a"
+            );
             if (next) next.focus();
         };
         const applyInlineSugg = () => {
             if (input && suggInline) {
                 const { dataset, classList } = suggInline;
-                if (classList.contains('show') && dataset.value) input.value = dataset.value;
+                if (classList.contains("show") && dataset.value)
+                    input.value = dataset.value;
             }
         };
 
         switch (event.key) {
-            case 'ArrowDown':
+            case "ArrowDown":
                 event.preventDefault();
                 selFirstBoxSugg();
                 break;
-            case 'ArrowUp':
+            case "ArrowUp":
                 event.preventDefault();
                 selLastBoxSugg();
                 break;
-            case 'Tab':
+            case "Tab":
                 event.preventDefault();
                 applyInlineSugg();
                 hideElement(suggInline);
                 break;
-            case 'Escape':
+            case "Escape":
                 hideElement(suggBox);
                 break;
         }
     };
 
-    input?.addEventListener('keydown', onInputKeydown);
-    input?.addEventListener('focusin', onInputFocusIn);
-    input?.addEventListener('input', onInput);
+    input?.addEventListener("keydown", onInputKeydown);
+    input?.addEventListener("focusin", onInputFocusIn);
+    input?.addEventListener("input", onInput);
 
     const onDocKeydown = function (this: Document, event: KeyboardEvent) {
-        if (document.activeElement?.nodeName === 'INPUT') return;
+        if (document.activeElement?.nodeName === "INPUT") return;
         switch (event.key) {
-            case 'F3':
-            case '/':
-            case 's':
+            case "F3":
+            case "/":
+            case "s":
                 event.preventDefault();
                 input?.focus();
         }
     };
 
-    document.addEventListener('keydown', onDocKeydown);
+    document.addEventListener("keydown", onDocKeydown);
 };
 
-type FilterType =
-    | "item"
-    | "location";
+type FilterType = "item" | "location";
 
 interface Filter {
-    type: FilterType
-    available: boolean,
-    values: string[],
+    type: FilterType;
+    available: boolean;
+    values: string[];
 }
 
 interface FilterOptions {
-    isInteractiveMap: boolean
+    isInteractiveMap: boolean;
 }
 
 class Filters {
@@ -425,45 +452,45 @@ class Filters {
     constructor(options: FilterOptions) {
         this.data = new Map();
 
-        this.data.set('item', {
+        this.data.set("item", {
             type: "item",
             available: !options.isInteractiveMap,
             values: [
-                'ammunition',
-                'armor',
-                'backpack',
-                'barrel',
-                'barter',
-                'bipod',
-                'charge',
-                'clothing',
-                'common',
-                'container',
-                'device',
-                'firearm',
-                'food',
-                'foregrip',
-                'gasblock',
-                'goggles',
-                'grenade',
-                'handguard',
-                'headphone',
-                'key',
-                'launcher',
-                'magazine',
-                'map',
-                'medical',
-                'melee',
-                'mod-other',
-                'money',
-                'mount',
-                'muzzle',
-                'pistolgrip',
-                'receiver',
-                'sight-special',
-                'sight',
-                'stock',
-                'tacticalrig'
+                "ammunition",
+                "armor",
+                "backpack",
+                "barrel",
+                "barter",
+                "bipod",
+                "charge",
+                "clothing",
+                "common",
+                "container",
+                "device",
+                "firearm",
+                "food",
+                "foregrip",
+                "gasblock",
+                "goggles",
+                "grenade",
+                "handguard",
+                "headphone",
+                "key",
+                "launcher",
+                "magazine",
+                "map",
+                "medical",
+                "melee",
+                "mod-other",
+                "money",
+                "mount",
+                "muzzle",
+                "pistolgrip",
+                "receiver",
+                "sight-special",
+                "sight",
+                "stock",
+                "tacticalrig",
             ],
         });
     }
@@ -474,17 +501,23 @@ class Filters {
 
     includes(key: string, value: string): boolean {
         const entry = this.data.get(key);
-        return (entry?.available ?? false) && (entry?.values.includes(value) ?? false);
+        return (
+            (entry?.available ?? false) &&
+            (entry?.values.includes(value) ?? false)
+        );
     }
 
     firstMatch(key: string): string {
-        const match = Array.from(this.data).find(v => v[1].available && v[0].startsWith(key));
-        return match ? match[0] : '';
+        const match = Array.from(this.data).find(
+            (v) => v[1].available && v[0].startsWith(key)
+        );
+        return match ? match[0] : "";
     }
 
     firstMatchIn(key: string, value: string): string | null {
         const entry = this.data.get(key);
-        return (entry?.available ?? false) ? entry?.values
-            .find(v => v.startsWith(value)) ?? null : null;
+        return entry?.available ?? false
+            ? entry?.values.find((v) => v.startsWith(value)) ?? null
+            : null;
     }
 }

@@ -6,5 +6,8 @@
     ],
     "gopls.env": {
         "GOFLAGS": "-tags=DEBUG"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

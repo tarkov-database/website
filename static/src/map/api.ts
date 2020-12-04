@@ -1,23 +1,31 @@
-import { Feature, Geometry, FeatureCollection, GeoJsonProperties } from "geojson";
+import {
+    Feature,
+    Geometry,
+    FeatureCollection,
+    GeoJsonProperties,
+} from "geojson";
 
-export interface CustomFeature<G extends Geometry | null = Geometry, P = GeoJsonProperties> extends Feature<G, P> {
-    _id: string
-    name: string
-    group: string
-    _location: string
+export interface CustomFeature<
+    G extends Geometry | null = Geometry,
+    P = GeoJsonProperties
+> extends Feature<G, P> {
+    _id: string;
+    name: string;
+    group: string;
+    _location: string;
 }
 
 export interface FeatureGroup {
-    _id: string
-    name: string
-    description: string
-    tags: string[]
-    _location: string
+    _id: string;
+    name: string;
+    description: string;
+    tags: string[];
+    _location: string;
 }
 
 export interface FeatureGroupResult {
-    total: number
-    items: FeatureGroup[]
+    total: number;
+    items: FeatureGroup[];
 }
 
 // TODO: Add options like limit and pagination
@@ -28,7 +36,10 @@ export class LocationAPI {
 
     constructor(locationId: string) {
         this._location = locationId;
-        this._url = new URL(`/location/${this._location}`, window.location.href);
+        this._url = new URL(
+            `/location/${this._location}`,
+            window.location.href
+        );
         this._options = {};
     }
 
@@ -38,7 +49,10 @@ export class LocationAPI {
         try {
             const res = await fetch(req, opts);
             const json = await res.json();
-            if (!res.ok) return Promise.reject(new Error(`${json.code}: ${json.message}`));
+            if (!res.ok)
+                return Promise.reject(
+                    new Error(`${json.code}: ${json.message}`)
+                );
             return json;
         } catch (err) {
             return Promise.reject(err);
@@ -50,8 +64,8 @@ export class LocationAPI {
             ...this._options,
             headers: {
                 ...this._options.headers,
-                'Content-Type': 'application/json'
-            }
+                "Content-Type": "application/json",
+            },
         });
     }
 
@@ -60,14 +74,14 @@ export class LocationAPI {
             ...this._options,
             headers: {
                 ...this._options.headers,
-                'Content-Type': 'application/geo+json'
-            }
+                "Content-Type": "application/geo+json",
+            },
         });
     }
 
     async featureGroups(): Promise<FeatureGroupResult> {
         const url = this._url;
-        url.pathname += '/featuregroup';
+        url.pathname += "/featuregroup";
         return await this._json(url);
     }
 
@@ -85,14 +99,14 @@ export class LocationAPI {
 
     async featuresByGroup(id: string): Promise<FeatureCollection> {
         const url = this._url;
-        url.pathname += '/feature';
+        url.pathname += "/feature";
         url.search = new URLSearchParams({ group: id }).toString();
         return await this._geojson(url);
     }
 
     async featuresByText(keyword: string): Promise<FeatureCollection> {
         const url = this._url;
-        url.pathname += '/feature';
+        url.pathname += "/feature";
         url.search = new URLSearchParams({ text: keyword }).toString();
         return await this._geojson(url);
     }

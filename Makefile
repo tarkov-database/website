@@ -32,6 +32,7 @@ lint:
 
 fmt:
 	go fmt ./...
+	npm run fmt
 
 test:
 	npm run test
