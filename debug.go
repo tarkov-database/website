@@ -28,12 +28,10 @@ func init() {
 		for event := range events {
 			if err := event.Error; err != nil {
 				logger.Error(err)
-				return
 			}
 
 			if err := version.RefreshSumOf(event.Filename); err != nil {
 				logger.Error(err)
-				return
 			}
 		}
 	}()
