@@ -11,7 +11,6 @@ import {
     PointElement,
     LineElement,
     TooltipItem,
-    ChartDataset,
     defaults,
 } from "chart.js";
 
@@ -33,6 +32,7 @@ const bgMainColor = getCSSVariable("--bg-main-color").trim();
 const fontMainColor = getCSSVariable("--font-main-color").trim();
 const fontSecColor = getCSSVariable("--font-sec-color").trim();
 
+defaults.color = fontMainColor;
 defaults.font.size = 16;
 defaults.font.color = fontMainColor;
 defaults.font.family = "Bender";
@@ -65,17 +65,22 @@ const ammoTypeChart = () => {
             ],
         },
         options: {
-            legend: {
-                display: false,
-            },
-            tooltips: {
-                callbacks: {
-                    label: ({ dataset, dataPoint, dataIndex }: TooltipItem) =>
-                        `${
-                            ((dataset as ChartDataset<"scatter">).data[
-                                dataIndex
-                            ] as CustomScatterPoint).label
-                        } (PEN: ${dataPoint.x}, DMG: ${dataPoint.y})`,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ({
+                            dataset,
+                            dataPoint,
+                            dataIndex,
+                        }: TooltipItem) =>
+                            `${
+                                (dataset.data[dataIndex] as CustomScatterPoint)
+                                    .label
+                            } (PEN: ${dataPoint.x}, DMG: ${dataPoint.y})`,
+                    },
                 },
             },
             scales: {
