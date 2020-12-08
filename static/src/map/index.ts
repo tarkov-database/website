@@ -1,6 +1,6 @@
 import {
+    AnyLayer,
     GeoJSONSource,
-    Layer,
     LngLat,
     Map as MapboxMap,
     MapMouseEvent,
@@ -267,7 +267,7 @@ const getRandomLayerColor = () => {
     return `hsl(${h}, ${s}%, ${l}%)`;
 };
 
-const addLayer = (name: string, layer: Layer) => {
+const addLayer = (name: string, layer: AnyLayer) => {
     const id = layer["id"];
 
     map.addLayer(layer);

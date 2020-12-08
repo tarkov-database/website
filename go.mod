@@ -10,6 +10,6 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/tarkov-database/website/bundler v0.0.0-00010101000000-000000000000
 	github.com/zeebo/blake3 v0.1.0
-	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
+	golang.org/x/net v0.0.0-20201207224615-747e23833adb
 	golang.org/x/text v0.3.4
 )
