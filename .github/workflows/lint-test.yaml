@@ -1,88 +1,104 @@
 name: Lint & Test
 on:
-  push:
-    paths:
-      - '**.go'
-      - '**.js'
-      - 'go.mod'
-      - 'go.sum'
-      - 'revive.toml'
-      - '.eslint*'
-      - 'tsconfig.json'
-      - 'package*.json'
-      - '.github/workflows/lint-test.yaml'
-  pull_request:
-    types: [opened, edited, synchronize, reopened]
-    paths:
-      - '**.go'
-      - '**.js'
-      - 'go.mod'
-      - 'go.sum'
-      - 'revive.toml'
-      - '.eslint*'
-      - 'tsconfig.json'
-      - 'package*.json'
-      - '.github/workflows/lint-test.yaml'
+    push:
+        paths:
+            - "**.go"
+            - "**.js"
+            - "go.mod"
+            - "go.sum"
+            - "revive.toml"
+            - ".eslint*"
+            - "tsconfig.json"
+            - "package*.json"
+            - ".github/workflows/lint-test.yaml"
+    pull_request:
+        types: [opened, edited, synchronize, reopened]
+        paths:
+            - "**.go"
+            - "**.js"
+            - "go.mod"
+            - "go.sum"
+            - "revive.toml"
+            - ".eslint*"
+            - "tsconfig.json"
+            - "package*.json"
+            - ".github/workflows/lint-test.yaml"
 
 jobs:
+    go-lint:
+        name: Go Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Set up Go
+              uses: actions/setup-go@v2
+              with:
+                  go-version: "1.15"
 
-  go-lint:
-    name: Go Lint
-    runs-on: ubuntu-latest
-    steps:
+            - name: Check out
+              uses: actions/checkout@v2
 
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: '1.15'
+            - name: Run Revive Action
+              uses: docker://morphy/revive-action:v1
+              with:
+                  config: revive.toml
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Check out
-      uses: actions/checkout@v2
+            - name: Check formatting
+              run: test -z $(gofmt -l .) || (gofmt -l . && exit 1)
 
-    - name: Run Revive Action
-      uses: docker://morphy/revive-action:v1
-      with:
-        config: revive.toml
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    js-lint:
+        name: JS Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out
+              uses: actions/checkout@v2
 
-    - name: Check formatting
-      run: test -z $(gofmt -l .) || (gofmt -l . && exit 1)
+            - name: Set up Node
+              uses: actions/setup-node@v2.1.2
+              with:
+                  node-version: 15
 
-  js-lint:
-    name: JS Lint
-    runs-on: ubuntu-latest
-    steps:
+            - name: Cache node modules
+              uses: actions/cache@v2
+              env:
+                  cache-name: cache-node-modules
+              with:
+                  path: ~/.npm
+                  key: lint-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      lint-${{ env.cache-name }}-
 
-    - name: Check out
-      uses: actions/checkout@v2
+            - name: Install packages
+              run: npm ci
 
-    - name: Set up Node
-      uses: actions/setup-node@v2.1.2
-      with:
-        node-version: 15
+            - name: Run linter
+              run: npm run lint
 
-    - name: Install packages
-      run: npm ci
+    js-test:
+        name: JS Test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out
+              uses: actions/checkout@v2
 
-    - name: Run linter
-      run: npm run lint
+            - name: Set up Node
+              uses: actions/setup-node@v2.1.2
+              with:
+                  node-version: 15
 
-  js-test:
-    name: JS Test
-    runs-on: ubuntu-latest
-    steps:
+            - name: Cache node modules
+              uses: actions/cache@v2
+              env:
+                  cache-name: cache-node-modules
+              with:
+                  path: ~/.npm
+                  key: test-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      test-${{ env.cache-name }}-
 
-    - name: Check out
-      uses: actions/checkout@v2
+            - name: Install packages
+              run: npm ci
 
-    - name: Set up Node
-      uses: actions/setup-node@v2.1.2
-      with:
-        node-version: 15
-
-    - name: Install packages
-      run: npm ci
-
-    - name: Run linter
-      run: npm run test
+            - name: Run linter
+              run: npm run test
