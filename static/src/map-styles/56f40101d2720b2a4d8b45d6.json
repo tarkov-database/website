@@ -1,131 +1,134 @@
 {
-    "version": 8,
-    "name": "Customs - Tarkov Database",
-    "metadata": {
-        "mapbox:autocomposite": true,
-        "mapbox:type": "template",
-        "mapbox:sdk-support": {
-            "js": "1.6.0",
-            "android": "7.4.0",
-            "ios": "4.11.0"
-        },
-        "mapbox:groups": {
-            "ace3089c3cf354767e0a310ff23f90ed": {"name": "Roads"}
-        },
-        "mapbox:uiParadigm": "layers",
-        "mapbox:trackposition": false,
-        "mapbox:maxBounds": [
-          {"lon": -0.00716, "lat": -0.00458},
-          {"lon": 0.00565, "lat": 0.00270}
-        ]
+  "version": 8,
+  "name": "Customs - Tarkov Database",
+  "metadata": {
+    "mapbox:autocomposite": true,
+    "mapbox:type": "template",
+    "mapbox:sdk-support": {
+      "js": "1.6.0",
+      "android": "7.4.0",
+      "ios": "4.11.0"
     },
-    "center": [0, 0],
-    "zoom": 17.3,
-    "bearing": 0,
-    "pitch": 0,
-    "sources": {
-        "composite": {"url": "https://tiles.tarkov-database.com/v1/56f40101d2720b2a4d8b45d6", "type": "vector"}
+    "mapbox:groups": {
+      "ace3089c3cf354767e0a310ff23f90ed": { "name": "Roads" }
     },
-    "layers": [
-        {
-            "id": "background",
-            "type": "background",
-            "layout": {},
-            "paint": {"background-color": "#0c0c0c"}
-        },
-        {
-            "id": "landcover-concrete",
-            "type": "fill",
-            "source": "composite",
-            "source-layer": "landcover_concrete",
-            "layout": {},
-            "paint": {"fill-color": "#131313"}
-        },
-        {
-            "id": "water-river",
-            "type": "fill",
-            "source": "composite",
-            "source-layer": "water_river",
-            "layout": {},
-            "paint": {"fill-color": "hsl(203, 19%, 50%)"}
-        },
-        {
-            "id": "road-access",
-            "type": "line",
-            "metadata": {"mapbox:group": "ace3089c3cf354767e0a310ff23f90ed"},
-            "source": "composite",
-            "source-layer": "road_access",
-            "layout": {},
-            "paint": {"line-color": "#c8c8c8", "line-width": 3}
-        },
-        {
-            "id": "road-driveway",
-            "type": "line",
-            "metadata": {"mapbox:group": "ace3089c3cf354767e0a310ff23f90ed"},
-            "source": "composite",
-            "source-layer": "road_driveway",
-            "layout": {},
-            "paint": {"line-color": "#c8c8c8", "line-width": 7}
-        },
-        {
-            "id": "road-military",
-            "type": "line",
-            "metadata": {"mapbox:group": "ace3089c3cf354767e0a310ff23f90ed"},
-            "source": "composite",
-            "source-layer": "road_military",
-            "layout": {},
-            "paint": {"line-color": "#c8c8c8", "line-width": 6}
-        },
-        {
-            "id": "road-side",
-            "type": "line",
-            "metadata": {"mapbox:group": "ace3089c3cf354767e0a310ff23f90ed"},
-            "source": "composite",
-            "source-layer": "road_side",
-            "layout": {},
-            "paint": {"line-color": "#c8c8c8", "line-width": 8}
-        },
-        {
-            "id": "road-main",
-            "type": "line",
-            "metadata": {"mapbox:group": "ace3089c3cf354767e0a310ff23f90ed"},
-            "source": "composite",
-            "source-layer": "road_main",
-            "layout": {},
-            "paint": {"line-color": "#c8c8c8", "line-width": 10}
-        },
-        {
-            "id": "railway",
-            "type": "line",
-            "source": "composite",
-            "source-layer": "railway",
-            "layout": {},
-            "paint": {
-                "line-color": "#c8c8c8",
-                "line-width": 3,
-                "line-dasharray": [2, 3]
-            }
-        },
-        {
-            "id": "pylon",
-            "type": "fill",
-            "source": "composite",
-            "source-layer": "pylon",
-            "layout": {},
-            "paint": {"fill-color": "hsla(0, 0%, 78%, 0.3)"}
-        },
-        {
-            "id": "building",
-            "type": "fill",
-            "source": "composite",
-            "source-layer": "building",
-            "layout": {},
-            "paint": {
-                "fill-color": "#968867",
-                "fill-outline-color": "hsla(0, 0%, 0%, 0)"
-            }
-        }
-    ],
-    "created": "2020-01-02T11:33:06.114Z",
-    "modified": "2020-01-02T12:55:06.746Z"
+    "mapbox:uiParadigm": "layers",
+    "mapbox:trackposition": false,
+    "mapbox:maxBounds": [
+      { "lon": -0.00716, "lat": -0.00458 },
+      { "lon": 0.00565, "lat": 0.0027 }
+    ]
+  },
+  "center": [0, 0],
+  "zoom": 17.3,
+  "bearing": 0,
+  "pitch": 0,
+  "sources": {
+    "composite": {
+      "url": "https://tiles.tarkov-database.com/v1/56f40101d2720b2a4d8b45d6",
+      "type": "vector"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "layout": {},
+      "paint": { "background-color": "#0c0c0c" }
+    },
+    {
+      "id": "landcover-concrete",
+      "type": "fill",
+      "source": "composite",
+      "source-layer": "landcover_concrete",
+      "layout": {},
+      "paint": { "fill-color": "#131313" }
+    },
+    {
+      "id": "water-river",
+      "type": "fill",
+      "source": "composite",
+      "source-layer": "water_river",
+      "layout": {},
+      "paint": { "fill-color": "hsl(203, 19%, 50%)" }
+    },
+    {
+      "id": "road-access",
+      "type": "line",
+      "metadata": { "mapbox:group": "ace3089c3cf354767e0a310ff23f90ed" },
+      "source": "composite",
+      "source-layer": "road_access",
+      "layout": {},
+      "paint": { "line-color": "#c8c8c8", "line-width": 3 }
+    },
+    {
+      "id": "road-driveway",
+      "type": "line",
+      "metadata": { "mapbox:group": "ace3089c3cf354767e0a310ff23f90ed" },
+      "source": "composite",
+      "source-layer": "road_driveway",
+      "layout": {},
+      "paint": { "line-color": "#c8c8c8", "line-width": 7 }
+    },
+    {
+      "id": "road-military",
+      "type": "line",
+      "metadata": { "mapbox:group": "ace3089c3cf354767e0a310ff23f90ed" },
+      "source": "composite",
+      "source-layer": "road_military",
+      "layout": {},
+      "paint": { "line-color": "#c8c8c8", "line-width": 6 }
+    },
+    {
+      "id": "road-side",
+      "type": "line",
+      "metadata": { "mapbox:group": "ace3089c3cf354767e0a310ff23f90ed" },
+      "source": "composite",
+      "source-layer": "road_side",
+      "layout": {},
+      "paint": { "line-color": "#c8c8c8", "line-width": 8 }
+    },
+    {
+      "id": "road-main",
+      "type": "line",
+      "metadata": { "mapbox:group": "ace3089c3cf354767e0a310ff23f90ed" },
+      "source": "composite",
+      "source-layer": "road_main",
+      "layout": {},
+      "paint": { "line-color": "#c8c8c8", "line-width": 10 }
+    },
+    {
+      "id": "railway",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "railway",
+      "layout": {},
+      "paint": {
+        "line-color": "#c8c8c8",
+        "line-width": 3,
+        "line-dasharray": [2, 3]
+      }
+    },
+    {
+      "id": "pylon",
+      "type": "fill",
+      "source": "composite",
+      "source-layer": "pylon",
+      "layout": {},
+      "paint": { "fill-color": "hsla(0, 0%, 78%, 0.3)" }
+    },
+    {
+      "id": "building",
+      "type": "fill",
+      "source": "composite",
+      "source-layer": "building",
+      "layout": {},
+      "paint": {
+        "fill-color": "#968867",
+        "fill-outline-color": "hsla(0, 0%, 0%, 0)"
+      }
+    }
+  ],
+  "created": "2020-01-02T11:33:06.114Z",
+  "modified": "2020-01-02T12:55:06.746Z"
 }

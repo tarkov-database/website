@@ -16,7 +16,7 @@
 
 .about .credits .flaticon {
   margin-top: 4rem;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .about .faq {
@@ -24,7 +24,7 @@
 }
 
 .about .faq li {
-  margin: .2rem 0;
+  margin: 0.2rem 0;
 }
 
 .about .sidebar-box {
@@ -41,7 +41,7 @@
 }
 
 .sidebar-box.links li {
-  margin: .2rem 0;
+  margin: 0.2rem 0;
 }
 
 .sidebar-box.donate .btc {

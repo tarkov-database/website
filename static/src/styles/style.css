@@ -1,35 +1,37 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: 'Bender';
+  font-family: "Bender";
   font-display: block;
   font-style: normal;
   font-weight: 400;
-  src: local('Bender Regular'), url("../fonts/Bender.woff2") format('woff2');
+  src: local("Bender Regular"), url("../fonts/Bender.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: 'Bender';
+  font-family: "Bender";
   font-display: swap;
   font-style: normal;
   font-weight: 700;
-  src: local('Bender Bold'), url("../fonts/Bender-Bold.woff2") format('woff2');
+  src: local("Bender Bold"), url("../fonts/Bender-Bold.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: 'Bender';
+  font-family: "Bender";
   font-display: swap;
   font-style: italic;
   font-weight: 400;
-  src: local('Bender Italic'), url("../fonts/Bender-Italic.woff2") format('woff2');
+  src: local("Bender Italic"),
+    url("../fonts/Bender-Italic.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: 'Bender';
+  font-family: "Bender";
   font-display: swap;
   font-style: italic;
   font-weight: 700;
-  src: local('Bender Bold Italic'), url("../fonts/Bender-Bold-Italic.woff2") format('woff2');
+  src: local("Bender Bold Italic"),
+    url("../fonts/Bender-Bold-Italic.woff2") format("woff2");
 }
 
 :root {
@@ -57,7 +59,7 @@ body {
 
 body {
   background-color: var(--bg-main-color);
-  font-family: 'Bender', 'sans serif';
+  font-family: "Bender", "sans serif";
   font-style: normal;
   font-weight: 400;
   font-size: 1rem;
@@ -74,7 +76,7 @@ a:hover {
 }
 
 input {
-  font-family: 'Bender', 'sans serif';
+  font-family: "Bender", "sans serif";
   color: var(--font-main-color);
   background-color: var(--bg-fourth-color);
   border: none;
@@ -89,7 +91,7 @@ main,
 footer {
   max-width: 90rem;
   margin: 0 auto;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
 }
 
 main {
@@ -99,7 +101,7 @@ main {
 
 @media only screen and (max-width: 500px) {
   main {
-    margin-top: .6rem;
+    margin-top: 0.6rem;
   }
 }
 
@@ -120,11 +122,11 @@ h1 {
 }
 
 .underline {
-  border-bottom: .05rem solid var(--font-main-color);
+  border-bottom: 0.05rem solid var(--font-main-color);
 }
 
 .underline:hover {
-  border-bottom: .05rem solid var(--font-sec-color);
+  border-bottom: 0.05rem solid var(--font-sec-color);
 }
 
 .system-info {
@@ -135,9 +137,9 @@ h1 {
   text-align: center;
   color: black;
   background-color: rgb(203, 116, 0);
-  opacity: .5;
+  opacity: 0.5;
   cursor: default;
-  transition: opacity .4s linear;
+  transition: opacity 0.4s linear;
 }
 
 @media only screen and (max-width: 500px) {
@@ -162,12 +164,12 @@ header .navbox {
   align-items: center;
   vertical-align: middle;
   flex-wrap: wrap;
-  margin: .9rem 0 1rem 0;
+  margin: 0.9rem 0 1rem 0;
 }
 
 @media only screen and (max-width: 500px) {
   header .navbox {
-    margin-top: .6rem;
+    margin-top: 0.6rem;
   }
 }
 
@@ -179,7 +181,7 @@ header .navbox {
 
 .title,
 .title:hover {
-  margin: .3rem 0;
+  margin: 0.3rem 0;
   color: var(--font-sec-color);
   text-decoration: none;
 }
@@ -200,7 +202,7 @@ header .navbox {
   background-size: 2.5rem;
   line-height: 2.6rem;
   width: 2.6rem;
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 }
 
 .title .name,
@@ -211,7 +213,7 @@ header .navbox {
 .title .name {
   font-weight: 700;
   text-transform: uppercase;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .title .db {
@@ -222,16 +224,16 @@ header .navbox {
   display: block;
   width: 100%;
   text-align: right;
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-style: italic;
   color: var(--font-main-color);
-  opacity: .8;
+  opacity: 0.8;
 }
 
 form.search {
   box-sizing: border-box;
   position: relative;
-  margin: .3rem auto;
+  margin: 0.3rem auto;
   margin-top: 1.5rem;
 }
 
@@ -241,26 +243,26 @@ header .search {
 
 header form.search {
   width: 100%;
-  margin-top: .8rem;
+  margin-top: 0.8rem;
 }
 
 .search input[type="search"] {
   width: 100%;
   height: 3rem;
-  padding: .3rem .6rem .3rem 3.2rem;
+  padding: 0.3rem 0.6rem 0.3rem 3.2rem;
   font-size: 1rem;
   border: none;
-  background-color: rgba(21, 21, 21, .7);
+  background-color: rgba(21, 21, 21, 0.7);
   transition: color 300ms ease;
 }
 
 .search input[type="search"]::placeholder {
   color: var(--font-main-color);
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .search input[type="search"]:invalid {
-  color: rgba(150, 136, 103, .6);
+  color: rgba(150, 136, 103, 0.6);
 }
 
 .search .inline-suggestion {
@@ -297,17 +299,17 @@ header form.search {
 .search .suggestion ul {
   list-style: none;
   margin: 0;
-  padding: .6rem 1rem;
+  padding: 0.6rem 1rem;
 }
 
 .search .suggestion li {
-  margin: .1rem 0;
+  margin: 0.1rem 0;
 }
 
 .search .suggestion li > a {
   box-sizing: border-box;
   display: inline-block;
-  padding: .4rem;
+  padding: 0.4rem;
   width: 100%;
 }
 
@@ -318,13 +320,13 @@ header form.search {
 }
 
 .search .suggestion li > a:focus {
-  outline: .01rem solid rgba(150, 136, 103, .2);
+  outline: 0.01rem solid rgba(150, 136, 103, 0.2);
 }
 
 .search .suggestion .icon {
   width: 1rem;
   line-height: 1rem;
-  margin: .3rem;
+  margin: 0.3rem;
 }
 
 .navbox .menu {
@@ -337,7 +339,7 @@ header form.search {
 
 .navbox .menu > li > .name {
   display: inline-block;
-  padding: .2rem .5rem;
+  padding: 0.2rem 0.5rem;
   cursor: default;
 }
 
@@ -350,12 +352,12 @@ header form.search {
   z-index: 10;
   position: absolute;
   list-style: none;
-  padding: .5rem;
+  padding: 0.5rem;
   margin: 0;
   background-color: var(--bg-third-color);
   opacity: 0;
-  box-shadow: 0 .2rem .6rem -.1rem rgba(0, 0, 0, 0.4);
-  transition: opacity .3s linear;
+  box-shadow: 0 0.2rem 0.6rem -0.1rem rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s linear;
 }
 
 .navbox .sub-menu.wide {
@@ -375,7 +377,7 @@ header form.search {
 .navbox .sub-menu li > .name {
   display: inline-block;
   width: 100%;
-  padding: .2rem;
+  padding: 0.2rem;
 }
 
 .navbox .sub-menu li > div.name {
@@ -393,7 +395,7 @@ header form.search {
 .navbox .sub-menu .icon {
   width: 1rem;
   line-height: 1rem;
-  margin: .3rem;
+  margin: 0.3rem;
 }
 
 .navbox .menu li:hover > .sub-menu {
@@ -411,16 +413,16 @@ header form.search {
 
 #search .icon.search {
   position: absolute;
-  left: .8rem;
+  left: 0.8rem;
   width: 1.6rem;
   height: 100%;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .list .icon {
   width: 1.6rem;
   line-height: 1.6rem;
-  margin: .5rem;
+  margin: 0.5rem;
 }
 
 .icon.search {
@@ -551,7 +553,7 @@ header form.search {
 }
 
 .unavailable {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 footer {
@@ -560,19 +562,19 @@ footer {
 }
 
 footer .links {
-  font-size: .9rem;
+  font-size: 0.9rem;
   text-align: center;
 }
 
 footer .version {
   margin-top: 1rem;
-  font-size: .8rem;
+  font-size: 0.8rem;
   text-align: center;
   color: var(--font-sec-color);
-  opacity: .2;
+  opacity: 0.2;
 }
 
 footer .version a {
   color: var(--font-sec-color);
-  border-bottom: .05rem solid var(--font-sec-color);
+  border-bottom: 0.05rem solid var(--font-sec-color);
 }
