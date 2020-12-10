@@ -27,13 +27,12 @@ debug: bin
 
 statics:
 	mkdir -p ${STATIC_DIST}/resources/css ${STATIC_DIST}/resources/js ${STATIC_DIST}/resources/fonts ${STATIC_DIST}/resources/img ${STATIC_DIST}/resources/style
-	cp -r ${STATIC_SRC}/styles/*.css ${STATIC_DIST}/resources/css
 	cp -r ${STATIC_SRC}/fonts/* ${STATIC_DIST}/resources/fonts
 	cp -r ${STATIC_SRC}/images/* ${STATIC_DIST}/resources/img
 	cp -r ${STATIC_SRC}/map-styles/* ${STATIC_DIST}/resources/style
 	cp ${STATIC_SRC}/manifest.json ${STATIC_DIST}/resources/
 	go run ${MAIN_PKG}/bundler/cmd -source=${STATIC_SRC}/scripts -out=${STATIC_DIST}/resources/js -sourcemap
-	cp ${NODE_MODULES}/mapbox-gl/dist/mapbox-gl.css ${STATIC_DIST}/resources/css/mapbox-gl.min.css
+	go run ${MAIN_PKG}/bundler/cmd -source=${STATIC_SRC}/styles -out=${STATIC_DIST}/resources/css
 
 lint:
 	revive -config revive.toml -formatter stylish ./...

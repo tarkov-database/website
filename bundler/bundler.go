@@ -25,6 +25,7 @@ var defaultOptions = api.BuildOptions{
 	Platform:          api.PlatformBrowser,
 	Format:            api.FormatESModule,
 	MainFields:        []string{"module", "browser", "main"},
+	External:          []string{"../fonts/*", "../img/*"},
 	Incremental:       false,
 	Write:             true,
 }
@@ -34,7 +35,7 @@ type BuildOptions struct {
 }
 
 func Build(source string, out string, opts *BuildOptions) error {
-	modules, err := getModules(source, out)
+	bundles, err := getBundles(source, out)
 	if err != nil {
 		return err
 	}
@@ -45,11 +46,11 @@ func Build(source string, out string, opts *BuildOptions) error {
 	}
 
 	wg := &sync.WaitGroup{}
-	wg.Add(len(modules))
+	wg.Add(len(bundles))
 
-	for _, m := range modules {
-		go func(m module) {
-			newBuild(m, options)
+	for _, m := range bundles {
+		go func(b bundle) {
+			newBuild(b, options)
 			wg.Done()
 		}(m)
 	}
@@ -60,7 +61,7 @@ func Build(source string, out string, opts *BuildOptions) error {
 }
 
 func Watch(source string, out string, opts *BuildOptions) (chan BuildEvent, error) {
-	modules, err := getModules(source, out)
+	bundles, err := getBundles(source, out)
 	if err != nil {
 		return nil, err
 	}
@@ -77,17 +78,25 @@ func Watch(source string, out string, opts *BuildOptions) (chan BuildEvent, erro
 	wg := &sync.WaitGroup{}
 	mutex := sync.Mutex{}
 
-	wg.Add(len(modules))
+	wg.Add(len(bundles))
 
-	for _, m := range modules {
-		go func(m module) {
-			dir := filepath.Dir(m.entryPoint)
-			builder := newBuilder(newBuild(m, options), events)
+	for _, b := range bundles {
+		go func(b bundle) {
+			var key string
+			if b.isDir {
+				key = filepath.Dir(b.entryPoint)
+			} else {
+				key = b.entryPoint
+			}
+
+			builder := newBuilder(newBuild(b, options), events)
+
 			mutex.Lock()
-			builders[dir] = builder
+			builders[key] = builder
 			mutex.Unlock()
+
 			wg.Done()
-		}(m)
+		}(b)
 	}
 
 	wg.Wait()
@@ -99,40 +108,47 @@ func Watch(source string, out string, opts *BuildOptions) (chan BuildEvent, erro
 	return events, nil
 }
 
-type module struct {
+type bundle struct {
 	entryPoint string
 	outFile    string
+	isDir      bool
 }
 
-func getModules(dir string, out string) ([]module, error) {
+func getBundles(dir string, out string) ([]bundle, error) {
 	index, err := ioutil.ReadDir(dir)
 	if err != nil {
 		return nil, err
 	}
 
-	modules := make([]module, 0)
+	bundles := make([]bundle, 0)
 	for _, e := range index {
 		if e.IsDir() {
 			path := filepath.Join(dir, e.Name())
 			file := filepath.Join(path, "index.ts")
 			if _, err := os.Stat(path); !os.IsNotExist(err) {
-				modules = append(modules, module{
+				bundles = append(bundles, bundle{
 					entryPoint: file,
 					outFile: filepath.Join(
 						out,
 						e.Name()+".js",
 					),
+					isDir: true,
 				})
 			}
+		} else {
+			bundles = append(bundles, bundle{
+				entryPoint: filepath.Join(dir, e.Name()),
+				outFile:    filepath.Join(out, e.Name()),
+			})
 		}
 	}
 
-	return modules, nil
+	return bundles, nil
 }
 
-func newBuild(mod module, opts api.BuildOptions) *api.BuildResult {
-	opts.EntryPoints = []string{mod.entryPoint}
-	opts.Outfile = mod.outFile
+func newBuild(b bundle, opts api.BuildOptions) *api.BuildResult {
+	opts.EntryPoints = []string{b.entryPoint}
+	opts.Outfile = b.outFile
 
 	result := api.Build(opts)
 	logMessages(&result)
@@ -258,9 +274,12 @@ func watchChanges(builders map[string]*builder) error {
 					return
 				}
 
-				builder, ok := builders[filepath.Dir(event.Name)]
+				builder, ok := builders[event.Name]
 				if !ok {
-					continue
+					dir := filepath.Dir(event.Name)
+					if builder, ok = builders[dir]; !ok {
+						continue
+					}
 				}
 
 				if event.Op == fsnotify.Write {
@@ -280,9 +299,8 @@ func watchChanges(builders map[string]*builder) error {
 		}
 	}()
 
-	for dir := range builders {
-		err := watcher.Add(dir)
-		if err != nil {
+	for path := range builders {
+		if err := watcher.Add(path); err != nil {
 			logger.Fatal(err)
 		}
 	}

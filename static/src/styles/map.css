@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@import "mapbox-gl/dist/mapbox-gl.css";
+
 :root {
   /* layer colors */
   --layer-exfil-color: rgb(43, 159, 26);

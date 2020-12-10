@@ -10,16 +10,38 @@ import (
 )
 
 const (
-	sourceDir = "static/src/scripts"
-	outDir    = "static/dist/resources/js"
+	sourceDir = "static/src"
+	outDir    = "static/dist/resources"
 )
 
 func init() {
-	opts := &bundler.BuildOptions{
+	watchScripts()
+	watchStyles()
+}
+
+func watchScripts() {
+	events, err := bundler.Watch(sourceDir+"/scripts", outDir+"/js", &bundler.BuildOptions{
 		Sourcemap: true,
+	})
+	if err != nil {
+		logger.Fatal(err)
 	}
 
-	events, err := bundler.Watch(sourceDir, outDir, opts)
+	go func() {
+		for event := range events {
+			if err := event.Error; err != nil {
+				logger.Error(err)
+			}
+
+			if err := version.RefreshSumOf(event.Filename); err != nil {
+				logger.Error(err)
+			}
+		}
+	}()
+}
+
+func watchStyles() {
+	events, err := bundler.Watch(sourceDir+"/styles", outDir+"/css", nil)
 	if err != nil {
 		logger.Fatal(err)
 	}
