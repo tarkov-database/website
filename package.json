@@ -2,8 +2,8 @@
   "name": "tarkov-database-website",
   "version": "0.1.0",
   "scripts": {
-    "lint": "eslint static/src && prettier --check static/src",
-    "fmt": "npx prettier --write static/src",
+    "lint": "eslint static/src/scripts && prettier --check static/src/scripts",
+    "fmt": "npx prettier --write static/src/scripts",
     "test": "tsc"
   },
   "repository": {

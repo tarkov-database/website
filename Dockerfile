@@ -13,12 +13,12 @@ WORKDIR /tmp/github.com/tarkov-database/website
 COPY --from=prebuild-env /tmp/github.com/tarkov-database/website .
 
 RUN make bin && \
-    mkdir -p /usr/share/tarkov-database/website  && \
+    mkdir -p /usr/share/tarkov-database/website && \
     mv -t /usr/share/tarkov-database/website frontendserver view
 
 RUN make statics && \
     mkdir -p /usr/share/tarkov-database/website/static && \
-    mv -t /usr/share/tarkov-database/website/static static/public
+    mv -t /usr/share/tarkov-database/website/static static/dist
 
 FROM gcr.io/distroless/base-debian10
 

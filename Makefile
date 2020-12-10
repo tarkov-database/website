@@ -13,6 +13,10 @@ COMMIT_LONG := $(shell git rev-parse HEAD)
 COMMIT_SHORT := $(shell git rev-parse --short HEAD)
 COMMIT_DATE := $(shell git show -s --format="%ct")
 
+STATIC_SRC := static/src
+STATIC_DIST := static/dist
+NODE_MODULES := node_modules
+
 all: run
 
 bin:
@@ -22,8 +26,14 @@ debug: BUILD_TAGS += DEBUG
 debug: bin
 
 statics:
-	go run ${MAIN_PKG}/bundler/cmd -source=static/src -out=static/public/resources/js -sourcemap
-	cp node_modules/mapbox-gl/dist/mapbox-gl.css static/public/resources/css/mapbox-gl.min.css
+	mkdir -p ${STATIC_DIST}/resources/css ${STATIC_DIST}/resources/js ${STATIC_DIST}/resources/fonts ${STATIC_DIST}/resources/img ${STATIC_DIST}/resources/style
+	cp -r ${STATIC_SRC}/styles/*.css ${STATIC_DIST}/resources/css
+	cp -r ${STATIC_SRC}/fonts/* ${STATIC_DIST}/resources/fonts
+	cp -r ${STATIC_SRC}/images/* ${STATIC_DIST}/resources/img
+	cp -r ${STATIC_SRC}/map-styles/* ${STATIC_DIST}/resources/style
+	cp ${STATIC_SRC}/manifest.json ${STATIC_DIST}/resources/
+	go run ${MAIN_PKG}/bundler/cmd -source=${STATIC_SRC}/scripts -out=${STATIC_DIST}/resources/js -sourcemap
+	cp ${NODE_MODULES}/mapbox-gl/dist/mapbox-gl.css ${STATIC_DIST}/resources/css/mapbox-gl.min.css
 
 lint:
 	revive -config revive.toml -formatter stylish ./...

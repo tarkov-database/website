@@ -42,7 +42,7 @@ func routes() *httprouter.Router {
 	r.GET("/projects", cntrl.ProjectsGET)
 
 	// Static
-	r.ServeFiles("/resources/*filepath", http.Dir("static/public/resources"))
+	r.ServeFiles("/resources/*filepath", http.Dir("static/dist/resources"))
 
 	// Status
 	r.NotFound = cntrl.StatusNotFoundHandler()

@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	sourceDir = "static/src"
-	outDir    = "static/public/resources/js"
+	sourceDir = "static/src/scripts"
+	outDir    = "static/dist/resources/js"
 )
 
 func init() {

@@ -6,7 +6,7 @@ import (
 	"github.com/tarkov-database/website/utils"
 )
 
-const staticDir = "static/public"
+const staticDir = "static/dist"
 
 var staticSums utils.FileSums
 
