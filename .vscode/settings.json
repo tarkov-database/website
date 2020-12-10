@@ -9,5 +9,8 @@
     },
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "prettier.disableLanguages": [
+        "yaml"
+    ]
 }

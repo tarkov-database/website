@@ -1,1 +1,5 @@
+# YAML files
+*.yaml
+*.yml
+
 static/public/resources/js/*
