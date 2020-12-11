@@ -19,10 +19,10 @@
   "dependencies": {
     "@turf/length": "6.0.2",
     "chart.js": "3.0.0-beta.7",
-    "mapbox-gl": "1.13.0"
+    "mapbox-gl": ">=1.13.0 <2.0.0"
   },
   "devDependencies": {
-    "@types/mapbox-gl": "1.12.9",
+    "@types/mapbox-gl": ">=1.12.9 <2.0.0",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "eslint": "^7.14.0",
