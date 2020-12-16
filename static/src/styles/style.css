@@ -340,7 +340,6 @@ header form.search {
 .navbox .menu > li > .name {
   display: inline-block;
   padding: 0.2rem 0.5rem;
-  cursor: default;
 }
 
 .navbox .menu > li:hover {

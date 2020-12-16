@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.project-list > li {
+  flex: 0 calc(50% - 1rem);
+  min-width: 32rem;
+}
+
+.project .feature-list {
+  list-style-type: disc;
+  margin: 0.5rem 0;
+}
+
+.project footer {
+  margin: 1rem 0;
+  height: auto;
+}
+
+.project .links ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
