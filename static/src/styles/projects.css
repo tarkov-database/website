@@ -10,9 +10,10 @@
   padding: 0;
 }
 
-.project-list > li {
-  flex: 0 calc(50% - 1rem);
-  min-width: 32rem;
+@media only screen and (min-width: 65rem) {
+  .project-list > li {
+    flex: 0 calc(50% - 1rem);
+  }
 }
 
 .project .feature-list {
