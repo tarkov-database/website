@@ -1,5 +1,5 @@
-github.com/evanw/esbuild v0.8.20 h1:QN1BijQTq/XDzPYwn7/iY7Nu7TK5Bi/dK3JrG/bP0H0=
-github.com/evanw/esbuild v0.8.20/go.mod h1:y2AFBAGVelPqPodpdtxWWqe6n2jYf5FrsJbligmRmuw=
+github.com/evanw/esbuild v0.8.24 h1:KRg6NEcjO+a1jsfelqQsTbQ3fk2mNhBMzrLtDaC5gKY=
+github.com/evanw/esbuild v0.8.24/go.mod h1:y2AFBAGVelPqPodpdtxWWqe6n2jYf5FrsJbligmRmuw=
 github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
 github.com/google/logger v1.1.0 h1:saB74Etb4EAJNH3z74CVbCKk75hld/8T0CsXKetWCwM=
