@@ -48,11 +48,11 @@ func Build(source string, out string, opts *BuildOptions) error {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(bundles))
 
-	for _, m := range bundles {
+	for _, b := range bundles {
 		go func(b bundle) {
 			newBuild(b, options)
 			wg.Done()
-		}(m)
+		}(b)
 	}
 
 	wg.Wait()
