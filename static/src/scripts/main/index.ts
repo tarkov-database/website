@@ -130,6 +130,34 @@ const sortTables = () => {
     }
 };
 
+const initListFilter = () => {
+    const el = document.getElementById("listFilter");
+    if (el === null) return;
+
+    const changeFilter = function (this: HTMLSelectElement) {
+        const params = new URLSearchParams(window.location.search);
+        const name = this.name,
+            value = this.value;
+
+        if (!value || value === "all") {
+            params.delete(name);
+        } else {
+            params.set(name, value);
+        }
+
+        const pageKey = "p";
+        if (params.has(pageKey)) params.delete(pageKey);
+
+        window.location.search = params.toString();
+    };
+
+    const ul = el.querySelectorAll("ul > li");
+    for (const li of ul) {
+        const sel = li.getElementsByTagName("select")[0];
+        sel.addEventListener("change", changeFilter);
+    }
+};
+
 const initInteractiveMap = async () => {
     const el = document.getElementById("map");
     if (el === null) return;
@@ -157,6 +185,7 @@ const initInteractiveMap = async () => {
     registerTabs();
     loadImage();
     sortTables();
+    initListFilter();
     const map = await initInteractiveMap();
     const form = document.getElementById("search") as HTMLFormElement | null;
     if (form) initSearchSocket(form, map);
