@@ -18,7 +18,7 @@ type Ammunition struct {
 	Penetration         float64               `json:"penetration"`
 	ArmorDamage         float64               `json:"armorDamage"`
 	Fragmentation       AmmoFrag              `json:"fragmentation"`
-	Effects             AmmoEffects           `json:"effects" bson:"effects"`
+	Effects             AmmoEffects           `json:"effects"`
 	Projectiles         int64                 `json:"projectiles"`
 	WeaponModifier      WeaponModifier        `json:"weaponModifier"`
 	GrenadeProperties   AmmoGrenadeProperties `json:"grenadeProps,omitempty"`
@@ -45,8 +45,8 @@ type AmmoFrag struct {
 }
 
 type AmmoEffects struct {
-	LightBleedingChance float64 `json:"lightBleedingChance,omitempty" bson:"lightBleedingChance,omitempty"`
-	HeavyBleedingChance float64 `json:"heavyBleedingChance,omitempty" bson:"heavyBleedingChance,omitempty"`
+	LightBleedingChance float64 `json:"lightBleedingChance,omitempty"`
+	HeavyBleedingChance float64 `json:"heavyBleedingChance,omitempty"`
 }
 
 type WeaponModifier struct {
@@ -55,10 +55,10 @@ type WeaponModifier struct {
 }
 
 type AmmoGrenadeProperties struct {
-	Delay         float64 `json:"delay" bson:"delay"`
-	FragmentCount float64 `json:"fragCount" bson:"fragCount"`
-	MinRadius     float64 `json:"minRadius" bson:"minRadius"`
-	MaxRadius     float64 `json:"maxRadius" bson:"maxRadius"`
+	Delay         float64 `json:"delay"`
+	FragmentCount float64 `json:"fragCount"`
+	MinRadius     float64 `json:"minRadius"`
+	MaxRadius     float64 `json:"maxRadius"`
 }
 
 var calibers = [...]string{
