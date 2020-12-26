@@ -41,7 +41,7 @@
               <td>
                 {{ range .Entity.Modes }}
                 {{ if eq . "single" }}<span title="Single">&#8226; </span>{{ end }}
-                {{ if eq . "burst" }}<span title="Burst">&#8226;&#8226; </span>{{ end }}
+                {{ if eq . "burst" }}<span title="{{ $.Entity.BurstRounds }}-round burst">&#8226;&#8226; </span>{{ end }}
                 {{ if eq . "full" }}<span title="Fullauto">&#8226;&#8226;&#8226; </span>{{ end }}
                 {{ end }}
               </td>

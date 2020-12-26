@@ -185,6 +185,10 @@
     <th>Velocity</th>
     <td>{{ if gt .Entity.Velocity 0.0 }}+{{ end }}{{ .Entity.Velocity }}</td>
   </tr>
+  <tr>
+    <th>Loudness</th>
+    <td>{{ if gt .Entity.Loudness 0.0 }}+{{ end }}{{ .Entity.Loudness }}</td>
+  </tr>
 </table>
 {{ end }}
 

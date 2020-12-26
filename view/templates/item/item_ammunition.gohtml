@@ -73,6 +73,19 @@
           </table>
           {{ end }}
 
+          {{ if or .Entity.Effects.LightBleedingChance .Entity.Effects.HeavyBleedingChance }}
+          <table>
+            <tr>
+              <th>Light Bleeding</th>
+              <td>{{ if gt .Entity.Effects.LightBleedingChance 0.0 }}+{{ end }}{{ .Entity.Effects.LightBleedingChance | decimalToPercent }} %</td>
+            </tr>
+            <tr>
+              <th>Heavy Bleeding</th>
+              <td>{{ if gt .Entity.Effects.HeavyBleedingChance 0.0 }}+{{ end }}{{ .Entity.Effects.HeavyBleedingChance | decimalToPercent }} %</td>
+            </tr>
+          </table>
+          {{ end }}
+
 {{ end }}
 
 {{ define "sub_box" }}

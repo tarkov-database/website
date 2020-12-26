@@ -11,6 +11,7 @@ type Firearm struct {
 	Class             string   `json:"class"`
 	Caliber           string   `json:"caliber"`
 	RateOfFire        int64    `json:"rof"`
+	BurstRounds       int64    `json:"burstRounds,omitempty"`
 	Action            string   `json:"action"`
 	Modes             []string `json:"modes"`
 	Velocity          float64  `json:"velocity"`

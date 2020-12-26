@@ -103,7 +103,7 @@
 </table>
 {{ end }}
 
-{{ if or .Entity.Effects.LightBleeding.Chance .Entity.Effects.HeavyBleeding.Chance .Entity.Effects.Fracture.Chance .Entity.Effects.Pain.Chance .Entity.Effects.Contusion.Chance .Entity.Effects.Toxication.Chance .Entity.Effects.RadiationExposure.Chance .Entity.Effects.Tremor.Chance .Entity.Effects.TunnelVision.Chance .Entity.Effects.WeightLimit.Chance .Entity.Effects.DamageModifier.Chance .Entity.Effects.DestroyedPart.Chance }}
+{{ if or .Entity.Effects.LightBleeding.Chance .Entity.Effects.HeavyBleeding.Chance .Entity.Effects.Fracture.Chance .Entity.Effects.Pain.Chance .Entity.Effects.Contusion.Chance .Entity.Effects.Toxication.Chance .Entity.Effects.RadiationExposure.Chance .Entity.Effects.Tremor.Chance .Entity.Effects.TunnelVision.Chance .Entity.Effects.WeightLimit.Chance .Entity.Effects.DamageModifier.Chance .Entity.Effects.DestroyedPart.Chance .Entity.Effects.Antidote.Chance .Entity.Effects.BodyTemperature.Chance }}
 <div class="table-big">
   <table>
     <thead>
@@ -179,6 +179,16 @@
         <td class="center">{{ if .Entity.Effects.Toxication.Removes }}{{ .Entity.Effects.Toxication.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
       {{ end }}
+      {{ if .Entity.Effects.Antidote.Chance }}
+      <tr>
+        <th>Antidote</th>
+        <td class="center">{{ .Entity.Effects.Antidote.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.Antidote.Value 0.0 }}{{ if gt .Entity.Effects.Antidote.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.Antidote.IsPercent }}{{ .Entity.Effects.Antidote.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.Antidote.Value }}{{ end }}{{ else }}-{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.Antidote.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.Antidote.Duration }}{{ .Entity.Effects.Antidote.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.Antidote.Removes }}{{ .Entity.Effects.Antidote.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      {{ end }}
       {{ if .Entity.Effects.RadiationExposure.Chance }}
       <tr>
         <th>Radiation</th>
@@ -187,6 +197,16 @@
         <td class="center">{{ if .Entity.Effects.RadiationExposure.Removes }}Yes{{ else }}No{{ end }}</td>
         <td class="center">{{ if .Entity.Effects.RadiationExposure.Duration }}{{ .Entity.Effects.RadiationExposure.Duration }}{{ else }}-{{ end }} sec.</td>
         <td class="center">{{ if .Entity.Effects.RadiationExposure.Removes }}{{ .Entity.Effects.RadiationExposure.ResourceCosts }}{{ else }}-{{ end }} res.</td>
+      </tr>
+      {{ end }}
+      {{ if .Entity.Effects.BodyTemperature.Chance }}
+      <tr>
+        <th>Body Temperature</th>
+        <td class="center">{{ .Entity.Effects.BodyTemperature.Chance | decimalToPercent }} %</td>
+        <td class="center">{{ if ne .Entity.Effects.BodyTemperature.Value 0.0 }}{{ if gt .Entity.Effects.BodyTemperature.Value 0.0 }}+{{ end }}{{ if .Entity.Effects.BodyTemperature.IsPercent }}{{ .Entity.Effects.BodyTemperature.Value | decimalToPercent }} %{{ else }}{{.Entity.Effects.BodyTemperature.Value }}{{ end }}{{ else }}-{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.BodyTemperature.Removes }}Yes{{ else }}No{{ end }}</td>
+        <td class="center">{{ if .Entity.Effects.BodyTemperature.Duration }}{{ .Entity.Effects.BodyTemperature.Duration }}{{ else }}-{{ end }} sec.</td>
+        <td class="center">{{ if .Entity.Effects.BodyTemperature.Removes }}{{ .Entity.Effects.BodyTemperature.ResourceCosts }}{{ else }}-{{ end }} res.</td>
       </tr>
       {{ end }}
       {{ if .Entity.Effects.Tremor.Chance }}

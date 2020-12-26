@@ -240,6 +240,7 @@ type Muzzle struct {
 
 	Type     string  `json:"type"`
 	Velocity float64 `json:"velocity"`
+	Loudness float64 `json:"loudness" bson:"loudness"`
 }
 
 type MuzzleResult struct {

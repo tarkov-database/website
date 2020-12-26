@@ -18,6 +18,7 @@ type Ammunition struct {
 	Penetration         float64               `json:"penetration"`
 	ArmorDamage         float64               `json:"armorDamage"`
 	Fragmentation       AmmoFrag              `json:"fragmentation"`
+	Effects             AmmoEffects           `json:"effects" bson:"effects"`
 	Projectiles         int64                 `json:"projectiles"`
 	WeaponModifier      WeaponModifier        `json:"weaponModifier"`
 	GrenadeProperties   AmmoGrenadeProperties `json:"grenadeProps,omitempty"`
@@ -41,6 +42,11 @@ type AmmoFrag struct {
 	Chance float64 `json:"chance"`
 	Min    int64   `json:"min"`
 	Max    int64   `json:"max"`
+}
+
+type AmmoEffects struct {
+	LightBleedingChance float64 `json:"lightBleedingChance,omitempty" bson:"lightBleedingChance,omitempty"`
+	HeavyBleedingChance float64 `json:"heavyBleedingChance,omitempty" bson:"heavyBleedingChance,omitempty"`
 }
 
 type WeaponModifier struct {

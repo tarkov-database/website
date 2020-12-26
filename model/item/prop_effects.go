@@ -17,7 +17,9 @@ type Effects struct {
 	TunnelVision      Effect   `json:"tunnelVision,omitempty"`
 	Tremor            Effect   `json:"tremor,omitempty"`
 	Toxication        Effect   `json:"toxication,omitempty"`
+	Antidote          Effect   `json:"antidote,omitempty"`
 	RadiationExposure Effect   `json:"radExposure,omitempty"`
+	BodyTemperature   Effect   `json:"bodyTemperature,omitempty"`
 	Mobility          Effect   `json:"mobility,omitempty"`
 	Recoil            Effect   `json:"recoil,omitempty"`
 	ReloadSpeed       Effect   `json:"reloadSpeed,omitempty"`
