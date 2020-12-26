@@ -261,7 +261,7 @@ var modMuzzleFilter = Filter{
 		"brake",
 		"combo",
 		"compensator",
-		"supressor",
+		"suppressor",
 	},
 }
 
