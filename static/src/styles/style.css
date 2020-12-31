@@ -538,6 +538,14 @@ header form.search {
   background-image: url("../img/plus.svg");
 }
 
+.icon.twitter {
+  background-image: url("../img/twitter.svg");
+}
+
+.icon.discord {
+  background-image: url("../img/discord.svg");
+}
+
 .icon.other {
   display: none;
 }
@@ -557,7 +565,7 @@ header form.search {
 
 footer {
   margin: 2rem auto;
-  height: 3rem;
+  height: 6rem;
 }
 
 footer .links {
@@ -565,8 +573,36 @@ footer .links {
   text-align: center;
 }
 
+footer .links .social {
+  margin-top: 0.6rem;
+}
+
+footer .links .social ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer .links .social a {
+  opacity: 0.6;
+  transition: opacity 200ms linear;
+}
+
+footer .links .social a:hover {
+  opacity: 1;
+}
+
+footer .links .icon {
+  width: 1.6rem;
+  line-height: 1.6rem;
+  margin: 0.5rem;
+}
+
 footer .version {
-  margin-top: 1rem;
+  margin: 1rem 0;
   font-size: 0.8rem;
   text-align: center;
   color: var(--font-sec-color);
