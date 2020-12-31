@@ -108,7 +108,7 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		if strings.HasPrefix(kind.String(), "modification") {
 			tmpl = "table_modification"
 		} else {
-		tmpl = fmt.Sprintf("table_%v", kind)
+			tmpl = fmt.Sprintf("table_%v", kind)
 		}
 	default:
 		tmpl = fmt.Sprintf("grid_%v", kind)
