@@ -14,7 +14,21 @@
     </header>
 
     <main>
-      {{ template "list" . }}
+      <div class="box list">
+
+        <div class="header">
+          {{ template "inner-header" . }}
+        </div>
+
+        <div class="content">
+          {{ template "content" . }}
+        </div>
+
+        <div class="footer">
+          {{ template "inner-footer" . }}
+        </div>
+
+      </div>
     </main>
 
     <footer>

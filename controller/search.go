@@ -353,7 +353,15 @@ func searchByText(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	view.RenderHTML("list", data, w)
+	var tmpl string
+	switch r.URL.Query().Get("view") {
+	case "table":
+		tmpl = "table"
+	default:
+		tmpl = "grid"
+	}
+
+	view.RenderHTML(tmpl, data, w)
 }
 
 func getFilter(t string) (*model.SearchFilter, string, error) {

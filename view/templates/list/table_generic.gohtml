@@ -1,0 +1,117 @@
+{{ define "content" }}
+<div class="table table-big">
+<table class="item-table sort-table">
+  <thead>
+    <tr title="Sort by">
+
+      {{ if hasQuery $.URI "sort" "name" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-name" }}">Name</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-name" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "name" }}">Name</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "name" }}">Name</a>
+      </th>
+      {{ end }}
+
+      {{ if not $.IsSearch }}
+
+      {{ if eq .Type.String "item" }}
+
+      {{ if hasQuery $.URI "sort" "weight" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-weight" }}">Weight</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-weight" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "weight" }}">Weight</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "weight" }}">Weight</a>
+      </th>
+      {{ end }}
+
+      {{ if hasQuery $.URI "sort" "price" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-price" }}">Base Price</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-price" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "price" }}">Base Price</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "price" }}">Base Price</a>
+      </th>
+      {{ end }}
+
+      {{ end }}
+
+      {{ else }}
+      
+      <th>Category</th>
+
+      {{ end }}
+
+    </tr>
+  </thead>
+  {{ range .List }}
+  <tr>
+
+    {{ if not $.IsSearch }}
+
+    {{ if eq $.Type.String "item" }}
+    {{ $cat := kindToCategory .Kind }}
+    <td>
+      <a href="/item/{{ $cat }}/{{ .ID }}">
+        {{ .Name }}
+      </a>
+    </td>
+
+    <td>{{ .Weight }} kg</td>
+
+    <td>&#8381; {{ .Price }}</td>
+    {{ end }}
+
+    {{ if eq $.Type.String "location" }}
+    <td>
+      <a href="/location/{{ .ID }}">
+        {{ .Name }}
+      </a>
+    </td>
+    {{ end }}
+
+    {{ else }}
+
+    {{ if eq .Type.String "item" }}
+    {{ $cat := .Parent }}
+    <td>
+      <a href="/item/{{ $cat }}/{{ .ID }}">
+        {{ .Name }}
+      </a>
+    </td>
+
+    <td>{{ $cat | categoryToName | toTitle }}</td>
+    {{ end }}
+
+    {{ if eq .Type.String "location" }}
+    <td>
+      <a href="/location/{{ .ID }}">
+        {{ .Name }}
+      </a>
+    </td>
+
+    <td>Location</td>
+    {{ end }}
+
+    {{ end }}
+  </tr>
+  {{ end }}
+</table>
+</div>
+{{ end }}

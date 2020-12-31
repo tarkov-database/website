@@ -1,0 +1,27 @@
+{{ define "inner-footer" }}
+    {{ if gt .PageTotal 1 }}
+    <nav class="pagination">
+    <ul>
+        <li>
+        {{ if gt .PagePrev.Number 0 }}
+        <a class="active" href="{{ .PagePrev.URL }}">Previous</a>
+        {{ else }}
+        <a>Previous</a>
+        {{ end }}
+        </li>
+        <li>
+        <div class="number">
+            {{ .PageCurrent }} / {{ .PageTotal }}
+        </div>
+        </li>
+        <li>
+        {{ if gt .PageNext.Number 0 }}
+        <a class="active" href="{{ .PageNext.URL }}">Next</a>
+        {{ else }}
+        <a>Next</a>
+        {{ end }}
+        </li>
+    </ul>
+    </nav>
+    {{ end }}
+{{ end }}

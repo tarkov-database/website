@@ -48,38 +48,93 @@
     "/header.gohtml",
     "/footer.gohtml"
   ],
-  "list": [
-    "/list/list.gohtml",
+  "grid_generic": [
+    "/list/grid_generic.gohtml",
     "/list/base.gohtml",
     "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
     "/header.gohtml",
     "/footer.gohtml"
   ],
   "table_generic": [
-    "/table/table_generic.gohtml",
-    "/table/base.gohtml",
-    "/table/head.gohtml",
+    "/list/table_generic.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
     "/header.gohtml",
     "/footer.gohtml"
   ],
   "table_ammunition": [
-    "/table/table_ammunition.gohtml",
-    "/table/base.gohtml",
-    "/table/head.gohtml",
+    "/list/table_ammunition.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_firearm": [
+    "/list/table_firearm.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
     "/header.gohtml",
     "/footer.gohtml"
   ],
   "table_armor": [
-    "/table/table_armor.gohtml",
-    "/table/base.gohtml",
-    "/table/head.gohtml",
+    "/list/table_armor.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_tacticalrig": [
+    "/list/table_tacticalrig.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
     "/header.gohtml",
     "/footer.gohtml"
   ],
   "table_magazine": [
-    "/table/table_magazine.gohtml",
-    "/table/base.gohtml",
-    "/table/head.gohtml",
+    "/list/table_magazine.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_food": [
+    "/list/table_food.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_medical": [
+    "/list/table_medical.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_modification": [
+    "/list/table_modification.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
     "/header.gohtml",
     "/footer.gohtml"
   ],
@@ -217,5 +272,14 @@
     "/location/map/header.gohtml",
     "/location/map/footer.gohtml",
     "/header.gohtml"
+  ],
+  "table_location": [
+    "/list/table_location.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
   ]
 }

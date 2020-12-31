@@ -1,0 +1,100 @@
+{{ define "content" }}
+<div class="table table-big">
+<table class="item-table sort-table">
+  <thead>
+    <tr title="Sort by">
+
+      {{ if hasQuery $.URI "sort" "shortName" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-shortName" }}">Name</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-shortName" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "shortName" }}">Name</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "shortName" }}">Name</a>
+      </th>
+      {{ end }}
+
+      {{ if not (hasQuery $.URI "type" "*" ) }}
+      {{ if hasQuery $.URI "sort" "type" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-type" }}">Type</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-type" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "type" }}">Type</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "type" }}">Type</a>
+      </th>
+      {{ end }}
+      {{ end }}
+
+      {{ if not (hasQuery $.URI "effects.health.value" "*" ) }}
+      {{ if hasQuery $.URI "sort" "effects.health.value" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-effects.health.value" }}">Health</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-effects.health.value" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "effects.health.value" }}">Health</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "effects.health.value" }}">Health</a>
+      </th>
+      {{ end }}
+      {{ end }}
+
+      {{ if not (hasQuery $.URI "effects.healthRate.value" "*" ) }}
+      {{ if hasQuery $.URI "sort" "effects.healthRate.value" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-effects.healthRate.value" }}">Health Rate</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-effects.healthRate.value" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "effects.healthRate.value" }}">Health Rate</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "effects.healthRate.value" }}">Health Rate</a>
+      </th>
+      {{ end }}
+      {{ end }}
+
+    </tr>
+  </thead>
+  {{ range .List }}
+  <tr>
+
+    <td>
+      <a title="{{ .Name }}" href="/item/medical/{{ .ID }}">
+        {{ .ShortName }}
+      </a>
+    </td>
+
+    {{ if not (hasQuery $.URI "type" "*" ) }}
+    <td>
+      <a href="{{ setQuery (setQuery $.URI "p" "1") "type" .Type }}">
+        {{ .Type | toTitle }}
+      </a>
+    </td>
+    {{ end }}
+
+    <td>
+      {{ if .Effects.Health.Value }}{{ if gt .Effects.Health.Value 0.0 }}+{{ end }}{{ .Effects.Health.Value }}{{ else }}-{{ end }}
+    </td>
+
+    <td>
+      {{ if .Effects.HealthRate.Value }}{{ if gt .Effects.HealthRate.Value 0.0 }}+{{ end }}{{ .Effects.HealthRate.Value }}{{ else }}-{{ end }}
+    </td>
+
+  </tr>
+  {{ end }}
+</table>
+</div>
+{{ end }}

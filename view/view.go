@@ -94,12 +94,13 @@ func RenderHTML(t string, d interface{}, w http.ResponseWriter) {
 		switch strings.Split(t, "_")[0] {
 		case "item":
 			tmpl = templates["item_common"]
+		case "grid":
+			tmpl = templates["grid_generic"]
 		case "table":
 			tmpl = templates["table_generic"]
 		default:
 			logger.Error(errTemplateNotExist)
 			tmpl = templates["status_500"]
-			return
 		}
 	}
 

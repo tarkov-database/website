@@ -1,0 +1,50 @@
+{{ define "inner-header" }}
+    <div class="row-1">
+        <div class="col-1"></div>
+        <div class="col-2 title">
+            {{ if .IsSearch }}Result for "{{ .Keyword }}"{{ else }}{{ .Keyword | toTitle }}{{ end }} ({{ .PageCount }} of {{ .TotalCount }})
+        </div>
+        <div class="col-3">
+            <nav>
+                <ul>
+                    <li>
+                        <a title="Grid view" href="{{ setQuery $.URI "view" "grid" }}">
+                            <div class="icon grid-icon {{ if not (hasQuery $.URI "view" "table") }}selected{{ end }}">&nbsp;</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a title="Table view" href="{{ setQuery $.URI "view" "table" }}">
+                            <div class="icon list-icon {{ if hasQuery $.URI "view" "table" }}selected{{ end }}">&nbsp;</div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row-2">
+        {{ if .Filter }}
+        <div id="listFilter" class="filters">
+            <ul>
+                {{ range $name, $options := .Filter.GetAll }}
+                <li>
+                    <label>{{ $name | toTitle }}</label>
+                    <select name="{{ $name }}">
+                    <option value="all">All</option>
+                    {{ range $options }}
+                    <option value="{{ . }}" {{ if hasQuery $.URI $name . }}selected{{ end }}>
+                        {{ if or (eq $name "type") (eq $name "class") }}
+                        {{ . | camelToTitle }}
+                        {{ else }}
+                        {{ if eq . "true" }}Yes{{ else if eq . "false" }}No{{ else }}{{ . | toTitle }}{{ end }}
+                        {{ end }}
+                    </option>
+                    {{ end }}
+                    </select>
+                </li>
+                {{ end }}
+            </ul>
+        </div>
+        {{ end }}
+    </div>
+{{ end }}

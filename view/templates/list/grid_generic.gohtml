@@ -1,0 +1,66 @@
+{{ define "content" }}
+<div class="grid">
+    <ul>
+    {{ range .List }}
+
+    {{ if not $.IsSearch }}
+
+    {{ if eq $.Type.String "item" }}
+    {{ $cat := kindToCategory .Kind }}
+    <li>
+    <a title="{{ .Name }}" href="/item/{{ $cat }}/{{ .ID }}">
+        <div class="icon {{ $cat }}" title="{{ $cat | categoryToName | toTitle }}">&nbsp;</div>
+        <span>{{ .ShortName }}</span>
+    </a>
+
+    </li>
+    {{ end }}
+
+    {{ if eq $.Type.String "location" }}
+    <li data-available="{{ .Available }}">
+
+    <a title="{{ .Name }}" href="/location/{{ .ID }}">
+        <div class="icon location">&nbsp;</div>
+        <span>{{ .Name }}</span>
+    </a>
+
+    </li>
+    {{ end }}
+
+    {{ else }}
+
+    {{ if eq .Type.String "item" }}
+    {{ $cat := .Parent }}
+    <li data-category="{{ $cat | categoryToName }}">
+
+    <a title="{{ .Name }}" href="/item/{{ $cat }}/{{ .ID }}">
+        <div class="icon {{ $cat }}" title="{{ $cat | categoryToName | toTitle }}">&nbsp;</div>
+        <span>{{ .ShortName }}</span>
+    </a>
+
+    </li>
+    {{ end }}
+
+    {{ if eq .Type.String "location" }}
+    <li data-category="Location">
+
+    <a title="{{ .Name }}" href="/location/{{ .ID }}">
+        <div class="icon location">&nbsp;</div>
+        <span>{{ .Name }}</span>
+    </a>
+
+    </li>
+    {{ end }}
+
+    {{ end }}
+
+    {{ else }}
+
+    <div class="list no-results">
+    No matches :-(
+    </div>
+
+    {{ end }}
+    </ul>
+</div>
+{{ end }}

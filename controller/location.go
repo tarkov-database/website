@@ -63,7 +63,15 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
-	view.RenderHTML("list", data, w)
+	var tmpl string
+	switch r.URL.Query().Get("view") {
+	case "table":
+		tmpl = "table_location"
+	default:
+		tmpl = "grid_location"
+	}
+
+	view.RenderHTML(tmpl, data, w)
 }
 
 func LocationMapGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {

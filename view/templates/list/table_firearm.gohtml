@@ -1,0 +1,104 @@
+{{ define "content" }}
+<div class="table table-big">
+<table class="item-table sort-table">
+  <thead>
+    <tr title="Sort by">
+
+      {{ if hasQuery $.URI "sort" "shortName" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-shortName" }}">Name</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-shortName" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "shortName" }}">Name</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "shortName" }}">Name</a>
+      </th>
+      {{ end }}
+
+      {{ if not (hasQuery $.URI "class" "*" ) }}
+      {{ if hasQuery $.URI "sort" "class" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-class" }}">Class</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-class" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "class" }}">Class</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "class" }}">Class</a>
+      </th>
+      {{ end }}
+      {{ end }}
+
+      {{ if hasQuery $.URI "sort" "caliber" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-caliber" }}">Caliber</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-caliber" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "caliber" }}">Caliber</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "caliber" }}">Caliber</a>
+      </th>
+      {{ end }}
+
+      {{ if not (hasQuery $.URI "rof" "*" ) }}
+      {{ if hasQuery $.URI "sort" "rof" }}
+      <th class="sorted-by up">
+        <a href="{{ setQuery $.URI "sort" "-rof" }}">Rate of Fire</a>
+      </th>
+      {{ else if hasQuery $.URI "sort" "-rof" }}
+      <th class="sorted-by down">
+        <a href="{{ setQuery $.URI "sort" "rof" }}">Rate of Fire</a>
+      </th>
+      {{ else }}
+      <th>
+        <a href="{{ setQuery $.URI "sort" "rof" }}">Rate of Fire</a>
+      </th>
+      {{ end }}
+      {{ end }}
+
+    </tr>
+  </thead>
+  {{ range .List }}
+  <tr>
+
+    <td>
+      <a title="{{ .Name }}" href="/item/firearm/{{ .ID }}">
+        {{ .ShortName }}
+      </a>
+    </td>
+
+    {{ if not (hasQuery $.URI "class" "*" ) }}
+    <td>
+      <a href="{{ setQuery (setQuery $.URI "p" "1") "class" .Class }}">
+        {{ if eq .Class "smg" }}SMG{{ else }}{{ .Class | camelToTitle }}{{ end }}
+      </a>
+    </td>
+    {{ end }}
+
+    {{ if not (hasQuery $.URI "caliber" "*" ) }}
+    <td>
+      <a href="{{ setQuery (setQuery $.URI "p" "1") "caliber" .Caliber }}">
+        {{ .Caliber }}
+      </a>
+    </td>
+    {{ end }}
+
+    <td>
+      <a href="{{ setQuery (setQuery $.URI "p" "1") "rof" .RateOfFire }}">
+        {{ .RateOfFire }} rpm
+      </a>
+    </td>
+
+  </tr>
+  {{ end }}
+</table>
+</div>
+{{ end }}

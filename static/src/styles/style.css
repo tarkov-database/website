@@ -424,6 +424,14 @@ header form.search {
   margin: 0.5rem;
 }
 
+.icon.grid-icon {
+  background-image: url("../img/grid.svg");
+}
+
+.icon.list-icon {
+  background-image: url("../img/row.svg");
+}
+
 .icon.search {
   background-image: url("../img/search.svg");
 }

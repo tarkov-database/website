@@ -7,12 +7,14 @@ import (
 type EntityType int
 
 const (
-	TypeItem EntityType = iota
+	TypeMixed EntityType = iota
+	TypeItem
 	TypeLocation
 	TypeFeature
 )
 
 var entityTypeString = [...]string{
+	"mixed",
 	"item",
 	"location",
 	"feature",
