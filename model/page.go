@@ -171,6 +171,7 @@ func (p *Page) Result(res interface{}, kw string) (*EntityList, error) {
 		el.PageCount = int64(len(v.Items))
 		el.Filter = location.GetFilter()
 	case []*SearchResult:
+		el.Type = TypeMixed
 		el.IsSearch = true
 		el.TotalCount = int64(len(v))
 		el.List = v

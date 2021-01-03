@@ -7,17 +7,17 @@ import (
 type EntityType int
 
 const (
-	TypeMixed EntityType = iota
-	TypeItem
+	TypeItem EntityType = iota
 	TypeLocation
 	TypeFeature
+	TypeMixed
 )
 
 var entityTypeString = [...]string{
-	"mixed",
 	"item",
 	"location",
 	"feature",
+	"mixed",
 }
 
 func (et EntityType) String() string {
