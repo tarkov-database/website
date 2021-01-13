@@ -44,10 +44,13 @@ func init() {
 			IdleConnTimeout: 0,
 		}}
 	}
+
+	go refreshScheduler()
 }
 
 type clientConfig struct {
 	Host        string
+	Token       string
 	TLS         bool
 	Certificate string
 	PrivateKey  string
@@ -61,6 +64,12 @@ func newConfig() (*clientConfig, error) {
 		c.Host = env
 	} else {
 		return c, errors.New("search host not set")
+	}
+
+	if env := os.Getenv("SEARCH_TOKEN"); len(env) > 4 {
+		c.Token = env
+	} else {
+		return c, errors.New("search token not set")
 	}
 
 	if env := os.Getenv("SEARCH_TLS"); len(env) > 3 {

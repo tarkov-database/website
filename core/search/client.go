@@ -39,6 +39,7 @@ func request(ctx context.Context, method, path string, body io.Reader) (*http.Re
 
 	req.Header.Set("User-Agent", userAgent)
 	req.Header.Set("Content-Type", contentTypeJSON)
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", config.Token))
 
 	res, err := client.Do(req.WithContext(ctx))
 	if err != nil {

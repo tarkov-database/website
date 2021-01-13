@@ -6,7 +6,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -48,8 +47,6 @@ func init() {
 			IdleConnTimeout: 0,
 		}}
 	}
-
-	userAgent = fmt.Sprintf("%s", userAgent)
 
 	go refreshScheduler()
 }
