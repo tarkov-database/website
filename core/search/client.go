@@ -107,23 +107,8 @@ type Item struct {
 	Kind        string `json:"kind"`
 }
 
-type Index int
-
-const (
-	IndexItem Index = iota
-)
-
-var indexStrings = [...]string{
-	"item",
-}
-
-func (c Index) String() string {
-	return indexStrings[c]
-}
-
 type Query struct {
-	Term  string
-	Index Index
+	Query string
 }
 
 type Options struct {
@@ -134,13 +119,13 @@ type Options struct {
 func Search(ctx context.Context, query *Query, opts *Options) (*Result, error) {
 	result := &Result{}
 
-	if len(query.Term) < 3 {
-		return result, fmt.Errorf("%w: term is too short", ErrInvalidTerm)
+	if len(query.Query) < 3 {
+		return result, fmt.Errorf("%w: query is too short", ErrInvalidTerm)
 	}
 
 	v := url.Values{}
 
-	v.Add("term", query.Term)
+	v.Add("q", query.Query)
 
 	if opts.Limit > 0 {
 		v.Add("limit", strconv.Itoa(opts.Limit))
@@ -149,7 +134,7 @@ func Search(ctx context.Context, query *Query, opts *Options) (*Result, error) {
 		v.Add("fuzzy", strconv.FormatBool(opts.Fuzzy))
 	}
 
-	path := fmt.Sprintf("/%s", query.Index)
+	path := "/search"
 	if len(v) > 0 {
 		path = path + "?" + v.Encode()
 	}

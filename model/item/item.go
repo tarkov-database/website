@@ -160,8 +160,7 @@ func Search(term string, limit int, kind *Kind) (*search.Result, error) {
 	}
 
 	query := &search.Query{
-		Term:  term,
-		Index: search.IndexItem,
+		Query: term,
 	}
 
 	opts := &search.Options{
@@ -188,8 +187,7 @@ func SearchByName(term string, limit int, kind *Kind) (*search.Result, error) {
 	}
 
 	query := &search.Query{
-		Term:  term,
-		Index: search.IndexItem,
+		Query: term,
 	}
 
 	opts := &search.Options{
