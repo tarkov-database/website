@@ -44,6 +44,9 @@ func routes() *httprouter.Router {
 	// Static
 	r.ServeFiles("/resources/*filepath", http.Dir("static/dist/resources"))
 
+	// Health
+	r.GET("/health", cntrl.HealthGET)
+
 	// Status
 	r.NotFound = cntrl.StatusNotFoundHandler()
 
