@@ -51,17 +51,18 @@ func SumDir(dir string, opts *SumOptions) FileSums {
 func SumFile(path string, basePath ...string) (FileSum, error) {
 	d, err := ioutil.ReadFile(path)
 	if err != nil {
-		logger.Fatal(err)
-	}
-
-	h := blake3.New()
-	if _, err := h.Write(d); err != nil {
 		return FileSum{}, err
 	}
 
 	if len(basePath) > 0 {
-		path, _ = filepath.Rel(basePath[0], path)
+		path, err = filepath.Rel(basePath[0], path)
+		if err != nil {
+			return FileSum{}, err
+		}
 	}
+
+	h := blake3.New()
+	h.Write(d)
 
 	return FileSum{path, hex.EncodeToString(h.Sum(nil))}, nil
 }
