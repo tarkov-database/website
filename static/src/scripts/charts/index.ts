@@ -12,6 +12,12 @@ import {
     LineElement,
     TooltipItem,
     defaults,
+    LineOptions,
+    LineHoverOptions,
+    PointOptions,
+    PointHoverOptions,
+    TooltipOptions,
+    FontSpec,
 } from "chart.js";
 
 Chart.register(
@@ -33,13 +39,25 @@ const fontMainColor = getCSSVariable("--font-main-color").trim();
 const fontSecColor = getCSSVariable("--font-sec-color").trim();
 
 defaults.color = fontMainColor;
-defaults.font.size = 16;
-defaults.font.family = "Bender";
-defaults.elements.line.backgroundColor = fontSecColor;
-defaults.elements.point.hitRadius = 15;
-defaults.elements.point.hoverRadius = 5;
-defaults.plugins.tooltip.backgroundColor = bgMainColor;
-defaults.plugins.tooltip.titleColor = fontSecColor;
+defaults.font = <FontSpec>{
+    ...defaults.font,
+    size: 16,
+    family: "Bender",
+};
+defaults.elements.line = <LineOptions & LineHoverOptions>{
+    ...defaults.elements.line,
+    backgroundColor: fontSecColor,
+};
+defaults.elements.point = <PointOptions & PointHoverOptions>{
+    ...defaults.elements.point,
+    hitRadius: 15,
+    hoverRadius: 5,
+};
+defaults.plugins.tooltip = <TooltipOptions>{
+    ...defaults.plugins.tooltip,
+    backgroundColor: bgMainColor,
+    titleColor: fontSecColor,
+};
 
 interface CustomScatterPoint extends ScatterDataPoint {
     x: number;
