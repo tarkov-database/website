@@ -258,6 +258,14 @@
     "/header.gohtml",
     "/footer.gohtml"
   ],
+  "item_key": [
+    "/item/item.gohtml",
+    "/item/item_key.gohtml",
+    "/item/base.gohtml",
+    "/item/head.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
   "location": [
     "/location/location.gohtml",
     "/location/base.gohtml",

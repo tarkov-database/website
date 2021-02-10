@@ -8,6 +8,7 @@ type Key struct {
 	Item
 
 	Location string `json:"location"`
+	Usages   int64  `json:"usages,omitempty"`
 }
 
 type KeyResult struct {
