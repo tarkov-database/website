@@ -3,15 +3,12 @@ package api
 import (
 	"crypto/tls"
 	"crypto/x509"
-	"encoding/base64"
-	"encoding/json"
 	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
 	"golang.org/x/net/http2"
 )
@@ -133,30 +130,4 @@ func (c *config) GetTLSCertificate() (tls.Certificate, *x509.CertPool, error) {
 	}
 
 	return clientCert, rootCAs, nil
-}
-
-type tokenClaims struct {
-	ExpirationTime Timestamp `json:"exp"`
-	NotBefore      Timestamp `json:"nbf"`
-	IssuedAt       Timestamp `json:"iat"`
-}
-
-func (c *config) GetTokenClaims() (*tokenClaims, error) {
-	claims := &tokenClaims{}
-
-	seg := strings.Split(c.Token, ".")[1]
-	if l := len(seg) % 4; l > 0 {
-		seg += strings.Repeat("=", 4-l)
-	}
-
-	data, err := base64.URLEncoding.DecodeString(seg)
-	if err != nil {
-		return claims, err
-	}
-
-	if err = json.Unmarshal(data, &claims); err != nil {
-		return claims, err
-	}
-
-	return claims, nil
 }

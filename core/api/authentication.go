@@ -7,39 +7,38 @@ import (
 )
 
 func refreshScheduler() {
-	if err := refreshToken(); err != nil {
+	exp, err := refreshToken()
+
+	if err != nil {
 		log.Printf("Error while refreshing token: %s", err)
-		time.Sleep(3 * time.Second)
+		time.Sleep(5 * time.Second)
 		go refreshScheduler()
 		return
 	}
 
-	claims, err := cfg.GetTokenClaims()
-	if err != nil {
-		log.Fatalf("Error while getting token claims: %s", err)
-		return
-	}
+	refresh := exp.Add(-60 * time.Second).Sub(time.Now())
 
-	refresh := claims.ExpirationTime.Add(-30 * time.Second).Sub(time.Now())
 	time.Sleep(refresh)
+
 	go refreshScheduler()
 }
 
 type tokenResponse struct {
-	Token string `json:"token"`
+	Token      string    `json:"token"`
+	Expiration Timestamp `json:"expires"`
 }
 
-func refreshToken() error {
+func refreshToken() (time.Time, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 8*time.Second)
 	defer cancel()
 
-	res := &tokenResponse{}
+	resp := &tokenResponse{}
 
-	if err := GET(ctx, "/token", &Options{}, res); err != nil {
-		return err
+	if err := GET(ctx, "/token", &Options{}, resp); err != nil {
+		return time.Time{}, err
 	}
 
-	cfg.Token = res.Token
+	cfg.Token = resp.Token
 
-	return nil
+	return resp.Expiration.Time, nil
 }
