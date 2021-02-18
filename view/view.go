@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 
@@ -49,7 +49,7 @@ var (
 )
 
 func init() {
-	f, err := ioutil.ReadFile(templateDir + "/index.json")
+	f, err := os.ReadFile(templateDir + "/index.json")
 	if err != nil {
 		logger.Fatal(err)
 	}

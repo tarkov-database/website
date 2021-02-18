@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"errors"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -100,12 +99,12 @@ func (c *config) GetTLSCertificate() (tls.Certificate, *x509.CertPool, error) {
 	var rootCAs *x509.CertPool
 
 	if len(c.Certificate) > 0 {
-		clientCertPEM, err := ioutil.ReadFile(c.Certificate)
+		clientCertPEM, err := os.ReadFile(c.Certificate)
 		if err != nil {
 			return clientCert, rootCAs, err
 		}
 
-		clientKeyPEM, err := ioutil.ReadFile(c.PrivateKey)
+		clientKeyPEM, err := os.ReadFile(c.PrivateKey)
 		if err != nil {
 			return clientCert, rootCAs, err
 		}
@@ -119,7 +118,7 @@ func (c *config) GetTLSCertificate() (tls.Certificate, *x509.CertPool, error) {
 	if len(c.RootCAs) > 0 {
 		rootCAs = x509.NewCertPool()
 
-		caPEM, err := ioutil.ReadFile(c.RootCAs)
+		caPEM, err := os.ReadFile(c.RootCAs)
 		if err != nil {
 			return clientCert, rootCAs, err
 		}

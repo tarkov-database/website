@@ -1,7 +1,6 @@
 package bundler
 
 import (
-	"io/ioutil"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -115,7 +114,7 @@ type bundle struct {
 }
 
 func getBundles(dir string, out string) ([]bundle, error) {
-	index, err := ioutil.ReadDir(dir)
+	index, err := os.ReadDir(dir)
 	if err != nil {
 		return nil, err
 	}

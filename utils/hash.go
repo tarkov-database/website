@@ -2,8 +2,8 @@ package utils
 
 import (
 	"encoding/hex"
-	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 	"sync"
 
@@ -49,7 +49,7 @@ func SumDir(dir string, opts *SumOptions) FileSums {
 }
 
 func SumFile(path string, basePath ...string) (FileSum, error) {
-	d, err := ioutil.ReadFile(path)
+	d, err := os.ReadFile(path)
 	if err != nil {
 		return FileSum{}, err
 	}
@@ -68,7 +68,7 @@ func SumFile(path string, basePath ...string) (FileSum, error) {
 }
 
 func hashFiles(p string, opts *SumOptions, ch chan FileSum, wg *sync.WaitGroup) {
-	index, err := ioutil.ReadDir(p)
+	index, err := os.ReadDir(p)
 	if err != nil {
 		logger.Fatal(err)
 	}

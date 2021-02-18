@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
+	"io"
 
 	"github.com/tarkov-database/website/bundler"
 
@@ -16,7 +16,7 @@ func main() {
 
 	flag.Parse()
 
-	defLog := logger.Init("default", true, false, ioutil.Discard)
+	defLog := logger.Init("default", true, false, io.Discard)
 	defer defLog.Close()
 
 	if *source == "" {
