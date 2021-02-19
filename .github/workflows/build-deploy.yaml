@@ -13,12 +13,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: website
     steps:
 
       - name: Login to Registry
-        run: docker login docker.pkg.github.com -u ${GITHUB_ACTOR} -p ${{ secrets.GITHUB_TOKEN }}
+        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ secrets.CR_USER }} --password-stdin
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
@@ -26,16 +24,13 @@ jobs:
       - name: Build image
         env:
           IMAGE_TAG: ${{ github.sha }}
-        run: |
-          BRANCH=${GITHUB_REF#refs/heads/}
-          if ! [ "$BRANCH" == "master" ]; then IMAGE_TAG="$IMAGE_TAG-$BRANCH"; fi
-          docker build --build-arg BRANCH=$BRANCH -t docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG} .
+        run: docker build -t ghcr.io/${GITHUB_REPOSITORY}:${IMAGE_TAG} .
 
       - name: Publish image
-        run: docker push docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}
+        run: docker push ghcr.io/${GITHUB_REPOSITORY}
 
       - name: Logout
-        run: docker logout docker.pkg.github.com
+        run: docker logout ghcr.io
 
   deploy:
     name: Deploy
@@ -44,15 +39,12 @@ jobs:
     env:
       DEPLOYMENT: website
       CONTAINER: website
-      IMAGE_NAME: website
     steps:
 
       - name: Set up config
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-          KUBE_CONFIG_STAGING: ${{ secrets.KUBE_CONFIG_STAGING }}
         run: |
-          if [ "${GITHUB_REF#refs/heads/}" == "staging" ]; then KUBE_CONFIG=$KUBE_CONFIG_STAGING; fi
           mkdir -p ${HOME}/.kube
           export KUBECONFIG=${HOME}/.kube/config
           echo $KUBE_CONFIG | base64 -d > $KUBECONFIG
@@ -60,10 +52,7 @@ jobs:
       - name: Deploy image
         env:
           IMAGE_TAG: ${{ github.sha }}
-        run: |
-          BRANCH=${GITHUB_REF#refs/heads/}
-          if ! [ "$BRANCH" == "master" ]; then IMAGE_TAG="$IMAGE_TAG-$BRANCH"; fi
-          kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=docker.pkg.github.com/${GITHUB_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
+        run: kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=ghcr.io/${GITHUB_REPOSITORY}:${IMAGE_TAG}
 
       - name: Check rollout
         if: success()

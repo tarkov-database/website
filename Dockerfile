@@ -26,6 +26,8 @@ LABEL homepage="https://tarkov-database.com"
 LABEL repository="https://github.com/tarkov-database/website"
 LABEL maintainer="Markus Wiegand <mail@morphy2k.dev>"
 
+LABEL org.opencontainers.image.source="https://github.com/tarkov-database/website"
+
 COPY --from=build-env /usr/share/tarkov-database/website /
 
 EXPOSE 8080
