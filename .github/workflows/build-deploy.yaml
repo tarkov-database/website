@@ -27,7 +27,7 @@ jobs:
         run: docker build -t ghcr.io/${GITHUB_REPOSITORY}:${IMAGE_TAG} .
 
       - name: Publish image
-        run: docker push ghcr.io/${GITHUB_REPOSITORY}
+        run: docker push --all-tags ghcr.io/${GITHUB_REPOSITORY}
 
       - name: Logout
         run: docker logout ghcr.io
