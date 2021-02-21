@@ -14,7 +14,10 @@ COPY --from=prebuild-env /tmp/github.com/tarkov-database/website .
 
 RUN make bin && \
     mkdir -p /usr/share/tarkov-database/website && \
-    mv -t /usr/share/tarkov-database/website frontendserver view
+    mv -t /usr/share/tarkov-database/website frontendserver
+
+RUN mkdir -p /usr/share/tarkov-database/website/view && \
+    mv -t /usr/share/tarkov-database/website/view view/templates
 
 RUN make statics && \
     mkdir -p /usr/share/tarkov-database/website/static && \
