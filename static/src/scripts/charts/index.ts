@@ -88,15 +88,12 @@ const ammoTypeChart = () => {
                 },
                 tooltip: {
                     callbacks: {
-                        label: ({
-                            dataset,
-                            dataPoint,
-                            dataIndex,
-                        }: TooltipItem) =>
-                            `${
-                                (dataset.data[dataIndex] as CustomScatterPoint)
-                                    .label
-                            } (PEN: ${dataPoint.x}, DMG: ${dataPoint.y})`,
+                        label: ({ dataset, dataIndex }: TooltipItem) => {
+                            const data = dataset.data[
+                                dataIndex
+                            ] as CustomScatterPoint;
+                            return `${data.label} (PEN: ${data.x}, DMG: ${data.y})`;
+                        },
                     },
                 },
             },
