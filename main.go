@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/tarkov-database/website/core/health"
 	"github.com/tarkov-database/website/core/server"
 	"github.com/tarkov-database/website/version"
 
@@ -16,6 +17,8 @@ func main() {
 
 	defLog := logger.Init("default", true, false, io.Discard)
 	defer defLog.Close()
+
+	health.InitChecks()
 
 	server.Start()
 }
