@@ -42,10 +42,6 @@
               <td>&#8381; {{ .Entity.Price | localeString }}</td>
             </tr>
             <tr>
-              <th>Rarity</th>
-              <td>{{ if eq .Entity.Rarity "none" }}-{{ else }}{{ .Entity.Rarity | toTitle }}{{ end }}</td>
-            </tr>
-            <tr>
               <th>Max. Stack</th>
               <td>{{ .Entity.MaxStack }}</td>
             </tr>
