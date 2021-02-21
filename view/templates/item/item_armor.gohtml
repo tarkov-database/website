@@ -34,6 +34,12 @@
                 {{ end }}
               </td>
             </tr>
+            {{ if .Entity.RicochetChance }}
+            <tr>
+              <th>Ricochet Chance</th>
+              <td>{{ .Entity.RicochetChance }}</td>
+            </td>
+            {{ end }}
             {{ if .Entity.Blocking }}
             <tr>
               <th class="tr-list">Blocking</th>

@@ -7,12 +7,13 @@ const (
 type Armor struct {
 	Item
 
-	Type          string    `json:"type"`
-	Armor         ArmorProp `json:"armor"`
-	Penalties     Penalties `json:"penalties"`
-	Blocking      []string  `json:"blocking"`
-	Slots         Slots     `json:"slots"`
-	Compatibility ItemList  `json:"compatibility"`
+	Type           string    `json:"type"`
+	Armor          ArmorProp `json:"armor"`
+	RicochetChance string    `json:"ricochetChance,omitempty"`
+	Penalties      Penalties `json:"penalties"`
+	Blocking       []string  `json:"blocking"`
+	Slots          Slots     `json:"slots"`
+	Compatibility  ItemList  `json:"compatibility"`
 }
 
 type ArmorResult struct {
