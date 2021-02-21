@@ -37,7 +37,7 @@
             {{ if .Entity.RicochetChance }}
             <tr>
               <th>Ricochet Chance</th>
-              <td>{{ .Entity.RicochetChance }}</td>
+              <td>{{ .Entity.RicochetChance | camelToTitle }}</td>
             </td>
             {{ end }}
             {{ if .Entity.Blocking }}
