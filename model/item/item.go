@@ -95,7 +95,7 @@ func GetItemList(items ItemList, sort string) map[Kind][]Entity {
 	wg := &sync.WaitGroup{}
 
 	for k, v := range items {
-		chunks := toQueryArray(v)
+		chunks := toQueryChunks(v)
 		wg.Add(len(chunks))
 
 		for _, c := range chunks {
@@ -128,29 +128,29 @@ func GetItemList(items ItemList, sort string) map[Kind][]Entity {
 	return result
 }
 
-const arrayLimit = 100
+const maxChunkLength = 100
 
-func toQueryArray(arr []objectID) []string {
-	length := len(arr)
-	count := length / arrayLimit
+func toQueryChunks(ids []objectID) []string {
+	length := len(ids)
+	count := length / maxChunkLength
 
-	if count*arrayLimit != length {
+	if count*maxChunkLength != length {
 		count++
 	}
 
-	qa := make([]string, count)
+	chunks := make([]string, count)
 	if full := count - 1; full > 0 {
 		for i := 0; i < full; i++ {
-			s := i * arrayLimit
-			e := s + arrayLimit
-			qa[i] = strings.Join(arr[s:e], ",")
+			s := i * maxChunkLength
+			e := s + maxChunkLength
+			chunks[i] = strings.Join(ids[s:e], ",")
 		}
 	}
 
-	s := (count - 1) * arrayLimit
-	qa[count-1] = strings.Join(arr[s:], ",")
+	s := (count - 1) * maxChunkLength
+	chunks[count-1] = strings.Join(ids[s:], ",")
 
-	return qa
+	return chunks
 }
 
 func Search(term string, limit int, kind *Kind) (*search.Result, error) {
