@@ -16,7 +16,6 @@ import {
     LineHoverOptions,
     PointOptions,
     PointHoverOptions,
-    TooltipOptions,
     FontSpec,
 } from "chart.js";
 
@@ -53,11 +52,6 @@ defaults.elements.point = <PointOptions & PointHoverOptions>{
     hitRadius: 15,
     hoverRadius: 5,
 };
-defaults.plugins.tooltip = <TooltipOptions>{
-    ...defaults.plugins.tooltip,
-    backgroundColor: bgMainColor,
-    titleColor: fontSecColor,
-};
 
 interface CustomScatterPoint extends ScatterDataPoint {
     x: number;
@@ -71,6 +65,7 @@ const ammoTypeChart = () => {
 
     const config: ChartConfiguration<"scatter"> = {
         type: "scatter",
+
         data: {
             labels: [],
             datasets: [
@@ -87,8 +82,13 @@ const ammoTypeChart = () => {
                     display: false,
                 },
                 tooltip: {
+                    backgroundColor: bgMainColor,
+                    titleColor: fontSecColor,
                     callbacks: {
-                        label: ({ dataset, dataIndex }: TooltipItem) => {
+                        label: ({
+                            dataset,
+                            dataIndex,
+                        }: TooltipItem<"scatter">) => {
                             const data = dataset.data[
                                 dataIndex
                             ] as CustomScatterPoint;
