@@ -63,16 +63,17 @@ const ammoTypeChart = () => {
     const ctx = document.getElementById("ammoTypeChart") as HTMLCanvasElement;
     if (ctx === null) return;
 
+    const points: CustomScatterPoint[] = [];
+
     const config: ChartConfiguration<"scatter"> = {
         type: "scatter",
-
         data: {
             labels: [],
             datasets: [
                 {
                     borderColor: fontMainColor,
                     backgroundColor: fontMainColor,
-                    data: [],
+                    data: points,
                 },
             ],
         },
@@ -99,11 +100,11 @@ const ammoTypeChart = () => {
             },
             scales: {
                 x: {
-                    scaleLabel: {
+                    title: {
                         display: true,
-                        labelString: "Penetration",
+                        text: "Penetration",
                     },
-                    gridLines: {
+                    grid: {
                         color: "rgba(150, 136, 103, .1)",
                         drawBorder: false,
                     },
@@ -111,11 +112,11 @@ const ammoTypeChart = () => {
                     position: "bottom",
                 },
                 y: {
-                    scaleLabel: {
+                    title: {
                         display: true,
-                        labelString: "Damage",
+                        text: "Damage",
                     },
-                    gridLines: {
+                    grid: {
                         color: "rgba(150, 136, 103, .1)",
                         drawBorder: false,
                     },
@@ -139,7 +140,7 @@ const ammoTypeChart = () => {
             label: type.dataset.name,
         };
 
-        config.data.datasets[0].data.push(data);
+        points.push(data);
     }
 
     const element = document.querySelector<HTMLElement>(".chart.ammo");
