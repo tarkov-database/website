@@ -7,7 +7,7 @@ RUN npm ci
 
 RUN npx tsc
 
-FROM golang:1.16.2 as build-env
+FROM golang:1.16.3 as build-env
 
 WORKDIR /tmp/github.com/tarkov-database/website
 COPY --from=prebuild-env /tmp/github.com/tarkov-database/website .
