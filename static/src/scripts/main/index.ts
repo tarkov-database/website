@@ -71,17 +71,16 @@ const sortTables = () => {
         tr.children[idx].textContent ||
         "";
 
-    const comparer = (idx: number, asc: boolean) => (
-        a: HTMLTableRowElement,
-        b: HTMLTableRowElement
-    ) =>
-        ((v1: string, v2: string) =>
-            !isNaN(Number(v1)) && !isNaN(Number(v2))
-                ? Number(v1) - Number(v2)
-                : v1?.toString().localeCompare(v2 as string))(
-            getCellValue(asc ? a : b, idx),
-            getCellValue(asc ? b : a, idx)
-        );
+    const comparer =
+        (idx: number, asc: boolean) =>
+        (a: HTMLTableRowElement, b: HTMLTableRowElement) =>
+            ((v1: string, v2: string) =>
+                !isNaN(Number(v1)) && !isNaN(Number(v2))
+                    ? Number(v1) - Number(v2)
+                    : v1?.toString().localeCompare(v2 as string))(
+                getCellValue(asc ? a : b, idx),
+                getCellValue(asc ? b : a, idx)
+            );
 
     for (const th of tables) {
         th.addEventListener("click", function (this: HTMLElement) {
@@ -162,9 +161,9 @@ const initInteractiveMap = async () => {
     const el = document.getElementById("map");
     if (el === null) return;
 
-    const libPath = (document.getElementById(
-        "mapLib"
-    ) as HTMLScriptElement | null)?.src;
+    const libPath = (
+        document.getElementById("mapLib") as HTMLScriptElement | null
+    )?.src;
     if (!libPath) {
         console.error("Library is missing");
         return;

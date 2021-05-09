@@ -185,11 +185,11 @@ const enableMeasureLines = () => {
                 type: "Feature",
                 geometry: {
                     type: "LineString",
-                    coordinates: (measurement.features.filter(
-                        ({ geometry }) => geometry.type === "Point"
-                    ) as Feature<Point>[]).map(
-                        ({ geometry }) => geometry.coordinates
-                    ),
+                    coordinates: (
+                        measurement.features.filter(
+                            ({ geometry }) => geometry.type === "Point"
+                        ) as Feature<Point>[]
+                    ).map(({ geometry }) => geometry.coordinates),
                 },
                 properties: {},
             };
