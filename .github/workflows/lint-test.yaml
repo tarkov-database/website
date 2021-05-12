@@ -36,7 +36,7 @@ jobs:
           go-version: "1.16"
 
       - name: Check out
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Run Revive Action
         uses: docker://morphy/revive-action:v2
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Set up Node
         uses: actions/setup-node@v2.1.5
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Set up Node
         uses: actions/setup-node@v2.1.5
