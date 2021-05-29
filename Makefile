@@ -36,6 +36,7 @@ statics:
 
 lint:
 	revive -config revive.toml -formatter stylish ./...
+	go vet
 	test -z $(shell gofmt -l .) || (gofmt -l . && exit 1)
 	npm run lint
 
