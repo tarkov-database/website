@@ -18,7 +18,7 @@
   "homepage": "https://github.com/tarkov-database/website#readme",
   "dependencies": {
     "@turf/length": "^6.2.0",
-    "chart.js": "^3.0.1",
+    "chart.js": "^3.3.2",
     "mapbox-gl": ">=1.13.0 <2.0.0"
   },
   "devDependencies": {
