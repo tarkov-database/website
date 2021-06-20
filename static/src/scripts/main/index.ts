@@ -22,14 +22,14 @@ const loadImage = async () => {
     const staticURL = (() => {
         const host = window.location.host;
         const parts = host.split(".");
-        return `//static.${
+        return `//storage.${
             parts.length > 2
                 ? [parts[parts.length - 2], parts[parts.length - 1]].join(".")
                 : host
         }`;
     })();
     const imageID = image.dataset.id;
-    const request = new Request(`${staticURL}/image/icon/1-1/${imageID}.png`);
+    const request = new Request(`${staticURL}/assets/icons/1-1/${imageID}.png`);
 
     try {
         const response = await fetch(request);
