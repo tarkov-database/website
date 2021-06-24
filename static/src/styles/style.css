@@ -397,6 +397,11 @@ header form.search {
   margin: 0.3rem;
 }
 
+.navbox .menu > li > .name .icon {
+  width: 0.8rem;
+  line-height: 0.8rem;
+}
+
 .navbox .menu li:hover > .sub-menu {
   visibility: visible;
   opacity: 1;
@@ -552,6 +557,10 @@ header form.search {
 
 .icon.discord {
   background-image: url("../img/discord.svg");
+}
+
+.icon.heart {
+  background-image: url("../img/heart.svg");
 }
 
 .icon.other {
