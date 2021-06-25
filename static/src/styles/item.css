@@ -129,6 +129,8 @@ main {
 .prop > table,
 .prop > .table-big {
   margin: 0.3rem;
+  height: fit-content;
+  height: -moz-fit-content;
 }
 
 .prop td,
