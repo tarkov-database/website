@@ -99,17 +99,22 @@
 .pagination li a {
   display: inline-block;
   color: var(--font-sec-color);
-  background: none;
+  background-color: var(--bg-fourth-color);
   text-transform: uppercase;
   margin: 0 2rem;
   width: 6rem;
   opacity: 0.3;
   cursor: default;
+  transition: background-color 300ms linear;
 }
 
 .pagination li .active {
   opacity: 1;
   cursor: pointer;
+}
+
+.pagination li .active:hover {
+  background-color: var(--font-main-color);
 }
 
 .filters {
