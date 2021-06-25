@@ -332,6 +332,7 @@ header form.search {
 .navbox .menu {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   list-style: none;
   margin: 0;
   padding: 0;
