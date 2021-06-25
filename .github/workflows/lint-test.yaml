@@ -16,10 +16,10 @@ on:
     types: [opened, edited, synchronize, reopened]
     paths:
       - "**.go"
-      - "**.js"
       - "go.mod"
       - "go.sum"
       - "revive.toml"
+      - "static/src/**"
       - ".eslint*"
       - "tsconfig.json"
       - "package*.json"
