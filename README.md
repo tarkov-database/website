@@ -15,7 +15,7 @@ It is also designed as a stateless service for use in a distributed system.
 - Git
 - [Go](https://golang.org/doc/install) (latest)
 - [NodeJS](https://nodejs.org/en/) (>=v15)
-- [Podman](https://podman.io/getting-started/installation) (v2)
+- [Podman](https://podman.io/getting-started/installation) (>=v2)
 - Linux environment
 
 ### Set up
@@ -61,10 +61,8 @@ The server should now be accessible via [localhost:8080](http://localhost:8080)
 
 #### 7. Install Revive linter (optional)
 
-Run the following command outside the project dir
-
 ```BASH
-go get -u github.com/mgechev/revive
+go install github.com/mgechev/revive@v1
 ```
 
 #### 8. [Install Prettier editor integration](https://prettier.io/docs/en/editors.html) (optional)
