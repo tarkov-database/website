@@ -50,8 +50,11 @@ type AmmoEffects struct {
 }
 
 type WeaponModifier struct {
-	Accuracy float64 `json:"accuracy"`
-	Recoil   float64 `json:"recoil"`
+	Accuracy          float64 `json:"accuracy"`
+	Recoil            float64 `json:"recoil"`
+	MalfunctionChance float64 `json:"malfunctionChance"`
+	DurabilityBurn    float64 `json:"durabilityBurn"`
+	HeatFactor        float64 `json:"heatFactor"`
 }
 
 type AmmoGrenadeProperties struct {

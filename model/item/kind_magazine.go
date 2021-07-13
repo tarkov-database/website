@@ -7,12 +7,13 @@ const (
 type Magazine struct {
 	Item
 
-	Capacity      int64            `json:"capacity"`
-	Caliber       string           `json:"caliber"`
-	Ergonomics    float64          `json:"ergonomicsFP"`
-	Modifier      MagazineModifier `json:"modifier"`
-	GridModifier  GridModifier     `json:"gridModifier"`
-	Compatibility ItemList         `json:"compatibility"`
+	Capacity          int64            `json:"capacity"`
+	Caliber           string           `json:"caliber"`
+	Ergonomics        float64          `json:"ergonomicsFP"`
+	MalfunctionChance float64          `json:"malfunctionChance"`
+	Modifier          MagazineModifier `json:"modifier"`
+	GridModifier      GridModifier     `json:"gridModifier"`
+	Compatibility     ItemList         `json:"compatibility"`
 }
 
 type MagazineModifier struct {

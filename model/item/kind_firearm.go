@@ -7,20 +7,24 @@ const (
 type Firearm struct {
 	Item
 
-	Type              string   `json:"type"`
-	Class             string   `json:"class"`
-	Caliber           string   `json:"caliber"`
-	RateOfFire        int64    `json:"rof"`
-	BurstRounds       int64    `json:"burstRounds,omitempty"`
-	Action            string   `json:"action"`
-	Modes             []string `json:"modes"`
-	Velocity          float64  `json:"velocity"`
-	EffectiveDistance int64    `json:"effectiveDist"`
-	Ergonomics        float64  `json:"ergonomicsFP"`
-	FoldRectractable  bool     `json:"foldRectractable"`
-	RecoilVertical    int64    `json:"recoilVertical"`
-	RecoilHorizontal  int64    `json:"recoilHorizontal"`
-	Slots             Slots    `json:"slots"`
+	Type               string   `json:"type"`
+	Class              string   `json:"class"`
+	Caliber            string   `json:"caliber"`
+	RateOfFire         int64    `json:"rof"`
+	BurstRounds        int64    `json:"burstRounds,omitempty"`
+	Action             string   `json:"action"`
+	Modes              []string `json:"modes"`
+	Velocity           float64  `json:"velocity"`
+	EffectiveDistance  int64    `json:"effectiveDist"`
+	Ergonomics         float64  `json:"ergonomicsFP"`
+	FoldRectractable   bool     `json:"foldRectractable"`
+	RecoilVertical     int64    `json:"recoilVertical"`
+	RecoilHorizontal   int64    `json:"recoilHorizontal"`
+	OperatingResources float64  `json:"operatingResources"`
+	MalfunctionChance  float64  `json:"malfunctionChance"`
+	DurabilityRatio    float64  `json:"durabilityRatio"`
+	HeatFactor         float64  `json:"heatFactor"`
+	Slots              Slots    `json:"slots"`
 }
 
 type FirearmResult struct {

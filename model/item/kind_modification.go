@@ -53,9 +53,11 @@ func (r *ModificationResult) GetEntities() []Entity {
 type Barrel struct {
 	Modification
 
-	Length     float64 `json:"length"`
-	Velocity   float64 `json:"velocity"`
-	Suppressor bool    `json:"suppressor"`
+	Length         float64 `json:"length"`
+	Velocity       float64 `json:"velocity"`
+	Suppressor     bool    `json:"suppressor"`
+	DurabilityBurn float64 `json:"durabilityBurn"`
+	HeatFactor     float64 `json:"heatFactor"`
 }
 
 type BarrelResult struct {
@@ -163,6 +165,9 @@ func (r *ForegripResult) GetEntities() []Entity {
 
 type GasBlock struct {
 	Modification
+
+	DurabilityBurn float64 `json:"durabilityBurn"`
+	HeatFactor     float64 `json:"heatFactor"`
 }
 
 type GasBlockResult struct {
@@ -181,6 +186,8 @@ func (r *GasBlockResult) GetEntities() []Entity {
 
 type Handguard struct {
 	Modification
+
+	HeatFactor float64 `json:"heatFactor"`
 }
 
 type HandguardResult struct {
@@ -219,6 +226,8 @@ func (r *LauncherResult) GetEntities() []Entity {
 
 type Mount struct {
 	Modification
+
+	HeatFactor float64 `json:"heatFactor"`
 }
 
 type MountResult struct {
@@ -238,9 +247,11 @@ func (r *MountResult) GetEntities() []Entity {
 type Muzzle struct {
 	Modification
 
-	Type     string  `json:"type"`
-	Velocity float64 `json:"velocity"`
-	Loudness float64 `json:"loudness"`
+	Type           string  `json:"type"`
+	Velocity       float64 `json:"velocity"`
+	Loudness       float64 `json:"loudness"`
+	DurabilityBurn float64 `json:"durabilityBurn"`
+	HeatFactor     float64 `json:"heatFactor"`
 }
 
 type MuzzleResult struct {
@@ -287,7 +298,9 @@ func (r *PistolGripResult) GetEntities() []Entity {
 type Receiver struct {
 	Modification
 
-	Velocity float64 `json:"velocity"`
+	Velocity       float64 `json:"velocity"`
+	DurabilityBurn float64 `json:"durabilityBurn"`
+	HeatFactor     float64 `json:"heatFactor"`
 }
 
 type ReceiverResult struct {
@@ -365,7 +378,8 @@ var modSightSpecialFilter = Filter{
 type Stock struct {
 	Modification
 
-	FoldRectractable bool `json:"foldRectractable"`
+	FoldRectractable bool    `json:"foldRectractable"`
+	HeatFactor       float64 `json:"heatFactor"`
 }
 
 type StockResult struct {

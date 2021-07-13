@@ -28,6 +28,12 @@
                 <a class="underline" title="Show all magazines with caliber '{{ .Entity.Caliber }}'" href="/item/magazine?caliber={{ .Entity.Caliber }}">{{ .Entity.Caliber }}</a>
               </td>
             </tr>
+            {{ if ne .Entity.MalfunctionChance 0.0 }}
+            <tr>
+              <th>Malfunction Chance</th>
+              <td>{{ if gt .Entity.MalfunctionChance 0.0 }}+{{ end }}{{ .Entity.MalfunctionChance }} %</td>
+            </tr>
+            {{ end }}
           </table>
 
           {{ template "gridModifier" . }}

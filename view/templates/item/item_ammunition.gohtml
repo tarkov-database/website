@@ -60,7 +60,7 @@
           </table>
           {{ end }}
 
-          {{ if or .Entity.WeaponModifier.Accuracy .Entity.WeaponModifier.Recoil }}
+          {{ if or .Entity.WeaponModifier.Accuracy .Entity.WeaponModifier.Recoil .Entity.WeaponModifier.DurabilityBurn }}
           <table>
             <tr>
               <th>Accuracy</th>
@@ -69,6 +69,14 @@
             <tr>
               <th>Recoil</th>
               <td>{{ if gt .Entity.WeaponModifier.Recoil 0.0 }}+{{ end }}{{ .Entity.WeaponModifier.Recoil }} %</td>
+            </tr>
+            <tr>
+              <th>Durability Burn</th>
+              <td>{{ if gt .Entity.WeaponModifier.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.WeaponModifier.DurabilityBurn }} %</td>
+            </tr>
+            <tr>
+              <th>Malfunction Chance</th>
+              <td>{{ if gt .Entity.WeaponModifier.MalfunctionChance 0.0 }}+{{ end }}{{ .Entity.WeaponModifier.MalfunctionChance }} %</td>
             </tr>
           </table>
           {{ end }}

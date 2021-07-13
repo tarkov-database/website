@@ -116,6 +116,10 @@
     <th>Suppressor</th>
     <td>{{ if .Entity.Suppressor }}Yes{{ else }}No{{ end }}</td>
   </tr>
+  <tr>
+    <th>Durability Burn</th>
+     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
+  </tr>
 </table>
 {{ end }}
 
@@ -150,9 +154,21 @@
 {{ end }}
 
 {{ define "modificationGasblock" }}
+<table>
+  <tr>
+    <th>Durability Burn</th>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
+  </tr>
+</table>
 {{ end }}
 
 {{ define "modificationHandguard" }}
+<table>
+  <tr>
+    <th>Durability Burn</th>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
+  </tr>
+</table>
 {{ end }}
 
 {{ define "modificationLauncher" }}
@@ -169,6 +185,12 @@
 {{ end }}
 
 {{ define "modificationMount" }}
+<table>
+  <tr>
+    <th>Durability Burn</th>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
+  </tr>
+</table>
 {{ end }}
 
 {{ define "modificationMuzzle" }}
@@ -188,6 +210,10 @@
   <tr>
     <th>Loudness</th>
     <td>{{ if gt .Entity.Loudness 0.0 }}+{{ end }}{{ .Entity.Loudness }}</td>
+  </tr>
+  <tr>
+    <th>Durability Burn</th>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -213,6 +239,10 @@
   <tr>
     <th>Velocity</th>
     <td>{{ if gt .Entity.Velocity 0.0 }}+{{ end }}{{ .Entity.Velocity }}</td>
+  </tr>
+  <tr>
+    <th>Durability Burn</th>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
   </tr>
 </table>
 {{ end }}
