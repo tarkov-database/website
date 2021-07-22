@@ -96,12 +96,12 @@
     {{ if not (hasQuery $.URI "class" "*" ) }}
     <td>
       <a href="{{ setQuery (setQuery $.URI "p" "1") "class" .Armor.Class }}">
-        {{ .Armor.Class }}
+        {{ if .Armor.Class }}{{ .Armor.Class }}{{ else }}-{{ end }}
       </a>
     </td>
     {{ end }}
 
-    <td>{{ .Armor.Durability }}</td>
+    <td>{{ if .Armor.Durability }}{{ .Armor.Durability }}{{ else }}-{{ end }}</td>
 
   </tr>
   {{ end }}
