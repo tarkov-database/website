@@ -48,43 +48,13 @@
       </th>
       {{ end }}
 
-      {{ if not (hasQuery $.URI "class" "*" ) }}
-      {{ if hasQuery $.URI "sort" "armor.class" }}
-      <th class="sorted-by up">
-        <a href="{{ setQuery $.URI "sort" "-armor.class" }}">Class</a>
-      </th>
-      {{ else if hasQuery $.URI "sort" "-armor.class" }}
-      <th class="sorted-by down">
-        <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
-      </th>
-      {{ else }}
-      <th>
-        <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
-      </th>
-      {{ end }}
-      {{ end }}
-
-      {{ if hasQuery $.URI "sort" "armor.durability" }}
-      <th class="sorted-by up">
-        <a href="{{ setQuery $.URI "sort" "-armor.durability" }}">Durability</a>
-      </th>
-      {{ else if hasQuery $.URI "sort" "-armor.durability" }}
-      <th class="sorted-by down">
-        <a href="{{ setQuery $.URI "sort" "armor.durability" }}">Durability</a>
-      </th>
-      {{ else }}
-      <th>
-        <a href="{{ setQuery $.URI "sort" "armor.durability" }}">Durability</a>
-      </th>
-      {{ end }}
-
     </tr>
   </thead>
   {{ range .List }}
   <tr>
 
     <td>
-      <a title="{{ .Name }}" href="/item/tacticalrig/{{ .ID }}">
+      <a title="{{ .Name }}" href="/item/container/{{ .ID }}">
         {{ .ShortName }}
       </a>
     </td>
@@ -92,16 +62,6 @@
     <td>{{ .Capacity }}</td>
 
     <td>{{ .Weight }} kg</td>
-
-    {{ if not (hasQuery $.URI "class" "*" ) }}
-    <td>
-      <a href="{{ setQuery (setQuery $.URI "p" "1") "class" .Armor.Class }}">
-        {{ .Armor.Class }}
-      </a>
-    </td>
-    {{ end }}
-
-    <td>{{ .Armor.Durability }}</td>
 
   </tr>
   {{ end }}

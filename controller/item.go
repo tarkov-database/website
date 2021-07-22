@@ -67,7 +67,7 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	case item.KindArmor:
 		params["type"], params["armor.class"], params["armor.material.name"] = r.URL.Query().Get("type"), r.URL.Query().Get("class"), r.URL.Query().Get("material")
 	case item.KindTacticalrig:
-		params["armor.class"], params["armor.material.name"] = r.URL.Query().Get("class"), r.URL.Query().Get("material")
+		params["armored"], params["armor.class"], params["armor.material.name"] = r.URL.Query().Get("armored"), r.URL.Query().Get("class"), r.URL.Query().Get("material")
 	case item.KindMedical, item.KindFood, item.KindGrenade, item.KindClothing, item.KindModificationMuzzle, item.KindModificationDevice, item.KindModificationSight, item.KindModificationSightSpecial, item.KindModificationGoggles, item.KindModificationGogglesSpecial:
 		params["type"] = r.URL.Query().Get("type")
 	}

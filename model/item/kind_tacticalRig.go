@@ -7,6 +7,7 @@ const (
 type TacticalRig struct {
 	Item
 
+	Capacity  int64     `json:"capacity"`
 	Grids     []Grid    `json:"grids"`
 	Penalties Penalties `json:"penalties"`
 	Armor     ArmorProp `json:"armor,omitempty"`
@@ -27,6 +28,10 @@ func (r *TacticalRigResult) GetEntities() []Entity {
 }
 
 var tacticalFilter = Filter{
+	"armored": {
+		"true",
+		"false",
+	},
 	"class":    armorClasses[:],
 	"material": armorMaterial[:],
 }

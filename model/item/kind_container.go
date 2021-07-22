@@ -7,7 +7,8 @@ const (
 type Container struct {
 	Item
 
-	Grids []Grid `json:"grids"`
+	Capacity int64  `json:"capacity"`
+	Grids    []Grid `json:"grids"`
 }
 
 type ContainerResult struct {

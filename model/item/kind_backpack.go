@@ -7,6 +7,7 @@ const (
 type Backpack struct {
 	Item
 
+	Capacity  int64     `json:"capacity"`
 	Grids     []Grid    `json:"grids"`
 	Penalties Penalties `json:"penalties"`
 }

@@ -1,5 +1,12 @@
 {{ define "properties" }}
-          {{ template "grids" . }}
+        <table>
+            <tr>
+              <th>Capacity</th>
+              <td>{{ .Entity.Capacity }}</td>
+            </tr>
+        </table>
+
+        {{ template "grids" . }}
 {{ end }}
 
 {{ define "sub_box" }}

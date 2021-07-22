@@ -102,6 +102,24 @@
     "/header.gohtml",
     "/footer.gohtml"
   ],
+  "table_backpack": [
+    "/list/table_backpack.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
+  "table_container": [
+    "/list/table_container.gohtml",
+    "/list/base.gohtml",
+    "/list/head.gohtml",
+    "/list/header.gohtml",
+    "/list/footer.gohtml",
+    "/header.gohtml",
+    "/footer.gohtml"
+  ],
   "table_magazine": [
     "/list/table_magazine.gohtml",
     "/list/base.gohtml",

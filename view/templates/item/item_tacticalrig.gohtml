@@ -1,4 +1,11 @@
 {{ define "properties" }}
+          <table>
+            <tr>
+              <th>Capacity</th>
+              <td>{{ .Entity.Capacity }}</td>
+            </tr>
+          </table>
+
           {{ if .Entity.Armor.Class }}
           <table>
             <tr>
