@@ -11,5 +11,5 @@ require (
 	github.com/tarkov-database/website/bundler v0.0.0-00010101000000-000000000000
 	github.com/zeebo/blake3 v0.2.0
 	golang.org/x/net v0.0.0-20210331212208-0fccb6fa2b5c
-	golang.org/x/text v0.3.6
+	golang.org/x/text v0.3.7
 )
