@@ -51,10 +51,12 @@ const loadImage = async () => {
             image.style.backgroundImage = `url("${objectURL}")`;
         };
     } catch (err) {
-        if (err.message === "404") {
-            console.warn("Image can not be found");
-        } else {
-            console.error("Image load failed:", err.message);
+        if (err instanceof Error) {
+            if (err.message === "404") {
+                console.warn("Image can not be found");
+            } else {
+                console.error("Image load failed:", err.message);
+            }
         }
     }
 };
