@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/mapbox-gl": ">=1.12.9 <2.0.0",
     "@typescript-eslint/eslint-plugin": "^4.30.0",
-    "@typescript-eslint/parser": "^4.30.0",
+    "@typescript-eslint/parser": "^4.31.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.1.0",
     "prettier": "^2.3.2",
