@@ -1,4 +1,4 @@
-// +build DEBUG
+//go:build DEBUG
 
 package main
 
