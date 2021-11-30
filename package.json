@@ -1,6 +1,9 @@
 {
   "name": "tarkov-database-website",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=17 <18"
+  },
   "scripts": {
     "lint": "eslint static/src && prettier --check static/src",
     "fmt": "npx prettier --write static/src",

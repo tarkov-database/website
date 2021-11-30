@@ -56,7 +56,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2.5.0
         with:
-          node-version: '17'
+          node-version-file: '.node-version'
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -84,7 +84,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2.5.0
         with:
-          node-version: '17'
+          node-version-file: '.node-version'
 
       - name: Cache node modules
         uses: actions/cache@v2
