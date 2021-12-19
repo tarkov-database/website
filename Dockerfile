@@ -23,7 +23,7 @@ RUN make statics && \
     mkdir -p /usr/share/tarkov-database/website/static && \
     mv -t /usr/share/tarkov-database/website/static static/dist
 
-FROM gcr.io/distroless/base-debian10
+FROM gcr.io/distroless/base-debian11
 
 LABEL homepage="https://tarkov-database.com"
 LABEL repository="https://github.com/tarkov-database/website"
