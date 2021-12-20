@@ -29,7 +29,7 @@ func refreshScheduler() {
 
 type tokenResponse struct {
 	Token      string        `json:"token"`
-	Expiration api.Timestamp `json:"expires"`
+	Expiration api.Timestamp `json:"expiresAt"`
 }
 
 func refreshToken() (time.Time, error) {
