@@ -2,6 +2,7 @@ package item
 
 const (
 	KindModification               Kind = "modification"
+	KindModificationAuxiliary      Kind = "modificationAuxiliary"
 	KindModificationBarrel         Kind = "modificationBarrel"
 	KindModificationBipod          Kind = "modificationBipod"
 	KindModificationCharge         Kind = "modificationCharge"
@@ -49,6 +50,28 @@ func (r *ModificationResult) GetEntities() []Entity {
 }
 
 // Weapon modifications //
+
+type Auxiliary struct {
+	Modification `bson:",inline"`
+
+	DurabilityBurn float64 `json:"durabilityBurn" bson:"durabilityBurn"`
+	HeatFactor     float64 `json:"heatFactor" bson:"heatFactor"`
+	CoolFactor     float64 `json:"coolFactor" bson:"coolFactor"`
+}
+
+type AuxiliaryResult struct {
+	*Result
+	Items []Auxiliary `json:"items"`
+}
+
+func (r *AuxiliaryResult) GetEntities() []Entity {
+	e := make([]Entity, len(r.Items))
+	for i, item := range r.Items {
+		e[i] = item
+	}
+
+	return e
+}
 
 type Barrel struct {
 	Modification

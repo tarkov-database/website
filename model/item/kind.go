@@ -98,6 +98,8 @@ func (k Kind) GetEntity() (Entity, error) {
 		e = &Melee{}
 	case KindModification:
 		e = &Modification{}
+	case KindModificationAuxiliary:
+		e = &Auxiliary{}
 	case KindModificationBarrel:
 		e = &Barrel{}
 	case KindModificationBipod:
@@ -181,6 +183,8 @@ func (k Kind) GetEntityResult() (EntityResult, error) {
 		r = &MeleeResult{Result: &Result{Kind: KindMelee}}
 	case KindModification:
 		r = &ModificationResult{Result: &Result{Kind: KindModification}}
+	case KindModificationAuxiliary:
+		r = &AuxiliaryResult{Result: &Result{Kind: KindModificationAuxiliary}}
 	case KindModificationBarrel:
 		r = &BarrelResult{Result: &Result{Kind: KindModificationBarrel}}
 	case KindModificationBipod:
@@ -242,6 +246,7 @@ var KindList = [...]Kind{
 	KindMedical,
 	KindMelee,
 	KindModification,
+	KindModificationAuxiliary,
 	KindModificationBarrel,
 	KindModificationBipod,
 	KindModificationCharge,

@@ -27,6 +27,9 @@
             </tr>
           </table>
 
+          {{ if eq .Entity.Kind "modificationAuxiliary" }}
+          {{ template "modificationAuxiliary" . }}
+          {{ end }}
           {{ if eq .Entity.Kind "modificationBarrel" }}
           {{ template "modificationBarrel" . }}
           {{ end }}
@@ -100,6 +103,16 @@
 
         </ul>
       </div>
+{{ end }}
+
+{{ define "modificationAuxiliary" }}
+<table>
+  <tr>
+    <th>Durability Burn</th>
+     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+  </tr>
+  <tr>
+</table>
 {{ end }}
 
 {{ define "modificationBarrel" }}

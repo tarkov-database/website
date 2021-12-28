@@ -26,6 +26,7 @@ const (
 	CategoryMedical                  = "medical"
 	CategoryMelee                    = "melee"
 	CategoryModification             = "mod-other"
+	CategoryModificationAuxiliary    = "auxiliary"
 	CategoryModificationBarrel       = "barrel"
 	CategoryModificationBipod        = "bipod"
 	CategoryModificationCharge       = "charge"
@@ -84,6 +85,8 @@ func CategoryToKind(s string) (Kind, error) {
 		k = KindMelee
 	case CategoryModification:
 		k = KindModification
+	case CategoryModificationAuxiliary:
+		k = KindModificationAuxiliary
 	case CategoryModificationBarrel:
 		k = KindModificationBarrel
 	case CategoryModificationBipod:
@@ -165,6 +168,8 @@ func KindToCategory(k Kind) (string, error) {
 		c = CategoryMelee
 	case KindModification:
 		c = CategoryModification
+	case KindModificationAuxiliary:
+		c = CategoryModificationAuxiliary
 	case KindModificationBarrel:
 		c = CategoryModificationBarrel
 	case KindModificationBipod:
@@ -248,6 +253,8 @@ func CategoryToDisplayName(s string) (string, error) {
 		c = "modification other"
 	case CategoryModificationBarrel:
 		c = "barrel"
+	case CategoryModificationAuxiliary:
+		c = "auxiliary"
 	case CategoryModificationBipod:
 		c = "bipod"
 	case CategoryModificationCharge:
