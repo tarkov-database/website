@@ -131,7 +131,7 @@
   </tr>
   <tr>
     <th>Durability Burn</th>
-     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
+     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -170,7 +170,7 @@
 <table>
   <tr>
     <th>Durability Burn</th>
-    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -214,7 +214,7 @@
   </tr>
   <tr>
     <th>Durability Burn</th>
-    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -243,7 +243,7 @@
   </tr>
   <tr>
     <th>Durability Burn</th>
-    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.DurabilityBurn }} %</td>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
   </tr>
 </table>
 {{ end }}
