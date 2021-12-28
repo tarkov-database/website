@@ -12,6 +12,9 @@ type Ammunition struct {
 	Tracer              bool                  `json:"tracer"`
 	TracerColor         string                `json:"tracerColor"`
 	Subsonic            bool                  `json:"subsonic"`
+	CasingMass          float64               `json:"casingMass"`
+	BulletMass          float64               `json:"bulletMass"`
+	BulletDiameter      float64               `json:"bulletDiameter"`
 	Velocity            float64               `json:"velocity"`
 	BallisticCoeficient float64               `json:"ballisticCoef"`
 	Damage              float64               `json:"damage"`
@@ -20,6 +23,8 @@ type Ammunition struct {
 	Fragmentation       AmmoFrag              `json:"fragmentation"`
 	Effects             AmmoEffects           `json:"effects"`
 	Projectiles         int64                 `json:"projectiles"`
+	MisfireChance       float64               `json:"misfireChance"`
+	FailureToFeedChance float64               `json:"failureToFeedChance"`
 	WeaponModifier      WeaponModifier        `json:"weaponModifier"`
 	GrenadeProperties   AmmoGrenadeProperties `json:"grenadeProps,omitempty"`
 }
@@ -50,11 +55,10 @@ type AmmoEffects struct {
 }
 
 type WeaponModifier struct {
-	Accuracy          float64 `json:"accuracy"`
-	Recoil            float64 `json:"recoil"`
-	MalfunctionChance float64 `json:"malfunctionChance"`
-	DurabilityBurn    float64 `json:"durabilityBurn"`
-	HeatFactor        float64 `json:"heatFactor"`
+	Accuracy       float64 `json:"accuracy"`
+	Recoil         float64 `json:"recoil"`
+	DurabilityBurn float64 `json:"durabilityBurn"`
+	HeatFactor     float64 `json:"heatFactor"`
 }
 
 type AmmoGrenadeProperties struct {

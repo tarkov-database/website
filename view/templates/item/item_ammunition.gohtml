@@ -38,7 +38,7 @@
               <td>{{ .Entity.Velocity }} m/s</td>
             </tr>
             <tr>
-              <th>Ballistic Coeficient</th>
+              <th>Ballistic Coefficient</th>
               <td>{{ .Entity.BallisticCoeficient }}</td>
             </tr>
           </table>
@@ -72,11 +72,19 @@
             </tr>
             <tr>
               <th>Durability Burn</th>
-              <td>{{ if gt .Entity.WeaponModifier.DurabilityBurn 0.0 }}+{{ end }}{{ .Entity.WeaponModifier.DurabilityBurn }} %</td>
+              <td>{{ if gt .Entity.WeaponModifier.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.WeaponModifier.DurabilityBurn 1 | decimalToPercent }} %</td>
             </tr>
             <tr>
-              <th>Malfunction Chance</th>
-              <td>{{ if gt .Entity.WeaponModifier.MalfunctionChance 0.0 }}+{{ end }}{{ .Entity.WeaponModifier.MalfunctionChance }} %</td>
+              <th>Misfire Chance</th>
+              <td>{{ .Entity.MisfireChance | decimalToPercent }} %</td>
+            </tr>
+            <tr>
+              <th title="Failure to feed">FTF Chance</th>
+              <td>{{ .Entity.FailureToFeedChance | decimalToPercent }} %</td>
+            </tr>
+            <tr>
+              <th>Heat</th>
+              <td>{{ if gt .Entity.WeaponModifier.HeatFactor 0.0 }}+{{ end }}{{ subtractFloat .Entity.WeaponModifier.HeatFactor 1 | decimalToPercent }} %</td>
             </tr>
           </table>
           {{ end }}
