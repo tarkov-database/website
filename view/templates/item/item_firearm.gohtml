@@ -60,6 +60,12 @@
               <th>Ergonomics</th>
               <td>{{ .Entity.Ergonomics }}</td>
             </tr>
+            {{ if .Entity.AccuracyMoa }}
+            <tr>
+              <th>Accuracy</th>
+              <td>{{ .Entity.AccuracyMoa | printf "%.2f" }} MOA</td>
+            </tr>
+            {{ end }}
             <tr>
               <th>Fold-/Retractable</th>
               <td>{{ if .Entity.FoldRectractable }}Yes{{ else }}No{{ end }}</td>

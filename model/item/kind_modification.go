@@ -1,5 +1,7 @@
 package item
 
+import "math"
+
 const (
 	KindModification               Kind = "modification"
 	KindModificationAuxiliary      Kind = "modificationAuxiliary"
@@ -79,8 +81,22 @@ type Barrel struct {
 	Length         float64 `json:"length"`
 	Velocity       float64 `json:"velocity"`
 	Suppressor     bool    `json:"suppressor"`
+	CenterOfImpact float64 `json:"centerOfImpact"`
 	DurabilityBurn float64 `json:"durabilityBurn"`
 	HeatFactor     float64 `json:"heatFactor"`
+	CoolFactor     float64 `json:"coolFactor"`
+}
+
+func (b *Barrel) AccuracyMoa() float64 {
+	return 100 * b.CenterOfImpact / 2.9089
+}
+
+func (b *Barrel) Heat() float64 {
+	return math.Round((1 - b.HeatFactor) * 100)
+}
+
+func (b *Barrel) Cooling() float64 {
+	return math.Round((1 - b.CoolFactor) * 100)
 }
 
 type BarrelResult struct {
@@ -191,6 +207,7 @@ type GasBlock struct {
 
 	DurabilityBurn float64 `json:"durabilityBurn"`
 	HeatFactor     float64 `json:"heatFactor"`
+	CoolFactor     float64 `json:"coolFactor"`
 }
 
 type GasBlockResult struct {
@@ -211,6 +228,7 @@ type Handguard struct {
 	Modification
 
 	HeatFactor float64 `json:"heatFactor"`
+	CoolFactor float64 `json:"coolFactor"`
 }
 
 type HandguardResult struct {
@@ -251,6 +269,7 @@ type Mount struct {
 	Modification
 
 	HeatFactor float64 `json:"heatFactor"`
+	CoolFactor float64 `json:"coolFactor"`
 }
 
 type MountResult struct {
@@ -275,6 +294,7 @@ type Muzzle struct {
 	Loudness       float64 `json:"loudness"`
 	DurabilityBurn float64 `json:"durabilityBurn"`
 	HeatFactor     float64 `json:"heatFactor"`
+	CoolFactor     float64 `json:"coolFactor"`
 }
 
 type MuzzleResult struct {
@@ -324,6 +344,7 @@ type Receiver struct {
 	Velocity       float64 `json:"velocity"`
 	DurabilityBurn float64 `json:"durabilityBurn"`
 	HeatFactor     float64 `json:"heatFactor"`
+	CoolFactor     float64 `json:"coolFactor"`
 }
 
 type ReceiverResult struct {
@@ -403,6 +424,7 @@ type Stock struct {
 
 	FoldRectractable bool    `json:"foldRectractable"`
 	HeatFactor       float64 `json:"heatFactor"`
+	CoolFactor       float64 `json:"coolFactor"`
 }
 
 type StockResult struct {

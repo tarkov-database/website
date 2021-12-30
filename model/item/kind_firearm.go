@@ -24,7 +24,15 @@ type Firearm struct {
 	MalfunctionChance  float64  `json:"malfunctionChance"`
 	DurabilityRatio    float64  `json:"durabilityRatio"`
 	HeatFactor         float64  `json:"heatFactor"`
+	HeatFactorByShot   float64  `json:"heatFactorByShot"`
+	CoolFactor         float64  `json:"coolFactor"`
+	CoolFactorMods     float64  `json:"coolFactorMods"`
+	CenterOfImpact     float64  `json:"centerOfImpact"`
 	Slots              Slots    `json:"slots"`
+}
+
+func (f *Firearm) AccuracyMoa() float64 {
+	return 100 * f.CenterOfImpact / 2.9089
 }
 
 type FirearmResult struct {

@@ -1,5 +1,7 @@
 package item
 
+import "math"
+
 const (
 	KindAmmunition Kind = "ammunition"
 )
@@ -27,6 +29,10 @@ type Ammunition struct {
 	FailureToFeedChance float64               `json:"failureToFeedChance"`
 	WeaponModifier      WeaponModifier        `json:"weaponModifier"`
 	GrenadeProperties   AmmoGrenadeProperties `json:"grenadeProps,omitempty"`
+}
+
+func (b *Ammunition) Heat() float64 {
+	return math.Round((b.WeaponModifier.HeatFactor - 1) * 100)
 }
 
 type AmmunitionResult struct {

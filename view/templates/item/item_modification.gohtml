@@ -126,12 +126,23 @@
     <td>{{ if gt .Entity.Velocity 0.0 }}+{{ end }}{{ .Entity.Velocity }}</td>
   </tr>
   <tr>
+    <th>Accuracy</th>
+    <td>{{ .Entity.AccuracyMoa | printf "%.2f" }} MOA</td>
+  </tr>
+  <tr>
     <th>Suppressor</th>
     <td>{{ if .Entity.Suppressor }}Yes{{ else }}No{{ end }}</td>
   </tr>
   <tr>
     <th>Durability Burn</th>
-     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+  </tr>
+  <tr>
+    <th>Heat</th>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+  </tr>
+    <th>Cooling</th>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -172,10 +183,25 @@
     <th>Durability Burn</th>
     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
   </tr>
-</table>
+  <tr>
+    <th>Heat</th>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+  </tr>
+    <th>Cooling</th>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+  </tr>
 {{ end }}
 
 {{ define "modificationHandguard" }}
+<table>
+  <tr>
+    <th>Heat</th>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+  </tr>
+    <th>Cooling</th>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+  </tr>
+</table>
 {{ end }}
 
 {{ define "modificationLauncher" }}
@@ -192,6 +218,15 @@
 {{ end }}
 
 {{ define "modificationMount" }}
+<table>
+  <tr>
+    <th>Heat</th>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+  </tr>
+    <th>Cooling</th>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+  </tr>
+</table>
 {{ end }}
 
 {{ define "modificationMuzzle" }}
@@ -215,6 +250,13 @@
   <tr>
     <th>Durability Burn</th>
     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+  </tr>
+  <tr>
+    <th>Heat</th>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+  </tr>
+    <th>Cooling</th>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -244,6 +286,13 @@
   <tr>
     <th>Durability Burn</th>
     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+  </tr>
+  <tr>
+    <th>Heat</th>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+  </tr>
+    <th>Cooling</th>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -315,6 +364,13 @@
   <tr>
     <th>Fold-/Retractable</th>
     <td>{{ if .Entity.FoldRectractable }}Yes{{ else }}No{{ end }}</td>
+  </tr>
+  <tr>
+    <th>Heat</th>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+  </tr>
+    <th>Cooling</th>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
   </tr>
 </table>
 {{ end }}

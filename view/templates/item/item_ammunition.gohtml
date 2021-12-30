@@ -84,7 +84,7 @@
             </tr>
             <tr>
               <th>Heat</th>
-              <td>{{ if gt .Entity.WeaponModifier.HeatFactor 0.0 }}+{{ end }}{{ subtractFloat .Entity.WeaponModifier.HeatFactor 1 | decimalToPercent }} %</td>
+              <td>{{ if gt .Entity.WeaponModifier.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
             </tr>
           </table>
           {{ end }}
