@@ -84,7 +84,7 @@
             </tr>
             <tr>
               <th>Heat</th>
-              <td>{{ if gt .Entity.WeaponModifier.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+              <td>{{ if gt .Entity.WeaponModifier.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
             </tr>
           </table>
           {{ end }}

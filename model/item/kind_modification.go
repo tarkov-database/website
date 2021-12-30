@@ -1,7 +1,5 @@
 package item
 
-import "math"
-
 const (
 	KindModification               Kind = "modification"
 	KindModificationAuxiliary      Kind = "modificationAuxiliary"
@@ -92,11 +90,11 @@ func (b *Barrel) AccuracyMoa() float64 {
 }
 
 func (b *Barrel) Heat() float64 {
-	return math.Round((1 - b.HeatFactor) * 100)
+	return (1 - b.HeatFactor) * 100
 }
 
 func (b *Barrel) Cooling() float64 {
-	return math.Round((1 - b.CoolFactor) * 100)
+	return (1 - b.CoolFactor) * 100
 }
 
 type BarrelResult struct {

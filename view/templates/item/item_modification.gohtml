@@ -139,10 +139,10 @@
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -185,10 +185,10 @@
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 {{ end }}
 
@@ -196,10 +196,10 @@
 <table>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -221,10 +221,10 @@
 <table>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -253,10 +253,10 @@
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -289,10 +289,10 @@
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -367,10 +367,10 @@
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat }} %</td>
+    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling }} %</td>
+    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}

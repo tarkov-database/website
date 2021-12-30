@@ -1,7 +1,5 @@
 package item
 
-import "math"
-
 const (
 	KindAmmunition Kind = "ammunition"
 )
@@ -32,7 +30,7 @@ type Ammunition struct {
 }
 
 func (b *Ammunition) Heat() float64 {
-	return math.Round((b.WeaponModifier.HeatFactor - 1) * 100)
+	return (b.WeaponModifier.HeatFactor - 1) * 100
 }
 
 type AmmunitionResult struct {
