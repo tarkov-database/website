@@ -72,7 +72,9 @@ func getLocationEndpoint() *Endpoint {
 		return ep
 	}
 
-	ep.Count, ep.Modified = loc.Count, loc.Items[0].Modified.Time
+	if len(loc.Items) > 0 {
+		ep.Count, ep.Modified = loc.Count, loc.Items[0].Modified.Time
+	}
 
 	return ep
 }
