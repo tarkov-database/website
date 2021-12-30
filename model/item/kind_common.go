@@ -9,7 +9,6 @@ type Item struct {
 	Name        string         `json:"name"`
 	ShortName   string         `json:"shortName"`
 	Description string         `json:"description"`
-	Price       int64          `json:"price"`
 	Weight      float64        `json:"weight"`
 	MaxStack    int64          `json:"maxStack"`
 	Grid        GridProperties `json:"grid"`
