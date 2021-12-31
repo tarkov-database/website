@@ -208,6 +208,14 @@ type GasBlock struct {
 	CoolFactor     float64 `json:"coolFactor"`
 }
 
+func (g *GasBlock) Heat() float64 {
+	return (1 - g.HeatFactor) * 100
+}
+
+func (g *GasBlock) Cooling() float64 {
+	return (1 - g.CoolFactor) * 100
+}
+
 type GasBlockResult struct {
 	*Result
 	Items []GasBlock `json:"items"`
@@ -227,6 +235,14 @@ type Handguard struct {
 
 	HeatFactor float64 `json:"heatFactor"`
 	CoolFactor float64 `json:"coolFactor"`
+}
+
+func (h *Handguard) Heat() float64 {
+	return (1 - h.HeatFactor) * 100
+}
+
+func (h *Handguard) Cooling() float64 {
+	return (1 - h.CoolFactor) * 100
 }
 
 type HandguardResult struct {
@@ -270,6 +286,14 @@ type Mount struct {
 	CoolFactor float64 `json:"coolFactor"`
 }
 
+func (m *Mount) Heat() float64 {
+	return (1 - m.HeatFactor) * 100
+}
+
+func (m *Mount) Cooling() float64 {
+	return (1 - m.CoolFactor) * 100
+}
+
 type MountResult struct {
 	*Result
 	Items []Mount `json:"items"`
@@ -293,6 +317,14 @@ type Muzzle struct {
 	DurabilityBurn float64 `json:"durabilityBurn"`
 	HeatFactor     float64 `json:"heatFactor"`
 	CoolFactor     float64 `json:"coolFactor"`
+}
+
+func (m *Muzzle) Heat() float64 {
+	return (1 - m.HeatFactor) * 100
+}
+
+func (m *Muzzle) Cooling() float64 {
+	return (1 - m.CoolFactor) * 100
 }
 
 type MuzzleResult struct {
@@ -343,6 +375,14 @@ type Receiver struct {
 	DurabilityBurn float64 `json:"durabilityBurn"`
 	HeatFactor     float64 `json:"heatFactor"`
 	CoolFactor     float64 `json:"coolFactor"`
+}
+
+func (r *Receiver) Heat() float64 {
+	return (1 - r.HeatFactor) * 100
+}
+
+func (r *Receiver) Cooling() float64 {
+	return (1 - r.CoolFactor) * 100
 }
 
 type ReceiverResult struct {
@@ -423,6 +463,14 @@ type Stock struct {
 	FoldRectractable bool    `json:"foldRectractable"`
 	HeatFactor       float64 `json:"heatFactor"`
 	CoolFactor       float64 `json:"coolFactor"`
+}
+
+func (s *Stock) Heat() float64 {
+	return (1 - s.HeatFactor) * 100
+}
+
+func (s *Stock) Cooling() float64 {
+	return (1 - s.CoolFactor) * 100
 }
 
 type StockResult struct {
