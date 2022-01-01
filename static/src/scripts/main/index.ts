@@ -15,54 +15,6 @@ const registerTabs = () => {
         });
 };
 
-const loadImage = async () => {
-    const image = document.getElementById("itemImage");
-    if (image === null) return;
-
-    const staticURL = (() => {
-        const host = window.location.host;
-        const parts = host.split(".");
-        return `//storage.${
-            parts.length > 2
-                ? [parts[parts.length - 2], parts[parts.length - 1]].join(".")
-                : host
-        }`;
-    })();
-    const imageID = image.dataset.id;
-    const request = new Request(
-        `${staticURL}/assets/icons/1-1/512/${imageID}.png`
-    );
-
-    try {
-        const response = await fetch(request);
-        if (!response.ok)
-            throw new Error(`Error while fetching image: ${response.status}`);
-
-        const objectURL = URL.createObjectURL(await response.blob());
-        const img = new Image();
-        img.src = objectURL;
-        img.onload = () => {
-            const imgWidth = img.naturalHeight,
-                imgHeight = img.naturalHeight;
-            const boxWidth = image.offsetWidth,
-                boxHeight = image.offsetHeight;
-
-            if (imgHeight > boxHeight || imgWidth > boxWidth)
-                image.style.backgroundSize = "contain";
-
-            image.style.backgroundImage = `url("${objectURL}")`;
-        };
-    } catch (err) {
-        if (err instanceof Error) {
-            if (err.message === "404") {
-                console.warn("Image can not be found");
-            } else {
-                console.error("Image load failed:", err.message);
-            }
-        }
-    }
-};
-
 const sortTables = () => {
     const tables = document.querySelectorAll<HTMLTableHeaderCellElement>(
         ".sort-table.client-sort thead th"
@@ -186,7 +138,6 @@ const initInteractiveMap = async () => {
 
 (async () => {
     registerTabs();
-    loadImage();
     sortTables();
     initListFilter();
     const map = await initInteractiveMap();

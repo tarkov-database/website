@@ -95,6 +95,7 @@ main {
 
 .main .image {
   box-sizing: border-box;
+  display: flex;
   float: right;
   margin: 0 0 2rem 4rem;
   padding: 1rem;
@@ -107,20 +108,14 @@ main {
   background-color: var(--bg-sec-color);
 }
 
+.main .image img {
+  object-fit: contain;
+}
+
 @media only screen and (max-width: 1454px) {
   .main .image {
     margin: 0 0 1rem 2rem;
   }
-}
-
-#itemImage {
-  box-sizing: border-box;
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: auto;
 }
 
 .main .prop {
