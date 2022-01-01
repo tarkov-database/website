@@ -58,18 +58,45 @@
 .list .grid li {
   margin: 0;
   padding: 0;
-  max-width: 20.5rem;
+  max-width: 17.1rem;
   width: 100%;
 }
 
 .list .grid li a {
   box-sizing: border-box;
-  display: block;
+  display: flex;
+  align-items: center;
   margin: 0.3rem;
   padding: 0.2rem 0.5rem;
-  line-height: 3rem;
+  height: 6rem;
+  max-height: 6rem;
   background-color: var(--bg-fourth-color);
-  text-decoration: none;
+}
+
+.list .grid li .title {
+  color: var(--font-main-color);
+  font-weight: bold;
+  margin: 0.2rem 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 200ms ease-in;
+}
+
+.list .grid li a:hover .title {
+  color: var(--font-sec-color);
+}
+
+.list .grid li .icon-image {
+  object-fit: contain;
+  width: 4rem;
+  height: auto;
+  filter: saturate(70%);
+  transition: filter 200ms ease-in;
+}
+
+.list .grid li a:hover .icon-image {
+  filter: saturate(100%);
 }
 
 .pagination {

@@ -9,8 +9,8 @@
     {{ $cat := kindToCategory .Kind }}
     <li>
     <a title="{{ .Name }}" href="/item/{{ $cat }}/{{ .ID }}">
-        <div class="icon {{ $cat }}" title="{{ $cat | categoryToName | toTitle }}">&nbsp;</div>
-        <span>{{ .ShortName }}</span>
+        <img class="icon-image" loading="lazy" src="https://storage.tarkov-database.com/assets/icons/1-1/128/{{ .ID }}.png" alt="Item image">
+        <div class="title">{{ .ShortName }}</div>
     </a>
 
     </li>
