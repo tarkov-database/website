@@ -82,6 +82,8 @@ main {
 
 .text h1 {
   margin: 0 0 1rem 0;
+  color: var(--font-sec-color);
+  filter: brightness(95%);
 }
 
 .main .modified-date {
@@ -96,10 +98,10 @@ main {
   float: right;
   margin: 0 0 2rem 4rem;
   padding: 1rem;
-  max-width: 12rem;
+  max-width: 13rem;
   min-width: 8rem;
   width: 30vw;
-  max-height: 12rem;
+  max-height: 13rem;
   min-height: 8rem;
   height: 30vw;
   background-color: var(--bg-sec-color);
