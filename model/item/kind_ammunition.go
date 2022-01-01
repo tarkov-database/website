@@ -33,6 +33,10 @@ func (b *Ammunition) Heat() float64 {
 	return (b.WeaponModifier.HeatFactor - 1) * 100
 }
 
+func (b *Ammunition) DurabilityBurnPercent() float64 {
+	return (b.WeaponModifier.DurabilityBurn - 1) * 100
+}
+
 type AmmunitionResult struct {
 	*Result
 	Items []Ammunition `json:"items"`

@@ -52,11 +52,23 @@ func (r *ModificationResult) GetEntities() []Entity {
 // Weapon modifications //
 
 type Auxiliary struct {
-	Modification `bson:",inline"`
+	Modification
 
-	DurabilityBurn float64 `json:"durabilityBurn" bson:"durabilityBurn"`
-	HeatFactor     float64 `json:"heatFactor" bson:"heatFactor"`
-	CoolFactor     float64 `json:"coolFactor" bson:"coolFactor"`
+	DurabilityBurn float64 `json:"durabilityBurn"`
+	HeatFactor     float64 `json:"heatFactor"`
+	CoolFactor     float64 `json:"coolFactor"`
+}
+
+func (a *Auxiliary) DurabilityBurnPercent() float64 {
+	return (a.DurabilityBurn - 1) * 100
+}
+
+func (a *Auxiliary) Heat() float64 {
+	return (1 - a.HeatFactor) * 100
+}
+
+func (a *Auxiliary) Cooling() float64 {
+	return (1 - a.CoolFactor) * 100
 }
 
 type AuxiliaryResult struct {
@@ -83,6 +95,10 @@ type Barrel struct {
 	DurabilityBurn float64 `json:"durabilityBurn"`
 	HeatFactor     float64 `json:"heatFactor"`
 	CoolFactor     float64 `json:"coolFactor"`
+}
+
+func (b *Barrel) DurabilityBurnPercent() float64 {
+	return (b.DurabilityBurn - 1) * 100
 }
 
 func (b *Barrel) AccuracyMoa() float64 {
@@ -208,6 +224,10 @@ type GasBlock struct {
 	CoolFactor     float64 `json:"coolFactor"`
 }
 
+func (g *GasBlock) DurabilityBurnPercent() float64 {
+	return (g.DurabilityBurn - 1) * 100
+}
+
 func (g *GasBlock) Heat() float64 {
 	return (1 - g.HeatFactor) * 100
 }
@@ -319,6 +339,10 @@ type Muzzle struct {
 	CoolFactor     float64 `json:"coolFactor"`
 }
 
+func (m *Muzzle) DurabilityBurnPercent() float64 {
+	return (m.DurabilityBurn - 1) * 100
+}
+
 func (m *Muzzle) Heat() float64 {
 	return (1 - m.HeatFactor) * 100
 }
@@ -375,6 +399,10 @@ type Receiver struct {
 	DurabilityBurn float64 `json:"durabilityBurn"`
 	HeatFactor     float64 `json:"heatFactor"`
 	CoolFactor     float64 `json:"coolFactor"`
+}
+
+func (r *Receiver) DurabilityBurnPercent() float64 {
+	return (r.DurabilityBurn - 1) * 100
 }
 
 func (r *Receiver) Heat() float64 {

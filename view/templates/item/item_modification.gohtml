@@ -109,9 +109,16 @@
 <table>
   <tr>
     <th>Durability Burn</th>
-     <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+     <td>{{ if gt .Entity.DurabilityBurnPercent 0.0 }}+{{ end }}{{ .Entity.DurabilityBurnPercent | printf "%.2f" }} %</td>
   </tr>
   <tr>
+  <tr>
+    <th>Heat</th>
+    <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+  </tr>
+    <th>Cooling</th>
+    <td>{{ if gt .Entity.Cooling 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
+  </tr>
 </table>
 {{ end }}
 
@@ -135,14 +142,14 @@
   </tr>
   <tr>
     <th>Durability Burn</th>
-    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+    <td>{{ if gt .Entity.DurabilityBurnPercent 0.0 }}+{{ end }}{{ .Entity.DurabilityBurnPercent | printf "%.2f" }} %</td>
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Cooling 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -181,14 +188,14 @@
 <table>
   <tr>
     <th>Durability Burn</th>
-    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+    <td>{{ if gt .Entity.DurabilityBurnPercent 0.0 }}+{{ end }}{{ .Entity.DurabilityBurnPercent | printf "%.2f" }} %</td>
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Cooling 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 {{ end }}
 
@@ -196,10 +203,10 @@
 <table>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Cooling 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -221,10 +228,10 @@
 <table>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Cooling 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -249,14 +256,14 @@
   </tr>
   <tr>
     <th>Durability Burn</th>
-    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+    <td>{{ if gt .Entity.DurabilityBurnPercent 0.0 }}+{{ end }}{{ .Entity.DurabilityBurnPercent | printf "%.2f" }} %</td>
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Cooling 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -285,14 +292,14 @@
   </tr>
   <tr>
     <th>Durability Burn</th>
-    <td>{{ if gt .Entity.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.DurabilityBurn 1 | decimalToPercent }} %</td>
+    <td>{{ if gt .Entity.DurabilityBurnPercent 0.0 }}+{{ end }}{{ .Entity.DurabilityBurnPercent | printf "%.2f" }} %</td>
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Cooling 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
@@ -367,10 +374,10 @@
   </tr>
   <tr>
     <th>Heat</th>
-    <td>{{ if gt .Entity.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
   </tr>
     <th>Cooling</th>
-    <td>{{ if gt .Entity.CoolFactor 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
+    <td>{{ if gt .Entity.Cooling 0.0 }}+{{ end }}{{ .Entity.Cooling | printf "%.2f" }} %</td>
   </tr>
 </table>
 {{ end }}
