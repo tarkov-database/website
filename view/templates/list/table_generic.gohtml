@@ -36,20 +36,6 @@
       </th>
       {{ end }}
 
-      {{ if hasQuery $.URI "sort" "price" }}
-      <th class="sorted-by up">
-        <a href="{{ setQuery $.URI "sort" "-price" }}">Base Price</a>
-      </th>
-      {{ else if hasQuery $.URI "sort" "-price" }}
-      <th class="sorted-by down">
-        <a href="{{ setQuery $.URI "sort" "price" }}">Base Price</a>
-      </th>
-      {{ else }}
-      <th>
-        <a href="{{ setQuery $.URI "sort" "price" }}">Base Price</a>
-      </th>
-      {{ end }}
-
       {{ end }}
 
       {{ else }}
@@ -74,8 +60,6 @@
     </td>
 
     <td>{{ .Weight }} kg</td>
-
-    <td>&#8381; {{ .Price }}</td>
     {{ end }}
 
     {{ if eq $.Type.String "location" }}
