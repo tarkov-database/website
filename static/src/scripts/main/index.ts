@@ -29,7 +29,9 @@ const loadImage = async () => {
         }`;
     })();
     const imageID = image.dataset.id;
-    const request = new Request(`${staticURL}/assets/icons/1-1/${imageID}.png`);
+    const request = new Request(
+        `${staticURL}/assets/icons/1-1/512/${imageID}.png`
+    );
 
     try {
         const response = await fetch(request);
