@@ -16,36 +16,52 @@
 
       </div>
 
-      <div class="item-info">
-        <div class="box">
-          <table>
-            <tr>
-              <th>Category</th>
-              <td>
-                {{ $cat := kindToCategory .Entity.Kind }}
-                <a href="/item/{{ $cat }}">
-                  <div class="icon {{ $cat }}">&nbsp;</div>
-                  <span>{{ $cat | categoryToName | toTitle }}</span>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <th>Size</th>
-              <td id="gridSize" data-width="{{ .Entity.Grid.Width }}" data-height="{{ .Entity.Grid.Height }}" title="Width x Height">{{ .Entity.Grid.Width }}x{{ .Entity.Grid.Height }}</td>
-            </tr>
-            <tr>
-              <th>Weight</th>
-              <td>{{ .Entity.Weight }} kg</td>
-            </tr>
-            <tr>
-              <th>Max. Stack</th>
-              <td>{{ .Entity.MaxStack }}</td>
-            </tr>
-          </table>
+      <div class="sidebar">
+        <div class="item-info">
+          <div class="box">
+            <table>
+              <tr>
+                <th>Category</th>
+                <td>
+                  {{ $cat := kindToCategory .Entity.Kind }}
+                  <a href="/item/{{ $cat }}">
+                    <div class="icon {{ $cat }}">&nbsp;</div>
+                    <span>{{ $cat | categoryToName | toTitle }}</span>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <th>Size</th>
+                <td id="gridSize" data-width="{{ .Entity.Grid.Width }}" data-height="{{ .Entity.Grid.Height }}" title="Width x Height">{{ .Entity.Grid.Width }}x{{ .Entity.Grid.Height }}</td>
+              </tr>
+              <tr>
+                <th>Weight</th>
+                <td>{{ .Entity.Weight }} kg</td>
+              </tr>
+              <tr>
+                <th>Max. Stack</th>
+                <td>{{ .Entity.MaxStack }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        {{ template "related_box" . }}
+
+        <div class="sidebar external-links">
+          <div class="box">
+            <h2 class="title">External Links</h2>
+            <ul>
+              <li>
+                <a class="underline" rel="noopener" target="_blank" href="https://escapefromtarkov.fandom.com/wiki/{{ .Entity.Name }}">View on Wiki</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
       {{ template "sub_box" . }}
+
 {{ end }}
 
 {{ define "effects" }}

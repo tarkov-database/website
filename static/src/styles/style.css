@@ -105,8 +105,23 @@ main {
   }
 }
 
+h1,
+h2,
+h3 {
+  color: var(--font-sec-color);
+  filter: brightness(95%);
+}
+
 h1 {
   font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.2rem;
 }
 
 body.modal-opened {

@@ -41,3 +41,17 @@
 
 {{ define "sub_box" }}
 {{ end }}
+
+{{ define "related_box" }}
+<div class="sidebar related-links">
+  <div class="box">
+    <h2 class="title">Related</h2>
+    <ul>
+      <li>
+        <div class="icon grenade">&nbsp;</div>
+        <a class="underline" href="/item/grenade?type={{ .Entity.Type }}">Similar Grenades</a>
+      </li>
+    </ul>
+  </div>
+</div>
+{{ end }}

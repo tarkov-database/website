@@ -23,3 +23,17 @@
 
 {{ define "sub_box" }}
 {{ end }}
+
+{{ define "related_box" }}
+<div class="sidebar related-links">
+  <div class="box">
+    <h2 class="title">Related</h2>
+    <ul>
+      <li>
+        <div class="icon food">&nbsp;</div>
+        <a class="underline" href="/item/food?type={{ .Entity.Type }}">Similar Food</a>
+      </li>
+    </ul>
+  </div>
+</div>
+{{ end }}

@@ -82,8 +82,6 @@ main {
 
 .text h1 {
   margin: 0 0 1rem 0;
-  color: var(--font-sec-color);
-  filter: brightness(95%);
 }
 
 .main .modified-date {
@@ -136,8 +134,15 @@ main {
   padding: 0.4rem 0.8rem;
 }
 
-.item-info {
+.sidebar {
+  box-sizing: border-box;
   flex: 1 auto;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar > div {
+  box-sizing: border-box;
+  width: 100%;
   margin-bottom: 0.5rem;
 }
 
@@ -161,8 +166,29 @@ main {
 }
 
 .item-info .icon {
-  width: 0.9rem;
-  line-height: 0.9rem;
+  width: 1.1rem;
+  line-height: 1.1rem;
+  margin: 0.1rem;
+}
+
+.related-links ul,
+.external-links ul {
+  margin: 0;
+  padding: 0;
+}
+
+.related-links ul {
+  list-style: none;
+}
+
+.related-links li,
+.external-links li {
+  margin: 1rem;
+}
+
+.related-links li .icon {
+  width: 1.1rem;
+  line-height: 1.1rem;
   margin: 0.1rem;
 }
 

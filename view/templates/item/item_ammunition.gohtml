@@ -84,7 +84,7 @@
             </tr>
             <tr>
               <th>Heat</th>
-              <td>{{ if gt .Entity.WeaponModifier.HeatFactor 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
+              <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
             </tr>
           </table>
           {{ end }}
@@ -137,4 +137,26 @@
               <canvas id="ammoTypeChart"></canvas>
             </div>
           </div>
+{{ end }}
+
+{{ define "related_box" }}
+<div class="sidebar related-links">
+  <div class="box">
+    <h2 class="title">Related</h2>
+    <ul>
+      <li>
+        <div class="icon ammunition">&nbsp;</div>
+        <a class="underline" title="Show all ammo with caliber '{{ .Entity.Caliber }}'" href="/item/ammunition?caliber={{ .Entity.Caliber }}">Types of this caliber</a>
+      </li>
+      <li>
+        <div class="icon firearm">&nbsp;</div>
+        <a class="underline" title="Show all firearms with caliber '{{ .Entity.Caliber }}'" href="/item/firearm?caliber={{ .Entity.Caliber }}">Compatible Firearms</a>
+      </li>
+      <li>
+        <div class="icon magazine">&nbsp;</div>
+        <a class="underline" title="Show all magazines with caliber '{{ .Entity.Caliber }}'" href="/item/magazine?caliber={{ .Entity.Caliber }}">Compatible Magazines</a>
+      </li>
+    </ul>    
+  </div>
+</div>
 {{ end }}
