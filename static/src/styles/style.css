@@ -109,6 +109,10 @@ h1 {
   font-size: 1.8rem;
 }
 
+body.modal-opened {
+  overflow: hidden;
+}
+
 .box {
   box-sizing: border-box;
   background-color: var(--bg-third-color);

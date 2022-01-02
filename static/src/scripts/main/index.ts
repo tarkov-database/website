@@ -15,6 +15,48 @@ const registerTabs = () => {
         });
 };
 
+const initImageView = () => {
+    const opener = document.getElementsByClassName(
+        "open-image-view"
+    ) as HTMLCollectionOf<HTMLElement>;
+    if (opener.length === 0) return;
+
+    function remove(element: HTMLElement) {
+        element.remove();
+        document.body.classList.remove("modal-opened");
+    }
+
+    for (const el of opener) {
+        el.addEventListener("click", function (this: HTMLElement) {
+            const url = this.dataset.largeUrl;
+            if (url === undefined) return;
+
+            const view = document.createElement("div");
+            view.classList.add("image-view");
+            view.addEventListener("click", function (this: HTMLDivElement) {
+                remove(this);
+            });
+            document.body.addEventListener(
+                "keydown",
+                function (this: HTMLElement, e: KeyboardEvent) {
+                    if (e.key == "Escape") {
+                        remove(view);
+                    }
+                }
+            );
+
+            const img = document.createElement("img");
+            img.src = url;
+            view.appendChild(img);
+
+            document.body.classList.add("modal-opened");
+            document.body.appendChild(view);
+        });
+
+        el.style.cursor = "pointer";
+    }
+};
+
 const sortTables = () => {
     const tables = document.querySelectorAll<HTMLTableHeaderCellElement>(
         ".sort-table.client-sort thead th"
@@ -140,6 +182,7 @@ const initInteractiveMap = async () => {
     registerTabs();
     sortTables();
     initListFilter();
+    initImageView();
     const map = await initInteractiveMap();
     const form = document.getElementById("search") as HTMLFormElement | null;
     if (form) initSearchSocket(form, map);
