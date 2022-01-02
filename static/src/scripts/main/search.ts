@@ -481,6 +481,7 @@ class Filters {
                 "map",
                 "medical",
                 "melee",
+                "auxiliary",
                 "mod-other",
                 "money",
                 "mount",
