@@ -31,6 +31,11 @@
   line-height: 1.2rem;
   margin: 0.5rem;
   opacity: 0.6;
+  transition: opacity 200ms ease-in;
+}
+
+.header .icon:hover {
+  opacity: 0.8;
 }
 
 .header .icon.selected {
@@ -67,16 +72,15 @@
   display: flex;
   align-items: center;
   margin: 0.3rem;
-  padding: 0.2rem 0.5rem;
-  height: 6rem;
-  max-height: 6rem;
+  padding: 0.2rem 1rem;
+  height: 5rem;
   background-color: var(--bg-fourth-color);
 }
 
 .list .grid li .title {
   color: var(--font-main-color);
   font-weight: bold;
-  margin: 0.2rem 0.8rem;
+  margin: 0.2rem 1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -89,8 +93,7 @@
 
 .list .grid li .icon-image {
   object-fit: contain;
-  width: 4rem;
-  height: auto;
+  width: 3.5rem;
   filter: saturate(70%);
   transition: filter 200ms ease-in;
 }
