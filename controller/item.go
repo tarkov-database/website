@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/tarkov-database/website/core/api"
@@ -59,15 +60,20 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	params := make(map[string]string)
 	switch kind {
 	case item.KindAmmunition:
-		params["type"], params["caliber"] = r.URL.Query().Get("type"), r.URL.Query().Get("caliber")
+		params["caliber"], _ = url.QueryUnescape(r.URL.Query().Get("caliber"))
+		params["type"] = r.URL.Query().Get("type")
 	case item.KindMagazine:
-		params["caliber"] = r.URL.Query().Get("caliber")
+		params["caliber"], _ = url.QueryUnescape(r.URL.Query().Get("caliber"))
 	case item.KindFirearm:
-		params["type"], params["caliber"], params["class"] = r.URL.Query().Get("type"), r.URL.Query().Get("caliber"), r.URL.Query().Get("class")
+		params["manufacturer"], _ = url.QueryUnescape(r.URL.Query().Get("manufacturer"))
+		params["caliber"], _ = url.QueryUnescape(r.URL.Query().Get("caliber"))
+		params["type"], params["class"] = r.URL.Query().Get("type"), r.URL.Query().Get("class")
 	case item.KindArmor:
-		params["type"], params["armor.class"], params["armor.material.name"] = r.URL.Query().Get("type"), r.URL.Query().Get("class"), r.URL.Query().Get("material")
+		params["armor.material.name"], _ = url.QueryUnescape(r.URL.Query().Get("material"))
+		params["type"], params["armor.class"] = r.URL.Query().Get("type"), r.URL.Query().Get("class")
 	case item.KindTacticalrig:
-		params["armored"], params["armor.class"], params["armor.material.name"] = r.URL.Query().Get("armored"), r.URL.Query().Get("class"), r.URL.Query().Get("material")
+		params["armor.material.name"], _ = url.QueryUnescape(r.URL.Query().Get("material"))
+		params["armored"], params["armor.class"] = r.URL.Query().Get("armored"), r.URL.Query().Get("class")
 	case item.KindMedical, item.KindFood, item.KindGrenade, item.KindClothing, item.KindModificationMuzzle, item.KindModificationDevice, item.KindModificationSight, item.KindModificationSightSpecial, item.KindModificationGoggles, item.KindModificationGogglesSpecial:
 		params["type"] = r.URL.Query().Get("type")
 	}
