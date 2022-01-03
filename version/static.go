@@ -36,6 +36,7 @@ func RefreshSumOf(path string) error {
 
 	return nil
 }
+
 func RefreshSumAll() {
 	staticSums = utils.SumDir(staticDir, &utils.SumOptions{
 		BasePath:  staticDir,
