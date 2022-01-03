@@ -15,7 +15,7 @@
             <tr>
               <th>Material</th>
               <td title="{{ if eq .Entity.Armor.Material.Name "uhmwpe" }}Ultra-high-molecular-weight polyethylene{{ end }}">
-                {{ if eq .Entity.Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Entity.Armor.Material.Name | toTitle }}{{ end }}
+                <a class="underline" title="Show all tactical rigs with material '{{ .Entity.Armor.Material.Name }}'" href="/item/tacticalrig?material={{ .Entity.Armor.Material.Name | queryEscape }}">{{ if eq .Entity.Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Entity.Armor.Material.Name | toTitle }}{{ end }}</a>
               </td>
             </tr>
             <tr>

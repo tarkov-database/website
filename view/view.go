@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"sync"
@@ -35,6 +36,7 @@ var (
 		"setQuery":         setQuery,
 		"hasQuery":         hasQuery,
 		"hasPrefix":        hasPrefix,
+		"queryEscape":      url.QueryEscape,
 
 		"appendStaticHash": appendStaticHash,
 		"categoryToName":   item.CategoryToDisplayName,
