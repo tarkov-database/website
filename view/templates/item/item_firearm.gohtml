@@ -1,6 +1,12 @@
 {{ define "properties" }}
           <table>
             <tr>
+              <th>Manufacturer</th>
+              <td>
+                <a class="underline" title="Show all weapons with the same manufacturer" href="/item/firearm?manufacturer={{ .Entity.Manufacturer | queryEscape }}">{{ .Entity.Manufacturer }}</a>
+              </td>
+            </tr>
+            <tr>
               <th>Type</th>
               <td>
                 <a class="underline" title="Show all armor with the same type" href="/item/firearm?type={{ .Entity.Type }}">
@@ -19,7 +25,7 @@
             <tr>
               <th>Caliber</th>
               <td>
-                <a class="underline" title="Show all firearms with caliber '{{ .Entity.Caliber }}'" href="/item/firearm?caliber={{ .Entity.Caliber }}">{{ .Entity.Caliber }}</a>
+                <a class="underline" title="Show all firearms with caliber '{{ .Entity.Caliber }}'" href="/item/firearm?caliber={{ .Entity.Caliber | queryEscape }}">{{ .Entity.Caliber }}</a>
               </td>
             </tr>
             <tr>

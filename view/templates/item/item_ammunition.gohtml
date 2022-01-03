@@ -3,7 +3,7 @@
             <tr>
               <th>Caliber</th>
               <td>
-                <a class="underline" title="Show all ammo with caliber '{{ .Entity.Caliber }}'" href="/item/ammunition?caliber={{ .Entity.Caliber }}">{{ .Entity.Caliber }}</a>
+                <a class="underline" title="Show all ammo with caliber '{{ .Entity.Caliber }}'" href="/item/ammunition?caliber={{ .Entity.Caliber | queryEscape }}">{{ .Entity.Caliber }}</a>
               </td>
             </tr>
             <tr>
@@ -60,7 +60,6 @@
           </table>
           {{ end }}
 
-          {{ if or .Entity.WeaponModifier.Accuracy .Entity.WeaponModifier.Recoil .Entity.WeaponModifier.DurabilityBurn }}
           <table>
             <tr>
               <th>Accuracy</th>
@@ -87,7 +86,6 @@
               <td>{{ if gt .Entity.Heat 0.0 }}+{{ end }}{{ .Entity.Heat | printf "%.2f" }} %</td>
             </tr>
           </table>
-          {{ end }}
 
           {{ if or .Entity.Effects.LightBleedingChance .Entity.Effects.HeavyBleedingChance }}
           <table>

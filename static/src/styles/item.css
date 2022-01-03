@@ -134,6 +134,10 @@ main {
   padding: 0.4rem 0.8rem;
 }
 
+.prop td {
+  max-width: 10rem;
+}
+
 .sidebar {
   box-sizing: border-box;
   flex: 1 auto;
