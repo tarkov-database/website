@@ -32,6 +32,7 @@ var clothingFilter = Filter{
 		"eyewear",
 		"faceCover",
 		"headwear",
+		"armband",
 		"unknown",
 	},
 }
