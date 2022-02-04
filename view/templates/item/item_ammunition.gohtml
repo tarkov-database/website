@@ -71,7 +71,7 @@
             </tr>
             <tr>
               <th>Durability Burn</th>
-              <td>{{ if gt .Entity.WeaponModifier.DurabilityBurn 0.0 }}+{{ end }}{{ subtractFloat .Entity.WeaponModifier.DurabilityBurn 1 | decimalToPercent }} %</td>
+              <td>{{ if gt .Entity.DurabilityBurnPercent 0.0 }}+{{ end }}{{ .Entity.DurabilityBurnPercent | printf "%.2f" }} %</td>
             </tr>
             <tr>
               <th>Misfire Chance</th>
