@@ -3,7 +3,7 @@ module github.com/tarkov-database/website/bundler
 go 1.17
 
 require (
-	github.com/evanw/esbuild v0.14.13
+	github.com/evanw/esbuild v0.14.20
 	github.com/fsnotify/fsnotify v1.5.1
 	github.com/google/logger v1.1.1
 )
