@@ -7,7 +7,7 @@ import {
     Tooltip,
     Legend,
     ChartConfiguration,
-    ScatterDataPoint,
+    // ScatterDataPoint,
     PointElement,
     LineElement,
     TooltipItem,
