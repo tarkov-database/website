@@ -25,7 +25,7 @@ warningCode = 0
 [rule.indent-error-flow]
 [rule.errorf]
 [rule.argument-limit]
-arguments = [4]
+arguments = [5]
 [rule.function-result-limit]
 arguments = [3]
 [rule.empty-block]
