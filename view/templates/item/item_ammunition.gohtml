@@ -105,34 +105,36 @@
 {{ define "sub_box" }}
           <div class="box sub">
             <div class="table-big">
-              <table class="item-table sort-table client-sort ammo">
-                <caption>Types of {{ .Entity.Caliber }}</caption>
+              <table class="item-table ammo">
+                <caption>Range Card</caption>
                 <thead>
-                  <tr title="Sort by">
-                    <th>Name</th>
-                    <th>Damage</th>
-                    <th class="sorted-by down">Penetration</th>
-                    <th>Armor Damage</th>
-                    <th>Fragmentation</th>
+                  <tr>
+                    <th id="range">Range</th>
+                    <th id="velocity">Velocity</th>
+                    <th id="damage">Damage</th>
+                    <th id="penetrationPower">Penetration Power</th>
+                    <th id="drop">Drop</th>
+                    <th id="timeOfFlight">Time Of Flight</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {{ $result := getAmmunitionByCaliber .Entity.Caliber "-penetration" 100 }}
-                  {{ range $result.Items }}
-                  <tr {{ if eq .ID $.Entity.ID }}title="Current selection" class="selected"{{ end }} data-name="{{ .ShortName }}" data-projectilecount="{{ .Projectiles }}" data-damage="{{ .Damage }}" data-penetration="{{ .Penetration }}" data-armordamage="{{ .ArmorDamage }}">
-                    <td><a title="{{ .Name }}" href="/item/ammunition/{{ .ID }}">{{ .ShortName }}</a></td>
-                    <td data-value="{{ .Damage }}">{{ .Damage }} {{ if gt .Projectiles 1 }}({{ .Projectiles }}x){{ end }}</td>
-                    <td data-value="{{ .Penetration }}">{{ .Penetration }}</td>
-                    <td data-value="{{ .ArmorDamage }}">{{ .ArmorDamage }} %</td>
-                    <td data-value="{{ .Fragmentation.Chance }}" title="{{ .Fragmentation.Min }}{{ if ne .Fragmentation.Min .Fragmentation.Max }} - {{ .Fragmentation.Max }}{{ end }} Fragment(s)">{{ .Fragmentation.Chance | decimalToPercent }} %</td>
-                  </tr>
+                  {{ $stats := getAmmunitionRangeData .Entity }}
+                  {{ range $stats }}
+                  <tr>
+                    <th id="{{ .Distance }}m" data-value="{{ .Distance }}">{{ .Distance }} m</th>
+                    <td headers="velocity {{ .Distance }}m" data-value="{{ .Velocity }}">{{ .Velocity | printf "%.2f" }} m/s</td>
+                    <td headers="damage {{ .Distance }}m" data-value="{{ .Damage }}">{{ .Damage | printf "%.2f" }}</td>
+                    <td headers="penetrationPower {{ .Distance }}m" data-value="{{ .PenetrationPower }}">{{ .PenetrationPower | printf "%.2f" }}</td>
+                    <td headers="drop {{ .Distance }}m" data-value="{{ multiplyFloat .Drop 100 }}">{{ multiplyFloat .Drop 100 | printf "%.2f" }} cm</td>
+                    <td headers="timeOfFlight {{ .Distance }}m" data-value="{{ .TimeOfFlight }}">{{ .TimeOfFlight | printf "%.2f" }} s</td>
+                </tr>
                   {{ end }}
                 </tbody>
               </table>
             </div>
 
             <div class="chart ammo">
-              <canvas id="ammoTypeChart"></canvas>
+              <canvas id="ammoRangeChart"></canvas>
             </div>
           </div>
 {{ end }}

@@ -37,6 +37,7 @@ var (
 		"hasQuery":         hasQuery,
 		"hasPrefix":        hasPrefix,
 		"queryEscape":      url.QueryEscape,
+		"toBase64":         toBase64,
 
 		"appendStaticHash": appendStaticHash,
 		"categoryToName":   item.CategoryToDisplayName,
@@ -45,6 +46,7 @@ var (
 		// Get entities
 		"getItem":                getItem,
 		"getAmmunitionByCaliber": getAmmunitionByCaliber,
+		"getAmmunitionRangeData": getAmmunitionRangeData,
 		"resolveItemList":        resolveItemList,
 		"resolveSlots":           resolveSlots,
 	}

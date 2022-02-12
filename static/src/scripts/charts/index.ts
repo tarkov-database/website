@@ -59,6 +59,126 @@ interface CustomScatterPoint extends ScatterDataPoint {
     label: string;
 }
 
+const ammoRangeChart = () => {
+    const ctx = document.getElementById("ammoRangeChart") as HTMLCanvasElement;
+    if (ctx === null) return;
+
+    const labels: string[] = [];
+    const damage: number[] = [];
+    const penetration: number[] = [];
+
+    const config: ChartConfiguration<"line"> = {
+        type: "line",
+        data: {
+            labels,
+            datasets: [
+                {
+                    label: "Damage",
+                    borderColor: fontMainColor,
+                    backgroundColor: fontMainColor,
+                    tension: 0.1,
+                    data: damage,
+                },
+                {
+                    label: "Penetration Power",
+                    borderColor: fontMainColor,
+                    backgroundColor: fontMainColor,
+                    tension: 0.1,
+                    borderDash: [5, 5],
+                    data: penetration,
+                },
+            ],
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: true,
+                },
+                tooltip: {
+                    backgroundColor: bgMainColor,
+                    titleColor: fontSecColor,
+                    callbacks: {
+                        label: ({
+                            dataset,
+                            formattedValue,
+                        }: TooltipItem<"line">) => {
+                            return `${formattedValue} ${dataset.label}`;
+                        },
+                    },
+                },
+            },
+            interaction: {
+                mode: "nearest",
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: "Range (m)",
+                    },
+                    grid: {
+                        color: "rgba(150, 136, 103, .1)",
+                        drawBorder: false,
+                    },
+                    ticks: {
+                        sampleSize: 10,
+                    },
+                    type: "linear",
+                    position: "bottom",
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: "Value",
+                    },
+                    grid: {
+                        color: "rgba(150, 136, 103, .1)",
+                        drawBorder: false,
+                    },
+                },
+            },
+        },
+    };
+
+    const range = document.querySelectorAll<HTMLTableRowElement>(
+        ".item-table.ammo tr"
+    );
+    for (const distance of range) {
+        const cells = distance.cells;
+        if (!cells[0].dataset.value) continue;
+
+        const label = cells[0].dataset.value;
+        const dmg = parseFloat(cells[2].dataset.value ?? "");
+        const pen = parseFloat(cells[3].dataset.value ?? "");
+
+        labels.push(label);
+        damage.push(dmg);
+        penetration.push(pen);
+    }
+
+    const element = document.querySelector<HTMLElement>(".chart.ammo");
+    if (element === null) return;
+
+    const intersectionHandler = (entries: IntersectionObserverEntry[]) =>
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                new Chart(ctx, config);
+                observer.unobserve(element);
+            }
+        });
+
+    const intersectionOptions = { threshold: 0.3 };
+
+    const observer = new IntersectionObserver(
+        intersectionHandler,
+        intersectionOptions
+    );
+
+    observer.observe(element);
+};
+
+ammoRangeChart();
+
 const ammoTypeChart = () => {
     const ctx = document.getElementById("ammoTypeChart") as HTMLCanvasElement;
     if (ctx === null) return;
@@ -163,5 +283,3 @@ const ammoTypeChart = () => {
 
     observer.observe(element);
 };
-
-ammoTypeChart();

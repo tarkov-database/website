@@ -1,6 +1,8 @@
 package view
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"math"
 	"net/url"
@@ -12,6 +14,7 @@ import (
 
 	"github.com/tarkov-database/website/core/api"
 	"github.com/tarkov-database/website/model/item"
+	"github.com/tarkov-database/website/model/statistic"
 	"github.com/tarkov-database/website/version"
 
 	"github.com/google/logger"
@@ -188,6 +191,15 @@ func camelToTitle(s string) string {
 	return strings.Title(regexUpperCase.ReplaceAllString(s, " $1"))
 }
 
+func toBase64(v interface{}) string {
+	j, err := json.Marshal(v)
+	if err != nil {
+		logger.Error(err)
+	}
+
+	return base64.StdEncoding.EncodeToString(j)
+}
+
 func getItem(id string, kind item.Kind) item.Entity {
 	result, err := item.GetItem(id, kind)
 	if err != nil {
@@ -222,6 +234,46 @@ func getAmmunitionByCaliber(caliber, sort string, limit int) item.EntityResult {
 	}
 
 	return result
+}
+
+func getAmmunitionRangeData(ammo *item.Ammunition) []statistic.AmmoDistanceStatistics {
+	max := 1000
+
+	switch {
+	case ammo.Type == "buckshot":
+		max = 100
+	case ammo.Subsonic:
+		max = 500
+	}
+
+	ids := []string{ammo.ID}
+
+	result, err := statistic.GetAmmoDistanceStatistics(ids, 0, uint64(max), 100)
+	if err != nil {
+		logger.Error(err)
+		return nil
+	}
+
+	switch {
+	case max > 300 && result.Items[30].Drop < -16:
+		max = 300
+	case max > 500 && result.Items[50].Drop < -24:
+		max = 500
+	}
+
+	if max/10 > len(result.Items) {
+		max = len(result.Items) * 10
+	}
+
+	steps := int(max / 10)
+	items := make([]statistic.AmmoDistanceStatistics, 0, 10)
+	for _, v := range result.Items[:steps] {
+		if int(v.Distance)%steps == 0 {
+			items = append(items, v)
+		}
+	}
+
+	return items
 }
 
 type resolvedSlots map[string]resolvedItemList
