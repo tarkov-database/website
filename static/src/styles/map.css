@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@import "mapbox-gl/dist/mapbox-gl.css";
+@import "maplibre-gl/dist/maplibre-gl.css";
 
 :root {
   /* layer colors */

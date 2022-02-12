@@ -22,10 +22,10 @@
   "dependencies": {
     "@turf/length": "^6.5.0",
     "chart.js": "^3.7.0",
-    "mapbox-gl": ">=1.13.0 <2.0.0"
+    "maplibre-gl": ">=2.1.6"
   },
   "devDependencies": {
-    "@types/mapbox-gl": ">=1.12.9 <2.0.0",
+    "@types/geojson": "^7946.0.8",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "eslint": "^8.3.0",

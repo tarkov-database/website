@@ -1,12 +1,13 @@
 import {
-    AnyLayer,
     GeoJSONSource,
+    LayerSpecification,
     LngLat,
-    Map as MapboxMap,
+    LngLatBoundsLike,
+    Map as MaplibreMap,
     MapMouseEvent,
     Popup,
-    Style,
-} from "mapbox-gl";
+    StyleSpecification,
+} from "maplibre-gl";
 import {
     FeatureCollection,
     Feature,
@@ -27,7 +28,7 @@ const layerColors: { [key: string]: string } = {
     cache: getCSSVariable("--layer-cache-color"),
 };
 
-let map: MapboxMap;
+let map: MaplibreMap;
 const loadedLayers: Map<string, ActiveLayer> = new Map();
 
 export let locationID = "";
@@ -131,7 +132,7 @@ const enableMeasureLines = () => {
         type: "circle",
         source: sourceID,
         paint: {
-            "circle-radius": 5,
+            "circle-radius": 9,
             "circle-color": "rgb(157, 59, 255)",
         },
         filter: ["in", "$type", "Point"],
@@ -267,7 +268,7 @@ const getRandomLayerColor = () => {
     return `hsl(${h}, ${s}%, ${l}%)`;
 };
 
-const addLayer = (name: string, layer: AnyLayer) => {
+const addLayer = (name: string, layer: LayerSpecification) => {
     const id = layer["id"];
 
     map.addLayer(layer);
@@ -407,13 +408,7 @@ const getFeaturesByText = async (keyword: string) => {
                 visibility: "none",
             },
             paint: {
-                "circle-radius": {
-                    base: 3,
-                    stops: [
-                        [0, 7],
-                        [22, 18],
-                    ],
-                },
+                "circle-radius": 10,
                 "circle-color": layerColors[id],
             },
         });
@@ -481,13 +476,7 @@ const addGroupLayer = async (group: FeatureGroup) => {
             visibility: "visible",
         },
         paint: {
-            "circle-radius": {
-                base: 2,
-                stops: [
-                    [0, 7],
-                    [22, 18],
-                ],
-            },
+            "circle-radius": 8,
             "circle-color": color,
         },
     });
@@ -565,7 +554,7 @@ export const init = async (el: HTMLElement): Promise<void> => {
     const lID = el.dataset.id || "";
     locationID = lID;
 
-    let style: Style;
+    let style: StyleSpecification;
     try {
         const url = new URL(
             `/resources/style/${lID}.json`,
@@ -577,10 +566,18 @@ export const init = async (el: HTMLElement): Promise<void> => {
         return Promise.reject(err);
     }
 
-    map = new MapboxMap({
+    if (!style.metadata) {
+        throw Error("missing style metadata");
+    }
+
+    const maxBounds = (style.metadata as { [key: string]: any })[
+        "mapbox:maxBounds"
+    ] as LngLatBoundsLike;
+
+    map = new MaplibreMap({
         container: el.id,
         style,
-        maxBounds: style.metadata["mapbox:maxBounds"],
+        maxBounds,
         antialias: true,
         doubleClickZoom: false,
     });
