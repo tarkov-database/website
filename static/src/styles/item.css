@@ -265,6 +265,7 @@ body .image-view img {
 .sub .tab {
   display: none;
   width: 100%;
+  padding-top: 0.5rem;
 }
 
 .sub .tab.active {

@@ -7,7 +7,7 @@ import {
     Tooltip,
     Legend,
     ChartConfiguration,
-    // ScatterDataPoint,
+    ScatterDataPoint,
     PointElement,
     LineElement,
     TooltipItem,
@@ -53,11 +53,11 @@ defaults.elements.point = <PointOptions & PointHoverOptions>{
     hoverRadius: 5,
 };
 
-// interface CustomScatterPoint extends ScatterDataPoint {
-//     x: number;
-//     y: number;
-//     label: string;
-// }
+interface CustomScatterPoint extends ScatterDataPoint {
+    x: number;
+    y: number;
+    label: string;
+}
 
 const ammoRangeChart = () => {
     const ctx = document.getElementById("ammoRangeChart") as HTMLCanvasElement;
@@ -179,107 +179,109 @@ const ammoRangeChart = () => {
 
 ammoRangeChart();
 
-// const ammoTypeChart = () => {
-//     const ctx = document.getElementById("ammoTypeChart") as HTMLCanvasElement;
-//     if (ctx === null) return;
+const ammoTypeChart = () => {
+    const ctx = document.getElementById("ammoTypeChart") as HTMLCanvasElement;
+    if (ctx === null) return;
 
-//     const points: CustomScatterPoint[] = [];
+    const points: CustomScatterPoint[] = [];
 
-//     const config: ChartConfiguration<"scatter"> = {
-//         type: "scatter",
-//         data: {
-//             labels: [],
-//             datasets: [
-//                 {
-//                     borderColor: fontMainColor,
-//                     backgroundColor: fontMainColor,
-//                     data: points,
-//                 },
-//             ],
-//         },
-//         options: {
-//             plugins: {
-//                 legend: {
-//                     display: false,
-//                 },
-//                 tooltip: {
-//                     backgroundColor: bgMainColor,
-//                     titleColor: fontSecColor,
-//                     callbacks: {
-//                         label: ({
-//                             dataset,
-//                             dataIndex,
-//                         }: TooltipItem<"scatter">) => {
-//                             const data = dataset.data[
-//                                 dataIndex
-//                             ] as CustomScatterPoint;
-//                             return `${data.label} (PEN: ${data.x}, DMG: ${data.y})`;
-//                         },
-//                     },
-//                 },
-//             },
-//             scales: {
-//                 x: {
-//                     title: {
-//                         display: true,
-//                         text: "Penetration",
-//                     },
-//                     grid: {
-//                         color: "rgba(150, 136, 103, .1)",
-//                         drawBorder: false,
-//                     },
-//                     type: "linear",
-//                     position: "bottom",
-//                 },
-//                 y: {
-//                     title: {
-//                         display: true,
-//                         text: "Damage",
-//                     },
-//                     grid: {
-//                         color: "rgba(150, 136, 103, .1)",
-//                         drawBorder: false,
-//                     },
-//                 },
-//             },
-//         },
-//     };
+    const config: ChartConfiguration<"scatter"> = {
+        type: "scatter",
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    borderColor: fontMainColor,
+                    backgroundColor: fontMainColor,
+                    data: points,
+                },
+            ],
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    backgroundColor: bgMainColor,
+                    titleColor: fontSecColor,
+                    callbacks: {
+                        label: ({
+                            dataset,
+                            dataIndex,
+                        }: TooltipItem<"scatter">) => {
+                            const data = dataset.data[
+                                dataIndex
+                            ] as CustomScatterPoint;
+                            return `${data.label} (PEN: ${data.x}, DMG: ${data.y})`;
+                        },
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: "Penetration",
+                    },
+                    grid: {
+                        color: "rgba(150, 136, 103, .1)",
+                        drawBorder: false,
+                    },
+                    type: "linear",
+                    position: "bottom",
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: "Damage",
+                    },
+                    grid: {
+                        color: "rgba(150, 136, 103, .1)",
+                        drawBorder: false,
+                    },
+                },
+            },
+        },
+    };
 
-//     const types = document.querySelectorAll<HTMLTableRowElement>(
-//         ".item-table.ammo tr"
-//     );
-//     for (const type of types) {
-//         if (!type.dataset.name) continue;
+    const types = document.querySelectorAll<HTMLTableRowElement>(
+        ".item-table.ammo tr"
+    );
+    for (const type of types) {
+        if (!type.dataset.name) continue;
 
-//         const pen = parseInt(type.dataset.penetration ?? "");
-//         const dmg = parseInt(type.dataset.damage ?? "");
-//         const count = parseInt(type.dataset.projectilecount ?? "");
-//         const data: CustomScatterPoint = {
-//             x: pen,
-//             y: count * dmg || dmg,
-//             label: type.dataset.name,
-//         };
+        const pen = parseInt(type.dataset.penetration ?? "");
+        const dmg = parseInt(type.dataset.damage ?? "");
+        const count = parseInt(type.dataset.projectilecount ?? "");
+        const data: CustomScatterPoint = {
+            x: pen,
+            y: count * dmg || dmg,
+            label: type.dataset.name,
+        };
 
-//         points.push(data);
-//     }
+        points.push(data);
+    }
 
-//     const element = document.querySelector<HTMLElement>(".chart.ammo");
-//     if (element === null) return;
+    const element = document.querySelector<HTMLElement>(".chart.ammo");
+    if (element === null) return;
 
-//     const intersectionHandler = (entries: IntersectionObserverEntry[]) =>
-//         entries.forEach((entry) => {
-//             if (entry.isIntersecting) {
-//                 new Chart(ctx, config);
-//                 observer.unobserve(element);
-//             }
-//         });
+    const intersectionHandler = (entries: IntersectionObserverEntry[]) =>
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                new Chart(ctx, config);
+                observer.unobserve(element);
+            }
+        });
 
-//     const intersectionOptions = { threshold: 0.3 };
+    const intersectionOptions = { threshold: 0.3 };
 
-//     const observer = new IntersectionObserver(
-//         intersectionHandler,
-//         intersectionOptions
-//     );
+    const observer = new IntersectionObserver(
+        intersectionHandler,
+        intersectionOptions
+    );
 
-//     observer.observe(element);
-// };
+    observer.observe(element);
+};
+
+ammoTypeChart();
