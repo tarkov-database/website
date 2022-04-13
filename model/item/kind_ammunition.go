@@ -99,6 +99,7 @@ var calibers = [...]string{
 	"9x18mm Makarov",
 	"9x19mm Parabellum",
 	"9x21mm Gyurza",
+	"9x33mmR",
 	"9x39mm",
 	"HK 4.6x30mm",
 }
