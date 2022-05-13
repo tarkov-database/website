@@ -427,7 +427,7 @@
 {{ end }}
 
 {{ define "penalties" }}
-{{ if or .Entity.Penalties.Mouse .Entity.Penalties.Speed .Entity.Penalties.Ergonomics }}
+{{ if or .Entity.Penalties.Mouse .Entity.Penalties.Speed .Entity.Penalties.Ergonomics .Entity.Penalties.Deafness }}
 <table>
   {{ if .Entity.Penalties.Mouse }}
   <tr>
