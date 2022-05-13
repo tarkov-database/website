@@ -64,11 +64,11 @@ func (a *Auxiliary) DurabilityBurnPercent() float64 {
 }
 
 func (a *Auxiliary) Heat() float64 {
-	return (1 - a.HeatFactor) * 100
+	return (a.HeatFactor - 1) * 100
 }
 
 func (a *Auxiliary) Cooling() float64 {
-	return (1 - a.CoolFactor) * 100
+	return (a.CoolFactor - 1) * 100
 }
 
 type AuxiliaryResult struct {
@@ -106,11 +106,11 @@ func (b *Barrel) AccuracyMoa() float64 {
 }
 
 func (b *Barrel) Heat() float64 {
-	return (1 - b.HeatFactor) * 100
+	return (b.HeatFactor - 1) * 100
 }
 
 func (b *Barrel) Cooling() float64 {
-	return (1 - b.CoolFactor) * 100
+	return (b.CoolFactor - 1) * 100
 }
 
 type BarrelResult struct {
@@ -229,11 +229,11 @@ func (g *GasBlock) DurabilityBurnPercent() float64 {
 }
 
 func (g *GasBlock) Heat() float64 {
-	return (1 - g.HeatFactor) * 100
+	return (g.HeatFactor - 1) * 100
 }
 
 func (g *GasBlock) Cooling() float64 {
-	return (1 - g.CoolFactor) * 100
+	return (g.CoolFactor - 1) * 100
 }
 
 type GasBlockResult struct {
@@ -258,11 +258,11 @@ type Handguard struct {
 }
 
 func (h *Handguard) Heat() float64 {
-	return (1 - h.HeatFactor) * 100
+	return (h.HeatFactor - 1) * 100
 }
 
 func (h *Handguard) Cooling() float64 {
-	return (1 - h.CoolFactor) * 100
+	return (h.CoolFactor - 1) * 100
 }
 
 type HandguardResult struct {
@@ -307,11 +307,11 @@ type Mount struct {
 }
 
 func (m *Mount) Heat() float64 {
-	return (1 - m.HeatFactor) * 100
+	return (m.HeatFactor - 1) * 100
 }
 
 func (m *Mount) Cooling() float64 {
-	return (1 - m.CoolFactor) * 100
+	return (m.CoolFactor - 1) * 100
 }
 
 type MountResult struct {
@@ -344,11 +344,11 @@ func (m *Muzzle) DurabilityBurnPercent() float64 {
 }
 
 func (m *Muzzle) Heat() float64 {
-	return (1 - m.HeatFactor) * 100
+	return (m.HeatFactor - 1) * 100
 }
 
 func (m *Muzzle) Cooling() float64 {
-	return (1 - m.CoolFactor) * 100
+	return (m.CoolFactor - 1) * 100
 }
 
 type MuzzleResult struct {
@@ -406,11 +406,11 @@ func (r *Receiver) DurabilityBurnPercent() float64 {
 }
 
 func (r *Receiver) Heat() float64 {
-	return (1 - r.HeatFactor) * 100
+	return (r.HeatFactor - 1) * 100
 }
 
 func (r *Receiver) Cooling() float64 {
-	return (1 - r.CoolFactor) * 100
+	return (r.CoolFactor - 1) * 100
 }
 
 type ReceiverResult struct {
@@ -494,11 +494,11 @@ type Stock struct {
 }
 
 func (s *Stock) Heat() float64 {
-	return (1 - s.HeatFactor) * 100
+	return (s.HeatFactor - 1) * 100
 }
 
 func (s *Stock) Cooling() float64 {
-	return (1 - s.CoolFactor) * 100
+	return (s.CoolFactor - 1) * 100
 }
 
 type StockResult struct {
