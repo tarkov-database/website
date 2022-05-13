@@ -6,7 +6,7 @@
             <img loading="lazy" src="https://storage.tarkov-database.com/assets/icons/1-1/256/{{ .Entity.ID }}.png" alt="Item image">
           </div>
           <time class="modified-date" itemprop="dateModified" datetime="{{ formatTime "RFC3339" .Entity.Modified.Time }}" title="Modified date in TT.MM.YYYY HH:MM">{{ formatTime "02.01.2006 15:04" .Entity.Modified.Time }}</time>
-          <h1 itemprop="name">{{ .Entity.Name }}</h1>
+          <h1 itemprop="name">{{ .Entity.Name }} ({{ .Entity.ShortName }})</h1>
           <p itemprop="description">{{ .Entity.Description }}</p>
         </div>
 
