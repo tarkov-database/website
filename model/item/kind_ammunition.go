@@ -84,6 +84,7 @@ var calibers = [...]string{
 	"12ga",
 	"20ga",
 	"23x75mmR",
+	"26.5x75mm",
 	"30x29mm",
 	"40mmRU",
 	"40x46mm",
