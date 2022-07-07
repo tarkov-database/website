@@ -452,6 +452,7 @@ func (r *SightResult) GetEntities() []Entity {
 
 var modSightFilter = Filter{
 	"type": {
+		"holographic",
 		"hybrid",
 		"iron",
 		"reflex",
