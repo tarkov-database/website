@@ -1,6 +1,6 @@
 module github.com/tarkov-database/website
 
-go 1.18
+go 1.19
 
 replace github.com/tarkov-database/website/bundler => ./bundler
 
