@@ -259,6 +259,7 @@ func getAmmunitionRangeData(ammo *item.Ammunition) []statistic.AmmoDistanceStati
 	}
 
 	switch {
+	case result.Count < 30:
 	case max > 300 && result.Items[30].Drop < -16:
 		max = 300
 	case max > 500 && result.Items[50].Drop < -24:
