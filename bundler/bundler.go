@@ -25,7 +25,6 @@ var defaultOptions = api.BuildOptions{
 	Format:            api.FormatESModule,
 	MainFields:        []string{"module", "browser", "main"},
 	External:          []string{"../fonts/*", "../img/*"},
-	Incremental:       false,
 	Write:             true,
 }
 
@@ -49,7 +48,7 @@ func Build(source string, out string, opts *BuildOptions) error {
 
 	for _, b := range bundles {
 		go func(b bundle) {
-			newBuild(b, options)
+			newContext(b, options)
 			wg.Done()
 		}(b)
 	}
@@ -66,7 +65,6 @@ func Watch(source string, out string, opts *BuildOptions) (chan BuildEvent, erro
 	}
 
 	options := defaultOptions
-	options.Incremental = true
 	if opts != nil && !opts.Sourcemap {
 		options.Sourcemap = api.SourceMapNone
 	}
@@ -88,7 +86,12 @@ func Watch(source string, out string, opts *BuildOptions) (chan BuildEvent, erro
 				key = b.entryPoint
 			}
 
-			builder := newBuilder(newBuild(b, options), events)
+			ctx, err := newContext(b, options)
+			if err != nil {
+				logger.Error(err)
+			}
+
+			builder := newBuilder(ctx, events)
 
 			mutex.Lock()
 			builders[key] = builder
@@ -145,14 +148,16 @@ func getBundles(dir string, out string) ([]bundle, error) {
 	return bundles, nil
 }
 
-func newBuild(b bundle, opts api.BuildOptions) *api.BuildResult {
+func newContext(b bundle, opts api.BuildOptions) (api.BuildContext, error) {
 	opts.EntryPoints = []string{b.entryPoint}
 	opts.Outfile = b.outFile
 
-	result := api.Build(opts)
-	logMessages(&result)
+	ctx, err := api.Context(opts)
+	if err != nil {
+		return nil, err
+	}
 
-	return &result
+	return ctx, nil
 }
 
 func logMessages(result *api.BuildResult) {
@@ -180,14 +185,15 @@ type BuildEvent struct {
 }
 
 type builder struct {
-	delay  time.Duration
-	build  *api.BuildResult
-	ticker *time.Ticker
-	events chan BuildEvent
-	close  chan bool
+	delay   time.Duration
+	context api.BuildContext
+	ticker  *time.Ticker
+	events  chan BuildEvent
+	close   chan bool
 }
 
 func (b *builder) Close() {
+	b.context.Dispose()
 	close(b.close)
 }
 
@@ -211,7 +217,7 @@ func (b *builder) Rebuild() {
 
 				start := time.Now()
 
-				res := b.build.Rebuild()
+				res := b.context.Rebuild()
 
 				elapsed := time.Since(start)
 
@@ -235,8 +241,6 @@ func (b *builder) Rebuild() {
 					b.events <- BuildEvent{Filename: file}
 				}
 
-				b.build = &res
-
 				b.ticker.Stop()
 			case <-b.close:
 				return
@@ -245,12 +249,12 @@ func (b *builder) Rebuild() {
 	}()
 }
 
-func newBuilder(result *api.BuildResult, events chan BuildEvent) *builder {
+func newBuilder(ctx api.BuildContext, events chan BuildEvent) *builder {
 	return &builder{
-		delay:  300 * time.Millisecond,
-		build:  result,
-		events: events,
-		close:  make(chan bool, 1),
+		delay:   300 * time.Millisecond,
+		context: ctx,
+		events:  events,
+		close:   make(chan bool, 1),
 	}
 }
 
