@@ -118,7 +118,9 @@ const ammoRangeChart = () => {
                     },
                     grid: {
                         color: "rgba(150, 136, 103, .1)",
-                        drawBorder: false,
+                    },
+                    border: {
+                        display: false,
                     },
                     ticks: {
                         sampleSize: 10,
@@ -133,7 +135,9 @@ const ammoRangeChart = () => {
                     },
                     grid: {
                         color: "rgba(150, 136, 103, .1)",
-                        drawBorder: false,
+                    },
+                    border: {
+                        display: false,
                     },
                 },
             },
@@ -226,7 +230,9 @@ const ammoTypeChart = () => {
                     },
                     grid: {
                         color: "rgba(150, 136, 103, .1)",
-                        drawBorder: false,
+                    },
+                    border: {
+                        display: false,
                     },
                     type: "linear",
                     position: "bottom",
@@ -238,7 +244,9 @@ const ammoTypeChart = () => {
                     },
                     grid: {
                         color: "rgba(150, 136, 103, .1)",
-                        drawBorder: false,
+                    },
+                    border: {
+                        display: false,
                     },
                 },
             },
