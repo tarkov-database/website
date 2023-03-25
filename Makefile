@@ -53,3 +53,4 @@ run: debug
 clean:
 	-@rm ${OUT}
 	-@rm -rf node_modules
+	-@rm -rf static/dist/*
