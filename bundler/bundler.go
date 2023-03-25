@@ -48,7 +48,8 @@ func Build(source string, out string, opts *BuildOptions) error {
 
 	for _, b := range bundles {
 		go func(b bundle) {
-			newContext(b, options)
+			res := newBuild(b, options)
+			logMessages(&res)
 			wg.Done()
 		}(b)
 	}
@@ -146,6 +147,15 @@ func getBundles(dir string, out string) ([]bundle, error) {
 	}
 
 	return bundles, nil
+}
+
+func newBuild(b bundle, opts api.BuildOptions) api.BuildResult {
+	opts.EntryPoints = []string{b.entryPoint}
+	opts.Outfile = b.outFile
+
+	result := api.Build(opts)
+
+	return result
 }
 
 func newContext(b bundle, opts api.BuildOptions) (api.BuildContext, error) {
