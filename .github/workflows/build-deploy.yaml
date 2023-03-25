@@ -60,6 +60,8 @@ jobs:
           location: '${{ secrets.GC_GKE_CLUSTER_LOCATION }}'
 
       - name: Deploy image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
         run: kubectl -n ${NAMESPACE} set image deployment/${DEPLOYMENT} ${CONTAINER}=ghcr.io/${GITHUB_REPOSITORY}:${IMAGE_TAG}
 
       - name: Check rollout
