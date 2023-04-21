@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "golang.go",
+        "casualjim.gotemplate",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+    ]
+}
