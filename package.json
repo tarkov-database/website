@@ -2,7 +2,7 @@
   "name": "tarkov-database-website",
   "version": "0.1.0",
   "engines": {
-    "node": ">=19 <20"
+    "node": ">=20 <21"
   },
   "scripts": {
     "lint": "eslint static/src && prettier --check static/src",
