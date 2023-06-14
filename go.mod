@@ -10,13 +10,13 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/tarkov-database/website/bundler v0.0.0-20230421142219-0be91592f10e
 	github.com/zeebo/blake3 v0.2.3
-	golang.org/x/net v0.9.0
-	golang.org/x/text v0.9.0
+	golang.org/x/net v0.11.0
+	golang.org/x/text v0.10.0
 )
 
 require (
 	github.com/evanw/esbuild v0.17.18 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.12 // indirect
-	golang.org/x/sys v0.7.0 // indirect
+	golang.org/x/sys v0.9.0 // indirect
 )
