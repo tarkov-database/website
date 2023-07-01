@@ -2,7 +2,6 @@ package view
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"math"
 	"net/url"
@@ -17,6 +16,7 @@ import (
 	"github.com/tarkov-database/website/model/statistic"
 	"github.com/tarkov-database/website/version"
 
+	"github.com/goccy/go-json"
 	"github.com/google/logger"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"

@@ -1,10 +1,11 @@
 package item
 
 import (
-	"encoding/json"
 	"errors"
 
 	"github.com/tarkov-database/website/core/api"
+
+	"github.com/goccy/go-json"
 )
 
 var (

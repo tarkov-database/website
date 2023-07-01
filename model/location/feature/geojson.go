@@ -1,7 +1,7 @@
 package feature
 
 import (
-	"encoding/json"
+	"github.com/goccy/go-json"
 )
 
 type FeatureType int

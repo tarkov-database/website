@@ -1,7 +1,6 @@
 package view
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -13,6 +12,7 @@ import (
 
 	"github.com/tarkov-database/website/model/item"
 
+	"github.com/goccy/go-json"
 	"github.com/google/logger"
 )
 

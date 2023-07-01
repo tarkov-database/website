@@ -5,6 +5,7 @@ go 1.20
 replace github.com/tarkov-database/website/bundler => ./bundler
 
 require (
+	github.com/goccy/go-json v0.10.2
 	github.com/google/logger v1.1.1
 	github.com/gorilla/websocket v1.5.0
 	github.com/julienschmidt/httprouter v1.3.0
