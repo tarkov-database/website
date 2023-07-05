@@ -12,7 +12,7 @@ require (
 	github.com/tarkov-database/website/bundler v0.0.0-20230507164103-6c7641c28c54
 	github.com/zeebo/blake3 v0.2.3
 	golang.org/x/net v0.11.0
-	golang.org/x/text v0.10.0
+	golang.org/x/text v0.11.0
 )
 
 require (
