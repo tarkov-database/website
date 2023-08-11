@@ -1,6 +1,6 @@
 module github.com/tarkov-database/website/bundler
 
-go 1.20
+go 1.21
 
 require (
 	github.com/evanw/esbuild v0.19.0
