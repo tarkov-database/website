@@ -7,7 +7,7 @@ import {
 
 export interface CustomFeature<
     G extends Geometry | null = Geometry,
-    P = GeoJsonProperties
+    P = GeoJsonProperties,
 > extends Feature<G, P> {
     _id: string;
     name: string;
