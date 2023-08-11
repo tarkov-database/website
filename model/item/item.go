@@ -121,8 +121,10 @@ func GetItemList(items ItemList, sort string) map[Kind][]Entity {
 	result := make(map[Kind][]Entity)
 	for r := range ch {
 		items := r.GetEntities()
-		kind := items[0].GetKind()
-		result[kind] = append(result[kind], items...)
+		if len(items) > 0 {
+			kind := items[0].GetKind()
+			result[kind] = append(result[kind], items...)
+		}
 	}
 
 	return result
