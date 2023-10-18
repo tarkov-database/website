@@ -22,7 +22,7 @@
   "dependencies": {
     "@turf/length": "^6.5.0",
     "chart.js": "^4.2.1",
-    "maplibre-gl": ">=2.1.6"
+    "maplibre-gl": ">=3.5.1"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.8",
