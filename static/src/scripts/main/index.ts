@@ -1,5 +1,3 @@
-import { initSearchSocket } from "./search";
-
 const registerTabs = () => {
     const tablinks = document.getElementsByClassName("tab-btn");
     for (const el of tablinks)
@@ -155,37 +153,11 @@ const initListFilter = () => {
     }
 };
 
-const initInteractiveMap = async () => {
-    const el = document.getElementById("map");
-    if (el === null) return;
-
-    const libPath = (
-        document.getElementById("mapLib") as HTMLScriptElement | null
-    )?.src;
-    if (!libPath) {
-        console.error("Library is missing");
-        return;
-    }
-
-    try {
-        const map = await import(libPath);
-        await map.init(el);
-        return map;
-    } catch (err) {
-        console.error(err);
-    }
-
-    return;
-};
-
 (async () => {
     registerTabs();
     sortTables();
     initListFilter();
     initImageView();
-    const map = await initInteractiveMap();
-    const form = document.getElementById("search") as HTMLFormElement | null;
-    if (form) initSearchSocket(form, map);
 })();
 
 export {};

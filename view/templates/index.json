@@ -291,14 +291,6 @@
     "/header.gohtml",
     "/footer.gohtml"
   ],
-  "location_map": [
-    "/location/map/map.gohtml",
-    "/location/map/base.gohtml",
-    "/location/map/head.gohtml",
-    "/location/map/header.gohtml",
-    "/location/map/footer.gohtml",
-    "/header.gohtml"
-  ],
   "table_location": [
     "/list/table_location.gohtml",
     "/list/base.gohtml",

@@ -9,14 +9,12 @@ type EntityType int
 const (
 	TypeItem EntityType = iota
 	TypeLocation
-	TypeFeature
 	TypeMixed
 )
 
 var entityTypeString = [...]string{
 	"item",
 	"location",
-	"feature",
 	"mixed",
 }
 

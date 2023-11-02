@@ -6,7 +6,6 @@ import (
 	"github.com/tarkov-database/website/core/search"
 	"github.com/tarkov-database/website/model/item"
 	"github.com/tarkov-database/website/model/location"
-	"github.com/tarkov-database/website/model/location/feature"
 )
 
 type SearchResult struct {
@@ -120,32 +119,6 @@ func (so *SearchOperation) Locations() {
 			ID:   r.ID,
 			Name: r.Name,
 			Type: TypeLocation,
-		}
-	}
-
-	so.Results <- rs
-}
-
-func (so *SearchOperation) Features() {
-	defer so.Tasks.Done()
-
-	result, err := feature.GetFeaturesByText(so.Term, so.Filter.Location, so.Limit)
-	if err != nil {
-		so.Lock()
-		so.Error = err
-		so.Unlock()
-		return
-	}
-
-	items := result.Items
-
-	rs := make([]*SearchResult, len(items))
-	for i, r := range items {
-		rs[i] = &SearchResult{
-			ID:     r.ID,
-			Name:   r.Name,
-			Parent: r.Group,
-			Type:   TypeFeature,
 		}
 	}
 

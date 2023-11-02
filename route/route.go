@@ -25,11 +25,6 @@ func routes() *httprouter.Router {
 	// Location
 	r.GET("/location", cntrl.LocationsGET)
 	r.GET("/location/:id", cntrl.LocationGET)
-	r.GET("/location/:id/map", cntrl.LocationMapGET)
-	r.GET("/location/:id/feature", cntrl.LocationFeaturesGET)
-	r.GET("/location/:id/feature/:fid", cntrl.LocationFeatureGET)
-	r.GET("/location/:id/featuregroup", cntrl.LocationFeatureGroupsGET)
-	r.GET("/location/:id/featuregroup/:gid", cntrl.LocationFeatureGroupGET)
 
 	// Search
 	r.GET("/search", cntrl.SearchGET)

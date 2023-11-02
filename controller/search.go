@@ -127,7 +127,6 @@ type socketRequest struct {
 	Filter    socketFilter `json:"filter"`
 	Items     bool         `json:"items"`
 	Locations bool         `json:"locations"`
-	Features  bool         `json:"features"`
 }
 
 type socketFilter struct {
@@ -244,10 +243,6 @@ func (s *socket) read(remote string) {
 			if req.Locations {
 				search.Tasks.Add(1)
 				go search.Locations()
-			}
-			if req.Features {
-				search.Tasks.Add(1)
-				go search.Features()
 			}
 
 			search.Close()

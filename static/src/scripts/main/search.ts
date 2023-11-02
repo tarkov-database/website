@@ -9,7 +9,6 @@ interface Item {
 enum ItemType {
     Item,
     Location,
-    Feature,
 }
 
 interface SocketRequest {
@@ -21,7 +20,6 @@ interface SocketRequest {
     };
     items: boolean;
     locations: boolean;
-    features: boolean;
 }
 
 interface SocketResponse {
@@ -100,16 +98,6 @@ export const initSearchSocket = async (
                     a.href = `/location/${item.id}`;
                     a.href += map ? "/map" : "";
                     div.className = "icon location";
-                    break;
-                case 2:
-                    a.addEventListener("click", async () => {
-                        hideElement(suggBox);
-                        map?.flyToFeature(
-                            await map?.getFeature(item.id, item.parent)
-                        );
-                    });
-                    a.href = `#feature=${item.id}`;
-                    div.className = "icon feature";
                     break;
             }
 
@@ -353,7 +341,6 @@ export const initSearchSocket = async (
             term: currentTerm,
             items: !filter.location,
             locations: !filter.item,
-            features: !!filter.location,
         };
 
         if (Object.keys(filter).length) data.filter = filter;
@@ -442,19 +429,18 @@ interface Filter {
     values: string[];
 }
 
-interface FilterOptions {
-    isInteractiveMap: boolean;
-}
+interface FilterOptions {}
 
 class Filters {
     private data: Map<string, Filter>;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     constructor(options: FilterOptions) {
         this.data = new Map();
 
         this.data.set("item", {
             type: "item",
-            available: !options.isInteractiveMap,
+            available: true,
             values: [
                 "ammunition",
                 "armor",
