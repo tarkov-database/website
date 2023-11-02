@@ -148,7 +148,7 @@ export const initSearchSocket = async (
         suggInline.dataset.value = val;
     };
 
-    const filters = new Filters({ isInteractiveMap: !!map });
+    const filters = new Filters();
 
     const openSocket = (
         msgListener: (this: WebSocket, ev: MessageEvent<any>) => any
@@ -429,13 +429,10 @@ interface Filter {
     values: string[];
 }
 
-interface FilterOptions {}
-
 class Filters {
     private data: Map<string, Filter>;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    constructor(options: FilterOptions) {
+    constructor() {
         this.data = new Map();
 
         this.data.set("item", {
