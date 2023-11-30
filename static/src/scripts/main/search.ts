@@ -48,7 +48,7 @@ const hideElement = (el: HTMLElement | null) =>
     el?.classList.replace("show", "hide");
 
 export const initSearchSocket = async (
-    element: HTMLFormElement,
+    element: HTMLFormElement
 ): Promise<void> => {
     const input = element.querySelector<HTMLInputElement>(
         'input[type="search"]'
