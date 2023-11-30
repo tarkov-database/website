@@ -7,7 +7,7 @@ replace github.com/tarkov-database/website/bundler => ./bundler
 require (
 	github.com/goccy/go-json v0.10.2
 	github.com/google/logger v1.1.1
-	github.com/gorilla/websocket v1.5.0
+	github.com/gorilla/websocket v1.5.1
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/tarkov-database/website/bundler v0.0.0-20231024161109-e647b533174f
 	github.com/zeebo/blake3 v0.2.3
