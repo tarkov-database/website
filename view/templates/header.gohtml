@@ -18,7 +18,7 @@
 <form id="search" class="search" action="/search" method="get">
   <div class="icon search">&nbsp;</div>
   <div class="inline-suggestion hide"></div>
-  <input required type="search" name="query" placeholder="Search..." minlength="3" pattern="^[A-Za-z0-9!#$%&'()*+,\-./:;?_~ ]+$" maxlength="56" autocomplete="off">
+  <input required type="search" name="query" placeholder="Search..." minlength="3" pattern="^[A-Za-z0-9!#$%&'\(\)*+,\-.\/:;?_~\s]+$" maxlength="56" autocomplete="off">
   <div class="suggestion hide"><ul></ul></div>
 </form>
 {{ end }}
