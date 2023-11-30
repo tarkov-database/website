@@ -49,7 +49,6 @@ const hideElement = (el: HTMLElement | null) =>
 
 export const initSearchSocket = async (
     element: HTMLFormElement,
-    mapInstance?: any
 ): Promise<void> => {
     const input = element.querySelector<HTMLInputElement>(
         'input[type="search"]'
@@ -63,8 +62,6 @@ export const initSearchSocket = async (
     let qCount = 0;
 
     let lastTerm = "";
-
-    const map = mapInstance;
 
     const updateBoxSuggestions = (items: Array<Item>, term: string) => {
         const newUl = document.createElement("ul");
@@ -93,11 +90,6 @@ export const initSearchSocket = async (
                 case 0:
                     a.href = `/item/${item.parent}/${item.id}`;
                     div.className = `icon ${item.parent}`;
-                    break;
-                case 1:
-                    a.href = `/location/${item.id}`;
-                    a.href += map ? "/map" : "";
-                    div.className = "icon location";
                     break;
             }
 
@@ -326,10 +318,6 @@ export const initSearchSocket = async (
         if (currentTerm === lastTerm) {
             showElement(suggBox);
             return;
-        }
-
-        if (map?.locationID) {
-            filter.location = map.locationID;
         }
 
         if (count < qCount) return;

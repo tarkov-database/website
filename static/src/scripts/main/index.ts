@@ -1,3 +1,5 @@
+import { initSearchSocket } from "./search";
+
 const registerTabs = () => {
     const tablinks = document.getElementsByClassName("tab-btn");
     for (const el of tablinks)
@@ -158,6 +160,8 @@ const initListFilter = () => {
     sortTables();
     initListFilter();
     initImageView();
+    const form = document.getElementById("search") as HTMLFormElement | null;
+    if (form) initSearchSocket(form);
 })();
 
 export {};
