@@ -16,8 +16,8 @@ require (
 )
 
 require (
-	github.com/evanw/esbuild v0.19.5 // indirect
+	github.com/evanw/esbuild v0.19.8 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
-	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/sys v0.15.0 // indirect
 )
