@@ -91,6 +91,7 @@ var calibers = [...]string{
 	"5.45x39mm",
 	"5.56x45mm NATO",
 	"5.7x28mm",
+	"6.8x51mm",
 	"7.62x25mm Tokarev",
 	"7.62x35mm",
 	"7.62x39mm",
