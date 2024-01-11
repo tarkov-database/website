@@ -345,6 +345,14 @@ func resolveSlots(slots item.Slots, sort string) resolvedSlots {
 				n = "Hammer"
 			case "catch":
 				n = "Catch"
+			case "frontPlate":
+				n = "Front Plate"
+			case "backPlate":
+				n = "Back Plate"
+			case "leftPlate":
+				n = "Left Plate"
+			case "rightPlate":
+				n = "Right Plate"
 			default:
 				logger.Warningf("Unknown slot name \"%s\"", t)
 			}

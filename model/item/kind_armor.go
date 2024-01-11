@@ -7,13 +7,23 @@ const (
 type Armor struct {
 	Item
 
-	Type           string    `json:"type"`
-	Armor          ArmorProp `json:"armor"`
-	RicochetChance string    `json:"ricochetChance,omitempty"`
-	Penalties      Penalties `json:"penalties"`
-	Blocking       []string  `json:"blocking"`
-	Slots          Slots     `json:"slots"`
-	Compatibility  ItemList  `json:"compatibility"`
+	Type           string           `json:"type"`
+	Armor          ArmorProps       `json:"armor"`
+	Components     []ArmorComponent `json:"components" bson:"components"`
+	RicochetChance string           `json:"ricochetChance,omitempty"`
+	Penalties      Penalties        `json:"penalties"`
+	Blocking       []string         `json:"blocking"`
+	Slots          Slots            `json:"slots"`
+	Compatibility  ItemList         `json:"compatibility"`
+}
+
+func (a Armor) TotalDurability() float64 {
+	var total float64
+	for _, component := range a.Components {
+		total += component.Durability
+	}
+
+	return total
 }
 
 type ArmorResult struct {
@@ -30,7 +40,11 @@ func (r *ArmorResult) GetEntities() []Entity {
 	return e
 }
 
-type ArmorProp struct {
+type ArmorComponent struct {
+	ArmorProps
+}
+
+type ArmorProps struct {
 	Class           int64         `json:"class"`
 	Durability      float64       `json:"durability"`
 	Material        ArmorMaterial `json:"material"`

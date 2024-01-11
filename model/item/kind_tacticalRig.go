@@ -7,10 +7,20 @@ const (
 type TacticalRig struct {
 	Item
 
-	Capacity  int64     `json:"capacity"`
-	Grids     []Grid    `json:"grids"`
-	Penalties Penalties `json:"penalties"`
-	Armor     ArmorProp `json:"armor,omitempty"`
+	Capacity        int64            `json:"capacity"`
+	Grids           []Grid           `json:"grids"`
+	Penalties       Penalties        `json:"penalties"`
+	ArmorComponents []ArmorComponent `json:"armorComponents,omitempty" bson:"armorComponents,omitempty"`
+	Slots           Slots            `json:"slots" bson:"slots"`
+}
+
+func (t TacticalRig) TotalDurability() float64 {
+	var total float64
+	for _, component := range t.ArmorComponents {
+		total += component.Durability
+	}
+
+	return total
 }
 
 type TacticalRigResult struct {

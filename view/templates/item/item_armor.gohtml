@@ -8,6 +8,7 @@
                 </a>
               </td>
             </tr>
+            {{ if and .Entity.Armor (gt .Entity.Armor.Class 0) }}
             <tr>
               <th>Class</th>
               <td>
@@ -34,6 +35,12 @@
                 {{ end }}
               </td>
             </tr>
+            {{ else if gt .Entity.TotalDurability 0.0 }}
+            <tr>
+              <th>Durability</th>
+              <td>{{ .Entity.TotalDurability }}</td>
+            </tr>
+            {{ end }}
             {{ if .Entity.RicochetChance }}
             <tr>
               <th>Ricochet Chance</th>
@@ -52,6 +59,31 @@
           </table>
 
           {{ template "penalties" . }}
+
+          {{ if gt .Entity.TotalDurability 0.0 }}
+          <div class="table-big">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="center">Class</th>
+                  <th class="center">Durability</th>
+                  <th class="center">Material</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{ range .Entity.Components }}
+                <tr>
+                  <th>{{ join .Zones ", " | camelToTitle }}</th>
+                  <td class="center">{{ .Class }}</td>
+                  <td class="center">{{ .Durability }}</td>
+                  <td class="center">{{ .Material.Name | toTitle }}</td>
+                </tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+          {{ end }}
 {{end}}
 
 {{ define "sub_box" }}

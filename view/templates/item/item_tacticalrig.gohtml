@@ -4,41 +4,60 @@
               <th>Capacity</th>
               <td>{{ .Entity.Capacity }}</td>
             </tr>
+            {{ if gt .Entity.TotalDurability 0.0 }}
+            <tr>
+              <th>Armor Durability</th>
+              <td>{{ .Entity.TotalDurability }}</td>
+            </tr>
+            {{ end }}
           </table>
-
-          {{ if .Entity.Armor.Class }}
-          <table>
-            <tr>
-              <th>Class</th>
-              <td>{{ .Entity.Armor.Class }}</td>
-            </tr>
-            <tr>
-              <th>Material</th>
-              <td title="{{ if eq .Entity.Armor.Material.Name "uhmwpe" }}Ultra-high-molecular-weight polyethylene{{ end }}">
-                <a class="underline" title="Show all tactical rigs with material '{{ .Entity.Armor.Material.Name }}'" href="/item/tacticalrig?material={{ .Entity.Armor.Material.Name | queryEscape }}">{{ if eq .Entity.Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Entity.Armor.Material.Name | toTitle }}{{ end }}</a>
-              </td>
-            </tr>
-            <tr>
-              <th>Durability</th>
-              <td>{{ .Entity.Armor.Durability }}</td>
-            </tr>
-            <tr>
-              <th class="tr-list">Protected Zones</th>
-              <td>
-                {{ range .Entity.Armor.Zones }}
-                {{ . }}<br>
-                {{ end }}
-              </td>
-            </tr>
-          </table>
-          {{ end }}
 
           {{ template "penalties" . }}
+
+          {{ if gt .Entity.TotalDurability 0.0 }}
+          <div class="table-big">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="center">Class</th>
+                  <th class="center">Durability</th>
+                  <th class="center">Material</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{ range .Entity.ArmorComponents }}
+                <tr>
+                  <th>{{ join .Zones ", " | camelToTitle }}</th>
+                  <td class="center">{{ .Class }}</td>
+                  <td class="center">{{ .Durability }}</td>
+                  <td class="center">{{ .Material.Name | toTitle }}</td>
+                </tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+          {{ end }}
 
           {{ template "grids" . }}
 {{ end }}
 
 {{ define "sub_box" }}
+      <div class="box sub">
+        <ul class="tab-buttons">
+          {{ if .Entity.Slots }}<li title="Item slots with compatible mods" class="tab-btn active" data-tab="slots">Slots</li>{{ end }}
+        </ul>
+
+        <ul class="tabs">
+
+          {{ if .Entity.Slots }}
+          <li id="slots" class="tab active">
+            {{ template "modSlots" . }}
+          </li>
+          {{ end }}
+
+        </ul>
+      </div>
 {{ end }}
 
 {{ define "related_box" }}

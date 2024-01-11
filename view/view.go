@@ -38,6 +38,7 @@ var (
 		"hasPrefix":        hasPrefix,
 		"queryEscape":      url.QueryEscape,
 		"toBase64":         toBase64,
+		"join":             strings.Join,
 
 		"appendStaticHash": appendStaticHash,
 		"categoryToName":   item.CategoryToDisplayName,
