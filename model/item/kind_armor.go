@@ -1,5 +1,7 @@
 package item
 
+import "fmt"
+
 const (
 	KindArmor Kind = "armor"
 )
@@ -19,12 +21,54 @@ type Armor struct {
 }
 
 func (a Armor) TotalDurability() float64 {
+	if a.Armor.Durability > 0 {
+		return a.Armor.Durability
+	}
+
 	var total float64
 	for _, component := range a.Components {
 		total += component.Durability
 	}
 
 	return total
+}
+
+func (a Armor) ClassRange() ClassRange {
+	if a.Armor.Class > 0 {
+		return ClassRange{
+			Min: a.Armor.Class,
+			Max: a.Armor.Class,
+		}
+	}
+
+	if len(a.Components) == 0 {
+		return ClassRange{}
+	}
+
+	min, max := a.Components[0].Class, a.Components[0].Class
+	for _, component := range a.Components {
+		if component.Class < min {
+			min = component.Class
+		}
+		if component.Class > max {
+			max = component.Class
+		}
+	}
+
+	return ClassRange{Min: min, Max: max}
+}
+
+type ClassRange struct {
+	Min int64
+	Max int64
+}
+
+func (c ClassRange) String() string {
+	if c.Min == c.Max {
+		return fmt.Sprintf("%d", c.Min)
+	}
+
+	return fmt.Sprintf("%d-%d", c.Min, c.Max)
 }
 
 type ArmorResult struct {

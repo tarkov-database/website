@@ -24,6 +24,24 @@ func (t TacticalRig) TotalDurability() float64 {
 	return total
 }
 
+func (t TacticalRig) ClassRange() ClassRange {
+	if len(t.ArmorComponents) == 0 {
+		return ClassRange{}
+	}
+
+	min, max := t.ArmorComponents[0].Class, t.ArmorComponents[0].Class
+	for _, component := range t.ArmorComponents {
+		if component.Class < min {
+			min = component.Class
+		}
+		if component.Class > max {
+			max = component.Class
+		}
+	}
+
+	return ClassRange{Min: min, Max: max}
+}
+
 type TacticalRigResult struct {
 	*Result
 	Items []TacticalRig `json:"items"`

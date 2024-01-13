@@ -34,51 +34,9 @@
       {{ end }}
       {{ end }}
 
-      {{ if not (hasQuery $.URI "class" "*" ) }}
-      {{ if hasQuery $.URI "sort" "armor.class" }}
-      <th class="sorted-by up">
-        <a href="{{ setQuery $.URI "sort" "-armor.class" }}">Class</a>
-      </th>
-      {{ else if hasQuery $.URI "sort" "-armor.class" }}
-      <th class="sorted-by down">
-        <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
-      </th>
-      {{ else }}
-      <th>
-        <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
-      </th>
-      {{ end }}
-      {{ end }}
+      <th>Class</th>
 
-      {{ if hasQuery $.URI "sort" "armor.durability" }}
-      <th class="sorted-by up">
-        <a href="{{ setQuery $.URI "sort" "-armor.durability" }}">Durability</a>
-      </th>
-      {{ else if hasQuery $.URI "sort" "-armor.durability" }}
-      <th class="sorted-by down">
-        <a href="{{ setQuery $.URI "sort" "armor.durability" }}">Durability</a>
-      </th>
-      {{ else }}
-      <th>
-        <a href="{{ setQuery $.URI "sort" "armor.durability" }}">Durability</a>
-      </th>
-      {{ end }}
-
-      {{ if not (hasQuery $.URI "material" "*" ) }}
-      {{ if hasQuery $.URI "sort" "armor.material.name" }}
-      <th class="sorted-by up">
-        <a href="{{ setQuery $.URI "sort" "-armor.material.name" }}">Material</a>
-      </th>
-      {{ else if hasQuery $.URI "sort" "-armor.material.name" }}
-      <th class="sorted-by down">
-        <a href="{{ setQuery $.URI "sort" "armor.material.name" }}">Material</a>
-      </th>
-      {{ else }}
-      <th>
-        <a href="{{ setQuery $.URI "sort" "armor.material.name" }}">Material</a>
-      </th>
-      {{ end }}
-      {{ end }}
+      <th>Durability</th>
 
       {{ if hasQuery $.URI "sort" "weight" }}
       <th class="sorted-by up">
@@ -113,23 +71,9 @@
     </td>
     {{ end }}
 
-    {{ if not (hasQuery $.URI "class" "*" ) }}
-    <td>
-      <a href="{{ setQuery (setQuery $.URI "p" "1") "class" .Armor.Class }}">
-        {{ .Armor.Class }}
-      </a>
-    </td>
-    {{ end }}
+    <td>{{ .ClassRange.String }}</td>
 
-    <td>{{ .Armor.Durability }}</td>
-
-    {{ if not (hasQuery $.URI "material" "*" ) }}
-    <td>
-      <a href="{{ setQuery (setQuery $.URI "p" "1") "material" .Armor.Material.Name }}">
-        {{ if eq .Armor.Material.Name "uhmwpe" }}UHMWPE{{ else }}{{ .Armor.Material.Name | toTitle }}{{ end }}
-      </a>
-    </td>
-    {{ end }}
+    <td>{{ .TotalDurability }}</td>
 
     <td>{{ .Weight }} kg</td>
 

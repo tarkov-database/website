@@ -48,35 +48,13 @@
       </th>
       {{ end }}
 
-      {{ if not (hasQuery $.URI "class" "*" ) }}
-      {{ if hasQuery $.URI "sort" "armor.class" }}
-      <th class="sorted-by up">
-        <a href="{{ setQuery $.URI "sort" "-armor.class" }}">Class</a>
-      </th>
-      {{ else if hasQuery $.URI "sort" "-armor.class" }}
-      <th class="sorted-by down">
-        <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
-      </th>
-      {{ else }}
       <th>
-        <a href="{{ setQuery $.URI "sort" "armor.class" }}">Class</a>
+        Class
       </th>
-      {{ end }}
-      {{ end }}
 
-      {{ if hasQuery $.URI "sort" "armor.durability" }}
-      <th class="sorted-by up">
-        <a href="{{ setQuery $.URI "sort" "-armor.durability" }}">Durability</a>
-      </th>
-      {{ else if hasQuery $.URI "sort" "-armor.durability" }}
-      <th class="sorted-by down">
-        <a href="{{ setQuery $.URI "sort" "armor.durability" }}">Durability</a>
-      </th>
-      {{ else }}
       <th>
-        <a href="{{ setQuery $.URI "sort" "armor.durability" }}">Durability</a>
+        Durability
       </th>
-      {{ end }}
 
     </tr>
   </thead>
@@ -94,14 +72,11 @@
     <td>{{ .Weight }} kg</td>
 
     {{ if not (hasQuery $.URI "class" "*" ) }}
-    <td>
-      <a href="{{ setQuery (setQuery $.URI "p" "1") "class" .Armor.Class }}">
-        {{ if .Armor.Class }}{{ .Armor.Class }}{{ else }}-{{ end }}
-      </a>
-    </td>
+    {{ $range := .ClassRange }}
+    <td>{{ if gt $range.Min 0 }}{{ $range.String }}{{ else }}-{{ end }}</td>
     {{ end }}
 
-    <td>{{ if .Armor.Durability }}{{ .Armor.Durability }}{{ else }}-{{ end }}</td>
+    <td>{{ if gt .TotalDurability 0.0 }}{{ .TotalDurability }}{{ else }}-{{ end }}</td>
 
   </tr>
   {{ end }}
