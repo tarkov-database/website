@@ -322,7 +322,7 @@ func (k Kind) GetFilter() Filter {
 	case KindModificationGoggles, KindModificationGogglesSpecial:
 		return modGogglesFilter
 	case KindTacticalrig:
-		return tacticalFilter
+		return tacticalRigFilter
 	default:
 		return Filter{}
 	}

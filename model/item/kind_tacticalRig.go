@@ -11,6 +11,7 @@ type TacticalRig struct {
 	Grids           []Grid           `json:"grids"`
 	Penalties       Penalties        `json:"penalties"`
 	ArmorComponents []ArmorComponent `json:"armorComponents,omitempty" bson:"armorComponents,omitempty"`
+	IsPlateCarrier  bool             `json:"isPlateCarrier" bson:"isPlateCarrier"`
 	Slots           Slots            `json:"slots" bson:"slots"`
 }
 
@@ -37,8 +38,12 @@ func (r *TacticalRigResult) GetEntities() []Entity {
 	return e
 }
 
-var tacticalFilter = Filter{
+var tacticalRigFilter = Filter{
 	"armored": {
+		"true",
+		"false",
+	},
+	"plateCarrier": {
 		"true",
 		"false",
 	},

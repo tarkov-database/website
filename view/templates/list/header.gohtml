@@ -28,7 +28,7 @@
             <ul>
                 {{ range $name, $options := .Filter.GetAll }}
                 <li>
-                    <label>{{ $name | toTitle }}</label>
+                    <label>{{ $name | camelToTitle }}</label>
                     <select name="{{ $name }}">
                     <option value="all">All</option>
                     {{ range $options }}

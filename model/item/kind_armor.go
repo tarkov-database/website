@@ -15,6 +15,7 @@ type Armor struct {
 	Blocking       []string         `json:"blocking"`
 	Slots          Slots            `json:"slots"`
 	Compatibility  ItemList         `json:"compatibility"`
+	Confilcts      ItemList         `json:"conflicts"`
 }
 
 func (a Armor) TotalDurability() float64 {
@@ -84,6 +85,7 @@ var armorFilter = Filter{
 		"faceCover",
 		"helmet",
 		"visor",
+		"plate",
 	},
 	"class":    armorClasses[:],
 	"material": armorMaterial[:],
