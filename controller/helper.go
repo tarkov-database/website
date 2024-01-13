@@ -72,6 +72,12 @@ func isAlnumExtended(s string) bool {
 
 func validateQueryValues(q url.Values) error {
 	for k, v := range q {
+		if len(k) > 30 {
+			return fmt.Errorf("error in key \"%s\": %w", k, ErrTooLongShort)
+		}
+		if !isAlnum(k) {
+			return fmt.Errorf("error in key \"%s\": %w", k, ErrIllegalChars)
+		}
 		for _, e := range v {
 			v, err := url.QueryUnescape(e)
 			if err != nil {
@@ -83,6 +89,18 @@ func validateQueryValues(q url.Values) error {
 			if !isAlnumExtended(v) {
 				return fmt.Errorf("error in value of \"%s\": %w", k, ErrIllegalChars)
 			}
+		}
+	}
+
+	return nil
+}
+
+func unescapeParams(params map[string]string) error {
+	for k, v := range params {
+		var err error
+		params[k], err = url.QueryUnescape(v)
+		if err != nil {
+			return fmt.Errorf("error in value of \"%s\": %w", k, err)
 		}
 	}
 

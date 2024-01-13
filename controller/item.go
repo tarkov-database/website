@@ -51,7 +51,9 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	if err := validateQueryValues(r.URL.Query()); err != nil {
+	queryValues := r.URL.Query()
+
+	if err := validateQueryValues(queryValues); err != nil {
 		statusBadRequest(w, r)
 		return
 	}
@@ -59,27 +61,32 @@ func ItemsGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	params := make(map[string]string)
 	switch kind {
 	case item.KindAmmunition:
-		params["caliber"] = r.URL.Query().Get("caliber")
-		params["type"] = r.URL.Query().Get("type")
+		params["caliber"] = queryValues.Get("caliber")
+		params["type"] = queryValues.Get("type")
 	case item.KindMagazine:
-		params["caliber"] = r.URL.Query().Get("caliber")
+		params["caliber"] = queryValues.Get("caliber")
 	case item.KindFirearm:
-		params["manufacturer"] = r.URL.Query().Get("manufacturer")
-		params["caliber"] = r.URL.Query().Get("caliber")
-		params["type"], params["class"] = r.URL.Query().Get("type"), r.URL.Query().Get("class")
+		params["manufacturer"] = queryValues.Get("manufacturer")
+		params["caliber"] = queryValues.Get("caliber")
+		params["type"], params["class"] = queryValues.Get("type"), queryValues.Get("class")
 	case item.KindArmor:
-		params["armor.material.name"] = r.URL.Query().Get("material")
-		params["type"], params["armor.class"] = r.URL.Query().Get("type"), r.URL.Query().Get("class")
+		params["armor.material.name"] = queryValues.Get("material")
+		params["type"], params["armor.class"] = queryValues.Get("type"), queryValues.Get("class")
 	case item.KindTacticalrig:
-		params["armor.material.name"] = r.URL.Query().Get("material")
-		params["isArmored"], params["armor.class"] = r.URL.Query().Get("armored"), r.URL.Query().Get("class")
-		params["isPlateCarrier"] = r.URL.Query().Get("plateCarrier")
+		params["armor.material.name"] = queryValues.Get("material")
+		params["isArmored"], params["armor.class"] = queryValues.Get("armored"), queryValues.Get("class")
+		params["isPlateCarrier"] = queryValues.Get("plateCarrier")
 	case item.KindMedical, item.KindFood, item.KindGrenade, item.KindClothing, item.KindModificationMuzzle, item.KindModificationDevice, item.KindModificationSight, item.KindModificationSightSpecial, item.KindModificationGoggles, item.KindModificationGogglesSpecial:
-		params["type"] = r.URL.Query().Get("type")
+		params["type"] = queryValues.Get("type")
+	}
+
+	if err := unescapeParams(params); err != nil {
+		statusBadRequest(w, r)
+		return
 	}
 
 	opts := &api.Options{
-		Sort:   r.URL.Query().Get("sort"),
+		Sort:   queryValues.Get("sort"),
 		Filter: params,
 	}
 	opts.Limit, opts.Offset = getLimitOffset(getPage(r.URL))

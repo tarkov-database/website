@@ -28,7 +28,9 @@ func LocationGET(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 }
 
 func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	if err := validateQueryValues(r.URL.Query()); err != nil {
+	queryValues := r.URL.Query()
+
+	if err := validateQueryValues(queryValues); err != nil {
 		statusBadRequest(w, r)
 		return
 	}
@@ -36,8 +38,13 @@ func LocationsGET(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	params := make(map[string]string)
 	params["available"] = r.URL.Query().Get("available")
 
+	if err := unescapeParams(params); err != nil {
+		statusBadRequest(w, r)
+		return
+	}
+
 	opts := &api.Options{
-		Sort:   r.URL.Query().Get("sort"),
+		Sort:   queryValues.Get("sort"),
 		Filter: params,
 	}
 	opts.Limit, opts.Offset = getLimitOffset(getPage(r.URL))
