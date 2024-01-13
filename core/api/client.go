@@ -77,7 +77,7 @@ func GET(ctx context.Context, path string, opts *Options, target interface{}) er
 	v := url.Values{}
 	for key, val := range opts.Filter {
 		if val != "" {
-			v.Add(key, url.QueryEscape(val))
+			v.Add(key, val)
 		}
 	}
 	if opts.Sort != "" {
