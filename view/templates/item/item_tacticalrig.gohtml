@@ -14,7 +14,7 @@
 
           {{ template "penalties" . }}
 
-          {{ if gt .Entity.TotalDurability 0.0 }}
+          {{ if .Entity.ArmorComponents }}
           <div class="table-big">
             <table>
               <thead>
