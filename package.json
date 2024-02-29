@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/tarkov-database/website#readme",
   "dependencies": {
-    "chart.js": "^4.2.1"
+    "chart.js": "^4.4.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.3.0",
